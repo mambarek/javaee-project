@@ -3,6 +3,7 @@ package com.it2go.employee.services.rest;
 
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.persistence.IEmployeeRepository;
+import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityRemovedException;
 

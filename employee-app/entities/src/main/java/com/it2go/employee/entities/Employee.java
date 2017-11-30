@@ -7,7 +7,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.ws.rs.Produces;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@XmlRootElement(name = "employee")
+@XmlRootElement
 public class Employee extends Person {
 
     private double salary;

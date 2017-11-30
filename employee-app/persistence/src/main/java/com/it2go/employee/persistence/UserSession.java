@@ -1,4 +1,4 @@
-package com.it2go.employee.services;
+package com.it2go.employee.persistence;
 
 
 import com.it2go.employee.entities.Person;

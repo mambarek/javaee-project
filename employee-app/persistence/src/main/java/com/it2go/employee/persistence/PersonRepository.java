@@ -20,9 +20,6 @@ import java.util.Objects;
 @Stateless
 public class PersonRepository implements IPersonRepository {
 
-/*    @Inject
-    private UserSession userSession;*/
-
     @Inject
     @DomainEntity(clazz = Person.class)
     private IEntityDAO<Person> personDAO;

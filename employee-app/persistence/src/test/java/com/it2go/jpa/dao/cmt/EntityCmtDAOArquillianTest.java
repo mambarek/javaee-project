@@ -10,6 +10,7 @@ import com.it2go.employee.persistence.ICarRepository;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.IPersonRepository;
 import com.it2go.employee.persistence.ITruckRepository;
+import com.it2go.employee.persistence.UserSession;
 import com.it2go.employee.persistence.view.EmployeeViewRepository;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotPersistedException;

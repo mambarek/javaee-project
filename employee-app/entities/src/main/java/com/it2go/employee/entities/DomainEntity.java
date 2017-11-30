@@ -1,6 +1,8 @@
 package com.it2go.employee.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.it2go.framework.entities.IAbstractEntity;
+import com.it2go.framework.util.json.JsonStdDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +31,7 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = JsonStdDateSerializer.class)
     private Date creationDate;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -36,6 +39,7 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
 
     //@Version
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = JsonStdDateSerializer.class)
     private Date lastUpdateTime;
 
     @OneToOne
