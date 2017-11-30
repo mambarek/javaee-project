@@ -2,7 +2,6 @@ package com.it2go.framework.util.json;
 
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
@@ -21,7 +20,7 @@ public class JsonStdDateSerializer extends JsonSerializer<Date> {
     @Override
     public void serialize(
             Date date, JsonGenerator jgen, SerializerProvider provider)
-            throws IOException, JsonProcessingException {
+            throws IOException {
 
         // clone because DateFormat is not thread-safe
         DateFormat myformat = (DateFormat) iso8601Format.clone();

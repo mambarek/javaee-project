@@ -31,16 +31,15 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonSerialize(using = JsonStdDateSerializer.class)
-    private Date creationDate;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Person createdBy;
+    //@JsonSerialize(using = JsonStdDateSerializer.class)
+    private Date createdAt;
 
     //@Version
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonSerialize(using = JsonStdDateSerializer.class)
-    private Date lastUpdateTime;
+    private Date updatedAt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Person createdBy;
 
     @OneToOne
     private Person updatedBy;
@@ -59,7 +58,7 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
         DomainEntity other = (DomainEntity) o;
 
         //check lstupdate the DB entity should not be changed
-        if (!Objects.equals(this.lastUpdateTime, other.lastUpdateTime)) {
+        if (!Objects.equals(this.updatedAt, other.updatedAt)) {
             return false;
         }
 
@@ -78,8 +77,8 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
         int multi = 29; // nicht zu große, zufällig gewählte Primzahl als Multiplikator
         hashCode += (this.getId() == null) ? 0 : this.getId().hashCode();
 
-        if (this.lastUpdateTime != null)
-            hashCode = hashCode * multi + this.getLastUpdateTime().hashCode();
+        if (this.updatedAt != null)
+            hashCode = hashCode * multi + this.getUpdatedAt().hashCode();
 
         return hashCode;
     }

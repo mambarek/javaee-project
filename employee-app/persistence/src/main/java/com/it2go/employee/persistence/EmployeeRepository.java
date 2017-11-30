@@ -69,7 +69,7 @@ public class EmployeeRepository implements IEmployeeRepository{
             for (Person child : employee.getChildren()) {
                 if (child.isNew()) {
                     child.setCreatedBy(user);
-                    child.setCreationDate(new Date());
+                    child.setCreatedAt(new Date());
                 }
             }
         }

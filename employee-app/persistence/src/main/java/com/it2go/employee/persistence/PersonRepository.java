@@ -58,11 +58,11 @@ public class PersonRepository implements IPersonRepository {
         Objects.requireNonNull(person);
 
         if(person.isNew()){
-            person.setCreationDate(new Date());
+            person.setCreatedAt(new Date());
             person.setCreatedBy(user);
         }else{
             person.setUpdatedBy(user);
-            person.setLastUpdateTime(new Date());
+            person.setUpdatedAt(new Date());
         }
         // check children
 /*        if(person.getChildren() != null && person.getChildren().size() > 0){

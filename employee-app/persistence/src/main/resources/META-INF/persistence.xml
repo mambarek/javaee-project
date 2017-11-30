@@ -6,18 +6,19 @@
     <persistence-unit name="h2-hibernate" transaction-type="JTA">
          <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
         <jta-data-source>java:jboss/arquillian</jta-data-source>
-        <class>com.it2go.employee.entities.Employee</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+<!--        <class>com.it2go.employee.entities.Employee</class>
         <class>com.it2go.employee.entities.Car</class>
         <class>com.it2go.employee.entities.EmailAddress</class>
         <class>com.it2go.employee.entities.Gender</class>
         <class>com.it2go.employee.entities.Person</class>
         <class>com.it2go.employee.entities.Project</class>
         <class>com.it2go.employee.entities.Truck</class>
-        <class>com.it2go.employee.entities.VehicleData</class>
+        <class>com.it2go.employee.entities.VehicleData</class>-->
 
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property
                     name="hibernate.enable_lazy_load_no_trans"

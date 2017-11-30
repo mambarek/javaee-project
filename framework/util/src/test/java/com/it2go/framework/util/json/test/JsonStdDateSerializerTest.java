@@ -31,7 +31,7 @@ public class JsonStdDateSerializerTest {
     }
 
     @Test
-    public void whenUsingCustomDateSerializer_thenCorrect()
+    public void testDateTime()
             throws JsonProcessingException, ParseException {
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -44,5 +44,23 @@ public class JsonStdDateSerializerTest {
         ObjectMapper mapper = new ObjectMapper();
         String result = mapper.writeValueAsString(event);
         assertThat(result, containsString(toParse));
+    }
+
+    @Test
+    public void testDate()
+            throws JsonProcessingException, ParseException {
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+
+        String toParse = "2014-12-20T02:30:00.000+0100";
+        LocalDateTime dateTime = LocalDateTime.of(2014,12,20,2,30,0);
+        Date date = new Date();
+        Event event = new Event("party", date);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String result = mapper.writeValueAsString(event);
+
+        System.out.println("result = " + result);
+        //assertThat(result, containsString(toParse));
     }
 }

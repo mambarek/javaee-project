@@ -1,5 +1,7 @@
 package com.it2go.employee.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.it2go.framework.util.json.JsonStdDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,6 +53,7 @@ public class Person extends DomainEntity {
     @Basic
     @Column(name = "BIRTH_DATE")
     @Temporal(TemporalType.DATE)
+    //@JsonSerialize(using = JsonStdDateSerializer.class)
     private Date birthDate;
 
     @Enumerated(EnumType.STRING)
