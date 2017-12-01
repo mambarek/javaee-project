@@ -22,6 +22,7 @@
         <module>dto</module>
         <module>webservices</module>
         <module>employee-ear</module>
+        <module>webapp</module>
     </modules>
 
     <dependencies>

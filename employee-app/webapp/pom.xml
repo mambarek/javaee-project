@@ -6,31 +6,22 @@
         <artifactId>employee-app</artifactId>
         <groupId>com.it2go.employee</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>employee-services</artifactId>
-    <packaging>pom</packaging>
-    <name>Java EE Project: javaee-project - employee-app - services</name>
-    <modules>
-        <module>jaxws</module>
-        <module>jaxrs</module>
-    </modules>
+    <artifactId>webapp</artifactId>
+    <packaging>war</packaging>
+    <name>Java EE Project: javaee-project - employee-app - webapp</name>
+
     <dependencies>
         <dependency>
             <groupId>com.it2go.employee</groupId>
-            <artifactId>dto</artifactId>
+            <artifactId>jaxrs</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.it2go.employee</groupId>
-            <artifactId>dao</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.it2go.employee</groupId>
-            <artifactId>persistence</artifactId>
+            <artifactId>jaxws</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
