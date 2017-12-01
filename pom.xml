@@ -22,11 +22,9 @@
     </prerequisites>
     
     <modules>
-        <module>test-utils</module>
         <module>framework</module>
         <module>employee-app</module>
     </modules>
-
 
     <dependencyManagement>
         <dependencies>
