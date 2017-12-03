@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 
 public class EntityManagerProducecr {
 
-    @PersistenceContext(unitName = "h2-hibernate")
+    @PersistenceContext(unitName = "EmployeeDS")
     private EntityManager defaultEntityManager;
 
     @Produces

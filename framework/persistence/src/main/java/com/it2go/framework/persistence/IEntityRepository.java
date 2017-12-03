@@ -6,9 +6,10 @@ import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.framework.entities.IAbstractEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface IEntityRepository<T extends IAbstractEntity, P extends IAbstractEntity > {
+public interface IEntityRepository<T extends IAbstractEntity, P extends IAbstractEntity > extends Serializable{
 
     public T persist(T entity, P user) throws EntityConcurrentModificationException, EntityRemovedException;
     public T remove(T entity) throws EntityNotPersistedException;

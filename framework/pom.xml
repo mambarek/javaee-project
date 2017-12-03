@@ -23,12 +23,4 @@
         <module>util</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.it2go</groupId>
-            <artifactId>test-utils</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

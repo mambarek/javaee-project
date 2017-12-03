@@ -3,9 +3,9 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="h2-hibernate" transaction-type="JTA">
+    <persistence-unit name="EmployeeDS" transaction-type="JTA">
          <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
-        <jta-data-source>java:jboss/arquillian</jta-data-source>
+        <jta-data-source>java:jboss/datasources/EmployeeAppDS</jta-data-source>
 
         <class>com.it2go.employee.entities.Employee</class>
         <class>com.it2go.employee.entities.Car</class>

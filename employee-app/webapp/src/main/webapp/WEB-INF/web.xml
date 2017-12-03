@@ -3,26 +3,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          id="WebApp_ID" version="3.1">
     <display-name>Archetype Created Web Application</display-name>
-    <servlet>
-        <servlet-name>Resteasy</servlet-name>
-        <servlet-class>
-            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-        </servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>com.it2go.employee.services.rest.JaxRsActivator</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+
     <servlet>
         <servlet-name>facesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>Resteasy</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>facesServlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
