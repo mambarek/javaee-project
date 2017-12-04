@@ -6,10 +6,11 @@ import com.it2go.employee.persistence.IPersonRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class UserSession {
+public class UserSession implements Serializable{
 
     @Inject
     private IPersonRepository personRepository;
