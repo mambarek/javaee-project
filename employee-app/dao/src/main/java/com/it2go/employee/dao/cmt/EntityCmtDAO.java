@@ -1,6 +1,7 @@
 package com.it2go.employee.dao.cmt;
 
 import com.it2go.employee.entities.DomainEntity;
+import com.it2go.employee.entities.DomainEntity_;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
@@ -56,7 +57,10 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
               entity.setUpdatedAt(new Date());
         }
 
-        return entityManager.merge(entity);
+        final T mergedEntity = entityManager.merge(entity);
+        entityManager.flush();
+
+        return mergedEntity;
     }
 
     public Date getLastUpdateTime(T entity){
@@ -64,11 +68,11 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
         Objects.requireNonNull(entity.getId());
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.getEntityClass());
-        Root root = criteriaQuery.from(this.getEntityClass());
+        CriteriaQuery<Date> criteriaQuery = criteriaBuilder.createQuery(Date.class);
+        Root<T> root = criteriaQuery.from(this.getEntityClass());
 
         ParameterExpression<Long> p = criteriaBuilder.parameter(Long.class);
-        criteriaQuery.select(root.get("lastUpdateTime")).where(criteriaBuilder.equal(p, root.get("id")));
+        criteriaQuery.select(root.get(DomainEntity_.updatedAt)).where(criteriaBuilder.equal(p, root.get("id")));
 
         TypedQuery<Date> query = entityManager.createQuery(criteriaQuery);
         query.setParameter(p, entity.getId());

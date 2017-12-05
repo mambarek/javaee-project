@@ -2,6 +2,7 @@ package com.it2go.employee.ui.controller;
 
 import com.it2go.employee.entities.EmailAddress;
 import com.it2go.employee.entities.Employee;
+import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.EmployeeRepository;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
@@ -37,15 +38,31 @@ public class EmployeeListController implements Serializable{
         return employees;
     }
 
-    public void createEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
+    public String createEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
         if(model.getFirstName() != null && model.getLastName() != null) {
             if(this.modelEmail.getEmail() != null && this.modelEmail.getEmail().length() > 0)
                 this.model.getEmails().add(this.modelEmail);
             System.out.println("## model = " + model);
-            employeeRepository.persist(model, userSession.getTestCreationUser());
+            Person loggedInUser = userSession.getTestUpdateUser();
+            if(model.isNew())
+                loggedInUser = userSession.getTestCreationUser();
+
+            employeeRepository.persist(model, loggedInUser);
+
             this.model = new Employee();
             this.modelEmail = new EmailAddress();
         }
+
+        return "faces-test?faces-redirect=true";
+    }
+
+    public String editEmployee(Long id){
+
+        final Employee employee = employeeRepository.findById(id);
+        System.out.println("editEmployee ## employee = " + employee);
+        this.model = employee;
+
+        return "faces-test?faces-redirect=true";
     }
 
     public Employee getModel() {
