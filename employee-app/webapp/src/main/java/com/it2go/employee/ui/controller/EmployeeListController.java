@@ -3,14 +3,11 @@ package com.it2go.employee.ui.controller;
 import com.it2go.employee.entities.EmailAddress;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.entities.Person;
-import com.it2go.employee.persistence.EmployeeRepository;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityRemovedException;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,6 +24,9 @@ public class EmployeeListController implements Serializable{
     @Inject
     UserSession userSession;
 
+    @Inject
+    EditEmployeeController editEmployeeController;
+
     private Employee model = new Employee();
     private EmailAddress modelEmail = new EmailAddress();
 
@@ -38,7 +38,7 @@ public class EmployeeListController implements Serializable{
         return employees;
     }
 
-    public String createEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
+    public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
         if(model.getFirstName() != null && model.getLastName() != null) {
             if(this.modelEmail.getEmail() != null && this.modelEmail.getEmail().length() > 0)
                 this.model.getEmails().add(this.modelEmail);
@@ -63,6 +63,15 @@ public class EmployeeListController implements Serializable{
         this.model = employee;
 
         return "faces-test?faces-redirect=true";
+    }
+
+    public String editEmployeeOnNewPage(Long id){
+
+        final Employee employee = employeeRepository.findById(id);
+        System.out.println("editEmployeeOnNewPage ## employee = " + employee);
+        editEmployeeController.setModel(employee);
+
+        return "editEmployee?faces-redirect=true";
     }
 
     public Employee getModel() {

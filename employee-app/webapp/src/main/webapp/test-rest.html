@@ -16,7 +16,7 @@
         });
     };
 
-    getJSON('http://localhost:8080/jaxrs/rest/EmployeeService/employees').then(function(data) {
+    getJSON('http://localhost:8080/webapp/rest/EmployeeService/employees').then(function(data) {
         alert('Your public IP address is: ' + data[0].firstName);
     }, function(status) {
         alert('Something went wrong.');

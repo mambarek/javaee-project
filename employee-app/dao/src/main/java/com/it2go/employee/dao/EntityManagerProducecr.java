@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContextType;
 
 public class EntityManagerProducecr {
 
-    @PersistenceContext(unitName = "EmployeeDS", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "EmployeeDS")
     private EntityManager defaultEntityManager;
 
     @Produces

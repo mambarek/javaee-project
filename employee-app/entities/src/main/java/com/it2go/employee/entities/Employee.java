@@ -27,7 +27,6 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        Person p = (Person)this;
         return String.format("Employee[(%s)%s %s (%s EUR)]",this.getId(), this.getFirstName(), this.getLastName(), this.getSalary());
     }
 

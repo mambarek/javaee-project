@@ -41,10 +41,10 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
         if(entity.isNew()) {
 
             entity.setCreatedAt(new Date());
-            //entity.setCreatedBy(userSession.getTestCreationUser());
+            entityManager.persist(entity);
         }
         else{
-                Date dbLastUpdate = this.getLastUpdateTime(entity);
+                //Date dbLastUpdate = this.getLastUpdateTime(entity);
                 T db_entity = this.getByIdentityKey(entity.getId());
                 if(db_entity == null)
                     throw new EntityRemovedException();
@@ -53,12 +53,11 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
                 if(db_entity.getUpdatedAt() != null && !db_entity.getUpdatedAt().equals(entity.getUpdatedAt()))
                     throw new EntityConcurrentModificationException();
 
-           // entity.setUpdatedBy(userSession.getTestUpdateUser());
               entity.setUpdatedAt(new Date());
         }
 
         final T mergedEntity = entityManager.merge(entity);
-        entityManager.flush();
+        //entityManager.flush();
 
         return mergedEntity;
     }

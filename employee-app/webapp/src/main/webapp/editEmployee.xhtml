@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
 </h:head>
 <h:body>
+    <f:metadata>
+        <f:viewParam name="id" value="#{editEmployeeController.employeeId}"/>
+        <f:event type="preRenderView" listener="#{editEmployeeController.initView}"/>
+    </f:metadata>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3"></div>
@@ -29,54 +33,25 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
 
-                <table jsf:id="employeeList" class="table table-striped table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th>Details</th>
-                            <th>Vorname</th>
-                            <th>Nachname</th>
-                            <th>Gehalt</th>
-                            <th>Geburtstag</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
-                        <tr>
-                            <td><form jsf:id="id_link">
-                                <a href="#" jsf:id="edit" jsf:action="#{employeeListController.editEmployee(employee.id)}"><i class="fa fa-pencil-square-o" aria-hidden="true" /></a>
-                            </form>
-                            </td>
-                            <td><form jsf:id="firstName_link">
-                                <a jsf:id="edit" jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a></form></td>
-                            <td><a jsf:id="lastName_link" jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
-                            <td>#{employee.salary}</td>
-                            <td>#{employee.birthDate}</td>
-                        </tr>
-                    </ui:repeat>
-                    </tbody>
-                </table>
-                <br/>
-                <br/>
-
                 <h:form>
                     <div class="form-row">
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="firstName">First Name</label>
+                            <label class="col-sm-2 col-form-label" for="firstName">Vorname</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" jsf:id="firstName" required="required" pattern=".{3,}" title="3 characters minimum" value="#{employeeListController.model.firstName}"/>
+                                <input type="text" class="form-control" jsf:id="firstName" required="required" pattern=".{3,}" value="#{editEmployeeController.model.firstName}"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="lastName">Last Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" jsf:id="lastName" pattern=".{3,}"  required="required" title="3 characters minimum" value="#{employeeListController.model.lastName}"/>
+                                <input type="text" class="form-control" jsf:id="lastName" pattern=".{3,}"  required="required" title="3 characters minimum" value="#{editEmployeeController.model.lastName}"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="birthDate">Geburtsdatum</label>
                             <div class="col-sm-10">
 <!--                                <div class="input-group date" data-provide="datepicker">
-                                    <input type="text" class="form-control datepicker" data-date-format="yyy-MM-dd" jsf:id="birthday" value="#{employeeListController.model.birthDate}">
+                                    <input type="text" class="form-control datepicker" data-date-format="yyy-MM-dd" jsf:id="birthday" value="#{editEmployeeController.model.birthDate}">
                                         <f:convertDateTime pattern="yyyy-MM-dd"/>
                                     </input>
                                     <div class="input-group-addon">
@@ -84,7 +59,7 @@
                                     </div>
                                 </div>-->
                                 <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoClose="true">
-                                    <input type="text" class="form-control" jsf:id="birthDate" value="#{employeeListController.model.birthDate}" placeholder="jjjj-mm-tt">
+                                    <input type="text" class="form-control" jsf:id="birthDate" value="#{editEmployeeController.model.birthDate}" placeholder="jjjj-mm-tt">
                                         <f:convertDateTime pattern="yyyy-mm-dd"/>
                                     </input>
                                     <div class="input-group-addon">
@@ -96,18 +71,18 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="email">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" jsf:id="email" value="#{employeeListController.modelEmail.email}"/>
+                                <input type="email" class="form-control" jsf:id="email" value="#{editEmployeeController.modelEmail.email}"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="salary">Gehalt</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" jsf:id="salary" value="#{employeeListController.model.salary}"/>
+                                <input type="number" class="form-control" jsf:id="salary" value="#{editEmployeeController.model.salary}"/>
                             </div>
                         </div>
                         <div class="form-group row justify-content-end">
                             <div class="col-sm-2 ">
-                                <button type="submit" class="btn btn-primary" jsf:action="#{employeeListController.saveEmployee}">Speichern</button>
+                                <button type="submit" class="btn btn-primary" jsf:action="#{editEmployeeController.saveEmployee}">Speichern</button>
                             </div>
                         </div>
                     </div>
