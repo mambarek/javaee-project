@@ -6,21 +6,22 @@ import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.flow.FlowScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Map;
 
 @Named
-@SessionScoped
-public class EditEmployeeController implements Serializable{
+@RequestScoped
+public class EditEmployeeController implements BaseViewController{
 
+    public static final String VIEW_ID = "editEmployee";
     //@ManagedProperty("id")
     Long employeeId;
 
@@ -29,9 +30,18 @@ public class EditEmployeeController implements Serializable{
 
     @Inject
     UserSession userSession;
+    @Inject
+    WebFlowController webFlowController;
 
-    private Employee model = new Employee();
-    private EmailAddress modelEmail = new EmailAddress();
+    private Map<String, Object> viewParams;
+
+    private Employee model;
+    private EmailAddress modelEmail;
+
+    public EditEmployeeController() {
+        System.out.println(">> EditEmployeeController::Constructor!");
+
+    }
 
     public Long getEmployeeId() {
         return employeeId;
@@ -57,28 +67,76 @@ public class EditEmployeeController implements Serializable{
         this.modelEmail = modelEmail;
     }
 
+    @PostConstruct
     public void initView(){
 
-        final Employee employee = employeeRepository.findById(employeeId);
-        System.out.println("## editEmployeeOnNewPage ## employee = " + employee);
-        model = employee;
+        viewParams = webFlowController.getViewParams(VIEW_ID);
+        Object id = null;
+        if(viewParams != null)
+            id = viewParams.get("id");
+
+        if(id != null){
+            model = employeeRepository.findById((Long)id);
+        }
+        else
+            model = new Employee();
+
+        System.out.println("-- EditEmployeeController::initView id = " + id);
+        modelEmail = new EmailAddress();
+/*        final Employee employee = employeeRepository.findById(employeeId);
+        System.out.println("## EditEmployeeController::initView employee = " + employee);
+        model = employee;*/
     }
 
     public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
+
         if(model.getFirstName() != null && model.getLastName() != null) {
             if(this.modelEmail.getEmail() != null && this.modelEmail.getEmail().length() > 0)
                 this.model.getEmails().add(this.modelEmail);
-            System.out.println("## editEmployeeOnNewPage model = " + model);
+            System.out.println("## EditEmployeeController::saveEmployee model = " + model);
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
                 loggedInUser = userSession.getTestCreationUser();
 
             employeeRepository.persist(model, loggedInUser);
 
-            this.model = new Employee();
-            this.modelEmail = new EmailAddress();
+            // reset the view
+            this.resetView();
         }
 
-        return "faces-test?faces-redirect=true";
+        return "employeeList?faces-redirect=true";
+    }
+
+    public String deleteEmployee() throws EntityNotPersistedException {
+        if(this.model != null && !this.model.isNew())
+            employeeRepository.remove(this.model);
+
+        this.resetView();
+
+        return "employeeList?faces-redirect=true";
+    }
+
+    public String cancel(){
+        // reset the view
+        this.resetView();
+
+        return "employeeList?faces-redirect=true";
+    }
+
+    private void resetView(){
+        if(viewParams != null)
+            viewParams.remove("id");
+        this.model = new Employee();
+        this.modelEmail = new EmailAddress();
+    }
+
+    @Override
+    public String getViewId() {
+        return "editEmployee";
+    }
+
+    @Override
+    public String getPage() {
+        return "editEmployee.xhtml";
     }
 }

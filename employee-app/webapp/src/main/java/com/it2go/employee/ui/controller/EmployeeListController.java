@@ -8,15 +8,18 @@ import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityRemovedException;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @SessionScoped
-public class EmployeeListController implements Serializable{
+public class EmployeeListController implements BaseViewController{
 
     @Inject
     IEmployeeRepository employeeRepository;
@@ -27,13 +30,16 @@ public class EmployeeListController implements Serializable{
     @Inject
     EditEmployeeController editEmployeeController;
 
+    @Inject
+    WebFlowController webFlowController;
+
     private Employee model = new Employee();
     private EmailAddress modelEmail = new EmailAddress();
 
     public List<Employee> getAllEmployees(){
-        System.out.println("### EmployeeListController findAll call!");
+       // System.out.println("### EmployeeListController findAll call!");
         final List<Employee> employees = employeeRepository.findAll();
-        System.out.println("EmployeeListController -- > employees found= " + employees.size());
+       // System.out.println("EmployeeListController -- > employees found= " + employees.size());
 
         return employees;
     }
@@ -53,23 +59,30 @@ public class EmployeeListController implements Serializable{
             this.modelEmail = new EmailAddress();
         }
 
-        return "faces-test?faces-redirect=true";
+        return "employeeList?faces-redirect=true";
     }
 
     public String editEmployee(Long id){
 
-        final Employee employee = employeeRepository.findById(id);
+/*        final Employee employee = employeeRepository.findById(id);
         System.out.println("editEmployee ## employee = " + employee);
-        this.model = employee;
+        this.model = employee;*/
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("id",id);
+        webFlowController.putViewParams(EditEmployeeController.VIEW_ID, paramsMap);
 
-        return "faces-test?faces-redirect=true";
+        return "employeeList?faces-redirect=true";
     }
 
     public String editEmployeeOnNewPage(Long id){
 
-        final Employee employee = employeeRepository.findById(id);
+/*        final Employee employee = employeeRepository.findById(id);
         System.out.println("editEmployeeOnNewPage ## employee = " + employee);
-        editEmployeeController.setModel(employee);
+        editEmployeeController.setModel(employee);*/
+
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("id",id);
+        webFlowController.putViewParams(EditEmployeeController.VIEW_ID, paramsMap);
 
         return "editEmployee?faces-redirect=true";
     }
@@ -88,5 +101,15 @@ public class EmployeeListController implements Serializable{
 
     public void setModelEmail(EmailAddress modelEmail) {
         this.modelEmail = modelEmail;
+    }
+
+    @Override
+    public String getViewId() {
+        return null;
+    }
+
+    @Override
+    public String getPage() {
+        return null;
     }
 }

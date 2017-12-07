@@ -15,16 +15,18 @@
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
 </h:head>
 <h:body>
+    <ui:remove>
     <f:metadata>
         <f:viewParam name="id" value="#{editEmployeeController.employeeId}"/>
         <f:event type="preRenderView" listener="#{editEmployeeController.initView}"/>
     </f:metadata>
+    </ui:remove>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <br/>
-                <h1>Welcom to Employees Application</h1>
+                <h2>Welcom to Employees Application</h2>
                 <br/>
             </div>
             <div class="col-sm-3"></div>
@@ -42,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="lastName">Last Name</label>
+                            <label class="col-sm-2 col-form-label" for="lastName">Nachname</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" jsf:id="lastName" pattern=".{3,}"  required="required" title="3 characters minimum" value="#{editEmployeeController.model.lastName}"/>
                             </div>
@@ -50,17 +52,9 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="birthDate">Geburtsdatum</label>
                             <div class="col-sm-10">
-<!--                                <div class="input-group date" data-provide="datepicker">
-                                    <input type="text" class="form-control datepicker" data-date-format="yyy-MM-dd" jsf:id="birthday" value="#{editEmployeeController.model.birthDate}">
-                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                    </input>
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                </div>-->
-                                <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoClose="true">
-                                    <input type="text" class="form-control" jsf:id="birthDate" value="#{editEmployeeController.model.birthDate}" placeholder="jjjj-mm-tt">
-                                        <f:convertDateTime pattern="yyyy-mm-dd"/>
+                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyy" data-date-autoClose="true">
+                                    <input type="text" class="form-control" jsf:id="birthDate" value="#{editEmployeeController.model.birthDate}" placeholder="z.B. 01.06.1970">
+                                        <f:convertDateTime pattern="dd-mm-yyyy"/>
                                     </input>
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"/>
@@ -81,7 +75,9 @@
                             </div>
                         </div>
                         <div class="form-group row justify-content-end">
-                            <div class="col-sm-2 ">
+                            <div class="btn-group-sm">
+                                <button type="submit" class="btn btn-info mr-2" jsf:action="#{editEmployeeController.cancel}">Abbrechen</button>
+                                <button type="submit" class="btn btn-outline-danger mr-2" jsf:action="#{editEmployeeController.deleteEmployee}">Löschen</button>
                                 <button type="submit" class="btn btn-primary" jsf:action="#{editEmployeeController.saveEmployee}">Speichern</button>
                             </div>
                         </div>
