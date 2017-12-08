@@ -16,20 +16,17 @@
 </h:head>
 <h:body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
                 <br/>
-                <h2>Welcom to Employees Application</h2>
+                <h4>Welcom to Employees Application</h4>
                 <br/>
             </div>
-            <div class="col-md-3"></div>
         </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
 
-                <table jsf:id="employeeList" class="table table-striped table-condensed table-hover">
+                <table jsf:id="employeeList" class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Details</th>
@@ -55,27 +52,33 @@
                     </ui:repeat>
                     </tbody>
                 </table>
-                <br/>
-                <br/>
+            </div>
+        </div>
+    </div>
 
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 col-lg-3"></div>
+                    <div class="col-md-8 col-lg-6">
                 <h:form>
                     <div class="form-row">
                         <div class="form-group row">
-                            <label class="col-xs-12 col-sm-5 col-md-3 col-form-label" for="firstName">Vorname</label>
-                            <div class="col-xs-12 col-md-9">
+                            <label class="col-form-label col-md-3" for="firstName">Vorname</label>
+                            <div class="col">
                                 <input type="text" class="form-control" jsf:id="firstName" required="required" pattern=".{3,}" value="#{editEmployeeController.model.firstName}"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xs-12 col-sm-5 col-md-3 col-form-label" for="lastName">Nachname</label>
-                            <div class="col-xs-12 col-md-9">
+                            <label class="col-md-3 col-form-label" for="lastName">Nachname</label>
+                            <div class="col">
                                 <input type="text" class="form-control" jsf:id="lastName" pattern=".{3,}"  required="required" title="3 characters minimum" value="#{editEmployeeController.model.lastName}"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xs-12 col-sm-5 col-md-3 col-form-label" for="birthDate">Geburtsdatum</label>
-                            <div class="col-xs-12 col-md-9">
-                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyy" data-date-autoClose="true">
+                            <label class="col-md-3 col-form-label" for="birthDate">Geburtsdatum</label>
+                            <div class="col">
+                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoClose="true">
                                     <input type="text" class="form-control" jsf:id="birthDate" value="#{editEmployeeController.model.birthDate}" placeholder="z.B. 01.06.1970">
                                         <f:convertDateTime pattern="dd-mm-yyyy"/>
                                     </input>
@@ -86,32 +89,55 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xs-12 col-sm-5 col-md-3 col-form-label" for="email">Email</label>
-                            <div class="col-xs-12 col-md-9">
+                            <label class="col-md-3 col-form-label" for="email">Email</label>
+                            <div class="col">
                                 <input type="email" class="form-control" jsf:id="email" value="#{editEmployeeController.modelEmail.email}"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xs-12 col-sm-5 col-md-3 col-form-label" for="salary">Gehalt</label>
-                            <div class="col-xs-12 col-md-9">
+                            <label class="col-md-3 col-form-label" for="salary">Gehalt</label>
+                            <div class="col">
                                 <input type="number" class="form-control" jsf:id="salary" value="#{editEmployeeController.model.salary}"/>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-end">
-                            <div class="btn-group-sm">
+                        <div class="form-group row justify-content-end hidden-sm-down">
+                            <div class="btn-group btn-group-sm">
                                 <button type="submit" class="btn btn-info mr-2" jsf:action="#{editEmployeeController.cancel}">Abbrechen</button>
-                                <button type="submit" class="btn btn-outline-danger mr-2" jsf:action="#{editEmployeeController.deleteEmployee}">Löschen</button>
-                                <button type="submit" class="btn btn-primary" jsf:action="#{editEmployeeController.saveEmployee}">Speichern</button>
+                                <button type="submit" class="btn btn-danger mr-2" jsf:action="#{editEmployeeController.deleteEmployee}">Löschen</button>
+                                <button type="submit" class="btn btn-primary mr-3" jsf:action="#{editEmployeeController.saveEmployee}">Speichern</button>
                             </div>
+                        </div>
+                        <div class="form-group row hidden-md-up">
+
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info btn-block" jsf:action="#{editEmployeeController.cancel}">Abbrechen</button>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-danger  btn-block" jsf:action="#{editEmployeeController.deleteEmployee}">Löschen</button>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary  btn-block" jsf:action="#{editEmployeeController.saveEmployee}">Speichern</button>
+                            </div>
+
                         </div>
                     </div>
                 </h:form>
+                    </div>
+                    <div class="col-md-2 col-lg-3">
+                        <div class="card">
+                            <div class="card-header">
+                                Featured
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Special title </h4>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary btn-sm">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
             </div>
-            <div class="col-md-3"><input type="date" jsf:id="date" name="date"
-                                         value="" required="required"
-                                         title="Enter or choose a date."/></div>
         </div>
-    </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
