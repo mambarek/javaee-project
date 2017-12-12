@@ -47,9 +47,9 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="birthDate">Geburtsdatum</label>
                             <div class="col">
-                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoClose="true">
-                                    <input type="text" class="form-control" jsf:id="birthDate" value="#{editEmployeeController.model.birthDate}" placeholder="z.B. 01.06.1970">
-                                        <f:convertDateTime pattern="dd-mm-yyyy"/>
+                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true" data-date-format="dd.mm.yyyy">
+                                    <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{editEmployeeController.model.birthDate}" placeholder="z.B. 01.06.1970">
+                                        <f:convertDateTime />
                                     </input>
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"/>
