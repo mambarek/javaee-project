@@ -1,18 +1,22 @@
 package com.it2go.employee.ui.controller;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Named
 @SessionScoped
 public class WebFlowController implements Serializable{
 
-    Map<String, Map<String, Object>> viewParamsCache = new HashMap<>();
+    private String locale = "de";
+
+    private Map<String, Map<String, Object>> viewParamsCache = new HashMap<>();
 
     public void putViewParams(String viewId, Map<String, Object> paramsMap){
         final Map<String, Object> map = viewParamsCache.get(viewId);
@@ -24,5 +28,22 @@ public class WebFlowController implements Serializable{
 
     public Map<String, Object> getViewParams(String viewId){
         return viewParamsCache.get(viewId);
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public void changeLocal(String newLocal, String outcome) throws IOException {
+
+        locale = newLocal;
+        //return outcome+"?faces-redirect=true";
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext ec = facesContext.getExternalContext();
+        ec.redirect(((HttpServletRequest)ec.getRequest()).getRequestURI());
     }
 }
