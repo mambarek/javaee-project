@@ -18,20 +18,18 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class EditEmployeeController implements BaseViewController{
 
     public static final String VIEW_ID = "editEmployee";
-    //@ManagedProperty("id")
-    Long employeeId;
 
     @Inject
-    IEmployeeRepository employeeRepository;
+    private IEmployeeRepository employeeRepository;
 
     @Inject
-    UserSession userSession;
+    private UserSession userSession;
     @Inject
-    WebFlowController webFlowController;
+    private WebFlowController webFlowController;
 
     private Map<String, Object> viewParams;
 
@@ -40,15 +38,6 @@ public class EditEmployeeController implements BaseViewController{
 
     public EditEmployeeController() {
         System.out.println(">> EditEmployeeController::Constructor!");
-
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
     }
 
     public Employee getModel() {
@@ -70,6 +59,7 @@ public class EditEmployeeController implements BaseViewController{
     @PostConstruct
     public void initView(){
 
+        System.out.println("-- EditEmployeeController::initView before model: " + model);
         viewParams = webFlowController.getViewParams(VIEW_ID);
         Object id = null;
         if(viewParams != null)
@@ -81,7 +71,7 @@ public class EditEmployeeController implements BaseViewController{
         else
             model = new Employee();
 
-        System.out.println("-- EditEmployeeController::initView id = " + id);
+        System.out.println("-- EditEmployeeController::initView id = " + id + " model: " + model);
         modelEmail = new EmailAddress();
 /*        final Employee employee = employeeRepository.findById(employeeId);
         System.out.println("## EditEmployeeController::initView employee = " + employee);

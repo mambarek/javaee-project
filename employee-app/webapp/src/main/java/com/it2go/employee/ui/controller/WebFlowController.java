@@ -7,16 +7,16 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Named
 @SessionScoped
 public class WebFlowController implements Serializable{
 
-    private String locale = "de";
+    private String locale = "en";
 
-    private Map<String, Map<String, Object>> viewParamsCache = new HashMap<>();
+    private Map<String, Map<String, Object>> viewParamsCache = new ConcurrentHashMap<>();
 
     public void putViewParams(String viewId, Map<String, Object> paramsMap){
         final Map<String, Object> map = viewParamsCache.get(viewId);
