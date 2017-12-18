@@ -35,12 +35,12 @@
             <artifactId>persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>-->
-        <dependency>
+<!--        <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>webapp</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
-        </dependency>
+        </dependency>-->
 <!--        <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>jaxws</artifactId>
@@ -84,10 +84,10 @@
                             <groupId>com.it2go.employee</groupId>
                             <artifactId>jaxws</artifactId>
                         </ejbModule>-->
-                        <webModule>
+<!--                        <webModule>
                             <groupId>com.it2go.employee</groupId>
                             <artifactId>webapp</artifactId>
-                        </webModule>
+                        </webModule>-->
                     </modules>
                 </configuration>
             </plugin>

@@ -13,6 +13,7 @@
     <packaging>war</packaging>
     <name>Java EE Project: javaee-project - employee-app - webapp</name>
 
+
     <dependencies>
         <dependency>
             <groupId>com.it2go.employee</groupId>
@@ -24,5 +25,70 @@
             <artifactId>jaxws</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+<!--        <dependency>
+            <groupId>nl.geodienstencentrum.maven</groupId>
+            <artifactId>sass-maven-plugin</artifactId>
+            <version>3.5.0</version>
+        </dependency>-->
     </dependencies>
+
+    <build>
+<!--        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>nl.geodienstencentrum.maven</groupId>
+                    <artifactId>sass-maven-plugin</artifactId>
+                    <version>2.25</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>-->
+        <plugins>
+            <!-- Sass compiler -->
+<!--            <plugin>
+                <groupId>nl.geodienstencentrum.maven</groupId>
+                <artifactId>sass-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>update-stylesheets</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sassSourceDirectory>${project.basedir}/src/main/webapp/assets/scss</sassSourceDirectory>
+                    &lt;!&ndash;<outputDirectory>${project.basedir}/src/main/webapp/assets/css</outputDirectory>&ndash;&gt;
+                    <destination>${project.basedir}/src/main/webapp/assets/css</destination>
+                    <resources>
+                        <resource>
+                            &lt;!&ndash; Set source and destination dirs &ndash;&gt;
+                            <source>
+                                <directory>${project.basedir}/src/main/webapp/assets/scss</directory>
+                            </source>
+                            <destination>${project.basedir}/src/main/webapp/assets/css</destination>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>-->
+            <plugin>
+                <groupId>nl.geodienstencentrum.maven</groupId>
+                <artifactId>sass-maven-plugin</artifactId>
+                <version>2.25</version>
+                <executions>
+                    <execution>
+                        <id>generate-css</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>update-stylesheets</goal>
+                        </goals>
+                        <configuration>
+                            <sassSourceDirectory>${basedir}/src/main/webapp/assets/scss</sassSourceDirectory>
+                            <destination>${project.build.directory}/webapp/assets/css</destination>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

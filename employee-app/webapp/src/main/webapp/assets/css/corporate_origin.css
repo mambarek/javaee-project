@@ -1,0 +1,103 @@
+/* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
+
+The size can be calculated from pixels to em using this formula: pixels/16=em */
+html{
+    font-size:100%;
+}
+
+body {
+    font-size: 0.875rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.875rem;
+}
+
+
+/* ----------------- theme bootstrap ------------------------------*/
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1rem;
+}
+
+.btn {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    border-radius: 0;
+}
+
+/*
+.btn-primary {
+    color: #3c763d;
+    background-color: #92d80259;
+    border-color: #3c763d;
+    border-radius: 0;
+}
+*/
+.btn-primary:hover{
+    color: #ffffff;
+    background-color: #45A61C;
+    border-color: #3c763d;
+}
+
+.list-group-item.active {
+    color: #fff;
+    background-color: #45A61C;
+    border-color: #3c763d;
+}
+/* ------------------------- Bootstrap-Datepicker --------------------------- */
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom {
+    padding: 5px;
+}
+.datepicker.dropdown-menu {
+    border-radius: 0;
+}
+.datepicker table tr td, .datepicker table tr th {
+    border-radius: 0;
+}
+
+.datepicker table tr td:hover {
+    background-color: #92d80259;
+}
+
+.datepicker table tr td.active {
+    color: #3c763d;
+    background-color: #92d80259;
+    border-color: #3c763d;
+}
+
+.datepicker table tr td.active:hover {
+    color: #ffffff;
+    background-color: #45A61C;
+    border-color: #3c763d !important;
+}
+
+.datepicker-switch{
+    background-color: #92d80259;
+    color: #3c763d;
+    border: 1px solid #3c763d !important;
+}
+.datepicker-switch:hover{
+    background-color: #45A61C;
+    color: #fff;
+    border: 1px solid #3c763d !important;
+}
+.datepicker thead tr:first-child th.datepicker-switch:hover,
+.datepicker tfoot tr th.datepicker-switch:hover {
+    background: #45A61C;
+    color: #fff;
+    border: 1px solid #3c763d !important;
+}
+
+.input-group-addon {
+    color: #3c763d;
+    background-color: #92d80259;
+    border-radius: 0;
+}
