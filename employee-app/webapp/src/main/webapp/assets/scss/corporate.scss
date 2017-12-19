@@ -1,14 +1,35 @@
 /*---------------------- Variable def ------------------------------*/
+
+/*Corporation colors*/
+$corpColorGreen: #45A61C;
+$corpColorYellow: #ffc107;
+$corpColorBlack: #000000;
+
 $lineHeight: 1rem;
 $fontSize: 0.875rem;
-$primaryFontColor: #3c763d;
-$primaryBgColor: #CFE79D;
+
+$primaryFontColor: #ffffff;
+$primaryBgColor: #45A61C;
 $primaryBorderColor: #3c763d;
+
+$primaryHoverBgColor: #CFE79D;
+$primaryHoverFontColor: #3c763d;
 
 $btn-border-radius: 0;
 
-$primaryHoverBgColor: #45A61C;
-$primaryHoverFontColor: #ffffff;
+/*$primaryHoverBgColor: #45A61C;
+$primaryHoverFontColor: #ffffff;*/
+
+$headerBgColor: $corpColorBlack;
+$headerFontColor: #ffffff;
+$footerBgColor: #5a5a5a;
+$footerFontColor: #ffffff;
+
+$blockHeaderBgColor: $footerBgColor;
+$blockHeaderFontColor: #ffffff;
+
+$anchorColor: #000000;
+$anchorHoverColor:$corpColorGreen;
 
 /* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
 
@@ -29,7 +50,60 @@ h2 {
     font-size: 1.875rem;
 }
 
+a, a:visited, a:focus{
+  color: $anchorColor;
+  text-decoration: none;
+}
+a:hover, a:active{
+  color: $anchorHoverColor;
+  text-decoration: none;
+}
+/*-----------------------------------------------------*/
+/*.corp-nav-header{
+  background-color: $headerBgColor;
+  color: $headerFontColor;
+}
 
+.navbar-brand, .navbar-brand:hover{
+  color: $headerFontColor;
+}
+.navbar-light .navbar-brand, .navbar-light .navbar-toggler, .navbar-light .navbar-toggler:hover{
+  color: $headerFontColor;
+}
+
+.navbar-light .navbar-nav .active > .nav-link{
+  color: $headerFontColor;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .nav-link:hover{
+  color: $headerFontColor;
+}*/
+
+.corp-block-header{
+    background-color: $blockHeaderBgColor;
+    color: $blockHeaderFontColor;
+    font-weight: bold;
+}
+
+.corp-block-form-header{
+  background-color: $corpColorGreen;
+  color: $blockHeaderFontColor;
+  font-weight: bold;
+}
+
+.card{
+    border: none;
+}
+
+.corp-footer{
+  background-color: $footerBgColor;
+  color: $footerFontColor;
+}
+/*---------------------- table ------------------------------------*/
+.table-header{
+  background-color: $corpColorGreen;
+  color: $primaryFontColor;
+}
 /* ----------------- theme bootstrap ------------------------------*/
 .form-control {
     display: block;
@@ -57,10 +131,27 @@ h2 {
     border-color: $primaryBorderColor;
 }
 
+.btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle{
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
+  border-radius: $btn-border-radius;
+}
+/*--------------------- list items*/
 .list-group-item.active {
-    color: $primaryHoverFontColor;
-    background-color: $primaryHoverBgColor;
-    border-color: $primaryBorderColor;
+  background-color: $blockHeaderBgColor;
+  font-weight: bold;
+    /*border-color: $primaryBorderColor;*/
+}
+
+.list-group-item{
+  color: $corpColorBlack;
+  font-weight: 500;
+}
+
+.list-group-item:active{
+  color: $corpColorGreen;
+  font-weight: 500;
 }
 /* ------------------------- Bootstrap-Datepicker --------------------------- */
 .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom {
@@ -78,36 +169,45 @@ h2 {
 }
 
 .datepicker table tr td.active {
-    color: #3c763d;
-    background-color: #92d80259;
-    border-color: #3c763d;
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-color: $primaryBorderColor;
 }
 
 .datepicker table tr td.active:hover {
-    color: #ffffff;
-    background-color: #45A61C;
-    border-color: #3c763d !important;
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor !important;
+    border-color: $primaryBorderColor !important;
 }
 
 .datepicker-switch{
-    background-color: #92d80259;
-    color: #3c763d;
-    border: 1px solid #3c763d !important;
+    background-color: $primaryBgColor;
+    color: $primaryFontColor;
+    border: 1px solid $primaryBorderColor !important;
 }
-.datepicker-switch:hover{
-    background-color: #45A61C;
-    color: #fff;
-    border: 1px solid #3c763d !important;
+.datepicker .datepicker-switch:hover,
+.datepicker .prev:hover,
+.datepicker .next:hover,
+.datepicker tfoot tr th:hover {
+    background-color: $primaryHoverBgColor !important;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
 }
 .datepicker thead tr:first-child th.datepicker-switch:hover,
 .datepicker tfoot tr th.datepicker-switch:hover {
-    background: #45A61C;
-    color: #fff;
-    border: 1px solid #3c763d !important;
+    background: $primaryHoverBgColor;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
 }
 
 .input-group-addon {
-    color: #3c763d;
-    background-color: #92d80259;
-    border-radius: 0;
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-radius: $btn-border-radius;
+}
+
+.input-group-addon:hover {
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor;
+    border-radius: $btn-border-radius;
 }
