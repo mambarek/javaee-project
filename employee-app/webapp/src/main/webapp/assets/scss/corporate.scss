@@ -3,10 +3,17 @@
 /*Corporation colors*/
 $corpColorGreen: #45A61C;
 $corpColorYellow: #ffc107;
-$corpColorBlack: #000000;
+$corpColorBlack: #292b2c;
+
+$heigth-10:0.625rem;
+$heigth-12:0.75rem;
+$heigth-14:0.875rem;
 
 $lineHeight: 1rem;
 $fontSize: 0.875rem;
+$blochHeaderHeight:$heigth-10;
+
+$bold:500;
 
 $primaryFontColor: #ffffff;
 $primaryBgColor: #45A61C;
@@ -19,14 +26,21 @@ $btn-border-radius: 0;
 
 /*$primaryHoverBgColor: #45A61C;
 $primaryHoverFontColor: #ffffff;*/
-
+/* headers*/
 $headerBgColor: $corpColorBlack;
 $headerFontColor: #ffffff;
 $footerBgColor: #5a5a5a;
 $footerFontColor: #ffffff;
 
-$blockHeaderBgColor: $footerBgColor;
+$blockHeaderBgColor: $corpColorGreen;
 $blockHeaderFontColor: #ffffff;
+
+$blockHeaderLeftBgColor: $corpColorYellow;
+$blockHeaderLeftFontColor: #ffffff;
+
+$blockHeaderReightBgColor: $corpColorBlack;
+$blockHeaderReightFontColor: #ffffff;
+
 
 $anchorColor: #000000;
 $anchorHoverColor:$corpColorGreen;
@@ -40,6 +54,7 @@ html{
 
 body {
     font-size: $fontSize;
+    line-height: $heigth-14;
 }
 
 h1 {
@@ -82,13 +97,33 @@ a:hover, a:active{
 .corp-block-header{
     background-color: $blockHeaderBgColor;
     color: $blockHeaderFontColor;
-    font-weight: bold;
+    font-weight: $bold;
+    line-height: $blochHeaderHeight;
+}
+
+.corp-block-header-left{
+  background-color: $blockHeaderLeftBgColor;
+  color: $blockHeaderLeftFontColor;
+  font-weight: $bold;
+  line-height: $blochHeaderHeight;
+}
+
+.corp-block-header-reight{
+  background-color: $blockHeaderReightBgColor;
+  color: $blockHeaderReightFontColor;
+  font-weight: $bold;
+  line-height: $blochHeaderHeight;
+}
+
+.card-header:first-child {
+  border-radius: $btn-border-radius;
 }
 
 .corp-block-form-header{
   background-color: $corpColorGreen;
   color: $blockHeaderFontColor;
-  font-weight: bold;
+  font-weight: $bold;
+  line-height: $blochHeaderHeight;
 }
 
 .card{
@@ -104,6 +139,12 @@ a:hover, a:active{
   background-color: $corpColorGreen;
   color: $primaryFontColor;
 }
+
+.table thead th {
+  vertical-align: bottom;
+  font-weight: $bold;
+  border-bottom: 2px solid #eceeef;
+}
 /* ----------------- theme bootstrap ------------------------------*/
 .form-control {
     display: block;
@@ -114,8 +155,8 @@ a:hover, a:active{
 }
 
 .btn {
-    font-size: $fontSize;
-    line-height: $lineHeight;
+    font-size: $heigth-12;
+    line-height: $heigth-14;
     border-radius: 0;
 }
 
@@ -210,4 +251,65 @@ a:hover, a:active{
     color: $primaryHoverFontColor;
     background-color: $primaryHoverBgColor;
     border-radius: $btn-border-radius;
+}
+
+/*----------------------------------- bootstrap dropdown menu --------------------------------------*/
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #292b2c;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: normal;
+  font-size: $heigth-12;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  color: #1d1e1f;
+  text-decoration: none;
+  background-color:  $primaryHoverBgColor;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: $primaryHoverBgColor;
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+  color: #636c72;
+  cursor: not-allowed;
+  background-color: transparent;
 }

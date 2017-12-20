@@ -24,259 +24,291 @@
     </f:view>
 
     <header>
-        <!--<nav class="navbar navbar-toggleable-md navbar-light bg-faded corp-nav-header">-->
-        <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="#">Navbar</a>
+        <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
+            <div class="container">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m1" aria-controls="navbarsExampleContainer" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"/>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="assets/images/logos/green_logo_1.jpg" class="img-fluid" style="width: 150px"/>
+                </a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                    <li class="nav-item">
+                <div  class="collapse navbar-collapse" id="m1">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                        <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                    </form>
+                    <div class="pull-right ml-3">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
                             </button>
                             <div class="dropdown-menu">
-                                <form jsf:id="manu_links">
-                                <a jsf:id="en" class="dropdown-item" jsf:action="#{webFlowController.changeLocal('en','employeeList')}">#{employeeMsg['employee.app.language.englisch']}</a>
-                                <a jsf:id="de" class="dropdown-item" jsf:action="#{webFlowController.changeLocal('de','employeeList')}">#{employeeMsg['employee.app.language.german']}</a>
+                                <form jsf:id="manu_links_xx">
+                                    <a jsf:id="en" class="dropdown-item" jsf:action="#{webFlowController.changeLocal('en','employeeList')}">#{employeeMsg['employee.app.language.englisch']}</a>
+                                    <a jsf:id="de" class="dropdown-item" jsf:action="#{webFlowController.changeLocal('de','employeeList')}">#{employeeMsg['employee.app.language.german']}</a>
                                 </form>
                             </div>
                         </div>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
-                    <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
-                </form>
+                    </div>
+                </div>
             </div>
         </nav>
-    </header>
 
-        <div class="container-fluid">
-            <div class="row ">
-                <div class="col-lg-3"></div>
-                <div class="col-md-8 col-lg-6">
-                    <br/>
-                    <h4>#{employeeMsg['employee.app.welcome']}</h4>
-                    <br/>
+
+        <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"/>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </nav>
 
-            <div class="row ">
-                <div class="col-lg-3">
-                    <div class="card">
-                        <div class="card-header corp-block-header">
-                            Angestellte bearbeiten
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
-                        <div class="card-block">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-lg-3"/>
+            <div class="col-md-8 col-lg-6">
+                <br/>
+                <h4>#{employeeMsg['employee.app.welcome']}</h4>
+                <br/>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-lg-1"/>
+            <div class="col-lg-2">
+                <div class="card">
+                    <div class="card-header corp-block-header-left">
+                        Aktionen
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-block">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
                     </div>
                 </div>
-                <div class="col-md-8 col-lg-6">
-                    <div class="card">
-                        <div class="card-header corp-block-header">
-                            Angestellte bearbeiten
-                        </div>
-                        <div class="card-block"></div>
-                        <div class="table-responsive mb-5">
-                        <table jsf:id="employeeList" class="table table-hover table-sm">
-                        <thead  class="table-header">
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-header corp-block-header">
+                        Angestellte bearbeiten
+                    </div>
+                    <div class="card-block"></div>
+                    <div class="table-responsive mb-5">
+                    <table jsf:id="employeeList" class="table table-hover table-sm">
+                    <thead  class="table-header">
+                    <tr>
+                        <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                        <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                        <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                        <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                        <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
                         <tr>
-                            <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
-                            <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
-                            <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
-                            <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
-                            <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                            <td>
+                                <form jsf:id="id_link">
+                                    <a href="#" jsf:id="edit"
+                                       jsf:action="#{employeeListController.editEmployee(employee.id)}">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
+                                </form>
+                            </td>
+                            <td>
+                                <form jsf:id="firstName_link">
+                                    <a jsf:id="edit"
+                                       jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a>
+                                </form>
+                            </td>
+                            <td><a jsf:id="lastName_link"
+                                   jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
+                            <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
+                            <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
-                            <tr>
-                                <td>
-                                    <form jsf:id="id_link">
-                                        <a href="#" jsf:id="edit"
-                                           jsf:action="#{employeeListController.editEmployee(employee.id)}">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form jsf:id="firstName_link">
-                                        <a jsf:id="edit"
-                                           jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a>
-                                    </form>
-                                </td>
-                                <td><a jsf:id="lastName_link"
-                                       jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
-                                <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
-                                <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
-                            </tr>
-                        </ui:repeat>
-                        </tbody>
-                    </table>
+                    </ui:repeat>
+                    </tbody>
+                </table>
 
+                </div>
+                </div>
+                <div class="card">
+                    <div class="card-header corp-block-form-header">
+                        Angestellte bearbeiten
                     </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header corp-block-form-header">
-                            Angestellte bearbeiten
+                    <div class="card-block"></div>
+                <h:form id="employeeForm" styleClass="form-horizontal">
+                    <div class="form-row">
+                        <div class="form-group row #{editEmployeeController.hasError('firstName',null) ? 'has-danger' : ''}">
+                            <label class="col-form-label col-md-3" for="firstName">#{employeeMsg['employee.editor.firstName']}</label>
+                            <div class="col">
+                                <input type="text" class="form-control #{editEmployeeController.hasError('firstName',null) ? 'form-control-danger' : ''}" jsf:id="firstName" jsf:required="true"
+                                       jsf:value="#{editEmployeeController.model.firstName}">
+                                    <f:validateLength minimum="3" maximum="50"/>
+                                </input>
+                                <h:message for="firstName" errorClass="form-control-feedback" />
+                            </div>
                         </div>
-                        <div class="card-block"></div>
-                    <h:form id="employeeForm" styleClass="form-horizontal">
-                        <div class="form-row">
-                            <div class="form-group row #{editEmployeeController.hasError('firstName',null) ? 'has-danger' : ''}">
-                                <label class="col-form-label col-md-3" for="firstName">#{employeeMsg['employee.editor.firstName']}</label>
-                                <div class="col">
-                                    <input type="text" class="form-control #{editEmployeeController.hasError('firstName',null) ? 'form-control-danger' : ''}" jsf:id="firstName" jsf:required="true"
-                                           jsf:value="#{editEmployeeController.model.firstName}">
-                                        <f:validateLength minimum="3" maximum="50"/>
-                                    </input>
-                                    <h:message for="firstName" errorClass="form-control-feedback" />
-                                </div>
+                        <div class="form-group row #{editEmployeeController.hasError('lastName',null) ? 'has-danger' : ''}">
+                            <label class="col-md-3 col-form-label" for="lastName">#{employeeMsg['employee.editor.lastName']}</label>
+                            <div class="col">
+                                <input type="text" class="form-control #{editEmployeeController.hasError('lastName',null) ? 'form-control-danger' : ''}" jsf:id="lastName" jsf:required="true"
+                                       jsf:value="#{editEmployeeController.model.lastName}">
+                                    <f:validateLength minimum="3" maximum="50"/>
+                                </input>
+                                <h:message for="lastName" errorClass="form-control-feedback"/>
                             </div>
-                            <div class="form-group row #{editEmployeeController.hasError('lastName',null) ? 'has-danger' : ''}">
-                                <label class="col-md-3 col-form-label" for="lastName">#{employeeMsg['employee.editor.lastName']}</label>
-                                <div class="col">
-                                    <input type="text" class="form-control #{editEmployeeController.hasError('lastName',null) ? 'form-control-danger' : ''}" jsf:id="lastName" jsf:required="true"
-                                           jsf:value="#{editEmployeeController.model.lastName}">
-                                        <f:validateLength minimum="3" maximum="50"/>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="birthDate">#{employeeMsg['employee.editor.birthDate']}</label>
+                            <div class="col">
+                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
+                                    <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{editEmployeeController.model.birthDate}">
+                                        <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                                     </input>
-                                    <h:message for="lastName" errorClass="form-control-feedback"/>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="birthDate">#{employeeMsg['employee.editor.birthDate']}</label>
-                                <div class="col">
-                                    <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                                        <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{editEmployeeController.model.birthDate}">
-                                            <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                                        </input>
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"/>
-                                        </div>
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"/>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="email">#{employeeMsg['employee.editor.email']}</label>
-                                <div class="col">
-                                    <input type="email" class="form-control" jsf:id="email"
-                                           jsf:value="#{editEmployeeController.modelEmail.email}"/>
-                                </div>
-                            </div>
-                            <div class="form-group row  #{editEmployeeController.hasError('salary',null) ? 'has-danger' : ''}">
-                                <label class="col-md-3 col-form-label" for="salary">#{employeeMsg['employee.editor.salary']}</label>
-                                <div class="col">
-                                    <input type="text" class="form-control #{editEmployeeController.hasError('salary',null) ? 'form-control-danger' : ''}" jsf:id="salary"
-                                           jsf:value="#{editEmployeeController.model.salary}">
-                                        <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
-                                    </input>
-                                    <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group row justify-content-end hidden-sm-down">
-                                <div class="btn-group">
-                                    <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true"
-                                            jsf:action="#{editEmployeeController.cancel}">#{employeeMsg['employee.editor.button.cancel']}
-                                    </button>
-                                    <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{editEmployeeController.model.isNew() == false}"
-                                            jsf:action="#{editEmployeeController.deleteEmployee}">#{employeeMsg['employee.editor.button.delete']}
-                                    </button>
-                                    <button type="submit" class="btn btn-primary mr-3"
-                                            jsf:action="#{editEmployeeController.saveEmployee}">#{employeeMsg['employee.editor.button.save']}
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group row hidden-md-up">
-
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary btn-block" jsf:immediate="true"
-                                            jsf:action="#{editEmployeeController.cancel}">#{employeeMsg['employee.editor.button.cancel']}
-                                    </button>
-                                </div>
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary  btn-block"
-                                            jsf:action="#{editEmployeeController.deleteEmployee}">#{employeeMsg['employee.editor.button.delete']}
-                                    </button>
-                                </div>
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary  btn-block"
-                                            jsf:action="#{editEmployeeController.saveEmployee}">#{employeeMsg['employee.editor.button.save']}
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </h:form>
-
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-3">
-                    <div class="card mb-3">
-                        <div class="card-header corp-block-header">
-                            <h4 class="card-title">Special title </h4>
                         </div>
 
-                        <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="email">#{employeeMsg['employee.editor.email']}</label>
+                            <div class="col">
+                                <input type="email" class="form-control" jsf:id="email"
+                                       jsf:value="#{editEmployeeController.modelEmail.email}"/>
+                            </div>
+                        </div>
+                        <div class="form-group row  #{editEmployeeController.hasError('salary',null) ? 'has-danger' : ''}">
+                            <label class="col-md-3 col-form-label" for="salary">#{employeeMsg['employee.editor.salary']}</label>
+                            <div class="col">
+                                <input type="text" class="form-control #{editEmployeeController.hasError('salary',null) ? 'form-control-danger' : ''}" jsf:id="salary"
+                                       jsf:value="#{editEmployeeController.model.salary}">
+                                    <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+                                </input>
+                                <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
+                            </div>
+                        </div>
 
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <h:messages style="color: red;"/>
+                        <div class="form-group row justify-content-end hidden-sm-down">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true"
+                                        jsf:action="#{editEmployeeController.cancel}">#{employeeMsg['employee.editor.button.cancel']}
+                                </button>
+                                <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{editEmployeeController.model.isNew() == false}"
+                                        jsf:action="#{editEmployeeController.deleteEmployee}">#{employeeMsg['employee.editor.button.delete']}
+                                </button>
+                                <button type="submit" class="btn btn-primary mr-3"
+                                        jsf:action="#{editEmployeeController.saveEmployee}">#{employeeMsg['employee.editor.button.save']}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group row hidden-md-up">
+
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary btn-block" jsf:immediate="true"
+                                        jsf:action="#{editEmployeeController.cancel}">#{employeeMsg['employee.editor.button.cancel']}
+                                </button>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary  btn-block"
+                                        jsf:action="#{editEmployeeController.deleteEmployee}">#{employeeMsg['employee.editor.button.delete']}
+                                </button>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary  btn-block"
+                                        jsf:action="#{editEmployeeController.saveEmployee}">#{employeeMsg['employee.editor.button.save']}
+                                </button>
+                            </div>
+
                         </div>
                     </div>
+                </h:form>
 
-                    <div class="list-group corp-block-header">
-                        <a href="#" class="list-group-item active">Link</a>
-                        <a href="#" class="list-group-item">Link</a>
-                        <a href="#" class="list-group-item">Link</a>
-                        <a href="#" class="list-group-item">Link</a>
-                        <a href="#" class="list-group-item">Link</a>
-                    </div>
                 </div>
             </div>
-
-            <hr/>
-
-            <footer>
-                <!-- Example row of columns -->
-                <div class="row corp-footer mt-3">
-                    <div class="col-lg-4 p-5">
-                        <h2>Heading 1</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
+            <div class="col-md-4 col-lg-2">
+                <div class="card mb-3">
+                    <div class="card-header corp-block-header-reight">
+                        Informationen
                     </div>
-                    <div class="col-lg-4 p-5">
-                        <h2>Heading 2</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
-                    </div>
-                    <div class="col-lg-4 p-5">
-                        <h2>Heading 3</h2>
-                        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-                        <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
+
+                    <div class="card-body">
+
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <h:messages style="color: red;"/>
                     </div>
                 </div>
-            </footer>
-            </div> <!-- /Container-->
+
+            </div>
+            <div class="col-lg-1"/>
+        </div>
+
+        <hr/>
+
+        <footer>
+            <!-- Example row of columns -->
+            <div class="row corp-footer mt-3">
+                <div class="col-lg-4 p-5">
+                    <h2>Heading 1</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
+                </div>
+                <div class="col-lg-4 p-5">
+                    <h2>Heading 2</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
+                </div>
+                <div class="col-lg-4 p-5">
+                    <h2>Heading 3</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+                    <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
+                </div>
+            </div>
+        </footer>
+        </div> <!-- /Container-->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
