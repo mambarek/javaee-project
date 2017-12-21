@@ -26,7 +26,7 @@
     <header>
         <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
             <div class="container">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m1" aria-controls="navbarsExampleContainer" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m1" aria-controls="m1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
                 </button>
                 <a class="navbar-brand" href="#">
@@ -66,16 +66,17 @@
                 </div>
             </div>
         </nav>
+        <div class="container">
 
-
-        <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+        </div>
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2" aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
                 </button>
+                <a class="navbar-brand" href="#">E-Management</a>
 
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="m2">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -98,16 +99,17 @@
                 </div>
             </div>
         </nav>
-
     </header>
 
     <div class="container-fluid">
-        <div class="row ">
+        <div class="row hidden-md-down">
             <div class="col-lg-3"/>
-            <div class="col-md-8 col-lg-6">
-                <br/>
-                <h4>#{employeeMsg['employee.app.welcome']}</h4>
-                <br/>
+            <div class="col">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Data</li>
+                </ol>
             </div>
         </div>
 
@@ -118,18 +120,43 @@
                     <div class="card-header corp-block-header-left">
                         Aktionen
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-left">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" data-toggle="collapse" data-target="#toggleDemo" class="nav-link collapsed">
+                                Submenu
+                            </a>
+                            <div class="collapse" id="toggleDemo" style="height: 0px;">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item"><a class="nav-link" href="#">Submenu 1</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Submenu 2</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Submenu 3</a></li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
-                    <div class="card-block">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
                 </div>
             </div>
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header corp-block-header">
                         Angestellte bearbeiten
@@ -269,7 +296,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-md-12 col-lg-2">
                 <div class="card mb-3">
                     <div class="card-header corp-block-header-reight">
                         Informationen

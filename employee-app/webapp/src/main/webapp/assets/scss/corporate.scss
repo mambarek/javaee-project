@@ -14,13 +14,20 @@ $fontSize: 0.875rem;
 $blochHeaderHeight:$heigth-10;
 
 $bold:500;
-
+/* green */
 $primaryFontColor: #ffffff;
 $primaryBgColor: #45A61C;
 $primaryBorderColor: #3c763d;
 
 $primaryHoverBgColor: #CFE79D;
 $primaryHoverFontColor: #3c763d;
+/* rosa */
+/*$primaryFontColor: #000000;
+$primaryBgColor: #E235C2;
+$primaryBorderColor: #E30AD2;
+
+$primaryHoverBgColor: #e7ddd8;
+$primaryHoverFontColor: #000000;*/
 
 $btn-border-radius: 0;
 
@@ -32,18 +39,18 @@ $headerFontColor: #ffffff;
 $footerBgColor: #5a5a5a;
 $footerFontColor: #ffffff;
 
-$blockHeaderBgColor: $corpColorGreen;
-$blockHeaderFontColor: #ffffff;
+$blockHeaderBgColor: $primaryBgColor;
+$blockHeaderFontColor: $primaryFontColor;
 
 $blockHeaderLeftBgColor: $corpColorYellow;
 $blockHeaderLeftFontColor: #ffffff;
 
-$blockHeaderReightBgColor: $corpColorBlack;
+$blockHeaderReightBgColor: #2196F3;
 $blockHeaderReightFontColor: #ffffff;
 
 
-$anchorColor: #000000;
-$anchorHoverColor:$corpColorGreen;
+$anchorColor: $corpColorBlack;
+$anchorHoverColor:$primaryHoverBgColor;
 
 /* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
 
@@ -53,8 +60,8 @@ html{
 }
 
 body {
-    font-size: $fontSize;
-    line-height: $heigth-14;
+  font-size: $fontSize;
+  line-height: $heigth-14;
 }
 
 h1 {
@@ -73,26 +80,8 @@ a:hover, a:active{
   color: $anchorHoverColor;
   text-decoration: none;
 }
+
 /*-----------------------------------------------------*/
-/*.corp-nav-header{
-  background-color: $headerBgColor;
-  color: $headerFontColor;
-}
-
-.navbar-brand, .navbar-brand:hover{
-  color: $headerFontColor;
-}
-.navbar-light .navbar-brand, .navbar-light .navbar-toggler, .navbar-light .navbar-toggler:hover{
-  color: $headerFontColor;
-}
-
-.navbar-light .navbar-nav .active > .nav-link{
-  color: $headerFontColor;
-}
-
-.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .nav-link:hover{
-  color: $headerFontColor;
-}*/
 
 .corp-block-header{
     background-color: $blockHeaderBgColor;
@@ -120,7 +109,7 @@ a:hover, a:active{
 }
 
 .corp-block-form-header{
-  background-color: $corpColorGreen;
+  background-color: $primaryBgColor;
   color: $blockHeaderFontColor;
   font-weight: $bold;
   line-height: $blochHeaderHeight;
@@ -136,7 +125,7 @@ a:hover, a:active{
 }
 /*---------------------- table ------------------------------------*/
 .table-header{
-  background-color: $corpColorGreen;
+  background-color: $primaryBgColor;
   color: $primaryFontColor;
 }
 
@@ -147,36 +136,79 @@ a:hover, a:active{
 }
 /* ----------------- theme bootstrap ------------------------------*/
 .form-control {
-    display: block;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  border-radius: $btn-border-radius;
+}
+
+@media (max-width: 768px) {
+  .container{
     width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: $fontSize;
-    line-height: $lineHeight;
+  }
+
+  .navbar{
+    line-height: 2rem;
+  }
 }
 
 .btn {
     font-size: $heigth-12;
     line-height: $heigth-14;
-    border-radius: 0;
-}
-
-.btn-primary {
-    color: $primaryFontColor;
-    background-color: $primaryBgColor;
-    border-color: $primaryBorderColor;
     border-radius: $btn-border-radius;
 }
-.btn-primary:hover{
-    color: $primaryHoverFontColor;
-    background-color: $primaryHoverBgColor;
-    border-color: $primaryBorderColor;
+
+.breadcrumb{
+  background-color: #ffffff;
+  margin-left: -15px;
 }
 
-.btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle{
+.breadcrumb-item+.breadcrumb-item::before {
+  display: inline-block;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #636c72;
+  content: ">";
+}
+
+.breadcrumb-item.active {
+  color: $primaryBorderColor;
+}
+/*-------------- primary btn----------------------------*/
+.btn-primary {
   color: $primaryFontColor;
   background-color: $primaryBgColor;
   border-color: $primaryBorderColor;
-  border-radius: $btn-border-radius;
+}
+
+.btn-primary:hover {
+  color: $primaryHoverFontColor;
+  background-color: $primaryHoverBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  -webkit-box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
+  box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: $primaryBorderColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:active, .btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  background-image: none;
+  border-color: $primaryBorderColor;
+}
+
+a.btn{
+  border: 1px solid $primaryBorderColor;
 }
 /*--------------------- list items*/
 .list-group-item.active {
