@@ -110,4 +110,9 @@ public class Person extends DomainEntity {
     public String toString() {
         return String.format("Person[(%s)%s %s]", this.getId(), this.getFirstName(), this.getLastName());
     }
+
+    public void addEmail(EmailAddress emailAddress){
+        if(!this.emails.contains(emailAddress))
+            this.emails.add(emailAddress);
+    }
 }

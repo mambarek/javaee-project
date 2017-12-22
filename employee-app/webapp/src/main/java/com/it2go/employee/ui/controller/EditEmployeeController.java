@@ -11,6 +11,7 @@ import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +19,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class EditEmployeeController implements BaseViewController{
 
     public static final String VIEW_ID = "editEmployee";
@@ -72,7 +73,10 @@ public class EditEmployeeController implements BaseViewController{
             model = new Employee();
 
         System.out.println("-- EditEmployeeController::initView id = " + id + " model: " + model);
-        modelEmail = new EmailAddress();
+        final EmailAddress emailAddress1 = new EmailAddress("mail_1@com");
+        final EmailAddress emailAddress2 = new EmailAddress("mail_2@com");
+        model.addEmail(emailAddress1);
+        model.addEmail(emailAddress2);
 /*        final Employee employee = employeeRepository.findById(employeeId);
         System.out.println("## EditEmployeeController::initView employee = " + employee);
         model = employee;*/
@@ -80,13 +84,15 @@ public class EditEmployeeController implements BaseViewController{
 
     public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
 
-        if(model.getFirstName() != null && model.getLastName() != null) {
-            if(this.modelEmail.getEmail() != null && this.modelEmail.getEmail().length() > 0)
-                this.model.getEmails().add(this.modelEmail);
+        if(model.isValid()) {
             System.out.println("## EditEmployeeController::saveEmployee model = " + model);
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
                 loggedInUser = userSession.getTestCreationUser();
+
+            if(this.modelEmail.getEmail() != null){
+                model.addEmail(this.modelEmail);
+            }
 
             employeeRepository.persist(model, loggedInUser);
 
@@ -118,6 +124,14 @@ public class EditEmployeeController implements BaseViewController{
             viewParams.remove("id");
         this.model = new Employee();
         this.modelEmail = new EmailAddress();
+    }
+
+    public String addNewEmail(){
+        System.out.println("*** EditController::addNewEmail before emails size " + this.model.getEmails().size());
+        this.model.addEmail(new EmailAddress());
+        System.out.println("*** EditController::addNewEmail after emails size " + this.model.getEmails().size());
+
+        return "employeeList?faces-redirect=true";
     }
 
     @Override

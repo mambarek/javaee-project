@@ -16,6 +16,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Objects;
 
@@ -83,6 +85,17 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
         return hashCode;
     }
 
-    //@Override
-    // public int hashCode(){return -31;}
+    public boolean isValid(){
+        for (Field field:this.getClass().getDeclaredFields()) {
+            final NotNull annotation = field.getAnnotation(NotNull.class);
+            try {
+                if(annotation != null && field.get(this) == null)
+                    return false;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
 }

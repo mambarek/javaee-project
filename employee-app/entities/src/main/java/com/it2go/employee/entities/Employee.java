@@ -20,7 +20,7 @@ import java.util.Objects;
 @XmlRootElement
 public class Employee extends Person {
 
-    private double salary;
+    private Double salary;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Project> projects = new ArrayList<>();
