@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:test="http://xmlns.jcp.org/jsf/composite/test">
+<h:head>
+    <title>Employees App</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="bootstrap-4.0.0-alpha.6-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
+
+</h:head>
+
+<h:body>
+    <h:form id="inputForm" style="margin-left:30px;width: 200px">
+        <test:inputWithLabel labelValue="Forename" editValue="" id="label"/>
+        <test:inputWithLabel labelValue="Last Name" editValue="" id="name"/>
+        <h:commandButton type="submit" value="Submit" />
+        <h:outputLabel value="Messges count: #{facesContext.getClientIdsWithMessages().hasNext()}"/>
+        <h:messages/>
+    </h:form>
+    <hr/>
+    <div style="margin-left:30px;width: 200px">
+        <test:formWithButtons model="#{testController}">
+            <f:actionListener for="save" binding="#{testController.save()}"/>
+            <f:actionListener for="delete" binding="#{testController.delete()}"/>
+            <f:actionListener for="cancel" binding="#{testController.cancel()}"/>
+        </test:formWithButtons>
+    </div>
+</h:body>
+</html>

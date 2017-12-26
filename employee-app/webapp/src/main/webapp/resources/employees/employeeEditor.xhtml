@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+<composite:interface>
+    <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
+    <composite:actionSource name="save" targets="#{cc.clientId}:employeeForm:save"/>
+    <composite:actionSource name="cancel" targets="#{cc.clientId}:employeeForm:cancel"/>
+    <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
+</composite:interface>
+<composite:implementation>
+<div id="#{cc.clientId}">    
+<div class="card" >
+    <div class="card-header corp-block-form-header">
+        Angestellte bearbeiten
+    </div>
+    <div class="card-block">
+        <h:form id="employeeForm" styleClass="form-horizontal">
+        <div class="form-row">
+            <div class="form-group row #{component.findComponent('firstName').valid ? '':'has-danger'}">
+                <label class="col-form-label col-md-3" for="firstName">#{cc.attrs.resourceBundleMap['employee.editor.firstName']}</label>
+                <div class="col">
+                    <input type="text" class="form-control #{hasError('firstName',null) ? 'form-control-danger' : ''}" jsf:id="firstName" jsf:required="true"
+                           jsf:value="#{cc.attrs.model.firstName}">
+                        <f:validateLength minimum="3" maximum="50"/>
+                    </input>
+                    <h:message for="firstName" errorClass="form-control-feedback" />
+                </div>
+            </div>
+            <div class="form-group row #{hasError('lastName',null) ? 'has-danger' : ''}">
+                <label class="col-md-3 col-form-label" for="lastName">#{cc.attrs.resourceBundleMap['employee.editor.lastName']}</label>
+                <div class="col">
+                    <input type="text" class="form-control #{hasError('lastName',null) ? 'form-control-danger' : ''}" jsf:id="lastName" jsf:required="true"
+                           jsf:value="#{cc.attrs.model.lastName}">
+                        <f:validateLength minimum="3" maximum="50"/>
+                    </input>
+                    <h:message for="lastName" errorClass="form-control-feedback"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="birthDate">#{cc.attrs.resourceBundleMap['employee.editor.birthDate']}</label>
+                <div class="col">
+                    <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
+                        <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}">
+                            <f:convertDateTime pattern="#{cc.attrs.resourceBundleMap['employee.app.date.pattern']}"/>
+                        </input>
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="email">#{cc.attrs.resourceBundleMap['employee.editor.email']}</label>
+                <div class="col">
+                    <input type="email" class="form-control" jsf:id="email"
+                           jsf:value="#{cc.attrs.modelEmail.email}"/>
+                </div>
+            </div>-->
+            <div class="form-group row  #{component.findComponent('slary').valid ? 'has-danger' : ''}">
+                <label class="col-md-3 col-form-label" for="salary">#{cc.attrs.resourceBundleMap['employee.editor.salary']}</label>
+                <div class="col">
+                    <input type="text" class="form-control  #{hasError('salary',null) ? 'form-control-danger' : ''}" jsf:id="salary"
+                           jsf:value="#{cc.attrs.model.salary}">
+                        <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+                    </input>
+                    <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-end hidden-sm-down">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" id="cancel">
+                        #{cc.attrs.resourceBundleMap['employee.editor.button.cancel']}</button>
+                    <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
+                            jsf:action="#{deleteEmployee}">#{cc.attrs.resourceBundleMap['employee.editor.button.delete']}
+                    </button>
+                    <button type="submit" class="btn btn-primary mr-3"
+                            jsf:action="#{saveEmployee}">#{cc.attrs.resourceBundleMap['employee.editor.button.save']}
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row hidden-md-up">
+
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary btn-block" jsf:immediate="true"
+                            jsf:action="#{cancel}">#{cc.attrs.resourceBundleMap['employee.editor.button.cancel']}
+                    </button>
+                </div>
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary  btn-block"
+                            jsf:action="#{deleteEmployee}">#{cc.attrs.resourceBundleMap['employee.editor.button.delete']}
+                    </button>
+                </div>
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary  btn-block"
+                            jsf:action="#{saveEmployee}">#{cc.attrs.resourceBundleMap['employee.editor.button.save']}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </h:form>
+    </div>
+</div>
+</div>
+</composite:implementation>
+</html>

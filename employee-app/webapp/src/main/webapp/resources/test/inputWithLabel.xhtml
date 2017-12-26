@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+<composite:interface>
+    <composite:attribute name="labelValue" />
+    <composite:attribute name="editValue" />
+</composite:interface>
+<composite:implementation>
+    <div class="form-row" id="#{cc.clientId}" >
+        <div class="form-group row #{component.findComponent('inputText').valid? '': 'has-danger'}">
+            <h:outputText value="#{cc.attrs.labelValue}" class="col-form-label" for="inputText"/>
+            <h:inputText value="#{cc.attrs.editValue}" id="inputText" required="true" class="form-control form-control-danger"/>
+            <h:message for="inputText" errorClass="form-control-feedback" />
+        </div>
+    </div>
+</composite:implementation>
+</html>
