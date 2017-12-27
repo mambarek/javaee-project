@@ -180,7 +180,7 @@
                             <td>
                                 <form jsf:id="id_link">
                                     <a href="#" jsf:id="edit"
-                                       jsf:action="#{employeeListController.editEmployee(employee.id)}">
+                                       jsf:action="#{editEmployeeController.editEmployee(employee.id)}">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
                                 </form>
                             </td>
@@ -202,7 +202,11 @@
                 </div>
                 </div>
 
-                <employees:employeeEditor  />
+                <employees:employeeEditor model="#{editEmployeeController.model}" cancel="#{editEmployeeController.cancel()}">
+                   <ui:remove> <f:actionListener for="cancel" binding="#{editEmployeeController.cancel()}"/></ui:remove>
+                    <f:actionListener for="save" binding="#{editEmployeeController.saveEmployee()}"/>
+                    <f:actionListener for="delete" binding="#{editEmployeeController.deleteEmployee()}"/>
+                </employees:employeeEditor>
 
             </div>
             <div class="col-md-12 col-lg-2">

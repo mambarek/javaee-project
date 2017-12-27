@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class EditEmployeeController implements BaseViewController{
 
     public static final String VIEW_ID = "editEmployee";
@@ -35,7 +35,6 @@ public class EditEmployeeController implements BaseViewController{
     private Map<String, Object> viewParams;
 
     private Employee model;
-    private EmailAddress modelEmail;
 
     public EditEmployeeController() {
         System.out.println(">> EditEmployeeController::Constructor!");
@@ -47,14 +46,6 @@ public class EditEmployeeController implements BaseViewController{
 
     public void setModel(Employee model) {
         this.model = model;
-    }
-
-    public EmailAddress getModelEmail() {
-        return modelEmail;
-    }
-
-    public void setModelEmail(EmailAddress modelEmail) {
-        this.modelEmail = modelEmail;
     }
 
     @PostConstruct
@@ -82,7 +73,15 @@ public class EditEmployeeController implements BaseViewController{
         model = employee;*/
     }
 
-    public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
+    public String editEmployee(Long id){
+        if(id != null){
+            model = employeeRepository.findById((Long)id);
+        }
+
+        return null;
+    }
+
+    public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
 
         if(model.isValid()) {
             System.out.println("## EditEmployeeController::saveEmployee model = " + model);
@@ -90,26 +89,22 @@ public class EditEmployeeController implements BaseViewController{
             if(model.isNew())
                 loggedInUser = userSession.getTestCreationUser();
 
-            if(this.modelEmail.getEmail() != null){
-                model.addEmail(this.modelEmail);
-            }
-
             employeeRepository.persist(model, loggedInUser);
 
             // reset the view
             this.resetView();
         }
 
-        return "employeeList?faces-redirect=true";
+        //return "employeeList?faces-redirect=true";
     }
 
-    public String deleteEmployee() throws EntityNotPersistedException {
+    public void deleteEmployee() throws EntityNotPersistedException {
         if(this.model != null && !this.model.isNew())
             employeeRepository.remove(this.model);
 
         this.resetView();
 
-        return "employeeList?faces-redirect=true";
+       // return "employeeList?faces-redirect=true";
     }
 
     public String cancel(){
@@ -123,7 +118,6 @@ public class EditEmployeeController implements BaseViewController{
         if(viewParams != null)
             viewParams.remove("id");
         this.model = new Employee();
-        this.modelEmail = new EmailAddress();
     }
 
     public String addNewEmail(){

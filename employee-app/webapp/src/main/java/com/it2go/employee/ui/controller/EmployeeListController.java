@@ -34,7 +34,6 @@ public class EmployeeListController implements BaseViewController{
     WebFlowController webFlowController;
 
     private Employee model = new Employee();
-    private EmailAddress modelEmail = new EmailAddress();
 
     public List<Employee> getAllEmployees(){
        // System.out.println("### EmployeeListController findAll call!");
@@ -46,8 +45,6 @@ public class EmployeeListController implements BaseViewController{
 
     public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
         if(model.getFirstName() != null && model.getLastName() != null) {
-            if(this.modelEmail.getEmail() != null && this.modelEmail.getEmail().length() > 0)
-                this.model.getEmails().add(this.modelEmail);
             System.out.println("## model = " + model);
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
@@ -56,7 +53,6 @@ public class EmployeeListController implements BaseViewController{
             employeeRepository.persist(model, loggedInUser);
 
             this.model = new Employee();
-            this.modelEmail = new EmailAddress();
         }
 
         return "employeeList?faces-redirect=true";
@@ -95,13 +91,6 @@ public class EmployeeListController implements BaseViewController{
         this.model = model;
     }
 
-    public EmailAddress getModelEmail() {
-        return modelEmail;
-    }
-
-    public void setModelEmail(EmailAddress modelEmail) {
-        this.modelEmail = modelEmail;
-    }
 
     @Override
     public String getViewId() {

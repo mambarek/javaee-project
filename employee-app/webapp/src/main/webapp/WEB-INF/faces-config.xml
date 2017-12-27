@@ -9,6 +9,10 @@
     <message-bundle>
         com.it2go.Messages
     </message-bundle>
+    <locale-config>
+        <default-locale>de</default-locale>
+        <supported-locale>en</supported-locale>
+    </locale-config>
 </application>
 
 </faces-config>

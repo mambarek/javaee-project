@@ -5,23 +5,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
-<composite:interface>
-
-    <composite:attribute name="employeeMsg"/>
+<composite:interface componentType="com.it2go.employee.ui.jsf.EmailListComponent">
+    <composite:attribute name="emailList"/>
 </composite:interface>
 
 <composite:implementation>
-    <ui:repeat value="#{editEmployeeController.model.emails}" var="email">
-        <div class="form-group row #{editEmployeeController.hasError('email',null) ? 'has-danger' : ''}">
-            <label class="col-md-3 col-form-label" for="email#{cc.attrs.employee.emails.indexOf(email)}">#{cc.attrs.employeeMsg['employee.editor.email']}</label>
+    <f:event type="postAddToView" listener="#{cc.init()}"/>
+    <ui:repeat value="#{cc.attrs.emailList}" var="email">
+        <div class="form-group row #{cc.findComponent('email').valid ? '':'has-danger'}">
+            <label class="col-md-3 col-form-label" for="email#{cc.attrs.emailList.indexOf(email)}">Email</label>
             <div class="col">
                 <div class="input-group">
                     <input type="text" class="form-control #{editEmployeeController.hasError('email',null) ? 'form-control-danger' : ''}"
-                           jsf:id="email#{editEmployeeController.model.emails.indexOf(email)}"
+                           jsf:id="email#{cc.attrs.emailList.indexOf(email)}"
                            jsf:value="#{email.email}" />
-                    <span class="input-group-addon fa fa-minus-square"/>
+                    <!--<span class="input-group-addon fa fa-minus-square"/>-->
+                    <a class="btn btn-primary" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
+                        <i class="input-group-addon fa fa-minus-square"></i> </a>
                 </div>
-                <h:message errorClass="form-control-feedback" for="email#{editEmployeeController.model.emails.indexOf(email)}"/>
+                <h:message errorClass="form-control-feedback" for="email#{cc.attrs.emailList.indexOf(email)}"/>
             </div>
         </div>
     </ui:repeat>
@@ -30,7 +32,7 @@
         <label class="col-md-3 col-form-label" />
         <div class="col">
 
-            <a class="btn btn-primary" jsf:action="#{editEmployeeController.addNewEmail()}" jsf:immediate="true">
+            <a class="btn btn-primary" jsf:action="#{cc.addNewEmail()}" jsf:immediate="true">
                 <i class="fa fa-plus-square fa-lg"></i> </a>
         </div>
     </div>

@@ -1,5 +1,7 @@
 package com.it2go.employee.ui.controller;
 
+import sun.util.locale.LocaleUtils;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -7,6 +9,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +18,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @SessionScoped
 public class WebFlowController implements Serializable{
 
-    private String locale = "en";
+    private String locale = "de";
+
+    /** Verfügbare Sprachen **/
+    private static Map<String, Locale> availableLocales;
+    static
+    {
+        availableLocales = new LinkedHashMap<String, Locale>();
+        availableLocales.put("en", Locale.ENGLISH);
+        availableLocales.put("de", Locale.GERMAN);
+    }
 
     private Map<String, Map<String, Object>> viewParamsCache = new ConcurrentHashMap<>();
 
@@ -38,11 +51,18 @@ public class WebFlowController implements Serializable{
         this.locale = locale;
     }
 
-    public void changeLocal(String newLocal, String outcome) throws IOException {
+    public void changeLocal(String newLocale, String outcome) throws IOException {
 
-        locale = newLocal;
+        locale = newLocale;
         //return outcome+"?faces-redirect=true";
         FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        for (Map.Entry<String, Locale> entry : availableLocales.entrySet())
+        {
+            if (entry.getValue().toString().equals(newLocale))
+                facesContext.getViewRoot().setLocale(entry.getValue());
+        }
+
         ExternalContext ec = facesContext.getExternalContext();
         ec.redirect(((HttpServletRequest)ec.getRequest()).getRequestURI());
     }
