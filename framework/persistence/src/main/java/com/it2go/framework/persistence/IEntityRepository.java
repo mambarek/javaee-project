@@ -13,6 +13,7 @@ public interface IEntityRepository<T extends IAbstractEntity, P extends IAbstrac
 
     public T persist(T entity, P user) throws EntityConcurrentModificationException, EntityRemovedException;
     public T remove(T entity) throws EntityNotPersistedException;
+    public void refresh(T entity);
     public <K> T removeById(K id) throws EntityNotFoundException;
     public <K> T findById(K id);
     public List<T> findAll();

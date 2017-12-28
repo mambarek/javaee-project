@@ -59,7 +59,9 @@
                     <h:message for="birthDate" errorClass="form-control-feedback" />
                 </div>
             </div>
-            <employees:emailList emailList="#{cc.attrs.model.emails}"></employees:emailList>
+            <employees:emailList emailList="#{cc.attrs.model.emails}">
+                <f:actionListener for="addAction" binding="javascript:alert('test')" />
+            </employees:emailList>
 
             <div class="form-group row  #{component.findComponent('slary').valid ? 'has-danger' : ''}">
                 <label class="col-md-3 col-form-label" for="salary">#{cc.resourceBundleMap['employee.editor.salary']}</label>

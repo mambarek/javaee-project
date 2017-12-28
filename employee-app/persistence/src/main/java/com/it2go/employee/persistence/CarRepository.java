@@ -32,6 +32,11 @@ public class CarRepository implements ICarRepository {
     }
 
     @Override
+    public void refresh(Car entity) {
+        carDAO.refresh(entity);
+    }
+
+    @Override
     public <Long> Car removeById(Long id) throws EntityNotFoundException {
         return carDAO.deleteByIdentityKey(id);
     }

@@ -7,33 +7,43 @@
 
 <composite:interface componentType="com.it2go.employee.ui.jsf.EmailListComponent">
     <composite:attribute name="emailList"/>
+    <composite:actionSource name="addAction" targets="addAction"/>
 </composite:interface>
 
 <composite:implementation>
     <f:event type="postAddToView" listener="#{cc.init()}"/>
-    <ui:repeat value="#{cc.attrs.emailList}" var="email">
-        <div class="form-group row #{cc.findComponent('email').valid ? '':'has-danger'}">
-            <label class="col-md-3 col-form-label" for="email#{cc.attrs.emailList.indexOf(email)}">Email</label>
-            <div class="col">
-                <div class="input-group">
-                    <input type="text" class="form-control #{editEmployeeController.hasError('email',null) ? 'form-control-danger' : ''}"
-                           jsf:id="email#{cc.attrs.emailList.indexOf(email)}"
-                           jsf:value="#{email.email}" />
-                    <!--<span class="input-group-addon fa fa-minus-square"/>-->
-                    <a class="btn btn-primary" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
-                        <i class="input-group-addon fa fa-minus-square"></i> </a>
+    <div id="#{cc.clientId}">
+        <ui:repeat value="#{cc.attrs.emailList}" var="email">
+            <div class="form-group row  #{component.findComponent('email').valid ? '':'has-danger'}">
+                <label class="col-md-3 col-form-label" for="email#{cc.attrs.emailList.indexOf(email)}">Email: #{cc.attrs.emailList.indexOf(email)}:#{component.findComponent('email').valid}</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}"
+                               jsf:id="email"
+                               jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true"/>
+
+                        <!--<span class="input-group-addon fa fa-minus-square"/>-->
+                        <a class="btn-primary" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
+                             <f:ajax render="#{cc.clientId}"/>
+                             <span class="input-group-addon fa fa-minus-circle fa-2"/>
+                         </a>
+                    </div>
+                    <h:message errorClass="form-control-feedback" for="email"/>
                 </div>
-                <h:message errorClass="form-control-feedback" for="email#{cc.attrs.emailList.indexOf(email)}"/>
             </div>
-        </div>
-    </ui:repeat>
+        </ui:repeat>
 
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label" />
-        <div class="col">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" />
+            <div class="col">
+                <button type="submit" class="btn btn-primary mr-3" jsf:id="add"
+                        jsf:action="#{cc.addNewEmail}">Hinzufügen
 
-            <a class="btn btn-primary" jsf:action="#{cc.addNewEmail()}" jsf:immediate="true">
-                <i class="fa fa-plus-square fa-lg"></i> </a>
+                </button>
+                <a class="btn btn-primary" jsf:action="#{cc.addNewEmail}"  jsf:immediate="true" jsf:jd="addAction">
+                    <f:ajax render="#{cc.clientId}" execute="@form"/>
+                    <i class="fa fa-plus-square fa-lg"/>Email</a>
+            </div>
         </div>
     </div>
 </composite:implementation>

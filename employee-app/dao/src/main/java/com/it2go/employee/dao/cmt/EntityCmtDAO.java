@@ -93,6 +93,11 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
     }
 
     @Override
+    public void refresh(T entity){
+        entityManager.refresh(entity);
+    }
+
+    @Override
     public <K> T deleteByIdentityKey(K key) throws EntityNotFoundException {
         Objects.requireNonNull(key);
         final T merged  = entityManager.find(this.getEntityClass(),key);

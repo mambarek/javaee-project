@@ -32,6 +32,11 @@ public class TruckRepository implements ITruckRepository {
     }
 
     @Override
+    public void refresh(Truck entity) {
+        truckDAO.refresh(entity);
+    }
+
+    @Override
     public <Long> Truck removeById(Long id) throws EntityNotFoundException {
         return truckDAO.deleteByIdentityKey(id);
     }

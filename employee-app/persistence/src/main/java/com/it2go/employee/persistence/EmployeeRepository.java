@@ -82,6 +82,11 @@ public class EmployeeRepository implements IEmployeeRepository{
     }
 
     @Override
+    public void refresh(Employee entity) {
+        employeeDAO.refresh(entity);
+    }
+
+    @Override
     public <Long> Employee removeById(Long id) throws EntityNotFoundException {
         return employeeDAO.deleteByIdentityKey(id);
     }

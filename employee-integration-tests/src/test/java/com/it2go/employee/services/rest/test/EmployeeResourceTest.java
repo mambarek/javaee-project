@@ -109,7 +109,7 @@ public class EmployeeResourceTest {
         Employee employee = new Employee();
         employee.setFirstName("X-Rest");
         employee.setLastName("Y-Rest");
-        employee.setSalary(4000);
+        employee.setSalary(4000d);
 
 /*        String ping = webTarget.path("/ping").request().get(String.class);
         System.out.println("ping = " + ping);*/

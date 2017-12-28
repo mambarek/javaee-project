@@ -116,7 +116,7 @@ public class EmployeeRepositoryServiceTest {
         Employee employee = new Employee();
         employee.setFirstName("xxx");
         employee.setLastName("yyy");
-        employee.setSalary(5000);
+        employee.setSalary(5000d);
 
         Employee res = null;
         try {
@@ -143,7 +143,7 @@ public class EmployeeRepositoryServiceTest {
         Employee employee = new Employee();
         employee.setFirstName("John");
         employee.setLastName("Braun");
-        employee.setSalary(3500);
+        employee.setSalary(3500d);
 
         try {
             employeeRepositoryService.save(employee);

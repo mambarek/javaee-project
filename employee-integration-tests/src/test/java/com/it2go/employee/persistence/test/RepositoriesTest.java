@@ -136,7 +136,7 @@ public class RepositoriesTest {
         Employee anna = new Employee();
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
-        anna.setSalary(3000);
+        anna.setSalary(3000d);
         anna.setGender(Gender.female);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
@@ -189,13 +189,13 @@ public class RepositoriesTest {
         Employee john = new Employee();
         john.setFirstName("John");
         john.setLastName("Smith");
-        john.setSalary(4500);
+        john.setSalary(4500d);
 
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
         helena.setGender(Gender.female);
-        helena.setSalary(3800);
+        helena.setSalary(3800d);
 
         Project p1 = new Project();
         p1.setName("My Project 1");
@@ -228,7 +228,7 @@ public class RepositoriesTest {
         System.out.println("--> test getById() : " + john.getId());
         Employee byId = employeeRepository.findById(john.getId());
         System.out.println("byId = " + byId);
-        byId.setSalary(10000);
+        byId.setSalary(10000d);
         try {
             byId = employeeRepository.persist(byId, userSession.getTestUpdateUser());
         } catch (EntityConcurrentModificationException | EntityRemovedException e) {
@@ -282,7 +282,7 @@ public class RepositoriesTest {
     @Test(expected = EntityConcurrentModificationException.class)
     public void test09() throws EntityConcurrentModificationException {
         System.out.println("### test9");
-        cachedEmplJohn.setSalary(2000);
+        cachedEmplJohn.setSalary(2000d);
         try {
             this.employeeRepository.persist(cachedEmplJohn, userSession.getTestUpdateUser());
         } catch (EntityRemovedException e) {
@@ -344,7 +344,7 @@ public class RepositoriesTest {
         Employee anna = new Employee();
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
-        anna.setSalary(3000);
+        anna.setSalary(3000d);
         anna.setGender(Gender.female);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
@@ -364,13 +364,13 @@ public class RepositoriesTest {
         Employee john = new Employee();
         john.setFirstName("John");
         john.setLastName("Smith");
-        john.setSalary(4500);
+        john.setSalary(4500d);
 
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
         helena.setGender(Gender.female);
-        helena.setSalary(3800);
+        helena.setSalary(3800d);
 
         Project p1 = new Project();
         p1.setName("My Project 1");
@@ -404,7 +404,7 @@ public class RepositoriesTest {
         Employee emp = foundList.get(0);
         System.out.println("emp = " + emp);
 
-        emp.setSalary(7500);
+        emp.setSalary(7500d);
 //        employeeRepository.persist(emp);
 
         final List<Employee> foundList2 = employeeRepository.findByLastName("Smith");
@@ -419,7 +419,7 @@ public class RepositoriesTest {
         items.forEach(System.out::println);*/
 
         //emp2.removeProject(emp2.getProjects().get(0));
-        emp2.setSalary(10);
+        emp2.setSalary(10d);
         Project p4 = new Project();
         p4.setName("My Project 4");
         emp2.addProject(p4);
@@ -509,7 +509,7 @@ public class RepositoriesTest {
         Employee anna = new Employee();
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
-        anna.setSalary(3000);
+        anna.setSalary(3000d);
         anna.setGender(Gender.female);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
@@ -529,13 +529,13 @@ public class RepositoriesTest {
         Employee john = new Employee();
         john.setFirstName("John");
         john.setLastName("Smith");
-        john.setSalary(4500);
+        john.setSalary(4500d);
 
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
         helena.setGender(Gender.female);
-        helena.setSalary(3800);
+        helena.setSalary(3800d);
 
         Project p1 = new Project();
         p1.setName("My Project 1");
@@ -570,7 +570,7 @@ public class RepositoriesTest {
         System.out.println("emp = " + emp);
         //this.employeeRepository.findByBirthDate(null);
 
-        emp.setSalary(7500);
+        emp.setSalary(7500d);
 //        employeeRepository.persist(emp);
 
         final List<Employee> foundList2 = employeeRepository.findByLastName("Smith");
@@ -585,7 +585,7 @@ public class RepositoriesTest {
         items.forEach(System.out::println);*/
 
         //emp2.removeProject(emp2.getProjects().get(0));
-        emp2.setSalary(10);
+        emp2.setSalary(10d);
         Project p4 = new Project();
         p4.setName("My Project 4");
         emp2.addProject(p4);

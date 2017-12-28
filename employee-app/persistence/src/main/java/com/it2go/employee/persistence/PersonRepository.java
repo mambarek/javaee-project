@@ -85,6 +85,11 @@ public class PersonRepository implements IPersonRepository {
     }
 
     @Override
+    public void refresh(Person entity) {
+        personDAO.refresh(entity);
+    }
+
+    @Override
     public <Long> Person removeById(Long id) throws EntityNotFoundException {
         return personDAO.deleteByIdentityKey(id);
     }

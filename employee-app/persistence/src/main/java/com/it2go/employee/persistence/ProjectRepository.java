@@ -34,6 +34,11 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public void refresh(Project entity) {
+        projectDAO.refresh(entity);
+    }
+
+    @Override
     public <Long> Project removeById(Long id) throws EntityNotFoundException {
         return projectDAO.deleteByIdentityKey(id);
     }
