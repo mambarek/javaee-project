@@ -203,7 +203,7 @@
                 </div>
 
                 <employees:employeeEditor model="#{editEmployeeController.model}" cancel="#{editEmployeeController.cancel()}">
-                   <ui:remove> <f:actionListener for="cancel" binding="#{editEmployeeController.cancel()}"/></ui:remove>
+                   <ui:remove><f:actionListener for="cancel" binding="#{editEmployeeController.cancel()}"/></ui:remove>
                     <f:actionListener for="save" binding="#{editEmployeeController.saveEmployee()}"/>
                     <f:actionListener for="delete" binding="#{editEmployeeController.deleteEmployee()}"/>
                 </employees:employeeEditor>

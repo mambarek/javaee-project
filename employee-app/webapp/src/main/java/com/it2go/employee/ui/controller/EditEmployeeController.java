@@ -96,6 +96,7 @@ public class EditEmployeeController implements BaseViewController{
     }
 
     public void deleteEmployee() throws EntityNotPersistedException {
+        System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
         if(this.model != null && !this.model.isNew())
             employeeRepository.remove(this.model);
 

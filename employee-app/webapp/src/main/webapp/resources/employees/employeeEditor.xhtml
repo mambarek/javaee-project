@@ -4,7 +4,9 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-      xmlns:employees="http://xmlns.jcp.org/jsf/composite/employees">
+      xmlns:employees="http://xmlns.jcp.org/jsf/composite/employees"
+      xmlns:behavior="http://it2go.com/employee"
+>
 
 <composite:interface componentType="employee.component">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
@@ -12,7 +14,8 @@
     <ui:remove>
         <composite:actionSource name="cancel" targets="#{cc.clientId}:employeeForm:cancel"/>
     </ui:remove>
-    <composite:attribute name="cancel" method-signature="java.lang.String action()"/>
+    <!--<composite:attribute name="cancel" method-signature="java.lang.String action()"/>-->
+    <composite:clientBehavior name="cnacel" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
 </composite:interface>
 <composite:implementation>
@@ -23,7 +26,7 @@
         #{cc.resourceBundleMap['employee.editor.title']}
     </div>
     <div class="card-block">
-        <h:form id="employeeForm" styleClass="form-horizontal">
+        <h:form id="employeeForm" styleClass="form-horizontal" class="employeeForm">
         <div class="form-row">
             <div class="form-group row #{component.findComponent('firstName').valid ? '':'has-danger'}">
                 <label class="col-form-label col-md-3" for="firstName">#{cc.resourceBundleMap['employee.editor.firstName']}</label>
@@ -60,7 +63,7 @@
                 </div>
             </div>
             <employees:emailList emailList="#{cc.attrs.model.emails}">
-                <f:actionListener for="addAction" binding="javascript:alert('test')" />
+
             </employees:emailList>
 
             <div class="form-group row  #{component.findComponent('slary').valid ? 'has-danger' : ''}">
@@ -78,9 +81,15 @@
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel" jsf:action="#{cc.attrs.cancel}">
                         #{cc.resourceBundleMap['employee.editor.button.cancel']}</button>
+
                     <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
-                            jsf:action="delete" jsf:id="delete">#{cc.resourceBundleMap['employee.editor.button.delete']}
+                            jsf:action="delete" jsf:id="delete" jsf:value="#{cc.resourceBundleMap['employee.editor.button.delete']}">
+                        <!--First ask for confirmation -->
+                        <behavior:confirm event="action"/>
+                        <!-- If successful, send an Ajax request -->
+                        <f:ajax/>
                     </button>
+
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save"
                             jsf:action="save">#{cc.resourceBundleMap['employee.editor.button.save']}
                     </button>
@@ -110,5 +119,31 @@
     </div>
 </div>
 </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>-->
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="return true;">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h:outputScript >
+        function test(){
+           // alert("Alert from test");
+            $('.employeeForm').submit();
+        }
+
+    </h:outputScript>
 </composite:implementation>
 </html>

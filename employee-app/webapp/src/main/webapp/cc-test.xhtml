@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:test="http://xmlns.jcp.org/jsf/composite/test">
+      xmlns:test="http://xmlns.jcp.org/jsf/composite/test"
+      xmlns:behavior="http://it2go.com/employee">
 <h:head>
     <title>Employees App</title>
     <meta charset="utf-8"/>
@@ -20,7 +21,10 @@
     <h:form id="inputForm" style="margin-left:30px;width: 200px">
         <test:inputWithLabel labelValue="Forename" editValue="" id="label"/>
         <test:inputWithLabel labelValue="Last Name" editValue="" id="name"/>
-        <h:commandButton type="submit" value="Submit" />
+        <h:commandButton type="submit" value="Submit" >
+            <behavior:confirm/>
+            <f:ajax/>
+        </h:commandButton>
         <h:outputLabel value="Messges count: #{facesContext.getClientIdsWithMessages().hasNext()}"/>
         <h:messages/>
     </h:form>
@@ -32,5 +36,94 @@
             <f:actionListener for="cancel" binding="#{testController.cancel()}"/>
         </test:formWithButtons>
     </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>-->
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-ok" type="button" class="btn btn-primary" >Save changes</button>
+                    <button id="modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h:outputScript>
+        function ConfirmYesNo() {
+            var dfd = jQuery.Deferred();
+            var $confirm = $('#myModal');
+            $confirm.modal('show');
+           // $('#myModalLabel').html(title);
+           // $('#myModalText').html(msg);
+            $('#modal-ok').off('click').click(function () {
+                $confirm.modal('hide');
+                dfd.resolve(1);
+                return 1;
+            });
+            $('#modal-cancel').off('click').click(function () {
+                $confirm.modal('hide');
+                return 0;
+            });
+            return dfd.promise();
+        }
+
+        function ShowConfirmYesNo() {
+            var result = false;
+            var a = ConfirmYesNo();
+            a.then(function () {
+                console.info("-- ShowConfirmYesNo() success");
+                result = true;
+            }, function (reason) {
+                console.info("-- ShowConfirmYesNo() no succes" + reason);
+            })
+            console.info("-- ShowConfirmYesNo() result: " + result);
+            return result;
+        }
+    </h:outputScript>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
 </h:body>
 </html>

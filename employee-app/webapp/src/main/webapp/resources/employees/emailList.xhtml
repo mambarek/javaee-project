@@ -7,7 +7,7 @@
 
 <composite:interface componentType="com.it2go.employee.ui.jsf.EmailListComponent">
     <composite:attribute name="emailList"/>
-    <composite:actionSource name="addAction" targets="addAction"/>
+    <composite:clientBehavior name="addEmail" event="action" targets="addAction"/>
 </composite:interface>
 
 <composite:implementation>
@@ -23,7 +23,7 @@
                                jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true"/>
 
                         <!--<span class="input-group-addon fa fa-minus-square"/>-->
-                        <a class="btn-primary" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
+                        <a class="btn-primary add-email" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
                              <f:ajax render="#{cc.clientId}"/>
                              <span class="input-group-addon fa fa-minus-circle fa-2"/>
                          </a>
@@ -36,11 +36,11 @@
         <div class="form-group row">
             <label class="col-md-3 col-form-label" />
             <div class="col">
-                <button type="submit" class="btn btn-primary mr-3" jsf:id="add"
+                <button type="submit" class="btn btn-primary mr-3" jsf:id="add" jsf:immediate="true"
                         jsf:action="#{cc.addNewEmail}">Hinzufügen
 
                 </button>
-                <a class="btn btn-primary" jsf:action="#{cc.addNewEmail}"  jsf:immediate="true" jsf:jd="addAction">
+                <a class="btn btn-primary" jsf:action="#{cc.addNewEmail}"  jsf:immediate="true" jsf:id="addAction">
                     <f:ajax render="#{cc.clientId}" execute="@form"/>
                     <i class="fa fa-plus-square fa-lg"/>Email</a>
             </div>
