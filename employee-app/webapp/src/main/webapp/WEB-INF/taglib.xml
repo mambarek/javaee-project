@@ -8,6 +8,13 @@
         <tag-name>confirm</tag-name>
         <behavior>
             <behavior-id>employee.behavior.Confirm</behavior-id>
+
         </behavior>
+        <attribute>
+            <name>message</name>
+        </attribute>
+        <attribute>
+            <name>ajax</name>
+        </attribute>
     </tag>
 </facelet-taglib>

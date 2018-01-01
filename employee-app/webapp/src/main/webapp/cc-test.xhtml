@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="bootstrap-4.0.0-alpha.6-dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.css"/>
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
-
 </h:head>
 
 <h:body>
     <h:form id="inputForm" style="margin-left:30px;width: 200px">
         <test:inputWithLabel labelValue="Forename" editValue="" id="label"/>
         <test:inputWithLabel labelValue="Last Name" editValue="" id="name"/>
-        <h:commandButton type="submit" value="Submit" >
-            <behavior:confirm/>
-            <f:ajax/>
+        <h:commandButton  value="Submit" type="submit">
+            <behavior:confirm message="Möchten Sie den Datensatz wirklich löschen?" ajax="true"/>
         </h:commandButton>
+
+        <!--<button class="btn btn-default" data-toggle="confirmation">Confirmation</button>-->
         <h:outputLabel value="Messges count: #{facesContext.getClientIdsWithMessages().hasNext()}"/>
         <h:messages/>
     </h:form>
@@ -46,7 +46,7 @@
                     </button>-->
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <p class="modal-message">Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
                     <button id="modal-ok" type="button" class="btn btn-primary" >Save changes</button>
@@ -81,10 +81,12 @@
             </div>
         </div>
     </div>
+
     <h:outputScript>
-        function ConfirmYesNo() {
+        function ConfirmYesNo(message) {
             var dfd = jQuery.Deferred();
             var $confirm = $('#myModal');
+            $confirm.find('.modal-message').html(message);
             $confirm.modal('show');
            // $('#myModalLabel').html(title);
            // $('#myModalText').html(msg);
@@ -95,22 +97,36 @@
             });
             $('#modal-cancel').off('click').click(function () {
                 $confirm.modal('hide');
+                dfd.reject("cancel");
                 return 0;
             });
             return dfd.promise();
         }
 
-        function ShowConfirmYesNo() {
-            var result = false;
-            var a = ConfirmYesNo();
-            a.then(function () {
-                console.info("-- ShowConfirmYesNo() success");
-                result = true;
-            }, function (reason) {
-                console.info("-- ShowConfirmYesNo() no succes" + reason);
+        var yesFunction = function () {
+                console.info("-- yesFunction() call!");
+                $('#inputForm').submit()
+            };
+
+        var yesFunctionAjax = function (event) {
+            console.info("-- yesFunctionAjax() call");
+            //$('#inputForm').submit()
+            jsf.ajax.request(this, event, {render: '@form', execute: '@form'})
+        };
+        // hier yes und no functions übergeben
+        // wie früher bei dojo
+        // statt $('#inputForm').submit();
+        // gibts du ein function die das macht und vielleicht mehr
+        function ShowConfirmYesNo(event, yesFunc, noFunc, message) {
+            // stop the event and trigger asynchron promise
+            event.preventDefault();
+            //event.stopPropagation();
+            var promise = ConfirmYesNo(message);
+            promise.then(yesFunc
+            , function (reason) {
+                console.info("-- ShowConfirmYesNo() no succes reason:", reason);
             })
-            console.info("-- ShowConfirmYesNo() result: " + result);
-            return result;
+            console.info("-- ShowConfirmYesNo() Event: ", event);
         }
     </h:outputScript>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -125,5 +141,6 @@
             crossorigin="anonymous"/>
     <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
+
 </h:body>
 </html>
