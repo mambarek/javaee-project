@@ -5,22 +5,23 @@ $corpColorGreen: #45A61C;
 $corpColorYellow: #ffc107;
 $corpColorBlack: #292b2c;
 
-$heigth-10:0.625rem;
-$heigth-12:0.75rem;
-$heigth-14:0.875rem;
+$heigth-10: 0.625rem;
+$heigth-12: 0.75rem;
+$heigth-14: 0.875rem;
+$heigth-16: 1rem;
 
 $lineHeight: 1rem;
 $fontSize: 0.875rem;
-$blochHeaderHeight:$heigth-10;
+$blockHeaderHeight:$heigth-10;
 
 $bold:500;
 /* green */
 $primaryFontColor: #ffffff;
-$primaryBgColor: #45A61C;
-$primaryBorderColor: #3c763d;
+$primaryBgColor: #0b127f;
+$primaryBorderColor: #0b127f;
 
-$primaryHoverBgColor: #CFE79D;
-$primaryHoverFontColor: #3c763d;
+$primaryHoverBgColor: #2196F3;
+$primaryHoverFontColor: #0b127f;
 /* rosa */
 /*$primaryFontColor: #000000;
 $primaryBgColor: #E235C2;
@@ -61,7 +62,7 @@ html{
 
 body {
   font-size: $fontSize;
-  line-height: $heigth-14;
+  /*line-height: $lineHeight;*/
 }
 
 h1 {
@@ -87,21 +88,21 @@ a:hover, a:active{
     background-color: $blockHeaderBgColor;
     color: $blockHeaderFontColor;
     font-weight: $bold;
-    line-height: $blochHeaderHeight;
+    line-height: $blockHeaderHeight;
 }
 
 .corp-block-header-left{
   background-color: $blockHeaderLeftBgColor;
   color: $blockHeaderLeftFontColor;
   font-weight: $bold;
-  line-height: $blochHeaderHeight;
+  line-height: $blockHeaderHeight;
 }
 
 .corp-block-header-reight{
   background-color: $blockHeaderReightBgColor;
   color: $blockHeaderReightFontColor;
   font-weight: $bold;
-  line-height: $blochHeaderHeight;
+  line-height: $blockHeaderHeight;
 }
 
 .card-header:first-child {
@@ -112,7 +113,7 @@ a:hover, a:active{
   background-color: $primaryBgColor;
   color: $blockHeaderFontColor;
   font-weight: $bold;
-  line-height: $blochHeaderHeight;
+  line-height: $blockHeaderHeight;
 }
 
 .card{
@@ -209,6 +210,7 @@ a:hover, a:active{
 
 a.btn{
   border: 1px solid $primaryBorderColor;
+  color: $primaryFontColor;
 }
 /*--------------------- list items*/
 .list-group-item.active {

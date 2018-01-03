@@ -1,0 +1,349 @@
+/*---------------------- Variable def ------------------------------*/
+
+/*Corporation colors*/
+$corpColorGreen: #45A61C;
+$corpColorYellow: #ffc107;
+$corpColorBlack: #292b2c;
+
+$heigth-10: 0.625rem;
+$heigth-12: 0.75rem;
+$heigth-14: 0.875rem;
+$heigth-16: 1rem;
+
+$lineHeight: 1rem;
+$fontSize: 0.875rem;
+$blockHeaderHeight:$heigth-10;
+
+$bold:500;
+/* green */
+$primaryFontColor: #ffffff;
+$primaryBgColor: #45A61C;
+$primaryBorderColor: #3c763d;
+
+$primaryHoverBgColor: #CFE79D;
+$primaryHoverFontColor: #3c763d;
+/* rosa */
+/*$primaryFontColor: #000000;
+$primaryBgColor: #E235C2;
+$primaryBorderColor: #E30AD2;
+
+$primaryHoverBgColor: #e7ddd8;
+$primaryHoverFontColor: #000000;*/
+
+$btn-border-radius: 0;
+
+/*$primaryHoverBgColor: #45A61C;
+$primaryHoverFontColor: #ffffff;*/
+/* headers*/
+$headerBgColor: $corpColorBlack;
+$headerFontColor: #ffffff;
+$footerBgColor: #5a5a5a;
+$footerFontColor: #ffffff;
+
+$blockHeaderBgColor: $primaryBgColor;
+$blockHeaderFontColor: $primaryFontColor;
+
+$blockHeaderLeftBgColor: $corpColorYellow;
+$blockHeaderLeftFontColor: #ffffff;
+
+$blockHeaderReightBgColor: #2196F3;
+$blockHeaderReightFontColor: #ffffff;
+
+
+$anchorColor: $corpColorBlack;
+$anchorHoverColor:$primaryHoverBgColor;
+
+/* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
+
+The size can be calculated from pixels to em using this formula: pixels/16=em */
+html{
+    font-size:100%;
+}
+
+body {
+  font-size: $fontSize;
+  /*line-height: $lineHeight;*/
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.875rem;
+}
+
+a, a:visited, a:focus{
+  color: $anchorColor;
+  text-decoration: none;
+}
+a:hover, a:active{
+  color: $anchorHoverColor;
+  text-decoration: none;
+}
+
+/*-----------------------------------------------------*/
+
+.corp-block-header{
+    background-color: $blockHeaderBgColor;
+    color: $blockHeaderFontColor;
+    font-weight: $bold;
+    line-height: $blockHeaderHeight;
+}
+
+.corp-block-header-left{
+  background-color: $blockHeaderLeftBgColor;
+  color: $blockHeaderLeftFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.corp-block-header-reight{
+  background-color: $blockHeaderReightBgColor;
+  color: $blockHeaderReightFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.card-header:first-child {
+  border-radius: $btn-border-radius;
+}
+
+.corp-block-form-header{
+  background-color: $primaryBgColor;
+  color: $blockHeaderFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.card{
+    border: none;
+}
+
+.corp-footer{
+  background-color: $footerBgColor;
+  color: $footerFontColor;
+}
+/*---------------------- table ------------------------------------*/
+.table-header{
+  background-color: $primaryBgColor;
+  color: $primaryFontColor;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  font-weight: $bold;
+  border-bottom: 2px solid #eceeef;
+}
+/* ----------------- theme bootstrap ------------------------------*/
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  border-radius: $btn-border-radius;
+}
+
+@media (max-width: 768px) {
+  .container{
+    width: 100%;
+  }
+
+  .navbar{
+    line-height: 2rem;
+  }
+}
+
+.btn {
+    font-size: $heigth-12;
+    line-height: $heigth-14;
+    border-radius: $btn-border-radius;
+}
+
+.breadcrumb{
+  background-color: #ffffff;
+  margin-left: -15px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  display: inline-block;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #636c72;
+  content: ">";
+}
+
+.breadcrumb-item.active {
+  color: $primaryBorderColor;
+}
+/*-------------- primary btn----------------------------*/
+.btn-primary {
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:hover {
+  color: $primaryHoverFontColor;
+  background-color: $primaryHoverBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  -webkit-box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
+  box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: $primaryBorderColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:active, .btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  background-image: none;
+  border-color: $primaryBorderColor;
+}
+
+a.btn{
+  border: 1px solid $primaryBorderColor;
+  color: $primaryFontColor;
+}
+/*--------------------- list items*/
+.list-group-item.active {
+  background-color: $blockHeaderBgColor;
+  font-weight: bold;
+    /*border-color: $primaryBorderColor;*/
+}
+
+.list-group-item{
+  color: $corpColorBlack;
+  font-weight: 500;
+}
+
+.list-group-item:active{
+  color: $corpColorGreen;
+  font-weight: 500;
+}
+/* ------------------------- Bootstrap-Datepicker --------------------------- */
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom {
+    padding: 5px;
+}
+.datepicker.dropdown-menu {
+    border-radius: 0;
+}
+.datepicker table tr td, .datepicker table tr th {
+    border-radius: 0;
+}
+
+.datepicker table tr td:hover {
+    background-color: #92d80259;
+}
+
+.datepicker table tr td.active {
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-color: $primaryBorderColor;
+}
+
+.datepicker table tr td.active:hover {
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor !important;
+    border-color: $primaryBorderColor !important;
+}
+
+.datepicker-switch{
+    background-color: $primaryBgColor;
+    color: $primaryFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+.datepicker .datepicker-switch:hover,
+.datepicker .prev:hover,
+.datepicker .next:hover,
+.datepicker tfoot tr th:hover {
+    background-color: $primaryHoverBgColor !important;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+.datepicker thead tr:first-child th.datepicker-switch:hover,
+.datepicker tfoot tr th.datepicker-switch:hover {
+    background: $primaryHoverBgColor;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+
+.input-group-addon {
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-radius: $btn-border-radius;
+}
+
+.input-group-addon:hover {
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor;
+    border-radius: $btn-border-radius;
+}
+
+/*----------------------------------- bootstrap dropdown menu --------------------------------------*/
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #292b2c;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: normal;
+  font-size: $heigth-12;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  color: #1d1e1f;
+  text-decoration: none;
+  background-color:  $primaryHoverBgColor;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: $primaryHoverBgColor;
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+  color: #636c72;
+  cursor: not-allowed;
+  background-color: transparent;
+}

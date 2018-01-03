@@ -8,7 +8,6 @@
         <tag-name>confirm</tag-name>
         <behavior>
             <behavior-id>employee.behavior.Confirm</behavior-id>
-
         </behavior>
         <attribute>
             <name>message</name>
@@ -16,5 +15,17 @@
         <attribute>
             <name>ajax</name>
         </attribute>
+        <attribute>
+            <name>successJsFunction</name>
+        </attribute>
+        <attribute>
+            <name>modalSelector</name>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>InputFieldBehavior</tag-name>
+        <behavior>
+            <behavior-id>employee.behavior.InputFieldBehavior</behavior-id>
+        </behavior>
     </tag>
 </facelet-taglib>

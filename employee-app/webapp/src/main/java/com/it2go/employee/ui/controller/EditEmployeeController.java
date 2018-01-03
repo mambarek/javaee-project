@@ -12,6 +12,8 @@ import com.it2go.framework.dao.EntityRemovedException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,7 +97,7 @@ public class EditEmployeeController implements BaseViewController{
         //return "employeeList?faces-redirect=true";
     }
 
-    public void deleteEmployee() throws EntityNotPersistedException {
+    public void deleteEmployee(ActionEvent event) throws EntityNotPersistedException {
         System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
         if(this.model != null && !this.model.isNew())
             employeeRepository.remove(this.model);
@@ -105,11 +107,11 @@ public class EditEmployeeController implements BaseViewController{
        // return "employeeList?faces-redirect=true";
     }
 
-    public String cancel(){
+    public void cancel(){
         // reset the view
         this.resetView();
 
-        return "employeeList?faces-redirect=true";
+       // return "employeeList?faces-redirect=true";
     }
 
     private void resetView(){
@@ -135,5 +137,11 @@ public class EditEmployeeController implements BaseViewController{
     @Override
     public String getPage() {
         return "editEmployee.xhtml";
+    }
+
+    public void onChange(ActionEvent actionEvent){
+        final String clientId = actionEvent.getComponent().getClientId();
+        String compId = clientId +":"+ actionEvent.getComponent().getId();
+        compId = compId.replace(":","\\:");
     }
 }
