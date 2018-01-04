@@ -16,7 +16,7 @@
     <composite:attribute name="deleteConfirmFunc" />
 </composite:interface>
 <composite:implementation>
-<script src="assets/js/employee.js"/>
+
 <div id="#{cc.clientId}">
 <div class="card" >
     <div class="card-header corp-block-form-header">
@@ -26,36 +26,115 @@
         <h:form id="employeeForm" styleClass="form-horizontal" class="employeeForm">
         <div class="form-row">
 
-            <div class="form-group row ">
-                <label class="col-form-label col-md-3" for="testAttr">#{cc.resourceBundleMap['employee.editor.firstName']}</label>
-                <div class="col">
-                    <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}" jsf:id="testAttr" jsf:required="true"
-                           jsf:value="#{cc.attrs.model.firstName}">
-                        <f:validateLength minimum="3" maximum="50"/>
-                        <behavior:InputFieldBehavior/>
-                    </input>
-                    <h:message for="testAttr" errorClass="form-control-feedback" />
-                </div>
-            </div>
-
-            <div class="form-group row #{component.findComponent('firstName').valid ? '':'has-danger'}" jsf:id="firstNameRow">
+            <div class="form-group row " jsf:id="firstNameRow">
                 <label class="col-form-label col-md-3" for="firstName">#{cc.resourceBundleMap['employee.editor.firstName']}</label>
                 <div class="col">
-                    <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}" jsf:id="firstName" jsf:required="true"
-                           jsf:value="#{cc.attrs.model.firstName}"
-                    >
+                    <input type="text" class="form-control" jsf:id="firstName" jsf:required="true"
+                           jsf:value="#{cc.attrs.model.firstName}" data-valid="#{component.valid}">
                         <f:validateLength minimum="3" maximum="50"/>
-                        <behavior:InputFieldBehavior/>
+                        <f:ajax execute="@this" render="@this" onevent="handleAjax" event="keyup"/>
+
                     </input>
                     <h:message for="firstName" errorClass="form-control-feedback" />
                 </div>
             </div>
-            <div class="form-group row #{component.findComponent('lastName').valid ? '':'has-danger'}">
+            <h:outputScript>
+                function encodeId(id) {
+                    return id.replace(new RegExp(':', 'g'), "\\:").toString();
+                }
+
+                function validateInputStyle(component){
+
+                    var valid = component.attr("data-valid");
+                    console.info("validateInputStyle component", component, " valid: " + valid);
+
+                    component.parent().removeClass('has-danger has-success');
+                    component.removeClass("form-control-danger form-control-success")
+                    if (valid == "false") {
+                        component.parent().addClass('has-danger');
+                        component.addClass('form-control-danger');
+                    }
+                    else {
+                        component.parent().addClass('has-success');
+                        component.addClass('form-control-success');
+                    }
+                }
+
+                function validateForm(form){
+                    //var allInputFields = form.filter('input[type=text], select');
+                    form.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+                }
+
+
+                function handleAjax(data) {
+                    var status = data.status;
+                    var compenentId = data.source.id.replace(new RegExp(':', 'g'), "\\:");
+                    var c1 = $("#j_idt23\\:employeeForm\\:firstName");
+                    var id = "j_idt23\\:employeeForm\\:firstName";
+                    var c111 = $("#" + id);
+                    var encodedId = encodeId(data.source.id);
+                    var c21 = $("#" + encodedId);
+
+
+                    var input = $("#" + compenentId);
+                    switch (status) {
+                        case "begin":
+                            // This is the start of the AJAX request.
+                            //document.getElementsByTagName('body')[0].className = 'loading';
+                            console.info("handleAjaxCall begin");
+                            break;
+
+                        case "complete":
+                            // This is invoked right after AJAX response is returned.
+                            break;
+
+                        case "success":
+                            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+                            //document.getElementsByTagName('body')[0].className = '';
+                            console.info("ComponentId: " + data.source.id);
+                            console.info("Component valid: " + $("#j_idt23\\:employeeForm\\:firstName").attr("data-valid"));
+                            console.info("checkInputStyle success valid:" + data.source.getAttribute("data-valid"), data.source);
+                            var valid = $("#" + compenentId).attr("data-valid");
+                            console.info("checkInputStyle success jquery valid: " + valid);
+
+                            validateInputStyle(input);
+
+                    break;
+                }
+                }
+
+                function checkValidation(data){
+                    var status = data.status;
+                    var encodedId = encodeId(data.source.id);
+                    var form = $("#" + encodedId).closest("form");;
+                    switch (status) {
+                        case "begin":
+                            // This is the start of the AJAX request.
+                            //document.getElementsByTagName('body')[0].className = 'loading';
+                            console.info("checkValidation begin");
+                            break;
+
+                        case "complete":
+                            // This is invoked right after AJAX response is returned.
+                            break;
+
+                        case "success":
+                            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+                            //document.getElementsByTagName('body')[0].className = '';
+
+                              validateForm(form);
+
+                            break;
+                    }
+                }
+            </h:outputScript>
+            <div class="form-group row">
                 <label class="col-md-3 col-form-label" for="lastName">#{cc.resourceBundleMap['employee.editor.lastName']}</label>
                 <div class="col">
-                    <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}" jsf:id="lastName" jsf:required="true"
-                           jsf:value="#{cc.attrs.model.lastName}">
+                    <input type="text" class="form-control" jsf:id="lastName" jsf:required="true"
+                           jsf:value="#{cc.attrs.model.lastName}" data-valid="#{component.valid}">
                         <f:validateLength minimum="3" maximum="50"/>
+                        <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
                     </input>
                     <h:message for="lastName" errorClass="form-control-feedback"/>
                 </div>
@@ -104,6 +183,7 @@
 
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save">
                         #{cc.resourceBundleMap['employee.editor.button.save']}
+                        <f:ajax execute="@form" render="@form" onevent="checkValidation"/>
                     </button>
                 </div>
             </div>

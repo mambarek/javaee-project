@@ -45,3 +45,33 @@ function makeAjax(element, event, execute, render){
 
     return jsf.ajax.request(element, event,{execute:execute,render:'render'});
 }
+
+function checkInputStyle(data){
+    var status = data.status;
+    var compenentId = data.source.id.replace(new RegExp(':', 'g'),"\\:");
+
+    //var component = $("'#"+compenentId+"'");
+    // j_idt23:employeeForm:testAttr
+    //var component = $('j_idt23\\:employeeForm\\:testAttr');
+
+    switch (status) {
+        case "begin":
+            // This is the start of the AJAX request.
+            //document.getElementsByTagName('body')[0].className = 'loading';
+            console.info("handleAjaxCall begin");
+            break;
+
+        case "complete":
+            // This is invoked right after AJAX response is returned.
+            console.info("handleAjaxCall complete");
+            break;
+
+        case "success":
+            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+            //document.getElementsByTagName('body')[0].className = '';
+            console.info("checkInputStyle success dom valid:" + data.source.getAttribute("data-valid"), data.source);
+            var valid = $("\"#"+compenentId+"\"").attr("data-valid");
+            console.info("checkInputStyle success jquery valid: " + valid );
+            break;
+    }
+}
