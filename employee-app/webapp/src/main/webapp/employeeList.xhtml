@@ -161,57 +161,68 @@
             <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header corp-block-header">
-                        Angestellte bearbeiten
+                        Angestelltenliste
                     </div>
-                    <div class="card-block"></div>
-                    <div class="table-responsive mb-5">
-                    <table jsf:id="employeeList" class="table table-hover table-sm">
-                    <thead  class="table-header">
-                    <tr>
-                        <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
-                        <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
-                        <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
-                        <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
-                        <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
-                        <tr>
-                            <td>
-                                <form jsf:id="id_link">
-                                    <a href="#" jsf:id="edit"
-                                       jsf:action="#{editEmployeeController.editEmployee(employee.id)}">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
-                                </form>
-                            </td>
-                            <td>
-                                <form jsf:id="firstName_link">
-                                    <a jsf:id="edit"
-                                       jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a>
-                                </form>
-                            </td>
-                            <td><a jsf:id="lastName_link"
-                                   jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
-                            <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
-                            <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
-                        </tr>
-                    </ui:repeat>
-                    </tbody>
-                </table>
-
+                    <div class="card-block" style="padding: 0px">
+                        <div class="table-responsive mb-5">
+                            <table jsf:id="employeeList" class="table table-hover table-sm">
+                            <thead  class="table-header">
+                            <tr>
+                                <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                                <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                                <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                                <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                                <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
+                                <tr>
+                                    <td>
+                                        <form jsf:id="id_link">
+                                            <a href="#" jsf:id="edit"
+                                               >
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
+                                            <f:ajax execute="@this" render="editorWrapper" listener="#{editEmployeeController.editEmployeeAjax(employee.id)}" event="click"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form jsf:id="firstName_link">
+                                            <a jsf:id="edit"
+                                               jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a>
+                                        </form>
+                                    </td>
+                                    <td><a jsf:id="lastName_link"
+                                           jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
+                                    <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
+                                    <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
+                                </tr>
+                            </ui:repeat>
+                            </tbody>
+                            </table>
+                        </div>
+                     </div>
+                    <div class="card-footer">
+                        <h:form id="create_employee_form">
+                            <input type="submit" value="Anlegen" jsf:id="create_button">
+                                <f:ajax listener="#{editEmployeeController.editEmployeeAjax(null)}" render=":editorWrapper"/>
+                            </input>
+                        </h:form>
+                    </div>
                 </div>
+
+
+                <div jsf:id="editorWrapper">
+                    <employees:employeeEditor model="#{editEmployeeController.model}" deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}">
+                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="@form"/>
+                        <f:ajax event="saveOk" binding="#{editEmployeeController.saveEmployee()}" render="employeelist"/>
+                    </employees:employeeEditor>
+
+                    <!-- hidden form for confirmation dialog action delete-->
+                    <h:form id="hiddenForm">
+                        <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" style="display: none;"/>
+                    </h:form>
                 </div>
-
-                <employees:employeeEditor model="#{editEmployeeController.model}" deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}">
-                    <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="@form"/>
-                    <f:actionListener for="save" binding="#{editEmployeeController.saveEmployee()}"/>
-
-                </employees:employeeEditor>
-                <!-- hidden form for confirmation dialog action delete-->
-                <h:form id="hiddenForm">
-                    <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" style="display: none;"/>
-                </h:form>
             </div>
             <div class="col-md-12 col-lg-2">
                 <div class="card mb-3">

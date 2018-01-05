@@ -105,10 +105,6 @@ a:hover, a:active{
   line-height: $blockHeaderHeight;
 }
 
-.card-header:first-child {
-  border-radius: $btn-border-radius;
-}
-
 .corp-block-form-header{
   background-color: $primaryBgColor;
   color: $blockHeaderFontColor;
@@ -118,6 +114,18 @@ a:hover, a:active{
 
 .card{
     border: none;
+}
+
+.card-block {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  /* padding: 1.25rem; */
+}
+
+.card-header:first-child {
+  border-radius: $btn-border-radius;
 }
 
 .corp-footer{

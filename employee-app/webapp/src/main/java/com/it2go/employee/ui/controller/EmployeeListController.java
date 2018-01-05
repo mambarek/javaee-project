@@ -10,6 +10,7 @@ import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class EmployeeListController implements BaseViewController{
 
     @Inject

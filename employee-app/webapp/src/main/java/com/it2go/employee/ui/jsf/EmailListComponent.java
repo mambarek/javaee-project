@@ -15,10 +15,12 @@ public class EmailListComponent extends UICompositeComponent {
 
     public void init(){
         emailList = (List<EmailAddress>)this.getAttributes().get("emailList");
+/*
          if(emailList == null)
              System.out.println("*** EmailListComponent init emailList is NULL ");
          else
             System.out.println("*** EmailListComponent init emailList: " + emailList.size());
+*/
     }
 
     public void addNewEmail(){

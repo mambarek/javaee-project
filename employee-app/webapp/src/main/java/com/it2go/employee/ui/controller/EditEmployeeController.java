@@ -9,15 +9,11 @@ import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 @Named
@@ -50,7 +46,7 @@ public class EditEmployeeController implements BaseViewController{
         this.model = model;
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void initView(){
 
         System.out.println("-- EditEmployeeController::initView before model: " + model);
@@ -80,6 +76,17 @@ public class EditEmployeeController implements BaseViewController{
         return null;
     }
 
+    public void editEmployeeAjax(Long id){
+        if(id != null){
+            Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("id",id);
+            webFlowController.putViewParams(VIEW_ID, paramsMap);
+            model = employeeRepository.findById((Long)id);
+        }
+        else
+            model = new Employee();
+    }
+
     public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
 
         if(model.isValid()) {
@@ -92,6 +99,7 @@ public class EditEmployeeController implements BaseViewController{
 
             // reset the view
             this.resetView();
+
         }
 
         //return "employeeList?faces-redirect=true";
@@ -117,8 +125,6 @@ public class EditEmployeeController implements BaseViewController{
     private void resetView(){
         if(viewParams != null)
             viewParams.remove("id");
-
-        this.model = new Employee();
     }
 
     public String addNewEmail(){
