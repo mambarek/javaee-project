@@ -11,6 +11,7 @@
 <composite:interface componentType="employee.component">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
     <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
+    <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
     <composite:clientBehavior name="saveOk" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
@@ -49,12 +50,13 @@
                     <h:message for="lastName" errorClass="form-control-feedback"/>
                 </div>
             </div>
-            <div class="form-group row  #{component.findComponent('birthDate').valid ? '':'has-danger'}">
+            <div class="form-group row">
                 <label class="col-md-3 col-form-label" for="birthDate">#{cc.resourceBundleMap['employee.editor.birthDate']}</label>
                 <div class="col">
                     <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                        <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}">
+                        <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}"  data-valid="#{component.valid}">
                             <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
+                            <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
                         </input>
                         <div class="input-group-addon">
                             <i class="fa fa-calendar" aria-hidden="true"/>
@@ -67,11 +69,11 @@
 
             </employees:emailList>
 
-            <div class="form-group row  #{component.findComponent('slary').valid ? 'has-danger' : ''}">
+            <div class="form-group row">
                 <label class="col-md-3 col-form-label" for="salary">#{cc.resourceBundleMap['employee.editor.salary']}</label>
                 <div class="col">
-                    <input type="text" class="form-control  #{component.valid ? '':'form-control-danger'}" jsf:id="salary"
-                           jsf:value="#{cc.attrs.model.salary}">
+                    <input type="text" class="form-control" jsf:id="salary"
+                           jsf:value="#{cc.attrs.model.salary}"  data-valid="#{component.valid}">
                         <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
                     </input>
                     <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>

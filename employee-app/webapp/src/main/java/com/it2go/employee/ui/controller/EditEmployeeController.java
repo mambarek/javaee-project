@@ -125,6 +125,8 @@ public class EditEmployeeController implements BaseViewController{
     private void resetView(){
         if(viewParams != null)
             viewParams.remove("id");
+
+        this.model = null;
     }
 
     public String addNewEmail(){

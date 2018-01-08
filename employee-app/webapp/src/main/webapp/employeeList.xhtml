@@ -158,8 +158,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-6">
-                <div class="card">
+            <div class="col-md-12 col-lg-6" jsf:id="ooo">
+                <div class="card" >
                     <div class="card-header corp-block-header">
                         Angestelltenliste
                     </div>
@@ -213,9 +213,10 @@
 
 
                 <div jsf:id="editorWrapper">
-                    <employees:employeeEditor model="#{editEmployeeController.model}" deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}">
-                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="@form"/>
-                        <f:ajax event="saveOk" binding="#{editEmployeeController.saveEmployee()}" render="employeelist"/>
+                    <employees:employeeEditor model="#{editEmployeeController.model}"
+                                              deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}" rendered="#{!empty editEmployeeController.model}">
+                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="ooo"/>
+                        <f:ajax event="save" listener="#{editEmployeeController.saveEmployee()}" render="ooo"/>
                     </employees:employeeEditor>
 
                     <!-- hidden form for confirmation dialog action delete-->
@@ -282,5 +283,6 @@
         });
     </script>
     <script src="assets/js/employee.js"/>
+    <script src="assets/js/jsf-fixes.js"/>
 </h:body>
 </html>
