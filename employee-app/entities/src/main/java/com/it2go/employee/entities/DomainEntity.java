@@ -5,6 +5,7 @@ import com.it2go.framework.entities.IAbstractEntity;
 import com.it2go.framework.util.json.JsonStdDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import org.reflections.ReflectionUtils;
 
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Getter
@@ -86,7 +88,9 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
     }
 
     public boolean isValid(){
-        for (Field field:this.getClass().getDeclaredFields()) {
+        Set<Field> allFields = ReflectionUtils.getAllFields(this.getClass());
+        for (Field field: allFields) {
+            field.setAccessible(true);
             final NotNull annotation = field.getAnnotation(NotNull.class);
             try {
                 if(annotation != null && field.get(this) == null)

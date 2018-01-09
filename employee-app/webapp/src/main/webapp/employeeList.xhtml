@@ -158,7 +158,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-6" jsf:id="ooo">
+            <div class="col-md-12 col-lg-6" jsf:id="content">
                 <div class="card" >
                     <div class="card-header corp-block-header">
                         Angestelltenliste
@@ -213,15 +213,17 @@
 
 
                 <div jsf:id="editorWrapper">
-                    <employees:employeeEditor model="#{editEmployeeController.model}"
+                    <employees:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
                                               deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}" rendered="#{!empty editEmployeeController.model}">
-                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="ooo"/>
-                        <f:ajax event="save" listener="#{editEmployeeController.saveEmployee()}" render="ooo"/>
+                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
+                        <f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>
+
                     </employees:employeeEditor>
 
                     <!-- hidden form for confirmation dialog action delete-->
-                    <h:form id="hiddenForm">
-                        <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" style="display: none;"/>
+                    <h:form id="hiddenForm" style="display: none;">
+                        <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" />
+                        <h:commandButton id="saveHidden" actionListener="#{editEmployeeController.saveEmployee}" />
                     </h:form>
                 </div>
             </div>

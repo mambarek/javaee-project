@@ -16,6 +16,7 @@
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
     <composite:attribute name="deleteConfirmFunc" />
+    <composite:attribute name="renderAfterSave"/>
 </composite:interface>
 <composite:implementation>
 
@@ -95,7 +96,7 @@
 
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save">
                         #{cc.resourceBundleMap['employee.editor.button.save']}
-                        <f:ajax execute="@form" render="@form" onevent="checkValidation" />
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidation"/>
                     </button>
                 </div>
             </div>

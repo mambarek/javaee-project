@@ -2,6 +2,7 @@ package com.it2go.employee.ui.controller;
 
 import com.it2go.employee.entities.EmailAddress;
 import com.it2go.employee.entities.Employee;
+import com.it2go.employee.entities.EntityNotValidException;
 import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
@@ -87,7 +88,7 @@ public class EditEmployeeController implements BaseViewController{
             model = new Employee();
     }
 
-    public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
+    public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
 
         if(model.isValid()) {
             System.out.println("## EditEmployeeController::saveEmployee model = " + model);
@@ -99,7 +100,9 @@ public class EditEmployeeController implements BaseViewController{
 
             // reset the view
             this.resetView();
-
+        }
+        else{
+            throw new EntityNotValidException();
         }
 
         //return "employeeList?faces-redirect=true";
