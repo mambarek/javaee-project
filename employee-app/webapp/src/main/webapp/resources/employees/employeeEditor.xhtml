@@ -55,7 +55,8 @@
                 <label class="col-md-3 col-form-label" for="birthDate">#{cc.resourceBundleMap['employee.editor.birthDate']}</label>
                 <div class="col">
                     <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                        <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}"  data-valid="#{component.valid}">
+                        <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}"
+                               placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}" data-valid="#{component.valid}">
                             <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
                             <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
                         </input>
@@ -150,7 +151,15 @@
            // alert("Alert from test");
             $('.employeeForm').submit();
         }
-
+        $(document).ready(function() {
+        $('.date').datepicker({
+        language: '#{webFlowController.locale}',
+        autoClose: true,
+        todayHighlight: true,
+        format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
+        })
+        });
     </h:outputScript>
 </composite:implementation>
+
 </html>

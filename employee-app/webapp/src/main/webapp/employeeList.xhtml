@@ -207,6 +207,16 @@
                             <input type="submit" value="Anlegen" jsf:id="create_button">
                                 <f:ajax listener="#{editEmployeeController.editEmployeeAjax(null)}" render=":editorWrapper"/>
                             </input>
+
+                            <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
+                                <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{editEmployeeController.model.birthDate}"
+                                       placeholder="#{employeeMsg['employee.app.date.pattern']}" data-valid="#{component.valid}">
+                                    <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                                </input>
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar" aria-hidden="true"/>
+                                </div>
+                            </div>
                         </h:form>
                     </div>
                 </div>
@@ -223,7 +233,6 @@
                     <!-- hidden form for confirmation dialog action delete-->
                     <h:form id="hiddenForm" style="display: none;">
                         <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" />
-                        <h:commandButton id="saveHidden" actionListener="#{editEmployeeController.saveEmployee}" />
                     </h:form>
                 </div>
             </div>
