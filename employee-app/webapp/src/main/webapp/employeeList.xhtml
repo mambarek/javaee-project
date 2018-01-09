@@ -183,7 +183,7 @@
                                             <a href="#" jsf:id="edit"
                                                >
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
-                                            <f:ajax execute="@this" render="editorWrapper" listener="#{editEmployeeController.editEmployeeAjax(employee.id)}" event="click"/>
+                                            <f:ajax execute="@this" render="content" listener="#{editEmployeeController.editEmployeeAjax(employee.id)}" event="click"/>
                                         </form>
                                     </td>
                                     <td>
@@ -203,20 +203,10 @@
                         </div>
                      </div>
                     <div class="card-footer">
-                        <h:form id="create_employee_form">
+                        <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
                             <input type="submit" value="Anlegen" jsf:id="create_button">
-                                <f:ajax listener="#{editEmployeeController.editEmployeeAjax(null)}" render=":editorWrapper"/>
+                                <f:ajax listener="#{editEmployeeController.editEmployeeAjax(null)}" render="content"/>
                             </input>
-
-                            <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                                <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{editEmployeeController.model.birthDate}"
-                                       placeholder="#{employeeMsg['employee.app.date.pattern']}" data-valid="#{component.valid}">
-                                    <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                                </input>
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar" aria-hidden="true"/>
-                                </div>
-                            </div>
                         </h:form>
                     </div>
                 </div>
@@ -227,7 +217,7 @@
                                               deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}" rendered="#{!empty editEmployeeController.model}">
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
                         <f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>
-
+                        <!-- WICHTIG: an dieser stelle kein AJAX für den save button. submitt fuktioniert dann nicht mehr-->
                     </employees:employeeEditor>
 
                     <!-- hidden form for confirmation dialog action delete-->
