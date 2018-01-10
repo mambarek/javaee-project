@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+<composite:interface componentType="com.it2go.employee.ui.jsf.EmailListComponent">
+    <composite:attribute name="value" type="java.util.List" shortDescription="The list of emails from model" />
+    <composite:clientBehavior name="addEmail" event="action" targets="addAction"/>
+</composite:interface>
+
+<composite:implementation>
+    <div id="#{cc.clientId}">
+        <ui:repeat value="#{cc.attrs.emailList}" var="email">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="email#{cc.attrs.emailList.indexOf(email)}">Email: #{cc.attrs.emailList.indexOf(email)}:#{component.findComponent('email').valid}</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               jsf:id="email"  data-valid="#{component.valid}"
+                               jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true">
+                            <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
+                        </input>
+                        <!--<span class="input-group-addon fa fa-minus-square"/>-->
+                        <a class="btn-primary add-email" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
+                             <f:ajax render="#{cc.clientId}"/>
+                             <span class="input-group-addon fa fa-minus-circle fa-2"/>
+                         </a>
+                    </div>
+                    <h:message errorClass="form-control-feedback" for="email"/>
+                </div>
+            </div>
+        </ui:repeat>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" />
+            <div class="col">
+                <button type="submit" class="btn btn-primary mr-3" jsf:id="add" jsf:immediate="true"
+                        jsf:action="#{cc.addNewEmail}">Hinzufügen
+
+                </button>
+                <a class="btn btn-primary" jsf:action="#{cc.addNewEmail}"  jsf:immediate="true" jsf:id="addAction">
+                    <f:ajax render="#{cc.clientId}" execute="@form"/>
+                    <i class="fa fa-plus-square fa-lg"/>Email</a>
+            </div>
+        </div>
+    </div>
+</composite:implementation>
+</html>

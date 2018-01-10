@@ -67,9 +67,8 @@
                     <h:message for="birthDate" errorClass="form-control-feedback" />
                 </div>
             </div>
-            <employees:emailList emailList="#{cc.attrs.model.emails}">
 
-            </employees:emailList>
+            <employees:emailList value="#{cc.attrs.model.emails}"/>
 
             <div class="form-group row">
                 <label class="col-md-3 col-form-label" for="salary">#{cc.resourceBundleMap['employee.editor.salary']}</label>
@@ -77,6 +76,7 @@
                     <input type="text" class="form-control" jsf:id="salary"
                            jsf:value="#{cc.attrs.model.salary}"  data-valid="#{component.valid}">
                         <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+                        <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
                     </input>
                     <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
                 </div>
@@ -147,17 +147,13 @@
         </div>
     </div>
     <h:outputScript >
-        function test(){
-           // alert("Alert from test");
-            $('.employeeForm').submit();
-        }
         $(document).ready(function() {
-        $('.date').datepicker({
-        language: '#{webFlowController.locale}',
-        autoClose: true,
-        todayHighlight: true,
-        format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
-        })
+            $('.date').datepicker({
+                language: '#{webFlowController.locale}',
+                autoClose: true,
+                todayHighlight: true,
+                format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
+            })
         });
     </h:outputScript>
 </composite:implementation>

@@ -85,8 +85,10 @@ function validateInputStyle(component){
     var valid = component.attr("data-valid");
     console.info("validateInputStyle component", component, " valid: " + valid);
 
+    // reset hightlighting
     component.parent().removeClass('has-danger has-success');
     component.removeClass("form-control-danger form-control-success")
+
     if (valid == "false") {
         component.parent().addClass('has-danger');
         component.addClass('form-control-danger');

@@ -1,24 +1,28 @@
 package com.it2go.employee.ui.controller;
 
+import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 @Named
-public class TestController {
+@ViewScoped
+public class TestController implements Serializable {
 
     private String firstName;
     private String lastName;
 
-    public String save(){
+    public String save() {
         System.out.println("-- TestController save() call --");
         return null;
     }
 
-    public String cancel(){
+    public String cancel() {
         System.out.println("-- TestController cancel() call --");
         return null;
     }
 
-    public String delete(){
+    public String delete() {
         System.out.println("-- TestController delete() call --");
         return null;
     }

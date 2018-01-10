@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+    <h:form id="myform">
+        <h:inputText value="#{testController.firstName}">
+            <p:ajax  update="out mylabel" />
+            <!--<f:ajax render="myform" execute="@this"/>-->
+
+        </h:inputText>
+
+        <h:outputText id="out" value="Das ist dein Text: #{testController.firstName}" />
+        <br/>
+        <h:outputLabel value="Das ist dein Text: #{testController.getFirstName()}" id="mylabel"/>
+    </h:form>
+</h:body>
+</html>

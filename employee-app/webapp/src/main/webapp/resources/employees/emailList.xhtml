@@ -5,44 +5,37 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
-<composite:interface componentType="com.it2go.employee.ui.jsf.EmailListComponent">
-    <composite:attribute name="emailList"/>
-    <composite:clientBehavior name="addEmail" event="action" targets="addAction"/>
+<composite:interface componentType="com.it2go.employee.ui.jsf.DynamicEmailList">
+    <composite:attribute name="value" type="java.util.List" shortDescription="The list of emails from model" />
 </composite:interface>
 
 <composite:implementation>
-    <f:event type="postAddToView" listener="#{cc.init()}"/>
     <div id="#{cc.clientId}">
-        <ui:repeat value="#{cc.attrs.emailList}" var="email">
-            <div class="form-group row  #{component.findComponent('email').valid ? '':'has-danger'}">
-                <label class="col-md-3 col-form-label" for="email#{cc.attrs.emailList.indexOf(email)}">Email: #{cc.attrs.emailList.indexOf(email)}:#{component.findComponent('email').valid}</label>
-                <div class="col">
-                    <div class="input-group">
-                        <input type="text" class="form-control #{component.valid ? '':'form-control-danger'}"
-                               jsf:id="email"
-                               jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true"/>
 
-                        <!--<span class="input-group-addon fa fa-minus-square"/>-->
-                        <a class="btn-primary add-email" jsf:action="#{cc.removeEmail(cc.attrs.emailList.indexOf(email))}" jsf:immediate="true">
-                             <f:ajax render="#{cc.clientId}"/>
-                             <span class="input-group-addon fa fa-minus-circle fa-2"/>
-                         </a>
-                    </div>
-                    <h:message errorClass="form-control-feedback" for="email"/>
+        <h:dataTable id="table" binding="#{cc.table}" value="#{cc.attrs.value}" var="email" style="width: 100%">
+            <h:column style="width:130px;"><h:outputLabel value="Email" /></h:column>
+            <h:column style="width: 100%;float:left;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Please give your Email here!"
+                           jsf:id="email"  data-valid="#{component.valid}"
+                           jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true">
+                        <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
+                    </input>
+                    <!--<span class="input-group-addon fa fa-minus-square"/>-->
+                    <a class="btn-primary add-email" jsf:action="#{cc.remove}" >
+                        <f:ajax render="#{cc.clientId}"/>
+                        <span class="input-group-addon fa fa-minus-circle fa-2"/>
+                    </a>
                 </div>
-            </div>
-        </ui:repeat>
-
+                <h:message errorClass="form-control-feedback" for="email"/>
+            </h:column>
+        </h:dataTable>
         <div class="form-group row">
             <label class="col-md-3 col-form-label" />
             <div class="col">
-                <button type="submit" class="btn btn-primary mr-3" jsf:id="add" jsf:immediate="true"
-                        jsf:action="#{cc.addNewEmail}">Hinzufügen
-
-                </button>
-                <a class="btn btn-primary" jsf:action="#{cc.addNewEmail}"  jsf:immediate="true" jsf:id="addAction">
-                    <f:ajax render="#{cc.clientId}" execute="@form"/>
-                    <i class="fa fa-plus-square fa-lg"/>Email</a>
+                <a class="btn btn-primary" jsf:action="#{cc.add}"  jsf:id="addAction">
+                    <f:ajax render="#{cc.clientId}" />
+                    <i class="fa fa-plus-square fa-lg"/>  Email</a>
             </div>
         </div>
     </div>
