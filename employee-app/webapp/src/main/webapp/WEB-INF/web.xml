@@ -3,6 +3,12 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          id="WebApp_ID" version="3.1">
     <display-name>Archetype Created Web Application</display-name>
+
+    <context-param>
+        <param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
+        <!--<param-value>mojarra-2.3.3</param-value>-->
+        <param-value>myfaces-2.3.0-beta</param-value>
+    </context-param>
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>

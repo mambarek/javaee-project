@@ -1,0 +1,32 @@
+<ui:component
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:cc="http://java.sun.com/jsf/composite"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+    <cc:interface componentType="testInput">
+        <cc:editableValueHolder name="editableText" targets="#{cc.clientId}:editableText"/>
+        <cc:attribute name="value" type="java.lang.String"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label" type="java.lang.String"
+                      shortDescription="the label." />
+
+    </cc:interface>
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <div class="form-group row">
+                <label class="col-form-label col-md-3" for="editableText">#{cc.attrs.label}</label>
+                <div class="col">
+                    <input type="text" class="form-control" jsf:binding="#{cc.text}" jsf:id="editableText"
+                           jsf:value="#{cc.value}" data-valid="#{cc.text.valid}">
+
+                        <f:ajax execute="@this" render="@this" onevent="handleAjax" event="change"/>
+                    </input>
+                    <h:message for="editableText" errorClass="form-control-feedback" />
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</ui:component>

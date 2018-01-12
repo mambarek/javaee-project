@@ -81,7 +81,9 @@
                     <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
                 </div>
             </div>
+            <employees:testInput value="#{testController.lastName}" label="Lastname">
 
+            </employees:testInput>
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
@@ -149,11 +151,11 @@
     <h:outputScript >
         $(document).ready(function() {
             $('.date').datepicker({
-                language: '#{webFlowController.locale}',
-                autoClose: true,
-                todayHighlight: true,
-                format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
-            })
+            language: '#{webFlowController.locale}',
+            autoClose: true,
+            todayHighlight: true,
+            format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
+        })
         });
     </h:outputScript>
 </composite:implementation>

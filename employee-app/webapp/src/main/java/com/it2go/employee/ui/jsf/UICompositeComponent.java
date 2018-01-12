@@ -32,8 +32,8 @@ public class UICompositeComponent extends UINamingContainer {
     private static final String PROPERTIES_EXT = ".properties";
 
 
-    private static Logger LOGGER = Logger.getLogger("com.it2go.employee.ui.jsf",
-            "javax.faces.LogStrings");
+/*    private static Logger LOGGER = Logger.getLogger("com.it2go.employee.ui.jsf",
+            "javax.faces.LogStrings");*/
 
     private Map<String, String> resourceBundleMap = null;
 
@@ -69,9 +69,7 @@ public class UICompositeComponent extends UINamingContainer {
                             try {
                                 propertiesInputStream.close();
                             } catch (IOException ioe) {
-                                if (LOGGER.isLoggable(Level.SEVERE)) {
-                                    LOGGER.log(Level.SEVERE, null, ioe);
-                                }
+                                ioe.printStackTrace();
                             }
                         }
                     }
@@ -246,9 +244,7 @@ public class UICompositeComponent extends UINamingContainer {
                         try {
                             propertiesInputStream.close();
                         } catch (IOException ioe) {
-                            if (LOGGER.isLoggable(Level.SEVERE)) {
-                                LOGGER.log(Level.SEVERE, null, ioe);
-                            }
+                            ioe.printStackTrace();
                         }
                     }
                 }

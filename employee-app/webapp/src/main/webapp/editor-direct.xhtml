@@ -204,11 +204,17 @@
                      </div>
                     <div class="card-footer">
                         <h:form id="create_employee_form">
-                            <input type="submit" value="Anlegen" jsf:id="create_button">
-                                <f:ajax listener="#{editEmployeeController.editEmployee(null)}" render=":editorWrapper" />
+                            <input type="submit" value="Anlegen" jsf:id="create_button" jsf:action="#{editEmployeeController.editEmployee(null)}">
+                                <f:ajax execute="@form" render=":editorWrapper" />
                             </input>
+                            <button type="submit" value="Button" jsf:id="submit">
+                                Button
+                                <f:ajax render=":editorWrapper" />
+                            </button>
 
-                            <h:commandButton action="#{editEmployeeController.editEmployeeAjax(null)}" value="Anlegen commandButton"/>
+                            <h:commandButton action="#{editEmployeeController.editEmployeeAjax(null)}" value="Anlegen commandButton">
+                                <f:ajax render=":editorWrapper"/>
+                            </h:commandButton>
                         </h:form>
                     </div>
                 </div>
@@ -291,8 +297,9 @@
                                                 <button type="submit" class="btn btn-primary mr-3" jsf:id="save" jsf:action="#{editEmployeeController.saveEmployee()}">
                                                    #{employeeMsg['employee.editor.button.save']}
                                                 </button>
-                                                <h:commandButton action="#{editEmployeeController.saveEmployee()}"
-                                                                 value="Command"/>
+                                                <h:commandButton action="#{editEmployeeController.saveEmployee()}"   value="Command">
+                                                    <f:ajax render="@form"/>
+                                                </h:commandButton>
                                             </div>
                                         </div>
 
