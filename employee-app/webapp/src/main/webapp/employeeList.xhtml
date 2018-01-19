@@ -203,48 +203,34 @@
                         </div>
                      </div>
                     <div class="card-footer">
-                        <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                        <h:form id="create_employee_form" rendered="true">
                             <input type="submit" value="Anlegen" jsf:id="create_button">
                                 <f:ajax listener="#{editEmployeeController.initView()}" render=":content"/>
                             </input>
-                        </h:form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header corp-block-header">
-                        Test UIComponents
-                    </div>
-                    <div class="card-block" style="padding: 0px">
-                        <form jsf:id="test-cc" class="form-horizontal employeeForm">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="firstName">firstName</label>
-                                <div class="col">
-                                    <input type="text" class="form-control" jsf:id="firstName" jsf:required="true"
-                                           jsf:value="#{testController.firstName}" data-valid="#{component.valid}">
-                                        <f:validateLength minimum="3" maximum="50"/>
-                                        <f:ajax execute="@this" render="@this" onevent="handleAjax" event="change"/>
-                                    </input>
-                                    <h:message for="firstName" errorClass="form-control-feedback" />
-                                </div>
-                            </div>
-                            <employees:testInput value="#{testController.lastName}" label="Lastname">
+                            <br/>
+                            <employees:testInput value="#{editEmployeeController.model.firstName}" label="myLabel" >
+
+                                <f:validateLength minimum="3" maximum="50" for="ediatbleText"/>
+
                             </employees:testInput>
-                            <employees:inputEditable >
+                            <employees:simpleInput  value="#{editEmployeeController.model.firstName}" inputLabel="Simple FirstName">
 
-                            </employees:inputEditable>
-                            <employees:inputDate value="#{testController.date1}" >
+                                <f:validateLength minimum="4" maximum="50" for="input"/>
 
-                            </employees:inputDate>
-                            <button type="submit" value="Submmit" jsf:id="submit">Submit me
-                                <f:ajax execute="@form" render="@form" onevent="checkValidation"/>
-                            </button>
-                        </form>
+                            </employees:simpleInput>
+                            <employees:bestInput  value="#{editEmployeeController.model.firstName}" inputLabel="Best FirstName">
+
+                                <f:validateLength minimum="4" maximum="50" for="input"/>
+
+                            </employees:bestInput>
+                        </h:form>
                     </div>
                 </div>
 
                 <div jsf:id="editorWrapper">
-                    <h1>Test Text</h1>
+
                     <employees:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
+                                              rendered="#{!empty editEmployeeController.model}"
                                               deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}"
                                               >
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
@@ -305,16 +291,7 @@
     <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.date').datepicker({
-                language: '#{webFlowController.locale}',
-                autoClose: true,
-                todayHighlight: true,
-                format: "#{employeeMsg['employee.app.javascript.date.pattern']}"
-            })
-        });
-    </script>
+
     <script src="assets/js/employee.js"/>
     <script src="assets/js/jsf-fixes.js"/>
 </h:body>

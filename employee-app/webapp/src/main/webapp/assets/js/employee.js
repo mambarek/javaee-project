@@ -101,9 +101,22 @@ function validateInputStyle(component){
     }
 }
 
+function validateElementWithId(id){
+    var element = $("#" + id.replace(new RegExp(':', 'g'),"\\:"));
+    //var allInputFields = form.filter('input[type=text], select');
+    element.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+}
+
+function validateElement(elem){
+    var element = $("#" + elem.id.replace(new RegExp(':', 'g'),"\\:"));
+    //var allInputFields = form.filter('input[type=text], select');
+    element.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+}
+
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
     form.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+
 }
 
 
@@ -164,7 +177,17 @@ function checkValidation(data){
             //document.getElementsByTagName('body')[0].className = '';
 
             validateForm(form);
-            $('#saveHiddenForm\\:saveOk').click();
+            //$('#saveHiddenForm\\:saveOk').click();
             break;
     }
+}
+
+function validateEnclosingFormWithId(elementId){
+    var form = $("#" + encodedId.replace(new RegExp(':', 'g'),"\\:")).closest("form");
+    validateForm(form);
+}
+
+function validateEnclosingForm(elem){
+    var form = $("#" + elem.id.replace(new RegExp(':', 'g'),"\\:")).closest("form");
+    validateForm(form);
 }

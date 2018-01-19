@@ -28,6 +28,9 @@
     <div class="card-block">
         <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
         <div class="form-row">
+            <employees:testInput value="#{cc.attrs.model.firstName}" label="myLabel" isRequired="true" id="t">
+                <f:validateLength for="input" maximum="50" minimum="10"/>
+            </employees:testInput>
 
             <div class="form-group row " jsf:id="firstNameRow">
                 <label class="col-form-label col-md-3" for="firstName">#{cc.resourceBundleMap['employee.editor.firstName']}</label>
@@ -35,30 +38,30 @@
                     <input type="text" class="form-control" jsf:id="firstName" jsf:required="true"
                            jsf:value="#{cc.attrs.model.firstName}" data-valid="#{component.valid}">
                         <f:validateLength minimum="3" maximum="50"/>
-                        <f:ajax execute="@this" render="@this" onevent="handleAjax" event="change"/>
+                        <f:ajax execute="@this" render="firstNameRow" onevent="handleAjax" event="change"/>
                     </input>
                     <h:message for="firstName" errorClass="form-control-feedback" />
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" jsf:id="lastNameRow">
                 <label class="col-md-3 col-form-label" for="lastName">#{cc.resourceBundleMap['employee.editor.lastName']}</label>
                 <div class="col">
                     <input type="text" class="form-control" jsf:id="lastName" jsf:required="true"
                            jsf:value="#{cc.attrs.model.lastName}" data-valid="#{component.valid}">
                         <f:validateLength minimum="3" maximum="50"/>
-                        <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
+                        <f:ajax execute="@this" render="lastNameRow" onevent="handleAjax"/>
                     </input>
                     <h:message for="lastName" errorClass="form-control-feedback"/>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" jsf:id="birthDateRow">
                 <label class="col-md-3 col-form-label" for="birthDate">#{cc.resourceBundleMap['employee.editor.birthDate']}</label>
                 <div class="col">
                     <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
                         <input type="text" class="form-control" jsf:id="birthDate" jsf:value="#{cc.attrs.model.birthDate}"
                                placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}" data-valid="#{component.valid}">
                             <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
-                            <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
+                            <f:ajax execute="@this" render="birthDateRow" onevent="handleAjax"/>
                         </input>
                         <div class="input-group-addon">
                             <i class="fa fa-calendar" aria-hidden="true"/>
@@ -67,23 +70,18 @@
                     <h:message for="birthDate" errorClass="form-control-feedback" />
                 </div>
             </div>
-
-            <employees:emailList value="#{cc.attrs.model.emails}"/>
-
-            <div class="form-group row">
+            <div class="form-group row" jsf:id="salaryRow">
                 <label class="col-md-3 col-form-label" for="salary">#{cc.resourceBundleMap['employee.editor.salary']}</label>
                 <div class="col">
                     <input type="text" class="form-control" jsf:id="salary"
                            jsf:value="#{cc.attrs.model.salary}"  data-valid="#{component.valid}">
                         <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
-                        <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
+                        <f:ajax execute="@this" render="salaryRow" onevent="handleAjax"/>
                     </input>
                     <h:message errorClass="form-control-feedback" id="errors1" for="salary"/>
                 </div>
             </div>
-            <employees:testInput value="#{testController.lastName}" label="Lastname">
 
-            </employees:testInput>
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">

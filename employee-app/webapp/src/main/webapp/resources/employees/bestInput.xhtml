@@ -4,18 +4,18 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:jsf="http://xmlns.jcp.org/jsf"
->
-    <cc:interface >
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-       <!-- <cc:clientBehavior name="change" targets="editableText" event="change"/>-->
-        <cc:attribute name="value" required="true"
-                      shortDescription="The selected value." />
-        <cc:attribute name="label"
-                      shortDescription="the label." />
-        <cc:attribute name="isRequired" />
-        <cc:editableValueHolder name="input" targets="inputText editableText"/>
+    <cc:interface>
+        <cc:attribute name="inputLabel" required="false" default="Input"/>
+        <cc:attribute name="label" required="false" default="Input"/>
+        <cc:attribute name="submitLabel" default="Submit"/>
+        <!-- <cc:attribute name="action" required="true" targets="submit"/>-->
+        <cc:attribute name="value" required="true"/>
+        <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:actionSource name="submit"/>
     </cc:interface>
+
     <cc:implementation>
         <div id="#{cc.clientId}">
             <div class="form-group row">
@@ -30,9 +30,15 @@
                 </div>
             </div>
         </div>
-        <h:inputText id="inputText" value="#{cc.attrs.value}">
-            <f:ajax execute="@this" render="@form"/>
-        </h:inputText>
-        <h:message for="inputText" errorClass="form-control-feedback" />
+        <div id="#{cc.clientId}-2">
+            <h:outputLabel for="input" value="#{cc.attrs.inputLabel}"/>
+            <h:inputText id="inputText" value="#{cc.attrs.value}">
+                <f:ajax execute="@this" render="@form"/>
+            </h:inputText>
+            <h:commandButton id="submit" value="#{cc.attrs.submitLabel}"/>
+            <br/>
+            <h:message for="inputText" style="color: red;"/>
+        </div>
     </cc:implementation>
+
 </ui:composition>

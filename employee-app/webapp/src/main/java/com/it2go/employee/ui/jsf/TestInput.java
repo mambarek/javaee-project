@@ -5,9 +5,11 @@ import javax.faces.component.NamingContainer;
 import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.LengthValidator;
+import javax.faces.validator.Validator;
 import java.io.IOException;
 
-@FacesComponent("testInput")
+@FacesComponent("xtestInput")
 public class TestInput extends UIInput implements NamingContainer {
 
     private UIInput text;
@@ -24,7 +26,18 @@ public class TestInput extends UIInput implements NamingContainer {
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
         //text.setValue(this.getValue());
+        //text.addValidator();
+
         super.encodeBegin(context);
+    }
+
+    @Override
+    public void encodeEnd(FacesContext context) throws IOException {
+        super.encodeEnd(context);
+        final LengthValidator lengthValidator = new LengthValidator();
+        lengthValidator.setMaximum(50);
+        lengthValidator.setMinimum(5);
+      //  text.addValidator(lengthValidator);
     }
 
     public UIInput getText() {

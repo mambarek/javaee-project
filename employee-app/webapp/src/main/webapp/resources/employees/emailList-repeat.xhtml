@@ -10,43 +10,37 @@
 </composite:interface>
 
 <composite:implementation>
-    <div id="#{cc.clientId}">
 
-        <h:dataTable id="table" binding="#{cc.table}" value="#{cc.attrs.value}" var="email" style="width: 100%">
-            <h:column >
+
+
+                <ui:repeat value="#{cc.attrs.value}" var="email">
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="email">Email</label>
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="mail@example.com"
+                            <input type="text" class="form-control" placeholder="Please give your Email here!"
                                    jsf:id="email"  data-valid="#{component.valid}"
-                                   jsf:value="#{email.email}" jsf:required="true">
+                                   jsf:value="#{email.email}" jsf:required="true" jsf:immediate="true">
                                 <f:ajax execute="@this" render="@this" onevent="handleAjax"/>
                             </input>
                             <!--<span class="input-group-addon fa fa-minus-square"/>-->
                             <a class="btn-primary add-email" jsf:action="#{cc.remove}" >
-                                <f:ajax render="#{cc.clientId}" />
+                                <f:ajax render="@form"/>
                                 <span class="input-group-addon fa fa-minus-circle fa-2"/>
                             </a>
                         </div>
                         <h:message errorClass="form-control-feedback" for="email"/>
                     </div>
                 </div>
-            </h:column>
-        </h:dataTable>
+                </ui:repeat>
         <div class="form-group row">
             <label class="col-md-3 col-form-label" />
             <div class="col">
-                <a class="btn btn-primary" jsf:type="submit" jsf:action="#{cc.add}"  jsf:id="addAction">
-                    <f:ajax render="#{cc.clientId}" immediate="true"/>
+                <a class="btn btn-primary" jsf:action="#{cc.add}"  jsf:id="addAction">
+                    <f:ajax render="@form" />
                     <i class="fa fa-plus-square fa-lg"/>  Email</a>
-
-                <button jsf:id="addButton" >Add
-                    <f:ajax immediate="true" listener="#{cc.add}"  render="#{cc.clientId}"
-                         execute="@this table" onevent="validateElementWithId('#{cc.clientId}')"/>
-                </button>
             </div>
         </div>
-    </div>
+
 </composite:implementation>
 </html>

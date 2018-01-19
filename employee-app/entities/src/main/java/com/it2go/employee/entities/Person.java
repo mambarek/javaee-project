@@ -40,13 +40,13 @@ public class Person extends DomainEntity {
 
     @Basic
     @Column(name = "FIRST_NAME", nullable = false)
-    @Size(min = 3, max = 100)
+    /*@Size(min = 3, max = 100)*/
     @NotNull
     private String firstName;
 
     @Basic
     @Column(name = "LAST_NAME", nullable = false)
-    @Size(min = 3, max = 100)
+    //@Size(min = 3, max = 100)
     @NotNull
     private String lastName;
 

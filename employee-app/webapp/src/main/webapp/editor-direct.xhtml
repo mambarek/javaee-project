@@ -204,7 +204,7 @@
                      </div>
                     <div class="card-footer">
                         <h:form id="create_employee_form">
-                            <input type="submit" value="Anlegen" jsf:id="create_button" jsf:action="#{editEmployeeController.editEmployee(null)}">
+                            <input type="submit" value="Anlegen" jsf:id="create_button" jsf:action="#{editEmployeeController.editEmployeeAjax(null)}">
                                 <f:ajax execute="@form" render=":editorWrapper" />
                             </input>
                             <button type="submit" value="Button" jsf:id="submit">
@@ -226,7 +226,7 @@
                                 #{employeeMsg['employee.editor.title']}
                             </div>
                             <div class="card-block">
-                                <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
+                                <form jsf:id="employeeForm" class="form-horizontal employeeForm" >
                                     <div class="form-row">
 
                                         <div class="form-group row ">
@@ -268,6 +268,7 @@
                                             </div>
                                         </div>
 
+                                        <employees:emailList value="#{editEmployeeController.model.emails}"/>
 
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label" for="salary">#{employeeMsg['employee.editor.salary']}</label>
@@ -286,7 +287,7 @@
                                                 <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
                                                     #{employeeMsg['employee.editor.button.cancel']}</button>
 
-                                                <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{editEmployeeController.model.isNew() == false}"
+                                                <button class="btn btn-primary mr-2" jsf:rendered="#{editEmployeeController.model.isNew() == false}"
                                                         jsf:id="delete">
                                                     <!--First ask for confirmation -->
                                                     <behavior:confirm modalSelector="#myModal" message="Möchten Sie den Datensatz wirklich löschen?"
@@ -294,17 +295,18 @@
                                                     <i class="fa fa-trash-o" aria-hidden="true"/> #{employeeMsg['employee.editor.button.delete']}
                                                 </button>
 
-                                                <button type="submit" class="btn btn-primary mr-3" jsf:id="save" jsf:action="#{editEmployeeController.saveEmployee()}">
+                                                <button class="btn btn-primary mr-3" jsf:id="save" jsf:action="#{editEmployeeController.saveEmployee()}">
                                                    #{employeeMsg['employee.editor.button.save']}
                                                 </button>
+
                                                 <h:commandButton action="#{editEmployeeController.saveEmployee()}"   value="Command">
-                                                    <f:ajax render="@form"/>
+                                                    <f:ajax execute="@form" render="@form" />
                                                 </h:commandButton>
                                             </div>
                                         </div>
 
                                     </div>
-                                </h:form>
+                                </form>
 
                             </div>
                         </div>
@@ -381,7 +383,7 @@
     <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
-    <script type="text/javascript">
+<!--    <script type="text/javascript">
         $(document).ready(function() {
             $('.date').datepicker({
                 language: '#{webFlowController.locale}',
@@ -390,7 +392,8 @@
                 format: "#{employeeMsg['employee.app.javascript.date.pattern']}"
             })
         });
-    </script>
+    </script>-->
     <script src="assets/js/employee.js"/>
+    <script src="assets/js/jsf-fixes.js"/>
 </h:body>
 </html>
