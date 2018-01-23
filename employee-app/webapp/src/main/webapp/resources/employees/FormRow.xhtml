@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <cc:interface componentType="AbstractFormRow">
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+        <cc:attribute name="type" default="text"/>
+        <cc:attribute name="isRequired" />
+        <cc:attribute name="readOnly" default="false" type="boolean"/>
+        <cc:attribute name="placeholder"/>
+        <cc:facet name="inputGroupAddon"/>
+        <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:clientBehavior name="changed" event="change" targets="editableText"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <div class="form-group row">
+                <label class="col-form-label col-md-3" for="editableText">#{cc.attrs.label}</label>
+                <div class="col">
+
+                    <c:if test="#{!cc.attrs.readOnly}">
+                        <div id="inputContainer">
+                            <c:choose>
+                                <!-- text -->
+                                <c:when test="#{cc.attrs.type eq 'text'}">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" jsf:binding="#{cc.input}" jsf:id="editableText"
+                                               jsf:value="#{cc.attrs.value}" data-valid="#{cc.input.valid}"
+                                               jsf:required="#{'true'.equals(cc.attrs.isRequired)? 'true': 'false'}"
+                                               placeholder="#{cc.attrs.placeholder}">
+
+                                            <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
+                                        </input>
+                                        <cc:renderFacet name="inputGroupAddon"/>
+                                    </div>
+                                </c:when>
+
+                                <!-- date -->
+                                <c:when test="#{cc.attrs.type eq 'date'}">
+                                    <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
+                                        <input type="text" class="form-control" jsf:binding="#{cc.input}" jsf:id="editableText"
+                                               jsf:value="#{cc.attrs.value}" data-valid="#{component.valid}"
+                                               jsf:required="#{'true'.equals(cc.attrs.isRequired)? 'true': 'false'}"
+                                               placeholder="#{cc.attrs.placeholder}">
+
+                                            <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
+                                        </input>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"/>
+                                        </div>
+                                    </div>
+                                </c:when>
+                            </c:choose>
+                            <!-- error message output -->
+                            <h:message for="#{cc.input.id}" errorClass="form-control-feedback" />
+                        </div>
+                    </c:if>
+
+                    <c:if test="#{cc.attrs.readOnly}">
+                        <!-- Hier muss der converter im backing bean eingeschalltet werden-->
+                        <span>#{cc.attrs.value}</span>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</html>
