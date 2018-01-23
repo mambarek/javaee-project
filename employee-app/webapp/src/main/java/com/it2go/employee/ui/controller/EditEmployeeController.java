@@ -7,6 +7,7 @@ import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 
@@ -50,7 +51,7 @@ public class EditEmployeeController implements BaseViewController{
     }
 
     //@PostConstruct
-    public void initView(){
+    public void initView() throws EntityNotFoundException {
 
         System.out.println("-- EditEmployeeController::initView before model: " + model);
         viewParams = webFlowController.getViewParams(VIEW_ID);
@@ -71,7 +72,11 @@ public class EditEmployeeController implements BaseViewController{
         model = employee;*/
     }
 
-    public String editEmployee(Long id){
+    public void createNewEmployee(){
+        model = new Employee();
+    }
+
+    public String editEmployee(Long id) throws EntityNotFoundException {
         if(id != null){
             model = employeeRepository.findById((Long)id);
         }
@@ -79,7 +84,7 @@ public class EditEmployeeController implements BaseViewController{
         return null;
     }
 
-    public void editEmployeeAjax(Long id){
+    public void editEmployeeAjax(Long id) throws EntityNotFoundException {
         if(id != null){
             Map<String, Object> paramsMap = new HashMap<>();
             paramsMap.put("id",id);
