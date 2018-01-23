@@ -83,19 +83,23 @@ function encodeId(id) {
 function validateInputStyle(component){
 
     var valid = component.attr("data-valid");
+    var inputContainer = component.closest("#inputContainer");
     console.info("validateInputStyle component", component, " valid: " + valid);
 
     // reset hightlighting
-    component.parent().removeClass('has-danger has-success');
+    //component.parent().removeClass('has-danger has-success');
+    inputContainer.removeClass('has-danger has-success');
     component.removeClass("form-control-danger form-control-success")
 
     if (valid == "false") {
-        component.parent().addClass('has-danger');
+        inputContainer.addClass('has-danger');
+        //component.parent().addClass('has-danger');
         component.addClass('form-control-danger');
         component.siblings('.form-control-feedback').show();
     }
     else {
-        component.parent().addClass('has-success');
+        inputContainer.addClass('has-success');
+        //component.parent().addClass('has-success');
         component.addClass('form-control-success');
         component.siblings('.form-control-feedback').hide();
     }

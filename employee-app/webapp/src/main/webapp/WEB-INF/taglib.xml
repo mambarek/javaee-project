@@ -28,4 +28,11 @@
             <behavior-id>employee.behavior.InputFieldBehavior</behavior-id>
         </behavior>
     </tag>
+    <tag>
+        <tag-name>formRow</tag-name>
+        <source>taglib.xml</source>
+        <attribute>
+            <name>visible</name>
+        </attribute>
+    </tag>
 </facelet-taglib>
