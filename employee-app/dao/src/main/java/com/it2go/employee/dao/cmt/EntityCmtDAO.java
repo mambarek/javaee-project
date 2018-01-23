@@ -44,9 +44,14 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
             entityManager.persist(entity);
         }
         else{
-                //Date dbLastUpdate = this.getLastUpdateTime(entity);
-                T db_entity = this.getByIdentityKey(entity.getId());
-                if(db_entity == null)
+            //Date dbLastUpdate = this.getLastUpdateTime(entity);
+            T db_entity = null;
+            try {
+                db_entity = this.getByIdentityKey(entity.getId());
+            } catch (EntityNotFoundException e) {
+                e.printStackTrace();
+            }
+            if(db_entity == null)
                     throw new EntityRemovedException();
 
                 //if (dbLastUpdate != null && !dbLastUpdate.equals(entity.getLastUpdateTime()))
@@ -107,8 +112,12 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
         return merged;
     }
 
-    public <K> T getByIdentityKey(K key) {
-        return entityManager.find(this.getEntityClass(), key);
+    public <K> T getByIdentityKey(K key) throws EntityNotFoundException {
+        Objects.requireNonNull(key);
+        final T entity = entityManager.find(this.getEntityClass(), key);
+
+        if(entity == null) throw new EntityNotFoundException("Entity not found id: [" + key + "]");
+        return entity;
     }
 
     public List<T> getAll() {
