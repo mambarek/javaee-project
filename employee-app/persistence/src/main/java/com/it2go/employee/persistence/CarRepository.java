@@ -42,7 +42,7 @@ public class CarRepository implements ICarRepository {
     }
 
     @Override
-    public <K> Car findById(K id) {
+    public <K> Car findById(K id) throws EntityNotFoundException {
         return carDAO.getByIdentityKey(id);
     }
 

@@ -95,7 +95,7 @@ public class PersonRepository implements IPersonRepository {
     }
 
     @Override
-    public <K> Person findById(K id) {
+    public <K> Person findById(K id) throws EntityNotFoundException {
         return this.personDAO.getByIdentityKey(id);
     }
 

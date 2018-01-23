@@ -2,6 +2,7 @@ package com.it2go.employee.services.rest;
 
 
 import com.it2go.employee.entities.Employee;
+import com.it2go.framework.dao.EntityNotFoundException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -29,7 +30,7 @@ public interface EmployeeResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.TEXT_PLAIN})
     @Path("/employees/{id:[1-9][0-9]*}")
-    Employee findById(@PathParam("id") final Long id);
+    Employee findById(@PathParam("id") final Long id) throws EntityNotFoundException;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

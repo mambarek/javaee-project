@@ -2,6 +2,7 @@ package com.it2go.employee.services.rest.test;
 
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.services.rest.EmployeeResource;
+import com.it2go.framework.dao.EntityNotFoundException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
@@ -162,7 +163,7 @@ public class EmployeeResourceTest {
     }
 
     @Test
-    public void test04(@ArquillianResteasyResource("rest/EmployeeService") EmployeeResource employeeResource){
+    public void test04(@ArquillianResteasyResource("rest/EmployeeService") EmployeeResource employeeResource) throws EntityNotFoundException {
         System.out.println(">>> test04");
 /*        Employee employee = new Employee();
         employee.setFirstName("X-Rest");

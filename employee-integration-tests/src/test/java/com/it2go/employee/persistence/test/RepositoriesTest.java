@@ -13,6 +13,7 @@ import com.it2go.employee.persistence.ITruckRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.employee.persistence.view.EmployeeViewRepository;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -131,7 +132,7 @@ public class RepositoriesTest {
     }
 
     @Test // test Lazy loading
-    public void test01(){
+    public void test01() throws EntityNotFoundException {
         System.out.println("### test1");
         Employee anna = new Employee();
         anna.setFirstName("Anna");
@@ -185,7 +186,7 @@ public class RepositoriesTest {
     }
 
     @Test
-    public void test04(){
+    public void test04() throws EntityNotFoundException {
         Employee john = new Employee();
         john.setFirstName("John");
         john.setLastName("Smith");
@@ -302,14 +303,14 @@ public class RepositoriesTest {
     }
 
     @Test
-    public void test11(){
+    public void test11() throws EntityNotFoundException {
         System.out.println("### test11");
         final Employee helena = employeeRepository.findById(helenaId);
         Assert.assertNull(helena);
     }
 
     //@Test
-    public void test_02_Repo() {
+    public void test_02_Repo() throws EntityNotFoundException {
 
         // create admin user
         Person admin = new Person();
@@ -474,7 +475,7 @@ public class RepositoriesTest {
         byGender.forEach(System.out::println);
     }
     //@Test
-    public void testRepo1() {
+    public void testRepo1() throws EntityNotFoundException {
 
         // create admin user
         Person admin = new Person();

@@ -5,6 +5,7 @@ import com.it2go.employee.entities.Employee;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.inject.Inject;
@@ -15,7 +16,7 @@ import java.util.List;
 public class EmployeeResourceImpl implements EmployeeResource {
 
     @Inject
-    IEmployeeRepository employeeRepository;
+    private IEmployeeRepository employeeRepository;
 
     @Inject
     private UserSession userSession;
@@ -31,9 +32,7 @@ public class EmployeeResourceImpl implements EmployeeResource {
         Employee persistedEmpl = null;
         try {
             persistedEmpl = employeeRepository.persist(employee, userSession.getTestCreationUser());
-        } catch (EntityConcurrentModificationException e) {
-            e.printStackTrace();
-        } catch (EntityRemovedException e) {
+        } catch (EntityConcurrentModificationException | EntityRemovedException e) {
             e.printStackTrace();
         }
 
@@ -41,9 +40,15 @@ public class EmployeeResourceImpl implements EmployeeResource {
     }
 
     @Override
-    public Employee findById(final Long id){
+    public Employee findById(final Long id) {
         System.out.println("### EmployeeResourceImpl findById call!");
-        return employeeRepository.findById(id);
+        Employee foundEntity = null;
+        try {
+            foundEntity = employeeRepository.findById(id);
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+        }
+        return foundEntity;
     }
 
     @Override

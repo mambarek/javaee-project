@@ -42,7 +42,7 @@ public class TruckRepository implements ITruckRepository {
     }
 
     @Override
-    public <K> Truck findById(K id) {
+    public <K> Truck findById(K id) throws EntityNotFoundException {
         return truckDAO.getByIdentityKey(id);
     }
 

@@ -92,7 +92,7 @@ public class EmployeeRepository implements IEmployeeRepository{
     }
 
     @Override
-    public <Long> Employee findById(Long id) {
+    public <Long> Employee findById(Long id) throws EntityNotFoundException {
         return this.employeeDAO.getByIdentityKey(id);
     }
 

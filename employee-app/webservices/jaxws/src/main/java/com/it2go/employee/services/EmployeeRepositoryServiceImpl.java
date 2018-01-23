@@ -4,6 +4,7 @@ import com.it2go.employee.entities.Employee;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.ejb.EJB;
@@ -27,7 +28,7 @@ public class EmployeeRepositoryServiceImpl implements EmployeeRepositoryService 
         return persistedEmpl;
     }
 
-    public Employee getEmployeeById(Long id) {
+    public Employee getEmployeeById(Long id) throws EntityNotFoundException {
         return employeeRepository.findById(id);
 //        return null;
     }

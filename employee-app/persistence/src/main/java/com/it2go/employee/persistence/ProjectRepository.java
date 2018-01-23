@@ -44,7 +44,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public <Long> Project findById(Long id) {
+    public <Long> Project findById(Long id) throws EntityNotFoundException {
         return projectDAO.getByIdentityKey(id);
     }
 

@@ -15,7 +15,7 @@ public interface IEntityRepository<T extends IAbstractEntity, P extends IAbstrac
     public T remove(T entity) throws EntityNotPersistedException;
     public void refresh(T entity);
     public <K> T removeById(K id) throws EntityNotFoundException;
-    public <K> T findById(K id);
+    public <K> T findById(K id) throws EntityNotFoundException;
     public List<T> findAll();
     public int executeUpdate(final String query);
 }

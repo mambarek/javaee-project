@@ -3,6 +3,7 @@ package com.it2go.employee.services.ws.test;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.services.EmployeeRepositoryService;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
+import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityRemovedException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -131,7 +132,7 @@ public class EmployeeRepositoryServiceTest {
     }
 
     @Test
-    public void test01(){
+    public void test01() throws EntityNotFoundException {
         EmployeeRepositoryService employeeRepositoryService = this.getEmployeeService();
         final Employee employeeById = employeeRepositoryService.getEmployeeById(1L);
         System.out.println("employeeById = " + employeeById);
