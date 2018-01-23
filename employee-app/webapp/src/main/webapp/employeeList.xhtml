@@ -203,26 +203,10 @@
                         </div>
                      </div>
                     <div class="card-footer">
-                        <h:form id="create_employee_form" rendered="true">
+                        <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
                             <input type="submit" value="Anlegen" jsf:id="create_button">
-                                <f:ajax listener="#{editEmployeeController.initView()}" render=":content"/>
+                                <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render=":content"/>
                             </input>
-                            <br/>
-                            <employees:testInput value="#{editEmployeeController.model.firstName}" label="myLabel" >
-
-                                <f:validateLength minimum="3" maximum="50" for="ediatbleText"/>
-
-                            </employees:testInput>
-                            <employees:simpleInput  value="#{editEmployeeController.model.firstName}" inputLabel="Simple FirstName">
-
-                                <f:validateLength minimum="4" maximum="50" for="input"/>
-
-                            </employees:simpleInput>
-                            <employees:bestInput  value="#{editEmployeeController.model.firstName}" inputLabel="Best FirstName">
-
-                                <f:validateLength minimum="4" maximum="50" for="input"/>
-
-                            </employees:bestInput>
                         </h:form>
                     </div>
                 </div>
