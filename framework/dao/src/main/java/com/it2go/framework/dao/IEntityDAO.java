@@ -12,7 +12,7 @@ public interface IEntityDAO<T extends IAbstractEntity> {
     public T delete(T entity) throws EntityNotPersistedException;
     public void refresh(T entity);
     public <K> T deleteByIdentityKey(final K key) throws EntityNotFoundException;
-    public <K> T getByIdentityKey(final K key);
+    public <K> T getByIdentityKey(final K key) throws EntityNotFoundException;
     public List<T> getAll();
     public List<T> getByQuery(final String jpaQuery, Object... params);
     public List<T> getByQuery(final String jpaQuery, Map<String, Object> paramMap);
