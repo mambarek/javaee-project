@@ -183,7 +183,10 @@
                                             <a href="#" jsf:id="edit"
                                                >
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
-                                            <f:ajax execute="@this" render="content" listener="#{editEmployeeController.editEmployeeAjax(employee.id)}" event="click"/>
+                                            <f:ajax execute="@this" render="content"
+                                                    listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                                    event="click"
+                                            />
                                         </form>
                                     </td>
                                     <td>

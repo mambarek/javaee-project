@@ -29,28 +29,36 @@
         <div class="form-row">
             <employees:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
-                               isRequired="true">
-                <f:validateLength for="input" minimum="5" maximum="50"/>
+                               isRequired="false" disabled="true">
+                <f:validateLength minimum="5" maximum="50"/>
+            </employees:formRow>
+            <employees:formRow value="#{cc.attrs.model.firstName}"
+                               label="#{cc.resourceBundleMap['employee.editor.firstName']}"
+                               isRequired="true" ajaxRender="@form">
+                <f:validateLength minimum="5" maximum="50"/>
             </employees:formRow>
 
             <employees:formRow value="#{cc.attrs.model.lastName}"
                                label="#{cc.resourceBundleMap['employee.editor.lastName']}"
-                               isRequired="true">
-                <f:validateLength for="input" minimum="3" maximum="50"/>
+                               isRequired="true" ajaxValidation="false">
+                <f:validateLength minimum="3" maximum="50"/>
             </employees:formRow>
 
             <employees:formRow value="#{cc.attrs.model.birthDate}"
                                label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
                                type="date"
                                placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
-                <f:convertDateTime for="input" pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
+                <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
             </employees:formRow>
 
             <employees:formRow value="#{cc.attrs.model.salary}"
                                label="#{cc.resourceBundleMap['employee.editor.salary']}">
-                <f:convertNumber for="input" currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+                <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>
-
+            <employees:formRow value="#{cc.attrs.model.salary}"
+                               label="#{cc.resourceBundleMap['employee.editor.salary']}" readOnly="true">
+                <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+            </employees:formRow>
 
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
@@ -119,11 +127,11 @@
     <h:outputScript >
         $(document).ready(function() {
             $('.date').datepicker({
-            language: '#{webFlowController.locale}',
-            autoClose: true,
-            todayHighlight: true,
-            format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
-        })
+                language: '#{webFlowController.locale}',
+                autoClose: true,
+                todayHighlight: true,
+                format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
+            })
         });
     </h:outputScript>
 </composite:implementation>

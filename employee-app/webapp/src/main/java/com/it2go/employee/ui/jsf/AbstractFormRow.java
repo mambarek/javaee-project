@@ -4,12 +4,11 @@ import lombok.Data;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.NamingContainer;
+import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -17,9 +16,10 @@ import java.util.Arrays;
 @FacesComponent(value = "AbstractFormRow")
 public class AbstractFormRow extends UIInput implements NamingContainer {
 
+    final static String START_VALUE = "startValue";
+
     private boolean visible = true;
     private UIInput input;
-    private HtmlInputText test;
 
     /**
      * Returns the component family of {@link UINamingContainer}.
@@ -29,40 +29,45 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
     public String getFamily() {
         return UINamingContainer.COMPONENT_FAMILY;
     }
+
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
-        Converter converter = (Converter) getAttributes().get("converter");
+
+        if(getStartValue() == null) System.out.println("["+input.getId()+"] enodingBegin getStartValue() is Null ");
+        if(getStartValue() == null)
+            setStartValue(getDisplayValue());
+
+        System.out.println("["+input.getId()+"] enodingBegin getStartValue(): " + getStartValue() + " value: " + getValue());
+/*        Converter converter = (Converter) getAttributes().get("converter");
         if (converter != null) {
             input.setConverter(converter);
-        }
+        }*/
+        input.setConverter(this.getConverter());
 
-        Arrays.stream(this.getValidators()).forEach(input::addValidator);
+        boolean readOnly = (boolean)this.getAttributes().get("readOnly");
 
-        if(visible)
+        Arrays.stream(input.getValidators()).forEach(input::removeValidator);
+        if(!readOnly)
+            Arrays.stream(this.getValidators()).forEach(input::addValidator);
+        else
+            input.setRendered(false);
+
+        if (visible)
             super.encodeBegin(context);
     }
 
-    @Override
-    public void encodeEnd(FacesContext context) throws IOException {
-        if(visible)
-            super.encodeEnd(context);
+    public String getDisplayValue(){
+        if(this.getConverter() == null)
+            return getValue() != null ? getValue().toString(): "";
+
+        return this.getConverter().getAsString(FacesContext.getCurrentInstance(),input,getValue() );
     }
 
-    @Override
-    public Object getSubmittedValue() {
-        return input.getSubmittedValue();
+    public Object getStartValue(){
+        return this.getStateHelper().get(START_VALUE);
     }
 
-    @Override
-    protected Object getConvertedValue(FacesContext context, Object newSubmittedValue) throws ConverterException {
-        //return super.getConvertedValue(context, newSubmittedValue);
-        Converter converter = (Converter) getAttributes().get("converter");
-        if (converter != null) {
-            return converter.getAsObject(context, this, (String) newSubmittedValue);
-        } else {
-            return newSubmittedValue;
-        }
-
-
+    public void setStartValue(Object startValue){
+        this.getStateHelper().put(START_VALUE,startValue);
     }
 }
