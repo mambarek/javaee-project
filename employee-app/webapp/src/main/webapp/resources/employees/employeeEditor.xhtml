@@ -12,6 +12,7 @@
     <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
     <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
     <composite:clientBehavior name="saveOk" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
+    <composite:actionSource name="saveOkButton" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
     <composite:attribute name="deleteConfirmFunc" />
@@ -75,7 +76,8 @@
 
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save">
                         #{cc.resourceBundleMap['employee.editor.button.save']}
-                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidation"/>
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="handlaAjaxSaveEvent"/>
+
                     </button>
                 </div>
             </div>
@@ -103,7 +105,10 @@
 
         <!-- hidden form for confirmation dialog action delete-->
         <h:form id="saveHiddenForm">
-            <h:commandButton id="saveOk" style="display: none;"/>
+            <h:commandButton id="showOverlay" style="display: none;" styleClass="showOverlay" >
+                <f:ajax onevent="showOverlay" listener="#{editEmployeeController.saveEmployee()}" render="content"/>
+            </h:commandButton>
+            <h:commandButton id="saveOk" style="display: none;" styleClass="saveOk"/>
         </h:form>
     </div>
 </div>
@@ -120,6 +125,23 @@
                 <div class="modal-footer">
                     <button id="modal-ok" type="button" class="btn btn-primary" >Löschen</button>
                     <button id="modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- overlay simulation -->
+    <div class="modal fade" id="overlayModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Daten werden verarbeitet</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-message">Möchten Sie den Datensatz wirklich löschen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="overlay-modal-ok" type="button" class="btn btn-primary" >Yes</button>
+                    <button id="overlay-modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 </div>
             </div>
         </div>

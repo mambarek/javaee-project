@@ -31,7 +31,9 @@ var yesFunctionAjax = function (event) {
 
 function ShowConfirmYesNo(event, modalSelector, yesFunc, noFunc, message) {
     // stop the event and trigger asynchron promise
-    event.preventDefault();
+    if(event)
+        event.preventDefault();
+
     //event.stopPropagation();
     var promise = ConfirmYesNo(modalSelector, message);
     promise.then(yesFunc
@@ -123,6 +125,11 @@ function validateForm(form){
 
 }
 
+function prepaireView(selector){
+    $(selector).find("input[type=text], select").each(function(){
+        this.startValue = this.value;
+    });
+}
 
 function handleAjax(data) {
     var status = data.status;
@@ -184,6 +191,116 @@ function checkValidation(data){
             //$('#saveHiddenForm\\:saveOk').click();
             break;
     }
+}
+
+function handlaAjaxSaveEvent(data){
+    var status = data.status;
+    var encodedId = encodeId(data.source.id);
+    var form = $("#" + encodedId).closest("form");
+    switch (status) {
+        case "begin":
+            // This is the start of the AJAX request.
+            //document.getElementsByTagName('body')[0].className = 'loading';
+            console.info("checkValidation begin");
+            break;
+
+        case "complete":
+            // This is invoked right after AJAX response is returned.
+            break;
+
+        case "success":
+            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+            //document.getElementsByTagName('body')[0].className = '';
+
+            validateForm(form);
+            var error = hasError(form);
+            if(!error) {
+                //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
+                var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
+                promise.then(showOverlayOnly
+                    , function (reason) {
+                        console.info("-- ShowConfirmYesNo() no succes reason:", reason);
+                    })
+            }
+            //$('#saveHiddenForm\\:saveOk').click();
+            break;
+    }
+
+}
+
+function hasError(element){
+    var res = false;
+    element.find("input[type=text], select").each(function(){
+        var erro = $(this).hasClass('form-control-danger');
+        if(erro){
+            res = true;
+            return false;}
+         }
+    );
+
+    return res;
+}
+
+function overlayYesNo(modalSelector,message) {
+    var dfd = jQuery.Deferred();
+    var confirm = $(modalSelector);
+    confirm.find('.modal-message').html(message);
+    confirm.modal('show');
+    // $('#myModalLabel').html(title);
+    // $('#myModalText').html(msg);
+    $('#overlay-modal-ok').off('click').click(function () {
+        confirm.modal('hide');
+        dfd.resolve(1);
+        return 1;
+    });
+    $('#overlay-modal-cancel').off('click').click(function () {
+        confirm.modal('hide');
+        dfd.reject("cancel");
+        return 0;
+    });
+    return dfd.promise();
+}
+
+function showOverlay(data){
+
+    var status = data.status;
+    if(status == "success") {
+
+        var message = "Overlay -- Ihre daten werden gespeichert...";
+        var promise = overlayYesNo("#overlayModal", message);
+        promise.then(function () {
+                alert("Ihre Daten wurden erfolgreich gespeichert!");
+            }
+            , function (reason) {
+                alert("Ihre Daten konnten nicht gepeichert werden. FEHLER: 00WWQQ");
+            });
+    }
+}
+
+function showOverlayOnly(){
+
+
+        var message = "Overlay -- Ihre daten werden gespeichert...";
+        var promise = overlayYesNo("#overlayModal", message);
+        promise.then(function () {
+                alert("Ihre Daten wurden erfolgreich gespeichert!");
+            }
+            , function (reason) {
+                alert("Ihre Daten konnten nicht gepeichert werden. FEHLER: 00WWQQ");
+            });
+
+}
+
+function processShowOverlay() {
+    //$('#saveHiddenForm\\:saveOk').click();
+    //TODO HIER SELECTOR MUSS DANN IRGEDWIE ÜBERGEBEN und nicht fest verdrahtet
+    $('.showOverlay').click();
+}
+
+function clickSave() {
+    //$('#saveHiddenForm\\:saveOk').click();
+    //TODO HIER SELECTOR MUSS DANN IRGEDWIE ÜBERGEBEN und nicht fest verdrahtet
+    $('.saveOk').click();
 }
 
 function validateEnclosingFormWithId(elementId){

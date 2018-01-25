@@ -185,8 +185,7 @@
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
                                             <f:ajax execute="@this" render="content"
                                                     listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                                    event="click"
-                                            />
+                                                    event="click" onevent="prepaireView('#editorWrapper')"/>
                                         </form>
                                     </td>
                                     <td>
@@ -221,7 +220,8 @@
                                               deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}"
                                               >
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
-                        <f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>
+                        <f:actionListener for="saveOkButton" binding="#{editEmployeeController.saveEmployee()}"/>
+                        <!--<f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>-->
                         <!-- WICHTIG: an dieser stelle kein AJAX für den save button. submitt fuktioniert dann nicht mehr-->
                     </employees:employeeEditor>
 
