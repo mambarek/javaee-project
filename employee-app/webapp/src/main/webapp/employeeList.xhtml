@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.css"/>
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="assets/css/corporate.css"/>
-
+    <link rel="stylesheet" href="assets/css/loader.css" />
 </h:head>
 
 <h:body>
@@ -185,7 +185,8 @@
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
                                             <f:ajax execute="@this" render="content"
                                                     listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                                    event="click" onevent="prepaireView('#editorWrapper')"/>
+                                                    event="click"
+                                            />
                                         </form>
                                     </td>
                                     <td>
@@ -217,17 +218,23 @@
 
                     <employees:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
                                               rendered="#{!empty editEmployeeController.model}"
-                                              deleteConfirmFunc="function(){$('#hiddenForm\\:hdnBtn').click();}"
-                                              >
+                                              deleteConfirmFunc="function(){$('#hiddenForm\\:deleteBtn').click();}"
+                                              saveConfirmFunc="function(){$('#hiddenForm\\:saveBtn').click();}">
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
-                        <f:actionListener for="saveOkButton" binding="#{editEmployeeController.saveEmployee()}"/>
+                        <f:ajax event="saveOk" listener="#{editEmployeeController.saveEmployee()}" render="content"/>
+                        <!--<f:actionListener for="saveOkButton" binding="#{editEmployeeEditorActionListener}"/>-->
                         <!--<f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>-->
                         <!-- WICHTIG: an dieser stelle kein AJAX für den save button. submitt fuktioniert dann nicht mehr-->
                     </employees:employeeEditor>
 
                     <!-- hidden form for confirmation dialog action delete-->
                     <h:form id="hiddenForm" style="display: none;">
-                        <h:commandButton id="hdnBtn" actionListener="#{editEmployeeController.deleteEmployee}" />
+                        <h:commandButton id="saveBtn" actionListener="#{editEmployeeController.saveEmployee}">
+                            <f:ajax execute="@this" render="content"/>
+                        </h:commandButton>
+                        <h:commandButton id="deleteBtn" actionListener="#{editEmployeeController.deleteEmployee}">
+                            <f:ajax execute="@this" render="content" onevent="checkValidation"/>
+                        </h:commandButton>
                     </h:form>
                 </div>
             </div>

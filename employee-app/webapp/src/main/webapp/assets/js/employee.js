@@ -43,9 +43,17 @@ function ShowConfirmYesNo(event, modalSelector, yesFunc, noFunc, message) {
     console.info("-- ShowConfirmYesNo() Event: ", event);
 }
 
-function makeAjax(element, event, execute, render){
+/**    new     */
+//function showConfirmationDialog(element, event, execute, render, oneventFunc, onerrorFunc){
+function showConfirmationDialog(element, event, yesFunc){
+    //var promise = ConfirmYesNo(modalSelector, message);
+    var ajax = makeAjax(element, event, '@form', '@form', ShowConfirmYesNo(null,'#myModal',yesFunc,null, "Message...."), null);
+}
 
-    return jsf.ajax.request(element, event,{execute:execute,render:'render'});
+
+function makeAjax(element, event, execute, render, oneventFunc, onerrorFunc){
+
+    return jsf.ajax.request(element, event,{execute:execute,render:render, onevent: oneventFunc, onerror: onerrorFunc});
 }
 
 function checkInputStyle(data){
@@ -217,10 +225,14 @@ function handlaAjaxSaveEvent(data){
             if(!error) {
                 //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
                 var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
-                promise.then(showOverlayOnly
+/*                promise.then(function(){
+
+                        // clickSave(); // save data
+                        showOverlayOnly();
+                    }
                     , function (reason) {
                         console.info("-- ShowConfirmYesNo() no succes reason:", reason);
-                    })
+                    })*/
             }
             //$('#saveHiddenForm\\:saveOk').click();
             break;
@@ -277,12 +289,13 @@ function showOverlay(data){
     }
 }
 
-function showOverlayOnly(){
+function saveAndshowOverlayOnly(){
 
-
+        clickSave();
         var message = "Overlay -- Ihre daten werden gespeichert...";
         var promise = overlayYesNo("#overlayModal", message);
         promise.then(function () {
+
                 alert("Ihre Daten wurden erfolgreich gespeichert!");
             }
             , function (reason) {
@@ -303,6 +316,24 @@ function clickSave() {
     $('.saveOk').click();
 }
 
+function processSaveAction(){
+
+}
+
+function checkFormForError(form){
+    var res = true;
+    form.find("input[type=text], select").each(function(){
+                var hasError = $(this).hasClass('form-control-danger');
+               if(hasError) {
+                   res = false;
+                   return false;
+               }
+            }
+        );
+
+    return res;
+}
+
 function validateEnclosingFormWithId(elementId){
     var form = $("#" + encodedId.replace(new RegExp(':', 'g'),"\\:")).closest("form");
     validateForm(form);
@@ -311,4 +342,107 @@ function validateEnclosingFormWithId(elementId){
 function validateEnclosingForm(elem){
     var form = $("#" + elem.id.replace(new RegExp(':', 'g'),"\\:")).closest("form");
     validateForm(form);
+}
+
+/**
+ * Module for displaying "Waiting for..." dialog using Bootstrap
+ *
+ * @author Eugene Maslovich <ehpc@em42.ru>
+ */
+
+var waitingDialog = waitingDialog || (function ($) {
+    'use strict';
+
+    // Creating modal dialog's DOM
+    var $dialog = $(
+        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+//        '<div class="modal-dialog modal-m viewport-centred">' +
+//        '<div class="modal-content">' +
+/*        '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
+        '<div class="modal-body">' +*/
+'<div class="viewport-centred overlay-white">'+
+        //'<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+
+        //'<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>'+
+        '<span class="overlay-text">Loading...</span><br/><br/>'+
+        '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'+
+/*
+        '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>'+
+
+        '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
+
+        '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'+
+
+        '<span class="sr-only">Loading...</span>'+
+        '<div class="loader_multi"></div>'+*/
+/*
+        '</div>' +
+        '</div>'+
+*/
+        '</div>'+
+
+        '</div>'
+    );
+
+    return {
+        /**
+         * Opens our dialog
+         * @param message Custom message
+         * @param options Custom options:
+         * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
+         * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
+         */
+        show: function (message, options) {
+            // Assigning defaults
+            if (typeof options === 'undefined') {
+                options = {};
+            }
+            if (typeof message === 'undefined') {
+                message = 'Loading...';
+            }
+            var settings = $.extend({
+                dialogSize: 'm',
+                progressType: '',
+                onHide: null // This callback runs after the dialog was hidden
+            }, options);
+
+            // Configuring dialog
+            $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+            $dialog.find('.progress-bar').attr('class', 'progress-bar');
+            if (settings.progressType) {
+                $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+            }
+            $dialog.find('overlay-text').text(message);
+            // Adding callbacks
+            if (typeof settings.onHide === 'function') {
+                $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+                    settings.onHide.call($dialog);
+                });
+            }
+            // Opening dialog
+            $dialog.modal();
+        },
+        /**
+         * Closes dialog
+         */
+        hide: function () {
+            $dialog.modal('hide');
+        }
+    };
+
+})(jQuery);
+
+function showOverlay(message, callback){
+    var dfd = jQuery.Deferred();
+    $('#modal-ok').off('click').click(function () {
+        confirm.modal('hide');
+        dfd.resolve(1);
+        return 1;
+    });
+    $('#modal-cancel').off('click').click(function () {
+        confirm.modal('hide');
+        dfd.reject("cancel");
+        return 0;
+    });
+    return dfd.promise();
 }

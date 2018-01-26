@@ -15,6 +15,7 @@
     <composite:actionSource name="saveOkButton" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
+    <composite:attribute name="saveConfirmFunc" />
     <composite:attribute name="deleteConfirmFunc" />
     <composite:attribute name="renderAfterSave"/>
 </composite:interface>
@@ -31,12 +32,12 @@
             <employees:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
                                isRequired="false" disabled="true">
-                <f:validateLength minimum="5" maximum="50"/>
+                <f:validateLength minimum="3" maximum="50"/>
             </employees:formRow>
             <employees:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
-                               isRequired="true" ajaxRender="@form">
-                <f:validateLength minimum="5" maximum="50"/>
+                               isRequired="true" >
+                <f:validateLength minimum="3" maximum="50"/>
             </employees:formRow>
 
             <employees:formRow value="#{cc.attrs.model.lastName}"
@@ -74,8 +75,9 @@
                         <i class="fa fa-trash-o" aria-hidden="true"/> #{cc.resourceBundleMap['employee.editor.button.delete']}
                     </button>
 
-                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save">
+                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" >
                         #{cc.resourceBundleMap['employee.editor.button.save']}
+
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="handlaAjaxSaveEvent"/>
 
                     </button>
@@ -102,18 +104,20 @@
             </ui:remove>
         </div>
     </h:form>
-
+        <h:messages style="color: red;"/>
         <!-- hidden form for confirmation dialog action delete-->
         <h:form id="saveHiddenForm">
             <h:commandButton id="showOverlay" style="display: none;" styleClass="showOverlay" >
-                <f:ajax onevent="showOverlay" listener="#{editEmployeeController.saveEmployee()}" render="content"/>
+                <f:ajax onevent="showOverlay" render="content"/>
             </h:commandButton>
-            <h:commandButton id="saveOk" style="display: none;" styleClass="saveOk"/>
+            <h:commandButton id="saveOk" style="display: none;" styleClass="saveOk">
+                <f:ajax execute="@this"  render="content"/>
+            </h:commandButton>
         </h:form>
     </div>
 </div>
 </div>
-    <div class="modal fade" id="myModal">
+    <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -123,7 +127,7 @@
                     <p class="modal-message">Möchten Sie den Datensatz wirklich löschen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="modal-ok" type="button" class="btn btn-primary" >Löschen</button>
+                    <button id="modal-ok" type="button" class="btn btn-primary" onclick="saveAndshowOverlayOnly()">Löschen</button>
                     <button id="modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                 </div>
             </div>
