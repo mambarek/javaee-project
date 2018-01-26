@@ -13,7 +13,12 @@ import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,7 +27,7 @@ import java.util.Map;
 
 @Named
 @ViewScoped
-public class EditEmployeeController implements BaseViewController{
+public class EditEmployeeController implements BaseViewController, ActionListener {
 
     public static final String VIEW_ID = "editEmployee";
 
@@ -97,7 +102,7 @@ public class EditEmployeeController implements BaseViewController{
 
     public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
 
-        if(model.isValid()) {
+        if(false/*model.isValid()*/) {
             System.out.println("## EditEmployeeController::saveEmployee model = " + model);
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
@@ -161,5 +166,28 @@ public class EditEmployeeController implements BaseViewController{
         final String clientId = actionEvent.getComponent().getClientId();
         String compId = clientId +":"+ actionEvent.getComponent().getId();
         compId = compId.replace(":","\\:");
+    }
+
+
+    /****************/
+    final static String SAVE_BUTTON_ID = "saveOk";
+    @Override
+    public void processAction(ActionEvent event) throws AbortProcessingException {
+
+        final UIComponent component = event.getComponent();
+        final String componentId = component.getId();
+        if(componentId.equals(SAVE_BUTTON_ID)){
+            try {
+
+                this.saveEmployee();
+            } catch (Exception e) {
+
+                FacesContext.getCurrentInstance().addMessage(event.getComponent().getParent().getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Details für dieses Fehler"));
+
+                e.printStackTrace();
+            }
+
+        }
     }
 }
