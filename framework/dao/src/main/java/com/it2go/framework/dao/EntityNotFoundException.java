@@ -1,9 +1,13 @@
 package com.it2go.framework.dao;
 
-public class EntityNotFoundException extends Exception {
+public class EntityNotFoundException extends BaseException {
 
     public EntityNotFoundException() {
         super();
+    }
+
+    public EntityNotFoundException(String errorCode, String message) {
+        super(errorCode, message);
     }
 
     public EntityNotFoundException(String message) {
