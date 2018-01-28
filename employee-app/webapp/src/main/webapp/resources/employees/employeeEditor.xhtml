@@ -9,10 +9,13 @@
 
 <composite:interface componentType="employee.component">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
+
     <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
     <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
-    <composite:clientBehavior name="saveOk" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
-    <composite:actionSource name="saveOkButton" event="click" targets="#{cc.clientId}:saveHiddenForm:saveOk"/>
+
+    <composite:clientBehavior name="saveConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:saveConfirmed"/>
+    <composite:actionSource name="saveConfirmedBtn" event="click" targets="#{cc.clientId}:saveHiddenForm:saveConfirmed" />
+
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
     <composite:attribute name="saveConfirmFunc" />
@@ -78,7 +81,7 @@
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save" >
                         #{cc.resourceBundleMap['employee.editor.button.save']}
 
-                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="handlaAjaxSaveEvent"/>
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
 
                     </button>
                 </div>
@@ -106,11 +109,11 @@
     </h:form>
         <h:messages style="color: red;"/>
         <!-- hidden form for confirmation dialog action delete-->
-        <h:form id="saveHiddenForm">
+        <h:form id="confirmHiddenForm">
             <h:commandButton id="showOverlay" style="display: none;" styleClass="showOverlay" >
                 <f:ajax onevent="showOverlay" render="content"/>
             </h:commandButton>
-            <h:commandButton id="saveOk" style="display: none;" styleClass="saveOk">
+            <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
                 <f:ajax execute="@this"  render="content"/>
             </h:commandButton>
         </h:form>
@@ -127,7 +130,7 @@
                     <p class="modal-message">Möchten Sie den Datensatz wirklich löschen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="modal-ok" type="button" class="btn btn-primary" onclick="saveAndshowOverlayOnly()">Löschen</button>
+                    <button id="modal-ok" type="button" class="btn btn-primary" onclick="clickSave()">Löschen</button>
                     <button id="modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                 </div>
             </div>

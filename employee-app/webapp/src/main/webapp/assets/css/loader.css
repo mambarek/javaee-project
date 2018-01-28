@@ -2,6 +2,7 @@
 .loader {
     border-top: 16px solid blue;
     border-bottom: 16px solid blue;
+    text-align: center;
 }
 
 .loader_color {

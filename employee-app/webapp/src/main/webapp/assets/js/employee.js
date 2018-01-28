@@ -201,7 +201,7 @@ function checkValidation(data){
     }
 }
 
-function handlaAjaxSaveEvent(data){
+function checkValidationAndConfirmSave(data) {
     var status = data.status;
     var encodedId = encodeId(data.source.id);
     var form = $("#" + encodedId).closest("form");
@@ -222,19 +222,53 @@ function handlaAjaxSaveEvent(data){
 
             validateForm(form);
             var error = hasError(form);
-            if(!error) {
+            if (!error) {
                 //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
                 var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
-/*                promise.then(function(){
+                /*                promise.then(function(){
 
-                        // clickSave(); // save data
-                        showOverlayOnly();
-                    }
-                    , function (reason) {
-                        console.info("-- ShowConfirmYesNo() no succes reason:", reason);
-                    })*/
+                                        // clickSave(); // save data
+                                        showOverlayOnly();
+                                    }
+                                    , function (reason) {
+                                        console.info("-- ShowConfirmYesNo() no succes reason:", reason);
+                                    })*/
             }
             //$('#saveHiddenForm\\:saveOk').click();
+            break;
+    }
+}
+
+function handleAjaxSaveEvent(data){
+    var status = data.status;
+    var encodedId = encodeId(data.source.id);
+    var form = $("#" + encodedId).closest("form");
+    switch (status) {
+        case "begin":
+            // This is the start of the AJAX request.
+            //document.getElementsByTagName('body')[0].className = 'loading';
+            console.info("handleAjaxSaveEvent --begin");
+            waitingDialog.show("Ihre daten werden gespeichert...");
+            break;
+
+        case "complete":
+            // This is invoked right after AJAX response is returned.
+            console.info("handleAjaxSaveEvent --complete");
+
+            break;
+
+        case "success":
+            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+            //document.getElementsByTagName('body')[0].className = '';
+            console.info("handleAjaxSaveEvent --success");
+            setTimeout(
+                function()
+                {
+                    //do something special
+                    waitingDialog.hide();
+                }, 3000);
+
+
             break;
     }
 
@@ -289,7 +323,7 @@ function showOverlay(data){
     }
 }
 
-function saveAndshowOverlayOnly(){
+function saveAndshowOverlay(){
 
         clickSave();
         var message = "Overlay -- Ihre daten werden gespeichert...";
@@ -313,7 +347,7 @@ function processShowOverlay() {
 function clickSave() {
     //$('#saveHiddenForm\\:saveOk').click();
     //TODO HIER SELECTOR MUSS DANN IRGEDWIE ÜBERGEBEN und nicht fest verdrahtet
-    $('.saveOk').click();
+    $('.saveConfirmed').click();
 }
 
 function processSaveAction(){
@@ -355,7 +389,7 @@ var waitingDialog = waitingDialog || (function ($) {
 
     // Creating modal dialog's DOM
     var $dialog = $(
-        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+        '<div class="modal fade waitingDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
 //        '<div class="modal-dialog modal-m viewport-centred">' +
 //        '<div class="modal-content">' +
 /*        '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
@@ -385,6 +419,7 @@ var waitingDialog = waitingDialog || (function ($) {
     );
 
     return {
+        dialog: $dialog,
         /**
          * Opens our dialog
          * @param message Custom message
@@ -407,26 +442,26 @@ var waitingDialog = waitingDialog || (function ($) {
             }, options);
 
             // Configuring dialog
-            $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+/*            $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
             $dialog.find('.progress-bar').attr('class', 'progress-bar');
             if (settings.progressType) {
                 $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
-            }
-            $dialog.find('overlay-text').text(message);
+            }*/
+            this.dialog.find('.overlay-text').text(message);
             // Adding callbacks
             if (typeof settings.onHide === 'function') {
-                $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+                this.dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
                     settings.onHide.call($dialog);
                 });
             }
             // Opening dialog
-            $dialog.modal();
+            this.dialog.modal();
         },
         /**
          * Closes dialog
          */
         hide: function () {
-            $dialog.modal('hide');
+            this.dialog.modal('hide');
         }
     };
 
