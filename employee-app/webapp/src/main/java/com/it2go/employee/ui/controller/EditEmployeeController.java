@@ -105,7 +105,7 @@ public class EditEmployeeController implements BaseViewController{
 
         System.out.println("## EditEmployeeController::saveEmployee model = " + model);
 
-        if(false/*model.isValid()*/) {
+        if(model.isValid()) {
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
                 loggedInUser = userSession.getTestCreationUser();
