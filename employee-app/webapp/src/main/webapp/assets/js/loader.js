@@ -71,7 +71,7 @@ var confirm2BtnDialog = confirm2BtnDialog || (function ($) {
 
     // Creating modal dialog's DOM
     var $dialog = $(
-        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+        '<div class="modal fade confirm2BtnDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
             '<div class="modal-dialog modal-m">' +
                 '<div class="modal-content">' +
                     '<div class="modal-header">'+
@@ -225,20 +225,24 @@ var waitingDialog = waitingDialog || (function ($) {
                 });
             }
             // Opening dialog
-            this.startTime = new Date().getTime();;
             this.dialog.modal();
         },
         /**
          * Closes dialog
          */
         hide: function () {
-            var now = new Date().getTime();
-            var diff = now - this.startTime;
-            while(diff/1000 < this.minLiveTime ) {
-                now = new Date().getTime();
-                diff = now - this.startTime;
-            }
-            this.dialog.modal('hide');
+            var dfd = jQuery.Deferred();
+            var _dialog = this.dialog;
+            // the overlay should appears min for one second
+            setTimeout(
+                function()
+                {
+                    _dialog.modal('hide');
+                    dfd.resolve(1);
+                }, 1000);
+
+
+            return dfd.promise();
         }
     };
 

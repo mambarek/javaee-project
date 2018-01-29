@@ -281,26 +281,30 @@ function handleAjaxSaveEvent(data){
                     waitingDialog.hide();
                 }, 3000);*/
 
-            waitingDialog.hide();
-            var messages = $('#employeeForErrorList');
-            if(messages && messages.children().length > 0) {
-                //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                confirm2BtnDialog.show({
-                    title:"Fehler",
-                    message: "Beim Speichern ist ein Fehler aufgetreten!",
-                    leftBtnLabel:'Ok',
-                    rightBtnLabel: 'TobeRemoved'
+            var messages = $('.employeeFormErrorList');
+            //var promise = waitingDialog.hide();
+            //promise.then(function()
+            $.when(waitingDialog.hide()).then(function()
+                {
+                    if (messages && messages.children().length > 0) {
+                        //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                        confirm2BtnDialog.show({
+                            title: "Fehler",
+                            message: "Beim Speichern ist ein Fehler aufgetreten!",
+                            leftBtnLabel: 'Ok',
+                            rightBtnLabel: 'TobeRemoved'
+                        });
+                    }
+                    else {
+                        //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                        confirm2BtnDialog.show({
+                            title: "Information",
+                            message: "Ihre Daten wurden erfolgreich gespeichert!",
+                            leftBtnLabel: 'Ok',
+                            rightBtnLabel: 'TobeRemoved'
+                        });
+                    }
                 });
-            }
-            else {
-                //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                confirm2BtnDialog.show({
-                    title: "Information",
-                    message: "Ihre Daten wurden erfolgreich gespeichert!",
-                    leftBtnLabel: 'Ok',
-                    rightBtnLabel: 'TobeRemoved'
-                });
-            }
             break;
     }
 }
