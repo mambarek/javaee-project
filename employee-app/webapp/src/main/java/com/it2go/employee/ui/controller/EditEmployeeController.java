@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 @Named
 @ViewScoped
-public class EditEmployeeController implements BaseViewController, ActionListener {
+public class EditEmployeeController implements BaseViewController{
 
     public static final String VIEW_ID = "editEmployee";
 
@@ -102,8 +103,9 @@ public class EditEmployeeController implements BaseViewController, ActionListene
 
     public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
 
+        System.out.println("## EditEmployeeController::saveEmployee model = " + model);
+
         if(false/*model.isValid()*/) {
-            System.out.println("## EditEmployeeController::saveEmployee model = " + model);
             Person loggedInUser = userSession.getTestUpdateUser();
             if(model.isNew())
                 loggedInUser = userSession.getTestCreationUser();
@@ -114,6 +116,12 @@ public class EditEmployeeController implements BaseViewController, ActionListene
             this.resetView();
         }
         else{
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             throw new EntityNotValidException();
         }
 
@@ -170,9 +178,28 @@ public class EditEmployeeController implements BaseViewController, ActionListene
 
 
     /****************/
-    final static String SAVE_BUTTON_ID = "saveOk";
-    @Override
+    final static String SAVE_BUTTON_ID = "saveConfirmed";
+   /* @Override*/
     public void processAction(ActionEvent event) throws AbortProcessingException {
+
+        final UIComponent component = event.getComponent();
+        final String componentId = component.getId();
+        if(componentId.equals(SAVE_BUTTON_ID)){
+            try {
+
+                this.saveEmployee();
+            } catch (Exception e) {
+
+                FacesContext.getCurrentInstance().addMessage(event.getComponent().getParent().getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Details für dieses Fehler"));
+
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void ajaxSaveAction(AjaxBehaviorEvent event) throws AbortProcessingException {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();

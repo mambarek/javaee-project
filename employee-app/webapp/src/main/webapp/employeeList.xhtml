@@ -221,8 +221,8 @@
                                               deleteConfirmFunc="function(){$('#hiddenForm\\:deleteBtn').click();}"
                                               saveConfirmFunc="function(){$('#hiddenForm\\:saveBtn').click();}">
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
-                        <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent" />
-                        <f:actionListener for="saveConfirmedBtn" binding="#{editEmployeeEditorActionListener}"/>
+                        <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent" listener="#{editEmployeeController.ajaxSaveAction}"/>
+                        <f:actionListener for="saveConfirmedBtn" binding="#{EditEmployeeEditorActionListener}"/>
                         <!--<f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>-->
                         <!-- WICHTIG: an dieser stelle kein AJAX für den save button. submitt fuktioniert dann nicht mehr-->
                     </employees:employeeEditor>

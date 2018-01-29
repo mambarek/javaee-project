@@ -94,12 +94,16 @@ function validateInputStyle(component){
 
     var valid = component.attr("data-valid");
     var inputContainer = component.closest("#inputContainer");
+    var disabled = component.attr("disabled");
     console.info("validateInputStyle component", component, " valid: " + valid);
 
-    // reset hightlighting
+    // reset highlighting
     //component.parent().removeClass('has-danger has-success');
     inputContainer.removeClass('has-danger has-success');
     component.removeClass("form-control-danger form-control-success")
+
+    // when disabled so no highlighting
+    if(disabled && disabled != false) return;
 
     if (valid == "false") {
         inputContainer.addClass('has-danger');
@@ -223,8 +227,18 @@ function checkValidationAndConfirmSave(data) {
             validateForm(form);
             var error = hasError(form);
             if (!error) {
+                var dialogOptions = {
+                    title:"Daten speichern",
+                    message: 'Möchten Sie Ihre Änderungen speichern?',
+                    leftBtnLabel:'Speichern',
+                    rightBtnLabel: 'Abbrechen',
+                    leftBtnFunc: clickSave,
+                    rightBtnFunc: null
+                };
+
+                confirm2BtnDialog.show(dialogOptions);
                 //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
-                var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
+                //var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
                 /*                promise.then(function(){
 
                                         // clickSave(); // save data
@@ -261,17 +275,25 @@ function handleAjaxSaveEvent(data){
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
             //document.getElementsByTagName('body')[0].className = '';
             console.info("handleAjaxSaveEvent --success");
-            setTimeout(
+/*            setTimeout(
                 function()
                 {
-                    //do something special
                     waitingDialog.hide();
-                }, 3000);
+                }, 3000);*/
 
-
+            waitingDialog.hide();
+            var messages = $('#employeeForErrorList');
+            if(messages && messages.children.length > 0) {
+                //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                confirm2BtnDialog.show({
+                    title:"Fehler",
+                    message: "Beim Speichern ist ein Fehler aufgetreten!",
+                    leftBtnLabel:'Ok',
+                    rightBtnLabel: 'TobeRemoved',
+                });
+            }
             break;
     }
-
 }
 
 function hasError(element){
@@ -378,94 +400,7 @@ function validateEnclosingForm(elem){
     validateForm(form);
 }
 
-/**
- * Module for displaying "Waiting for..." dialog using Bootstrap
- *
- * @author Eugene Maslovich <ehpc@em42.ru>
- */
 
-var waitingDialog = waitingDialog || (function ($) {
-    'use strict';
-
-    // Creating modal dialog's DOM
-    var $dialog = $(
-        '<div class="modal fade waitingDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
-//        '<div class="modal-dialog modal-m viewport-centred">' +
-//        '<div class="modal-content">' +
-/*        '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
-        '<div class="modal-body">' +*/
-'<div class="viewport-centred overlay-white">'+
-        //'<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
-
-        //'<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>'+
-        '<span class="overlay-text">Loading...</span><br/><br/>'+
-        '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'+
-/*
-        '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>'+
-
-        '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
-
-        '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'+
-
-        '<span class="sr-only">Loading...</span>'+
-        '<div class="loader_multi"></div>'+*/
-/*
-        '</div>' +
-        '</div>'+
-*/
-        '</div>'+
-
-        '</div>'
-    );
-
-    return {
-        dialog: $dialog,
-        /**
-         * Opens our dialog
-         * @param message Custom message
-         * @param options Custom options:
-         * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
-         * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
-         */
-        show: function (message, options) {
-            // Assigning defaults
-            if (typeof options === 'undefined') {
-                options = {};
-            }
-            if (typeof message === 'undefined') {
-                message = 'Loading...';
-            }
-            var settings = $.extend({
-                dialogSize: 'm',
-                progressType: '',
-                onHide: null // This callback runs after the dialog was hidden
-            }, options);
-
-            // Configuring dialog
-/*            $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
-            $dialog.find('.progress-bar').attr('class', 'progress-bar');
-            if (settings.progressType) {
-                $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
-            }*/
-            this.dialog.find('.overlay-text').text(message);
-            // Adding callbacks
-            if (typeof settings.onHide === 'function') {
-                this.dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
-                    settings.onHide.call($dialog);
-                });
-            }
-            // Opening dialog
-            this.dialog.modal();
-        },
-        /**
-         * Closes dialog
-         */
-        hide: function () {
-            this.dialog.modal('hide');
-        }
-    };
-
-})(jQuery);
 
 function showOverlay(message, callback){
     var dfd = jQuery.Deferred();

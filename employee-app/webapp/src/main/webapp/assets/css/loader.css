@@ -1,14 +1,26 @@
-
 .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
     border-top: 16px solid blue;
     border-bottom: 16px solid blue;
-    text-align: center;
+    width: 80px;
+    height: 80px;
+    margin-left: 50px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
 .loader_color {
-    border-top: 16px solid blue;
-    border-right: 16px solid green;
-    border-bottom: 16px solid red;
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid blue;
+    border-right: 12px solid green;
+    border-bottom: 12px solid red;
+    width: 60px;
+    height: 60px;
+    margin-left: 50px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
 .loader_multi {
@@ -18,10 +30,11 @@
     border-right: 16px solid green;
     border-bottom: 16px solid red;
     border-left: 16px solid pink;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    width: 80px;
+    height: 80px;
+    margin-left: 50px;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 @-webkit-keyframes spin {
@@ -38,11 +51,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    /*margin-right: -50%;*/
     transform: translate(-50%, -50%)
 }
 
 .overlay-white{
     color: white;
     padding: 10px;
+    /*display: block;*/
+    width: max-content;
+    text-align: center;
+    margin-left: 30%;
 }

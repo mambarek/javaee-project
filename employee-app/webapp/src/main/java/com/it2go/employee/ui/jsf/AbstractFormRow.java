@@ -33,11 +33,6 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
 
-        if(getStartValue() == null) System.out.println("["+input.getId()+"] enodingBegin getStartValue() is Null ");
-        if(getStartValue() == null)
-            setStartValue(getDisplayValue());
-
-        System.out.println("["+input.getId()+"] enodingBegin getStartValue(): " + getStartValue() + " value: " + getValue());
 /*        Converter converter = (Converter) getAttributes().get("converter");
         if (converter != null) {
             input.setConverter(converter);

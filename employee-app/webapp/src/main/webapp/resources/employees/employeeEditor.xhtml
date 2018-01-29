@@ -14,7 +14,7 @@
     <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
 
     <composite:clientBehavior name="saveConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:saveConfirmed"/>
-    <composite:actionSource name="saveConfirmedBtn" event="click" targets="#{cc.clientId}:saveHiddenForm:saveConfirmed" />
+    <composite:actionSource name="saveConfirmedBtn" event="click" targets="saveConfirmed" />
 
     <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
@@ -32,11 +32,11 @@
     <div class="card-block">
         <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
         <div class="form-row">
-            <employees:formRow value="#{cc.attrs.model.firstName}"
+<!--            <employees:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
                                isRequired="false" disabled="true">
                 <f:validateLength minimum="3" maximum="50"/>
-            </employees:formRow>
+            </employees:formRow>-->
             <employees:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
                                isRequired="true" >
@@ -60,10 +60,10 @@
                                label="#{cc.resourceBundleMap['employee.editor.salary']}">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>
-            <employees:formRow value="#{cc.attrs.model.salary}"
+<!--            <employees:formRow value="#{cc.attrs.model.salary}"
                                label="#{cc.resourceBundleMap['employee.editor.salary']}" readOnly="true">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
-            </employees:formRow>
+            </employees:formRow>-->
 
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
@@ -107,7 +107,7 @@
             </ui:remove>
         </div>
     </h:form>
-        <h:messages style="color: red;"/>
+        <h:messages style="color: red;" id="employeeForErrorList"/>
         <!-- hidden form for confirmation dialog action delete-->
         <h:form id="confirmHiddenForm">
             <h:commandButton id="showOverlay" style="display: none;" styleClass="showOverlay" >
