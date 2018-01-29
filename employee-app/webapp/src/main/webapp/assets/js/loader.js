@@ -188,6 +188,8 @@ var waitingDialog = waitingDialog || (function ($) {
 
     return {
         dialog: $dialog,
+        startTime: null,
+        minLiveTime:1,   // 3s
         /**
          * Opens our dialog
          * @param message Custom message
@@ -206,7 +208,7 @@ var waitingDialog = waitingDialog || (function ($) {
             var settings = $.extend({
                 dialogSize: 'm',
                 progressType: '',
-                onHide: null // This callback runs after the dialog was hidden
+                onHide: null, // This callback runs after the dialog was hidden,
             }, options);
 
             // Configuring dialog
@@ -223,12 +225,19 @@ var waitingDialog = waitingDialog || (function ($) {
                 });
             }
             // Opening dialog
+            this.startTime = new Date().getTime();;
             this.dialog.modal();
         },
         /**
          * Closes dialog
          */
         hide: function () {
+            var now = new Date().getTime();
+            var diff = now - this.startTime;
+            while(diff/1000 < this.minLiveTime ) {
+                now = new Date().getTime();
+                diff = now - this.startTime;
+            }
             this.dialog.modal('hide');
         }
     };

@@ -283,13 +283,22 @@ function handleAjaxSaveEvent(data){
 
             waitingDialog.hide();
             var messages = $('#employeeForErrorList');
-            if(messages && messages.children.length > 0) {
+            if(messages && messages.children().length > 0) {
                 //alert("Beim Speichern ist ein Fehler aufgetreten!");
                 confirm2BtnDialog.show({
                     title:"Fehler",
                     message: "Beim Speichern ist ein Fehler aufgetreten!",
                     leftBtnLabel:'Ok',
-                    rightBtnLabel: 'TobeRemoved',
+                    rightBtnLabel: 'TobeRemoved'
+                });
+            }
+            else {
+                //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                confirm2BtnDialog.show({
+                    title: "Information",
+                    message: "Ihre Daten wurden erfolgreich gespeichert!",
+                    leftBtnLabel: 'Ok',
+                    rightBtnLabel: 'TobeRemoved'
                 });
             }
             break;
