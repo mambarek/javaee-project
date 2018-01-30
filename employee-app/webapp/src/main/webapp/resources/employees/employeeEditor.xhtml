@@ -45,7 +45,7 @@
 
             <employees:formRow value="#{cc.attrs.model.lastName}"
                                label="#{cc.resourceBundleMap['employee.editor.lastName']}"
-                               isRequired="true" ajaxValidation="false">
+                               isRequired="true" ajaxValidation="true">
                 <f:validateLength minimum="3" maximum="50"/>
             </employees:formRow>
 
@@ -120,39 +120,7 @@
     </div>
 </div>
 </div>
-    <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Löschen</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="modal-message">Möchten Sie den Datensatz wirklich löschen?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-ok" type="button" class="btn btn-primary" onclick="clickSave()">Löschen</button>
-                    <button id="modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- overlay simulation -->
-    <div class="modal fade" id="overlayModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Daten werden verarbeitet</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="modal-message">Möchten Sie den Datensatz wirklich löschen?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="overlay-modal-ok" type="button" class="btn btn-primary" >Yes</button>
-                    <button id="overlay-modal-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <h:outputScript >
         $(document).ready(function() {
             $('.date').datepicker({

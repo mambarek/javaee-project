@@ -228,15 +228,18 @@ function checkValidationAndConfirmSave(data) {
             var error = hasError(form);
             if (!error) {
                 var dialogOptions = {
-                    title:"Daten speichern",
-                    message: 'Möchten Sie Ihre Änderungen speichern?',
-                    leftBtnLabel:'Speichern',
-                    rightBtnLabel: 'Abbrechen',
-                    leftBtnFunc: clickSave,
+                    title: employee_i18n.saveData,
+                    message: employee_i18n.saveDataQuestion,
+                    leftBtnLabel:employee_i18n.save,
+                    rightBtnLabel: employee_i18n.cancel,
+                    leftBtnFuncName: "clickSave()",
+                    leftBtnDismiss: false,
                     rightBtnFunc: null
                 };
 
-                confirm2BtnDialog.show(dialogOptions);
+                overlay.showConfirm2BtnDialog(dialogOptions);
+                //confirm2BtnDialog.show(dialogOptions);
+
                 //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
                 //var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
                 /*                promise.then(function(){
@@ -257,12 +260,16 @@ function handleAjaxSaveEvent(data){
     var status = data.status;
     var encodedId = encodeId(data.source.id);
     var form = $("#" + encodedId).closest("form");
+    var minLiveTime = 3000; // 3s
+
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
             //document.getElementsByTagName('body')[0].className = 'loading';
             console.info("handleAjaxSaveEvent --begin");
-            waitingDialog.show("Ihre daten werden gespeichert...");
+            //waitingDialog.show("Ihre daten werden gespeichert...");
+            //overlay.show("Ihre daten werden gespeichert...");
+            overlay.showSpinner(employee_i18n.saveDataWaitMessage);
             break;
 
         case "complete":
@@ -281,11 +288,52 @@ function handleAjaxSaveEvent(data){
                     waitingDialog.hide();
                 }, 3000);*/
 
+            // the overlay should appears min for one second
+            var startTime = overlay.startTime;
+            var now = new Date().getTime();
+            var diff = now - startTime;
+            while(diff < minLiveTime ) {
+                now = new Date().getTime();
+                diff = now - startTime;
+            }
+
             var messages = $('.employeeFormErrorList');
             //var promise = waitingDialog.hide();
-            //promise.then(function()
-            $.when(waitingDialog.hide()).then(function()
+
+           //         waitingDialog.hide();
+/*            setTimeout(
+                function()
                 {
+                   // waitingDialog.dialog.html('<span style="color:red">Das ist ein Test!<span>');
+                    //overlay.showConfirm2BtnDialog();
+                }, 3000);*/
+
+
+            if (messages && messages.children().length > 0) {
+                //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                overlay.showConfirm2BtnDialog({
+                    title: employee_i18n.error,
+                    message: employee_i18n.savingError,
+                    showOnlyRightBtn: true,
+                    rightBtnLabel: employee_i18n.ok
+                });
+            }
+            else {
+                //alert("Beim Speichern ist ein Fehler aufgetreten!");
+                overlay.showConfirm2BtnDialog({
+                    title: employee_i18n.info,
+                    message: employee_i18n.savingSuccess,
+                    showOnlyRightBtn: true,
+                    rightBtnLabel: employee_i18n.ok
+                });
+            }
+            //waitingDialog.hide().then(function()
+             //   {
+
+
+/*setTimeout(
+    function()
+    {
                     if (messages && messages.children().length > 0) {
                         //alert("Beim Speichern ist ein Fehler aufgetreten!");
                         confirm2BtnDialog.show({
@@ -304,7 +352,9 @@ function handleAjaxSaveEvent(data){
                             rightBtnLabel: 'TobeRemoved'
                         });
                     }
-                });
+    }, 500);*/
+
+
             break;
     }
 }
