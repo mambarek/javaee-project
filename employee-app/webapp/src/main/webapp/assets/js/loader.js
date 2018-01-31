@@ -298,7 +298,7 @@ var overlay =  overlay || (function ($) {
             if(this.visible) {
                 this.dialog.html(content);
 
-                // set focus when ching content
+                // set focus when chainging content
                 if(this.dialog.find('#modal-btn-left').length > 0)
                     this.dialog.find('#modal-btn-left').focus();
                 else

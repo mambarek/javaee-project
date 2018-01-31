@@ -68,19 +68,19 @@
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
-                        #{cc.resourceBundleMap['employee.editor.button.cancel']}</button>
+                        <i class="fa fa-reply" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
+                    </button>
 
                     <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
                             jsf:id="delete">
                         <!--First ask for confirmation -->
                         <behavior:confirm modalSelector="#myModal" message="Möchten Sie den Datensatz wirklich löschen?"
                                           ajax="true" successJsFunction="#{cc.attrs.deleteConfirmFunc}"/>
-                        <i class="fa fa-trash-o" aria-hidden="true"/> #{cc.resourceBundleMap['employee.editor.button.delete']}
+                        <i class="fa fa-trash-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
                     </button>
 
                     <button type="submit" class="btn btn-primary mr-3" jsf:id="save" >
-                        #{cc.resourceBundleMap['employee.editor.button.save']}
-
+                        <i class="fa fa-floppy-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
 
                     </button>

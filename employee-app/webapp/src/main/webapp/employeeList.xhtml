@@ -163,9 +163,9 @@
             <div class="col-md-12 col-lg-6" jsf:id="content">
                 <div class="card" >
                     <div class="card-header corp-block-header">
-                        Angestelltenliste
+                        #{employeeMsg['employee.table.title']}
                     </div>
-                    <div class="card-block" style="padding: 0px">
+                    <div class="card-block" style="padding: 0">
                         <div class="table-responsive mb-5">
                             <table jsf:id="employeeList" class="table table-hover table-sm">
                             <thead  class="table-header">
@@ -209,9 +209,10 @@
                      </div>
                     <div class="card-footer">
                         <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
-                            <input type="submit" value="Anlegen" jsf:id="create_button">
+                            <button type="submit" jsf:id="create_button" class="btn btn-primary">
+                                <i class="fa fa-user-plus" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
                                 <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render=":content"/>
-                            </input>
+                            </button>
                         </h:form>
                     </div>
                 </div>
