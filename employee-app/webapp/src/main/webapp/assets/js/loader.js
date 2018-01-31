@@ -239,7 +239,7 @@ var waitingDialog =  (function ($) {
 
             while(!_visible){
                 // wait until visible
-            };
+            }
 
             this.visible = _visible;
             dfd.resolve();

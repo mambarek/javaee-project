@@ -145,7 +145,7 @@ function prepaireView(selector){
 
 function handleAjax(data) {
     var status = data.status;
-    var compenentId = data.source.id.replace(new RegExp(':', 'g'), "\\:");
+    var componentId = data.source.id.replace(new RegExp(':', 'g'), "\\:");
     var c1 = $("#j_idt23\\:employeeForm\\:firstName");
     var id = "j_idt23\\:employeeForm\\:firstName";
     var c111 = $("#" + id);
@@ -153,7 +153,7 @@ function handleAjax(data) {
     var c21 = $("#" + encodedId);
 
 
-    var input = $("#" + compenentId);
+    var input = $("#" + componentId);
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
@@ -171,13 +171,24 @@ function handleAjax(data) {
             console.info("ComponentId: " + data.source.id);
             console.info("Component valid: " + $("#j_idt23\\:employeeForm\\:firstName").attr("data-valid"));
             console.info("checkInputStyle success valid:" + data.source.getAttribute("data-valid"), data.source);
-            var valid = $("#" + compenentId).attr("data-valid");
+            var valid = $("#" + componentId).attr("data-valid");
             console.info("checkInputStyle success jquery valid: " + valid);
 
             validateInputStyle(input);
 
+            //var date = $(data.source.getParent()).hasClass('date');
+            //if(date) initDatepicker();
             break;
     }
+}
+
+function initDatepicker(elment){
+    $(elment).datepicker({
+        language: 'de',
+        autoClose: true,
+        todayHighlight: true,
+        format: 'dd.mm.yyyy'
+    })
 }
 
 function checkValidation(data){
@@ -228,10 +239,10 @@ function checkValidationAndConfirmSave(data) {
             var error = hasError(form);
             if (!error) {
                 var dialogOptions = {
-                    title: employee_i18n.saveData,
-                    message: employee_i18n.saveDataQuestion,
-                    leftBtnLabel:employee_i18n.save,
-                    rightBtnLabel: employee_i18n.cancel,
+                    title: employee_i18n['employee.overlay.saveData'],
+                    message: employee_i18n['employee.overlay.saveDataQuestion'],
+                    leftBtnLabel:employee_i18n['employee.overlay.save'],
+                    rightBtnLabel: employee_i18n['employee.overlay.cancel'],
                     leftBtnFuncName: "clickSave()",
                     leftBtnDismiss: false,
                     rightBtnFunc: null
@@ -269,7 +280,7 @@ function handleAjaxSaveEvent(data){
             console.info("handleAjaxSaveEvent --begin");
             //waitingDialog.show("Ihre daten werden gespeichert...");
             //overlay.show("Ihre daten werden gespeichert...");
-            overlay.showSpinner(employee_i18n.saveDataWaitMessage);
+            overlay.showSpinner(employee_i18n['employee.overlay.saveDataWaitMessage']);
             break;
 
         case "complete":
@@ -312,19 +323,19 @@ function handleAjaxSaveEvent(data){
             if (messages && messages.children().length > 0) {
                 //alert("Beim Speichern ist ein Fehler aufgetreten!");
                 overlay.showConfirm2BtnDialog({
-                    title: employee_i18n.error,
-                    message: employee_i18n.savingError,
+                    title: employee_i18n['employee.overlay.error'],
+                    message: employee_i18n['employee.overlay.savingError'],
                     showOnlyRightBtn: true,
-                    rightBtnLabel: employee_i18n.ok
+                    rightBtnLabel: employee_i18n['employee.overlay.ok']
                 });
             }
             else {
                 //alert("Beim Speichern ist ein Fehler aufgetreten!");
                 overlay.showConfirm2BtnDialog({
-                    title: employee_i18n.info,
-                    message: employee_i18n.savingSuccess,
+                    title: employee_i18n['employee.overlay.info'],
+                    message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
-                    rightBtnLabel: employee_i18n.ok
+                    rightBtnLabel: employee_i18n['employee.overlay.ok']
                 });
             }
             //waitingDialog.hide().then(function()

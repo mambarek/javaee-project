@@ -22,24 +22,21 @@ public class ApplicationController {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         ResourceBundle bundle = ResourceBundle.getBundle("com/it2go/EmployeeApp", locale);
 
-        // build tree map
-        Map<String, Object> map;
+        builder.append("'locale':'"+locale.toString()+"',");
 
         bundle.keySet().forEach(key -> {
-            String[] names = key.split(".");
-            Arrays.stream(names).forEach(name ->{
-                //map.containsKey(name)
-            });
-
             String value = bundle.getString(key);
-            builder.append(key.replace(".","_"));
-            builder.append(":\"");
+            builder.append("'"+key+"'");
+            builder.append(":'");
             builder.append(value);
-            builder.append("\" ");
+            builder.append("', ");
         });
 
         //builder.append("}");
+        String res = builder.toString();
+        // remove the last quote
+        if(res.endsWith(",")) res.substring(res.length());
 
-        return builder.toString();
+        return res;
     }
 }

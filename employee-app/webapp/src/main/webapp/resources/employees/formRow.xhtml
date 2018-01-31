@@ -76,10 +76,10 @@
                                             var id = '#' + encodeId('#{cc.clientId}:datetimepicker');
                                             //console.info("Datepicker id: " + id);
                                             $(id).datepicker({
-                                                language: "#{cc.attrs.language}",
+                                                language: employee_i18n['locale'],
                                                 autoClose: true,
                                                 todayHighlight: true,
-                                                format: "#{cc.attrs.datePattern}"
+                                                format: employee_i18n['employee.app.javascript.date.pattern']
                                             })
                                         });
                                     </h:outputScript>

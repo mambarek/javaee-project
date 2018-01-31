@@ -23,7 +23,9 @@
         <f:loadBundle var="employeeMsg" basename="com.it2go.EmployeeApp"/>
         <f:loadBundle var="messages" basename="com.it2go.Messages"/>
     </f:view>
-
+    <h:outputScript>
+        var employee_i18n = {#{applicationController.translations}};
+    </h:outputScript>
     <header>
         <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
             <div class="container">
@@ -289,31 +291,6 @@
     <script src="assets/js/employee.js"/>
     <script src="assets/js/jsf-fixes.js"/>
     <script src="assets/js/loader.js"/>
-    <script src="assets/js/empoyee-i18n.js"/>
-    <h:outputScript>
-        employee_i18n.cancel = '#{employeeMsg['employee.overlay.cancel']}';
-        employee_i18n.yes = '#{employeeMsg['employee.overlay.yes']}';
-        employee_i18n.no = '#{employeeMsg['employee.overlay.no']}';
-        employee_i18n.ok = '#{employeeMsg['employee.overlay.ok']}';
-        employee_i18n.info = '#{employeeMsg['employee.overlay.info']}';
-        employee_i18n.warning = '#{employeeMsg['employee.overlay.warning']}';
-        employee_i18n.error = '#{employeeMsg['employee.overlay.error']}';
-        employee_i18n.savingError = '#{employeeMsg['employee.overlay.savingError']}';
 
-        employee_i18n.deleteData = '#{employeeMsg['employee.overlay.deleteData']}';
-        employee_i18n.deleteDataQuestion = '#{employeeMsg['employee.overlay.deleteDataQuestion']}';
-        employee_i18n.deletingSuccess = '#{employeeMsg['employee.overlay.deletingSuccess']}';
-        employee_i18n.deleteDataWaitMessage = '#{employeeMsg['employee.overlay.deleteDataWaitMessage']}';
-
-        employee_i18n.save = '#{employeeMsg['employee.overlay.save']}';
-        employee_i18n.saveData = '#{employeeMsg['employee.overlay.saveData']}';
-        employee_i18n.saveDataQuestion = '#{employeeMsg['employee.overlay.saveDataQuestion']}';
-        employee_i18n.saveDataWaitMessage = '#{employeeMsg['employee.overlay.saveDataWaitMessage']}';
-        employee_i18n.savingSuccess = '#{employeeMsg['employee.overlay.savingSuccess']}';
-<!--
-        var testB = '#{applicationController.translations}';
-        var testBundle = {#{applicationController.translations}};
--->
-    </h:outputScript>
 </h:body>
 </html>

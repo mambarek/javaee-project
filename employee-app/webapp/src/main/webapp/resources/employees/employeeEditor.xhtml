@@ -52,8 +52,6 @@
             <employees:formRow value="#{cc.attrs.model.birthDate}"
                                label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
                                type="date"
-                               language="#{webFlowController.locale}"
-                               datePattern="#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
                                placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
                 <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
             </employees:formRow>
