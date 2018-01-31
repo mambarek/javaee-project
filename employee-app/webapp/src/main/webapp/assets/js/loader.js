@@ -297,6 +297,13 @@ var overlay =  overlay || (function ($) {
             var dfd = jQuery.Deferred();
             if(this.visible) {
                 this.dialog.html(content);
+
+                // set focus when ching content
+                if(this.dialog.find('#modal-btn-left').length > 0)
+                    this.dialog.find('#modal-btn-left').focus();
+                else
+                    this.dialog.find('#modal-btn-right').focus();
+
                 dfd.resolve();
 
                 return dfd.promise();
@@ -308,6 +315,10 @@ var overlay =  overlay || (function ($) {
             var _this = this;
             this.dialog.off('shown.bs.modal').on('shown.bs.modal', function (e) {
                 _this.visible = true;
+                if(_this.dialog.find('#modal-btn-left').length > 0)
+                    _this.dialog.find('#modal-btn-left').focus();
+                else
+                    _this.dialog.find('#modal-btn-right').focus();
             });
 
             this.dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
@@ -317,6 +328,7 @@ var overlay =  overlay || (function ($) {
             this.dialog.html(content);
             // show the dialog
             this.dialog.modal();
+
 
             while(!this.visible){
                 // wait until visible
@@ -334,8 +346,8 @@ var overlay =  overlay || (function ($) {
          * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
          * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
          */
-        show: function () {
-            return this.showSpinner();
+        show: function (message) {
+            return this.showSpinner(message);
         },
 
         showSpinner: function (message) {
@@ -346,16 +358,15 @@ var overlay =  overlay || (function ($) {
                 message = 'Loading...';
             }
 
-            var spinnerContent =  '<div class="modal-dialog modal-m viewport-centred">' +
-                '<div class="modal-content" style="border:0px;background-color: inherit;text-align: center">' +
-                /*        '<div class="modal-header"><h3 style="margin:0;"></h3></div>'*/
-                '<div class="modal-body viewport-centred">' +
+            var spinnerContent =
+                '<div class="modal-dialog modal-m viewport-centred">' +
+                '<div class="modal-content" style="border: 0px;background-color: inherit">' +
+                '<div class="modal-header" style="border: 0px"><span style="color:white">'+ message +'</span></div>'+
+                '<div class="modal-body">' +
                 '<div class="overlay-white">'+
-                //'<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
 
-                '<span class="overlay-text">'+ message +'</span><br/><br/>'+
                 /*'<i class="fa fa-spinner fa-spin fa-4x fa-fw"></i>'+*/
-                /*'<i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>'+*/
+                '<i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>'+
 
                 /*'<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>'+*/
 
@@ -364,7 +375,7 @@ var overlay =  overlay || (function ($) {
                 /*'<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'+*/
 
                 /*'<span class="sr-only">Loading...</span>'+*/
-                '<div class="loader_color"></div>'+
+                /*'<div class="loader_color"></div>'+*/
                 '</div>' +
                 '</div>' +
                 '</div>'+
@@ -396,8 +407,8 @@ var overlay =  overlay || (function ($) {
 
             var dialogContent = '<div class="modal-dialog modal-m modal-'+settings.dialogSize+'">' +
                 '<div class="modal-content">' +
-                '<div class="modal-header">'+
-                '<h5 class="modal-title">'+settings.title+'</h5>' +
+                '<div class="modal-header popup-header">'+
+                '<div class="modal-title">'+settings.title+'</div>' +
                 '</div>'+
                 '<div class="modal-body">' +
                 '<p class="modal-message">'+settings.message+'</p>' +
@@ -411,12 +422,15 @@ var overlay =  overlay || (function ($) {
                     dialogContent += '<button id="modal-btn-left" type="button" class="btn btn-primary" onclick="'+settings.leftBtnFuncName+'" >' + settings.leftBtnLabel+'</button>';
             }
 
+            var btnClass = "btn btn-secondary";
+            if(settings.showOnlyRightBtn) btnClass = "btn btn-primary";
+
             if(settings.rightBtnDismiss)
                 dialogContent +=
-                    '<button id="modal-btn-right" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="'+settings.rightBtnFunc+'" >' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" type="button" class="'+btnClass+'" data-dismiss="modal" onclick="'+settings.rightBtnFunc+'" >' + settings.rightBtnLabel+'</button>';
             else
                 dialogContent +=
-                    '<button id="modal-btn-right" type="button" class="btn btn-secondary" onclick="'+settings.rightBtnFunc+'"  > ' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" type="button" class="'+btnClass+'" onclick="'+settings.rightBtnFunc+'"  > ' + settings.rightBtnLabel+'</button>';
 
             dialogContent +=
                 '</div>'+

@@ -112,6 +112,21 @@ a:hover, a:active{
   line-height: $blockHeaderHeight;
 }
 
+.popup-header{
+  background-color: $primaryBgColor;
+  color: $blockHeaderFontColor;
+  padding: 5px;
+/*  font-weight: $bold;
+  line-height: $blockHeaderHeight;*/
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-size: $fontSize;
+  font-weight: $bold;
+}
+
 .card{
     border: none;
 }
@@ -153,11 +168,18 @@ a:hover, a:active{
   border-radius: $btn-border-radius;
 }
 
-.form-control:hover {
+/*.form-control:hover {
   border-color: #66afe9;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}*/
+
+.form-control:hover {
+  border-color: #e9bc52;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 208, 128, 0.98);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 208, 128, 0.98);
 }
 
 @media (max-width: 768px) {
@@ -168,12 +190,6 @@ a:hover, a:active{
   .navbar{
     line-height: 2rem;
   }
-}
-
-.btn {
-    font-size: $heigth-12;
-    line-height: $heigth-14;
-    border-radius: $btn-border-radius;
 }
 
 .breadcrumb{
@@ -192,6 +208,13 @@ a:hover, a:active{
 .breadcrumb-item.active {
   color: $primaryBorderColor;
 }
+
+.btn {
+  font-size: $heigth-12;
+  line-height: $heigth-14;
+  border-radius: $btn-border-radius;
+}
+
 /*-------------- primary btn----------------------------*/
 .btn-primary {
   color: $primaryFontColor;
@@ -205,9 +228,11 @@ a:hover, a:active{
   border-color: $primaryBorderColor;
 }
 
-.btn-primary:focus, .btn-primary.focus {
-  -webkit-box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
-  box-shadow: none;/*0 0 0 2px $primaryHoverBgColor;*/
+.btn-primary:focus{
+  border: double;
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
@@ -222,7 +247,102 @@ a:hover, a:active{
   background-image: none;
   border-color: $primaryBorderColor;
 }
+/*-------------- default btn----------------------------*/
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-default:focus,
+.btn-default.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.btn-default:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+/*--------------- btn secondory --------------------------*/
+.btn-secondary:hover {
+  color: #292b2c;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
 
+.btn-secondary:focus, .btn-secondary.focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
+  box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
+}
+
+.btn-secondary.disabled, .btn-secondary:disabled {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn-secondary:active, .btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #292b2c;
+  background-color: #e6e6e6;
+  background-image: none;
+  border-color: #adadad;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #5bc0de;
+}
+/*-------------- btn success -----------------------------*/
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.btn-success:focus,
+.btn-success.focus {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #255625;
+}
+.btn-success:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.btn-success:active,
+.btn-success.active,
+.open > .dropdown-toggle.btn-success {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+/*------------- btn info ------------------*/
+.btn-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.btn-info:focus,
+.btn-info.focus {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #1b6d85;
+}
+.btn-info:hover {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+/*----------------------------------------*/
 a.btn{
   border: 1px solid $primaryBorderColor;
   color: $primaryFontColor;
