@@ -52,6 +52,8 @@
             <employees:formRow value="#{cc.attrs.model.birthDate}"
                                label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
                                type="date"
+                               language="#{webFlowController.locale}"
+                               datePattern="#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
                                placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
                 <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
             </employees:formRow>
@@ -110,9 +112,6 @@
         <h:messages style="color: red;" id="employeeFormErrorList" styleClass="employeeFormErrorList"/>
         <!-- hidden form for confirmation dialog action delete-->
         <h:form id="confirmHiddenForm">
-            <h:commandButton id="showOverlay" style="display: none;" styleClass="showOverlay" >
-                <f:ajax onevent="showOverlay" render="content"/>
-            </h:commandButton>
             <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
                 <f:ajax execute="@this"  render="content"/>
             </h:commandButton>
@@ -120,17 +119,6 @@
     </div>
 </div>
 </div>
-
-    <h:outputScript >
-        $(document).ready(function() {
-            $('.date').datepicker({
-                language: '#{webFlowController.locale}',
-                autoClose: true,
-                todayHighlight: true,
-                format: "#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}"
-            })
-        });
-    </h:outputScript>
 </composite:implementation>
 
 </ui:composition>

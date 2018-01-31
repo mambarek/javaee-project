@@ -25,6 +25,10 @@
                       shortDescription="enable onChange event ajax validation. default true"/>
         <cc:attribute name="ajaxRender"
                       shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:attribute name="datePattern" default="dd.mm.yyyy"
+                      shortDescription="pattern for date"/>
+        <cc:attribute name="language" default="de"
+                      shortDescription="The application language. may be useful for many inputs"/>
         <cc:facet name="inputGroupAddon"
                   shortDescription="adds bootstrap addon button to input"/>
         <cc:editableValueHolder name="input" targets="editableText"/>
@@ -56,7 +60,7 @@
 
                             <!-- date -->
                             <c:when test="#{cc.attrs.type eq 'date'}">
-                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
+                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true" jsf:id="datetimepicker" >
                                     <input type="text" class="form-control" jsf:binding="#{cc.input}" jsf:id="editableText"
                                            jsf:value="#{cc.attrs.value}" data-valid="#{component.valid}"
                                            jsf:required="#{'true'.equals(cc.attrs.isRequired)? 'true': 'false'}"
@@ -67,6 +71,18 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"/>
                                     </div>
+                                    <h:outputScript >
+                                        $(function() {
+                                            var id = '#' + encodeId('#{cc.clientId}:datetimepicker');
+                                            //console.info("Datepicker id: " + id);
+                                            $(id).datepicker({
+                                                language: "#{cc.attrs.language}",
+                                                autoClose: true,
+                                                todayHighlight: true,
+                                                format: "#{cc.attrs.datePattern}"
+                                            })
+                                        });
+                                    </h:outputScript>
                                 </div>
                             </c:when>
                         </c:choose>
