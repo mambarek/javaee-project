@@ -106,6 +106,9 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
     public <K> T deleteByIdentityKey(K key) throws EntityNotFoundException {
         Objects.requireNonNull(key);
         final T merged  = entityManager.find(this.getEntityClass(),key);
+
+        if(merged == null) throw new EntityNotFoundException();
+
         entityManager.lock(merged, LockModeType.PESSIMISTIC_WRITE);
         entityManager.remove(merged);
 

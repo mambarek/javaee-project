@@ -114,7 +114,7 @@
         <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
             <div class="alert alert-danger alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
-                <strong>Fehler!</strong> #{facesMessage.summary}
+                <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
             </div>
         </ui:repeat>
      </div>

@@ -173,7 +173,7 @@ public class EditEmployeeController implements BaseViewController{
 
     /*** Ajax events handling ***/
 
-    public void ajaxSaveAction(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void ajaxSaveAction(AjaxBehaviorEvent event)  {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
@@ -186,7 +186,7 @@ public class EditEmployeeController implements BaseViewController{
         }
     }
 
-    public void ajaxDeleteAction(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void ajaxDeleteAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
