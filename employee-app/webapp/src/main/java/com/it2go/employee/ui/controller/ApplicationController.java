@@ -17,26 +17,20 @@ public class ApplicationController {
 
     public String getTranslations(){
         final StringBuilder builder = new StringBuilder();
-        //builder.append("{");
 
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         ResourceBundle bundle = ResourceBundle.getBundle("com/it2go/EmployeeApp", locale);
 
-        builder.append("'locale':'"+locale.toString()+"',");
+        builder.append("'locale':'").append(locale.toString()).append("',");
 
         bundle.keySet().forEach(key -> {
             String value = bundle.getString(key);
-            builder.append("'"+key+"'");
+            builder.append("'").append(key).append("'");
             builder.append(":'");
             builder.append(value);
             builder.append("', ");
         });
 
-        //builder.append("}");
-        String res = builder.toString();
-        // remove the last quote
-        if(res.endsWith(",")) res.substring(res.length());
-
-        return res;
+        return  builder.toString();
     }
 }

@@ -1,22 +1,23 @@
 package com.it2go.framework.dao;
 
-import lombok.Data;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-@Data
 public class BaseException extends Exception {
 
-    private String errorCode;
+    private final ExceptionCode exceptionCode;
 
-    public BaseException() {
-        super();
+    public BaseException(ExceptionCode exceptionCode) {
+        this.exceptionCode = exceptionCode;
     }
 
-    public BaseException(String message) {
-        super(message);
+    public String getMessage() {
+        return exceptionCode.getMessage();
     }
 
-    public BaseException(String errorCode, String message) {
-        super(message);
-    }
+    public String getLocalizedMessage(Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle("com/it2go/exception/ExceptionMessages", locale);
 
+        return bundle.getString(this.exceptionCode.getCode());
+    }
 }

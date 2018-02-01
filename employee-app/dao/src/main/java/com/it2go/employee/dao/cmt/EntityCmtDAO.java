@@ -116,7 +116,7 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
         Objects.requireNonNull(key);
         final T entity = entityManager.find(this.getEntityClass(), key);
 
-        if(entity == null) throw new EntityNotFoundException("Entity not found id: [" + key + "]");
+        if(entity == null) throw new EntityNotFoundException();
         return entity;
     }
 

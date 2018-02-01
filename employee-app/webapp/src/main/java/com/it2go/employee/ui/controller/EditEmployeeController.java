@@ -6,6 +6,7 @@ import com.it2go.employee.entities.EntityNotValidException;
 import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
+import com.it2go.framework.dao.BaseException;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
@@ -24,6 +25,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Named
@@ -105,34 +107,25 @@ public class EditEmployeeController implements BaseViewController{
 
         System.out.println("## EditEmployeeController::saveEmployee model = " + model);
 
-        if(model.isValid()) {
-            Person loggedInUser = userSession.getTestUpdateUser();
-            if(model.isNew())
-                loggedInUser = userSession.getTestCreationUser();
+        if(!model.isValid()) throw new EntityNotValidException();
 
-            employeeRepository.persist(model, loggedInUser);
+        Person loggedInUser = userSession.getTestUpdateUser();
+        if(model.isNew())
+            loggedInUser = userSession.getTestCreationUser();
 
-            // reset the view
-            this.resetView();
-        }
-        else{
-/*
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-*/
-            throw new EntityNotValidException();
-        }
+        employeeRepository.persist(model, loggedInUser);
 
-        //return "employeeList?faces-redirect=true";
+        // reset the view
+        this.resetView();
+
     }
 
-    public void deleteEmployee(ActionEvent event) throws EntityNotPersistedException {
+    public void deleteEmployee() throws EntityNotPersistedException {
         System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
-        if(this.model != null && !this.model.isNew())
-            employeeRepository.remove(this.model);
+        if(this.model == null || this.model.isNew())
+            throw new EntityNotPersistedException();
+
+        employeeRepository.remove(this.model);
 
         this.resetView();
 
@@ -178,44 +171,39 @@ public class EditEmployeeController implements BaseViewController{
     }
 
 
-    /****************/
-    final static String SAVE_BUTTON_ID = "saveConfirmed";
-   /* @Override*/
-    public void processAction(ActionEvent event) throws AbortProcessingException {
-
-        final UIComponent component = event.getComponent();
-        final String componentId = component.getId();
-        if(componentId.equals(SAVE_BUTTON_ID)){
-            try {
-
-                this.saveEmployee();
-            } catch (Exception e) {
-
-                FacesContext.getCurrentInstance().addMessage(event.getComponent().getParent().getClientId(),
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Details für dieses Fehler"));
-
-                e.printStackTrace();
-            }
-
-        }
-    }
+    /*** Ajax events handling ***/
 
     public void ajaxSaveAction(AjaxBehaviorEvent event) throws AbortProcessingException {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
-        if(componentId.equals(SAVE_BUTTON_ID)){
-            try {
 
-                this.saveEmployee();
-            } catch (Exception e) {
-
-                FacesContext.getCurrentInstance().addMessage(event.getComponent().getParent().getClientId(),
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Details für dieses Fehler"));
-
-                e.printStackTrace();
-            }
-
+        try {
+            this.saveEmployee();
+        } catch (BaseException e) {
+            this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
+            e.printStackTrace();
         }
+    }
+
+    public void ajaxDeleteAction(AjaxBehaviorEvent event) throws AbortProcessingException {
+
+        final UIComponent component = event.getComponent();
+        final String componentId = component.getId();
+
+        try {
+            this.deleteEmployee();
+        } catch (BaseException e) {
+            this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
+            e.printStackTrace();
+        }
+    }
+
+    private void handleBaseEcption(BaseException e, String clientId){
+        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        String msg = e.getLocalizedMessage(locale);
+        FacesContext.getCurrentInstance().addMessage(clientId,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+
     }
 }

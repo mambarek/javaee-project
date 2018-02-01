@@ -220,25 +220,12 @@
                 <div jsf:id="editorWrapper">
 
                     <employees:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
-                                              rendered="#{!empty editEmployeeController.model}"
-                                              deleteConfirmFunc="function(){$('#hiddenForm\\:deleteBtn').click();}"
-                                              saveConfirmFunc="function(){$('#hiddenForm\\:saveBtn').click();}">
+                                              rendered="#{!empty editEmployeeController.model}">
                         <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
                         <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent" listener="#{editEmployeeController.ajaxSaveAction}"/>
-                        <f:actionListener for="saveConfirmedBtn" binding="#{EditEmployeeEditorActionListener}"/>
-                        <!--<f:actionListener for="saveButton" binding="#{editEmployeeController.saveEmployee()}"/>-->
-                        <!-- WICHTIG: an dieser stelle kein AJAX für den save button. submitt fuktioniert dann nicht mehr-->
+                        <f:ajax event="deleteConfirmed" render="content" onevent="handleAjaxDeleteEvent" listener="#{editEmployeeController.ajaxDeleteAction}"/>
                     </employees:employeeEditor>
 
-                    <!-- hidden form for confirmation dialog action delete-->
-                    <h:form id="hiddenForm" style="display: none;">
-                        <h:commandButton id="saveBtn" actionListener="#{editEmployeeController.saveEmployee}">
-                            <f:ajax execute="@this" render="content"/>
-                        </h:commandButton>
-                        <h:commandButton id="deleteBtn" actionListener="#{editEmployeeController.deleteEmployee}">
-                            <f:ajax execute="@this" render="content" onevent="checkValidation"/>
-                        </h:commandButton>
-                    </h:form>
                 </div>
             </div>
             <div class="col-md-12 col-lg-2">

@@ -219,12 +219,12 @@ function checkValidation(data){
 function checkValidationAndConfirmSave(data) {
     var status = data.status;
     var encodedId = encodeId(data.source.id);
-    var form = $("#" + encodedId).closest("form");
+    var button = $('#'+encodedId);
+    var form = button.closest("form");
+    var saveFunc = button.attr("data-saveFunc");
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
-            //document.getElementsByTagName('body')[0].className = 'loading';
-            console.info("checkValidation begin");
             break;
 
         case "complete":
@@ -233,7 +233,6 @@ function checkValidationAndConfirmSave(data) {
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            //document.getElementsByTagName('body')[0].className = '';
 
             validateForm(form);
             var error = hasError(form);
@@ -241,28 +240,48 @@ function checkValidationAndConfirmSave(data) {
                 var dialogOptions = {
                     title: employee_i18n['employee.overlay.saveData'],
                     message: employee_i18n['employee.overlay.saveDataQuestion'],
-                    leftBtnLabel:employee_i18n['employee.overlay.save'],
+                    leftBtnLabel: employee_i18n['employee.overlay.save'],
                     rightBtnLabel: employee_i18n['employee.overlay.cancel'],
-                    leftBtnFuncName: "clickSave()",
+                    leftBtnFuncName: saveFunc,
                     leftBtnDismiss: false,
                     rightBtnFunc: null
                 };
 
                 overlay.showConfirm2BtnDialog(dialogOptions);
-                //confirm2BtnDialog.show(dialogOptions);
 
-                //ShowConfirmYesNo(null, "#myModal", processShowOverlay, null, "Änderungen speichern?");
-                //var promise = ConfirmYesNo("#myModal", "Änderungen speichern?");
-                /*                promise.then(function(){
-
-                                        // clickSave(); // save data
-                                        showOverlayOnly();
-                                    }
-                                    , function (reason) {
-                                        console.info("-- ShowConfirmYesNo() no succes reason:", reason);
-                                    })*/
+                break;
             }
-            //$('#saveHiddenForm\\:saveOk').click();
+    }
+}
+
+function confirmDelete(data) {
+    var status = data.status;
+    var encodedId = encodeId(data.source.id);
+    var button = $('#'+encodedId);
+    var form = button.closest("form");
+    var deleteFunc = button.attr("data-deleteFunc");
+    switch (status) {
+        case "begin":
+            // This is the start of the AJAX request.
+            break;
+
+        case "complete":
+            // This is invoked right after AJAX response is returned.
+            break;
+
+        case "success":
+            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+            var dialogOptions = {
+                title: employee_i18n['employee.overlay.deleteData'],
+                message: employee_i18n['employee.overlay.deleteDataQuestion'],
+                leftBtnLabel:employee_i18n['employee.overlay.delete'],
+                rightBtnLabel: employee_i18n['employee.overlay.cancel'],
+                leftBtnFuncName: deleteFunc,
+                leftBtnDismiss: false,
+                rightBtnFunc: null
+            };
+
+            overlay.showConfirm2BtnDialog(dialogOptions);
             break;
     }
 }
@@ -276,28 +295,15 @@ function handleAjaxSaveEvent(data){
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
-            //document.getElementsByTagName('body')[0].className = 'loading';
-            console.info("handleAjaxSaveEvent --begin");
-            //waitingDialog.show("Ihre daten werden gespeichert...");
-            //overlay.show("Ihre daten werden gespeichert...");
             overlay.showSpinner(employee_i18n['employee.overlay.saveDataWaitMessage']);
             break;
 
         case "complete":
             // This is invoked right after AJAX response is returned.
-            console.info("handleAjaxSaveEvent --complete");
-
             break;
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            //document.getElementsByTagName('body')[0].className = '';
-            console.info("handleAjaxSaveEvent --success");
-/*            setTimeout(
-                function()
-                {
-                    waitingDialog.hide();
-                }, 3000);*/
 
             // the overlay should appears min for one second
             var startTime = overlay.startTime;
@@ -309,63 +315,78 @@ function handleAjaxSaveEvent(data){
             }
 
             var messages = $('.employeeFormErrorList');
-            //var promise = waitingDialog.hide();
-
-           //         waitingDialog.hide();
-/*            setTimeout(
-                function()
-                {
-                   // waitingDialog.dialog.html('<span style="color:red">Das ist ein Test!<span>');
-                    //overlay.showConfirm2BtnDialog();
-                }, 3000);*/
-
-
+            var options;
             if (messages && messages.children().length > 0) {
-                //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                overlay.showConfirm2BtnDialog({
+                messages.css('display','block');
+                options = {
                     title: employee_i18n['employee.overlay.error'],
                     message: employee_i18n['employee.overlay.savingError'],
                     showOnlyRightBtn: true,
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
-                });
+                };
             }
             else {
-                //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                overlay.showConfirm2BtnDialog({
+                options = {
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
-                });
+                };
             }
-            //waitingDialog.hide().then(function()
-             //   {
+            overlay.showConfirm2BtnDialog(options);
+            break;
+    }
+}
 
+function handleAjaxDeleteEvent(data){
+    var status = data.status;
+    var encodedId = encodeId(data.source.id);
+    var form = $("#" + encodedId).closest("form");
+    var minLiveTime = 3000; // 3s
 
-/*setTimeout(
-    function()
-    {
-                    if (messages && messages.children().length > 0) {
-                        //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                        confirm2BtnDialog.show({
-                            title: "Fehler",
-                            message: "Beim Speichern ist ein Fehler aufgetreten!",
-                            leftBtnLabel: 'Ok',
-                            rightBtnLabel: 'TobeRemoved'
-                        });
-                    }
-                    else {
-                        //alert("Beim Speichern ist ein Fehler aufgetreten!");
-                        confirm2BtnDialog.show({
-                            title: "Information",
-                            message: "Ihre Daten wurden erfolgreich gespeichert!",
-                            leftBtnLabel: 'Ok',
-                            rightBtnLabel: 'TobeRemoved'
-                        });
-                    }
-    }, 500);*/
+    switch (status) {
+        case "begin":
+            // This is the start of the AJAX request.
+            overlay.showSpinner(employee_i18n['employee.overlay.deleteDataWaitMessage']);
+            break;
 
+        case "complete":
+            // This is invoked right after AJAX response is returned.
+            break;
 
+        case "success":
+            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+
+            // the overlay should appears min for one second
+            var startTime = overlay.startTime;
+            var now = new Date().getTime();
+            var diff = now - startTime;
+            while(diff < minLiveTime ) {
+                now = new Date().getTime();
+                diff = now - startTime;
+            }
+
+            var messages = $('.employeeFormErrorList');
+            var options;
+            if (messages && messages.children().length > 0) {
+                messages.css('display','block');
+                options = {
+                    title: employee_i18n['employee.overlay.error'],
+                    message: employee_i18n['employee.overlay.deletingError'],
+                    showOnlyRightBtn: true,
+                    rightBtnLabel: employee_i18n['employee.overlay.ok']
+                }
+            }
+            else {
+                options = {
+                    title: employee_i18n['employee.overlay.info'],
+                    message: employee_i18n['employee.overlay.deletingSuccess'],
+                    showOnlyRightBtn: true,
+                    rightBtnLabel: employee_i18n['employee.overlay.ok']
+                }
+            }
+
+            overlay.showConfirm2BtnDialog(options);
             break;
     }
 }
@@ -434,21 +455,6 @@ function saveAndshowOverlay(){
 
 }
 
-function processShowOverlay() {
-    //$('#saveHiddenForm\\:saveOk').click();
-    //TODO HIER SELECTOR MUSS DANN IRGEDWIE ÜBERGEBEN und nicht fest verdrahtet
-    $('.showOverlay').click();
-}
-
-function clickSave() {
-    //$('#saveHiddenForm\\:saveOk').click();
-    //TODO HIER SELECTOR MUSS DANN IRGEDWIE ÜBERGEBEN und nicht fest verdrahtet
-    $('.saveConfirmed').click();
-}
-
-function processSaveAction(){
-
-}
 
 function checkFormForError(form){
     var res = true;

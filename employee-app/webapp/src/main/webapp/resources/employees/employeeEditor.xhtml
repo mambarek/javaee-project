@@ -16,11 +16,16 @@
     <composite:clientBehavior name="saveConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:saveConfirmed"/>
     <composite:actionSource name="saveConfirmedBtn" event="click" targets="saveConfirmed" />
 
-    <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
     <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
+    <composite:clientBehavior name="deleteConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:deleteConfirmed"/>
+    <composite:actionSource name="deleteConfirmedBtn" event="click" targets="deleteConfirmed" />
+
+    <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
+
     <composite:attribute name="saveConfirmFunc" />
     <composite:attribute name="deleteConfirmFunc" />
     <composite:attribute name="renderAfterSave"/>
+    <composite:attribute name="renderAfterDelete"/>
 </composite:interface>
 <composite:implementation>
 
@@ -72,17 +77,14 @@
                     </button>
 
                     <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
-                            jsf:id="delete">
-                        <!--First ask for confirmation -->
-                        <behavior:confirm modalSelector="#myModal" message="Möchten Sie den Datensatz wirklich löschen?"
-                                          ajax="true" successJsFunction="#{cc.attrs.deleteConfirmFunc}"/>
+                            jsf:id="delete" data-deleteFunc="clickDelete()">
                         <i class="fa fa-trash-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
                     </button>
 
-                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" >
+                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" data-saveFunc="clickSave()">
                         <i class="fa fa-floppy-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
-
                     </button>
                 </div>
             </div>
@@ -107,12 +109,32 @@
             </ui:remove>
         </div>
     </h:form>
-        <h:messages style="color: red;" id="employeeFormErrorList" styleClass="employeeFormErrorList"/>
+
+     <div class="employeeFormErrorList" style="display: none">
+        <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
+                <strong>Fehler!</strong> #{facesMessage.summary}
+            </div>
+        </ui:repeat>
+     </div>
         <!-- hidden form for confirmation dialog action delete-->
         <h:form id="confirmHiddenForm">
+            <h:commandButton id="deleteConfirmed" style="display: none;" styleClass="deleteConfirmed">
+                <f:ajax execute="@this"  render="content"/>
+            </h:commandButton>
             <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
                 <f:ajax execute="@this"  render="content"/>
             </h:commandButton>
+            <h:outputScript>
+                function clickSave() {
+                    $('.saveConfirmed').click();
+                }
+
+                function clickDelete() {
+                    $('.deleteConfirmed').click();
+                }
+            </h:outputScript>
         </h:form>
     </div>
 </div>
