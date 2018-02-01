@@ -32,26 +32,27 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
 
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
-
+        if(input != null) {
 /*        Converter converter = (Converter) getAttributes().get("converter");
         if (converter != null) {
             input.setConverter(converter);
         }*/
-        input.setConverter(this.getConverter());
+            input.setConverter(this.getConverter());
 
-        boolean readOnly = (boolean)this.getAttributes().get("readOnly");
+            boolean readOnly = (boolean) this.getAttributes().get("readOnly");
 
-        Arrays.stream(input.getValidators()).forEach(input::removeValidator);
-        if(!readOnly)
-            Arrays.stream(this.getValidators()).forEach(input::addValidator);
-        else
-            input.setRendered(false);
-
+            Arrays.stream(input.getValidators()).forEach(input::removeValidator);
+            if (!readOnly)
+                Arrays.stream(this.getValidators()).forEach(input::addValidator);
+            else
+                input.setRendered(false);
+        }
         if (visible)
             super.encodeBegin(context);
     }
 
     public String getDisplayValue(){
+
         if(this.getConverter() == null)
             return getValue() != null ? getValue().toString(): "";
 

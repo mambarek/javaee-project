@@ -69,6 +69,9 @@
                                label="#{cc.resourceBundleMap['employee.editor.salary']}" readOnly="true">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>-->
+            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="Gender"
+                               radioItems="#{editEmployeeController.genderList}">
+            </employees:formRow>
 
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">

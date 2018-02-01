@@ -1,9 +1,6 @@
 package com.it2go.employee.ui.controller;
 
-import com.it2go.employee.entities.EmailAddress;
-import com.it2go.employee.entities.Employee;
-import com.it2go.employee.entities.EntityNotValidException;
-import com.it2go.employee.entities.Person;
+import com.it2go.employee.entities.*;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.BaseException;
@@ -21,10 +18,12 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -205,5 +204,21 @@ public class EditEmployeeController implements BaseViewController{
         FacesContext.getCurrentInstance().addMessage(clientId,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 
+    }
+
+    public Gender[] getGenderList(){
+        Gender[] res = new Gender[2];
+        res[0] = Gender.MALE;
+        res[1] = Gender.FEMALE;
+
+        return res;
+    }
+
+    public SelectItem[] getGenderItems(){
+        SelectItem[] res = new SelectItem[2];
+        res[0] = new SelectItem(Gender.MALE, Gender.MALE.getName());
+        res[1] = new SelectItem(Gender.FEMALE, Gender.FEMALE.getName());
+
+        return res;
     }
 }
