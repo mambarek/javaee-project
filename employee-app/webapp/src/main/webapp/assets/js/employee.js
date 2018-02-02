@@ -95,7 +95,7 @@ function validateInputStyle(component){
     var valid = component.attr("data-valid");
     var inputContainer = component.closest("#inputContainer");
     var disabled = component.attr("disabled");
-    console.info("validateInputStyle component", component, " valid: " + valid);
+   // console.info("validateInputStyle component", component, " valid: " + valid);
 
     // reset highlighting
     //component.parent().removeClass('has-danger has-success');
@@ -104,7 +104,8 @@ function validateInputStyle(component){
     var target = component;
     if(component[0].type == "radio") {
         target = component.closest(".input-group");
-        target.css("borader","solid");
+        // add border
+        target.addClass("form-control");
     }
 
     target.removeClass("form-control-danger form-control-success")

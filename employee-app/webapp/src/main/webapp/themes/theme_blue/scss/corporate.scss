@@ -499,3 +499,7 @@ a.btn{
   margin-bottom: 0;
   cursor: pointer;
 }
+
+.has-danger .form-check-label, .has-success .form-check-label{
+  color: inherit;
+}
