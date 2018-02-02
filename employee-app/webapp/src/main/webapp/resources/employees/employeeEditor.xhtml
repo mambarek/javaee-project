@@ -70,7 +70,7 @@
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>-->
             <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="Gender"
-                               radioItems="#{editEmployeeController.genderList}">
+                               radioItems="#{editEmployeeController.genderList}" isRequired="true">
             </employees:formRow>
 
             <div class="form-group row justify-content-end hidden-sm-down">

@@ -100,7 +100,14 @@ function validateInputStyle(component){
     // reset highlighting
     //component.parent().removeClass('has-danger has-success');
     inputContainer.removeClass('has-danger has-success');
-    component.removeClass("form-control-danger form-control-success")
+
+    var target = component;
+    if(component[0].type == "radio") {
+        target = component.closest(".input-group");
+        target.css("borader","solid");
+    }
+
+    target.removeClass("form-control-danger form-control-success")
 
     // when disabled so no highlighting
     if(disabled && disabled != false) return;
@@ -108,14 +115,14 @@ function validateInputStyle(component){
     if (valid == "false") {
         inputContainer.addClass('has-danger');
         //component.parent().addClass('has-danger');
-        component.addClass('form-control-danger');
-        component.siblings('.form-control-feedback').show();
+        target.addClass('form-control-danger');
+        target.siblings('.form-control-feedback').show();
     }
     else {
         inputContainer.addClass('has-success');
         //component.parent().addClass('has-success');
-        component.addClass('form-control-success');
-        component.siblings('.form-control-feedback').hide();
+        target.addClass('form-control-success');
+        target.siblings('.form-control-feedback').hide();
     }
 }
 
@@ -133,7 +140,7 @@ function validateElement(elem){
 
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
-    form.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+    form.find("input[type=text], input[type=radio], select").each(function(){validateInputStyle($(this))});
 
 }
 

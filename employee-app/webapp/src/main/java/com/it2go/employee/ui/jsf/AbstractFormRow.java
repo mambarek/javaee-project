@@ -20,6 +20,7 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
 
     private boolean visible = true;
     private UIInput input;
+    private UIInput hiddenInput;
 
     /**
      * Returns the component family of {@link UINamingContainer}.
