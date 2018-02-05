@@ -413,8 +413,12 @@ function handleAjaxDeleteEvent(data){
 
 function hasError(element){
     var res = false;
-    element.find("input[type=text], select").each(function(){
-        var erro = $(this).hasClass('form-control-danger');
+    element.find("input[type=text], input[type=radio], select").each(function(){
+        var target = $(this);
+        if($(this)[0].type == "radio") {
+            target = $(this).closest(".input-group");
+        }
+        var erro = target.hasClass('form-control-danger');
         if(erro){
             res = true;
             return false;}
