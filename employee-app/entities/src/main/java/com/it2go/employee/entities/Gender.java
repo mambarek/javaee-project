@@ -1,5 +1,9 @@
 package com.it2go.employee.entities;
 
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public enum Gender {
     MALE(1,"Male"),
     FEMALE(2,"Female");
@@ -20,5 +24,9 @@ public enum Gender {
         return name;
     }
 
+    public String getLocalizedName(Locale locale){
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/gender/gender",locale);
 
+        return resourceBundle.getString(this.toString());
+    }
 }

@@ -141,8 +141,20 @@ function validateElement(elem){
 
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
-    form.find("input[type=text], input[type=radio], select").each(function(){validateInputStyle($(this))});
+    form.find("input[type=text], input[type=radio], select").each(function(){
 
+        validateInputStyle($(this))
+    });
+}
+
+function validateWidget(widget){
+    widget.children('.widget');
+    //var allInputFields = form.filter('input[type=text], select');
+    widget.find("input[type=text], input[type=radio], select").each(function(){
+        var _this = $(this);
+        if(!_this.hasClass('.inputWidget'))
+            validateInputStyle(_this)
+    });
 }
 
 function prepaireView(selector){
