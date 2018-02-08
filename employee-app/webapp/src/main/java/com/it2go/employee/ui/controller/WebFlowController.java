@@ -1,5 +1,6 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.framework.util.StringUtils;
 import sun.util.locale.LocaleUtils;
 
 import javax.enterprise.context.SessionScoped;
@@ -54,6 +55,9 @@ public class WebFlowController implements Serializable{
     public void changeLocal(String newLocale, String outcome) throws IOException {
 
         locale = newLocale;
+        if(!StringUtils.exists(locale))
+            locale = "de";
+
         //return outcome+"?faces-redirect=true";
         FacesContext facesContext = FacesContext.getCurrentInstance();
 

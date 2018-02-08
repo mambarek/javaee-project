@@ -1,0 +1,27 @@
+<ui:composition
+        template="/pages/templates/masterTemplate.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="mainContent">
+
+        <div class="card" >
+            <div class="card-header corp-block-header">
+                Fehler!
+            </div>
+            <div class="card-block" style="padding: 0">
+                <h3>Ein Fehler ist augetreten!</h3>
+                <br/><br/>
+                <div class="errorDetails">
+                    Error details: <br/>
+                    #{flash.keep.errorDetails}<br/>
+                    Error details Map: <br/>
+                    #{flash.get('errorDetails')}
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
+

@@ -46,7 +46,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
                 NavigationHandler navigationHandler = fc.getApplication().getNavigationHandler();
 
-                navigationHandler.handleNavigation(fc, null, "/error?faces-redirect=true");
+                navigationHandler.handleNavigation(fc, null, "/pages/error?faces-redirect=true");
 
                 fc.renderResponse();
             } finally {

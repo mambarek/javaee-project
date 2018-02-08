@@ -4,20 +4,11 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <div class="col inputContainer p-0" jsf:id="comment-block" data-component-name='rowForm'>
-        <div class="input-group">
-            <h:inputTextarea cols="30" rows="10" styleClass="form-control" id="comment" binding="#{commentTextArea}"
-                             value="#{editEmployeeController.model.comment}" pt:data-valid="#{commentTextArea.valid}"
-                             style="margin-top: 0px; margin-bottom: 0px; height: 123px;">
-                <f:validateLength minimum="50" maximum="500"/>
-                <f:ajax execute="@this" render="comment-block" onevent="validateInput"/>
-            </h:inputTextarea>
-        </div>
-        <!-- error message output -->
-        <div class="invalid-feedback">
-            <h:message id="message" for="comment"/>
-        </div>
-    </div>
+    <pe:textArea value="#{editEmployeeController.model.comment}" label="#{employeeMsg['employee.editor.comment']}">
+
+    </pe:textArea>
+
 </ui:composition>

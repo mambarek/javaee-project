@@ -51,7 +51,8 @@
             <div class="form-group row">
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
-                    <div jsf:id="inputContainer" class="inputContainer" style="height: 100%">
+                    <c:if test="#{!cc.attrs.readOnly}">
+                        <div jsf:id="inputContainer" class="inputContainer" style="height: 100%">
 
                         <c:choose>
                             <!-- CHOOSE BLOCK BEGIN-->
@@ -292,6 +293,7 @@
                                     });
                                 </h:outputScript>
                             </c:when>
+
       <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
@@ -299,6 +301,7 @@
                             <h:message id="message" for="editableText"/>
                         </div>
                     </div>
+                    </c:if>
                     <!-- if readonly so render the display value. the input is not rendered s. class AbstractFormRow -->
                     <c:if test="#{cc.attrs.readOnly}">
                         <span>#{cc.displayValue}</span>
