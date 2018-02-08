@@ -8,6 +8,7 @@ import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityRemovedException;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.jws.WebService;
 import java.util.List;
 
@@ -15,10 +16,10 @@ import java.util.List;
         serviceName = "EmployeeRepositoryService")
 public class EmployeeRepositoryServiceImpl implements EmployeeRepositoryService {
 
-    @EJB
+    @Inject
     private IEmployeeRepository employeeRepository;
 
-    @EJB
+    @Inject
     private UserSession userSession;
 
     public Employee save(Employee employee) throws EntityConcurrentModificationException, EntityRemovedException {

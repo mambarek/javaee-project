@@ -1,0 +1,3 @@
+<ResourceLink name="jdbc/EmployeeDS"
+              global="EmployeeDS"
+              type="javax.sql.DataSource"/>

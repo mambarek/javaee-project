@@ -47,12 +47,16 @@ public class ExtendedMenuRenderer extends MenuRenderer {
     // Override -----------------------------------------------------------------------------------
 
 
-    /**
-     */
-    protected void renderOption(FacesContext context, UIComponent component, Converter converter,
-                                SelectItem currentItem, Object currentSelections, Object[] submittedValues)
-            throws IOException
-    {
+    @Override
+    protected boolean renderOption(FacesContext context,
+                                   UIComponent component,
+                                   UIComponent selectComponent,
+                                   Converter converter,
+                                   SelectItem curItem,
+                                   Object currentSelections,
+                                   Object[] submittedValues,
+                                   OptionComponentInfo optionInfo) throws IOException{
+
         // Copied from MenuRenderer#renderOption() (and a bit rewritten, but that's just me) ------
 
         // Get writer.
@@ -64,7 +68,7 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         writer.startElement("option", component);
 
         // Write 'value' attribute.
-        String valueString = getFormattedValue(context, component, currentItem.getValue(), converter);
+        String valueString = getFormattedValue(context, component, curItem.getValue(), converter);
         writer.writeAttribute("value", valueString, "value");
 
         // Write 'selected' attribute.
@@ -75,7 +79,7 @@ public class ExtendedMenuRenderer extends MenuRenderer {
             itemValue = valueString;
         } else {
             valuesArray = currentSelections;
-            itemValue = currentItem.getValue();
+            itemValue = curItem.getValue();
         }
         if (isSelected(context, component, itemValue, valuesArray, converter)) {
             writer.writeAttribute("selected", true, "selected");
@@ -84,13 +88,13 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         // Write 'disabled' attribute.
         Boolean disabledAttr = (Boolean) component.getAttributes().get("disabled");
         boolean componentDisabled = disabledAttr != null && disabledAttr.booleanValue();
-        if (!componentDisabled && currentItem.isDisabled()) {
+        if (!componentDisabled && curItem.isDisabled()) {
             writer.writeAttribute("disabled", true, "disabled");
         }
 
         // Write 'class' attribute.
         String labelClass;
-        if (componentDisabled || currentItem.isDisabled()) {
+        if (componentDisabled || curItem.isDisabled()) {
             labelClass = (String) component.getAttributes().get("disabledClass");
         } else {
             labelClass = (String) component.getAttributes().get("enabledClass");
@@ -119,19 +123,21 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         }
 
         // Write option body (the option label).
-        if (currentItem.isEscape()) {
-            String label = currentItem.getLabel();
+        if (curItem.isEscape()) {
+            String label = curItem.getLabel();
             if (label == null) {
                 label = valueString;
             }
             writer.writeText(label, component, "label");
         } else {
-            writer.write(currentItem.getLabel());
+            writer.write(curItem.getLabel());
         }
 
         // Write 'option' end tag.
         writer.endElement("option");
         writer.writeText("\n", component, null);
+
+        return true;
     }
 
 }

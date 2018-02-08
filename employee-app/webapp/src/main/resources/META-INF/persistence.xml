@@ -27,6 +27,7 @@
             <property
                     name="hibernate.enable_lazy_load_no_trans"
                     value="true"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
         </properties>
     </persistence-unit>
 

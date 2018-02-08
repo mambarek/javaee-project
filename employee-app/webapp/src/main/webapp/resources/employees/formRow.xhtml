@@ -99,6 +99,7 @@
                                 <div class="input-group form-control">
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="form-check form-check-inline">
+                                        <div class="custom-control custom-radio">
                                             <input class="form-check-input" type="radio" a:name="#{cc.hiddenInput.clientId}"
                                                    jsf:id="radio" value="#{item}"
                                                    a:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
@@ -113,6 +114,7 @@
                                                 <h:message for="text" errorClass="form-control-feedback" />
 -->
                                             </div>
+                                        </div>
                                         </div>
                                     </ui:repeat>
                                     <h:inputHidden id="editableText" binding="#{cc.hiddenInput}" value="#{cc.attrs.value}"
@@ -159,9 +161,7 @@
                             <!-- text -->
                             <c:when test="#{cc.attrs.type eq 'select'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}">
-                                        <f:attribute name="optionClasses" value="option1, option2" />
-
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText">
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
                                                        itemLabel="#{item.getLocalizedName(facesContext.viewRoot.locale)}" itemValue="#{item}" />
                                     </h:selectOneMenu>

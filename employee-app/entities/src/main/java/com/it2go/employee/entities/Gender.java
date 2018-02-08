@@ -1,6 +1,5 @@
 package com.it2go.employee.entities;
 
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 

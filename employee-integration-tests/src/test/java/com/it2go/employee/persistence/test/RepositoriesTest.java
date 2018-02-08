@@ -138,7 +138,7 @@ public class RepositoriesTest {
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
         anna.setSalary(3000d);
-        anna.setGender(Gender.female);
+        anna.setGender(Gender.FEMALE);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
         anna.getEmails().add(new EmailAddress("ann2@mobil.com"));
@@ -195,7 +195,7 @@ public class RepositoriesTest {
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
-        helena.setGender(Gender.female);
+        helena.setGender(Gender.FEMALE);
         helena.setSalary(3800d);
 
         Project p1 = new Project();
@@ -255,7 +255,7 @@ public class RepositoriesTest {
         LocalDate date = LocalDate.of(1970, 1, 1);
         System.out.println("-- Print all male employees NOCHMAL!!!!!");
 
-        final List<Employee> all_Male = employeeRepository.findByGender(Gender.male);
+        final List<Employee> all_Male = employeeRepository.findByGender(Gender.FEMALE);
         all_Male.forEach(System.out::println);
 
         System.out.println(" ## Test getByBirthday");
@@ -346,7 +346,7 @@ public class RepositoriesTest {
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
         anna.setSalary(3000d);
-        anna.setGender(Gender.female);
+        anna.setGender(Gender.FEMALE);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
         anna.getEmails().add(new EmailAddress("ann2@mobil.com"));
@@ -370,7 +370,7 @@ public class RepositoriesTest {
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
-        helena.setGender(Gender.female);
+        helena.setGender(Gender.FEMALE);
         helena.setSalary(3800d);
 
         Project p1 = new Project();
@@ -438,7 +438,7 @@ public class RepositoriesTest {
         System.out.println("emp = " + emp3);
 
         System.out.println("-- Print all male employees");
-        final List<Employee> allMale = employeeRepository.findByGender(Gender.male);
+        final List<Employee> allMale = employeeRepository.findByGender(Gender.FEMALE);
         allMale.forEach(System.out::println);
 
         final List<Person> children = personRepository.findByFullName("Paul", "Barth");
@@ -451,7 +451,7 @@ public class RepositoriesTest {
         //employeeRepository.remove(john);
 
         System.out.println("-- Print all male employees NOCHMAL!!!!!");
-        final List<Employee> all_Male = employeeRepository.findByGender(Gender.male);
+        final List<Employee> all_Male = employeeRepository.findByGender(Gender.FEMALE);
         all_Male.forEach(System.out::println);
 
         // employeeRepository.remove(anna);
@@ -471,7 +471,7 @@ public class RepositoriesTest {
         allperson.forEach(System.out::println);
 
         System.out.println(" ## Test person findByGender");
-        final List<Person> byGender = personRepository.findByGender(Gender.male);
+        final List<Person> byGender = personRepository.findByGender(Gender.FEMALE);
         byGender.forEach(System.out::println);
     }
     //@Test
@@ -511,7 +511,7 @@ public class RepositoriesTest {
         anna.setFirstName("Anna");
         anna.setLastName("Barth");
         anna.setSalary(3000d);
-        anna.setGender(Gender.female);
+        anna.setGender(Gender.FEMALE);
 
         anna.getEmails().add(new EmailAddress("ann@mobil.com"));
         anna.getEmails().add(new EmailAddress("ann2@mobil.com"));
@@ -535,7 +535,7 @@ public class RepositoriesTest {
         Employee helena = new Employee();
         helena.setFirstName("Helena");
         helena.setLastName("Mayer");
-        helena.setGender(Gender.female);
+        helena.setGender(Gender.FEMALE);
         helena.setSalary(3800d);
 
         Project p1 = new Project();
@@ -604,7 +604,7 @@ public class RepositoriesTest {
         System.out.println("emp = " + emp3);
 
         System.out.println("-- Print all male employees");
-        final List<Employee> allMale = employeeRepository.findByGender(Gender.male);
+        final List<Employee> allMale = employeeRepository.findByGender(Gender.MALE);
         allMale.forEach(System.out::println);
 
 /*
@@ -624,7 +624,7 @@ public class RepositoriesTest {
         //employeeRepository.remove(john);
 
         System.out.println("-- Print all male employees NOCHMAL!!!!!");
-        final List<Employee> all_Male = employeeRepository.findByGender(Gender.male);
+        final List<Employee> all_Male = employeeRepository.findByGender(Gender.FEMALE);
         all_Male.forEach(System.out::println);
 
         // employeeRepository.remove(anna);
@@ -644,7 +644,7 @@ public class RepositoriesTest {
         allperson.forEach(System.out::println);
 
         System.out.println(" ## Test person findByGender");
-        final List<Person> byGender = personRepository.findByGender(Gender.male);
+        final List<Person> byGender = personRepository.findByGender(Gender.FEMALE);
         byGender.forEach(System.out::println);
     }
 

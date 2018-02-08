@@ -29,10 +29,6 @@ public abstract class EntityCmtDAO<T extends DomainEntity> implements IEntityDAO
     @Inject
     private EntityManager entityManager;
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
     @Override
     public T save(T entity) throws EntityConcurrentModificationException, EntityRemovedException {
         Objects.requireNonNull(entity);
