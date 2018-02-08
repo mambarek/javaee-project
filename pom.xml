@@ -24,6 +24,7 @@
     <modules>
         <module>framework</module>
         <module>employee-app</module>
+        <module>myapp</module>
     </modules>
 
     <dependencyManagement>
