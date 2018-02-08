@@ -106,7 +106,7 @@
                                              pt:data-valid="#{component.valid}"
                                              pt:placeholder="Strasse">
 
-                                    <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
+                                    <f:ajax execute="@this" render="street-container" onevent="validateInput" event="change" />
 
                                 </h:inputText>
                             </div>
@@ -119,7 +119,7 @@
                                              pt:data-valid="#{component.valid}"
                                              pt:placeholder="Nr.">
 
-                                    <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
+                                    <f:ajax execute="@this" render="street-container" onevent="validateInput" event="change" />
 
                                 </h:inputText>
                             </div>
@@ -152,7 +152,7 @@
                                              pt:data-valid="#{component.valid}"
                                              pt:placeholder="Zip">
                                     <f:validateLength minimum="5" maximum="5"/>
-                                    <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
+                                    <f:ajax execute="@this" render="zip-city-container" onevent="validateInput" event="change" />
 
                                 </h:inputText>
                             </div>
@@ -164,7 +164,7 @@
                                              pt:data-valid="#{component.valid}"
                                              pt:placeholder="City">
                                     <f:validateLength minimum="3" maximum="50"/>
-                                    <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
+                                    <f:ajax execute="@this" render="zip-city-container" onevent="validateInput" event="change" />
 
                                 </h:inputText>
                             </div>

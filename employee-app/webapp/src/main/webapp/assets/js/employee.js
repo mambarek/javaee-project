@@ -210,7 +210,14 @@ function validateInputStyle3(component){
     }
 }
 
-function validateInputStyle(component){
+function validateInput(data){
+    if(data.status == "success"){
+        var input = $('#' + encodeId(data.source.id));
+        validateInputStyle(input, true);
+    }
+}
+
+function validateInputStyle(component, hightlight_valid_input){
 
     var valid = component.attr("data-valid");
     var inputContainer = component.closest(".inputContainer");
@@ -249,13 +256,14 @@ function validateInputStyle(component){
 
         if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').show();
-    }
-    else {
-        target.addClass('is-valid');
-        //target.siblings('.invalid-feedback').hide();
-        if(component.attr('type') == "radio") {
-            // all radios should have the same color valid/invalid
-            $('input[name="'+encodeId(component.attr('name'))+'"').addClass('is-valid');
+    }else {
+        if(hightlight_valid_input) {
+            target.addClass('is-valid');
+            //target.siblings('.invalid-feedback').hide();
+            if (component.attr('type') == "radio") {
+                // all radios should have the same color valid/invalid
+                $('input[name="' + encodeId(component.attr('name')) + '"').addClass('is-valid');
+            }
         }
 
         if(countrySelect.length > 0)
@@ -285,7 +293,7 @@ function validateForm(form){
     //form-control
     //form.find(".form-control, input[type=radio]").each(function(){
     form.find("input[type=text], input[type=radio], select, textarea").each(function(){
-        validateInputStyle($(this))
+        validateInputStyle($(this), false)
     });
 
     //form.find("radio")

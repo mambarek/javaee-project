@@ -39,7 +39,7 @@
                                         itemLabel="#{cc.resourceBundleMap['employee.continentSelect.empty.text']}" itemValue="" />
                                 <f:selectItems value="#{masterdataService.continents}" var="item"
                                                itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item.code}" />
-                                <f:ajax execute="@this" event="change" render="#{cc.clientId}"  onevent="handleAjax"/>
+                                <f:ajax execute="@this" event="change" render="#{cc.clientId}"  onevent="validateInput"/>
                             </h:selectOneMenu>
                             <!-- draw table with cols-->
                             <div style="display: none">
@@ -71,8 +71,8 @@
                                                 itemLabel="#{cc.resourceBundleMap['employee.countrySelect.empty.text']}" />
                                         <f:selectItems value="#{cc.countries}" var="item"
                                                        itemLabel="#{item.name}" itemValue="#{item.code}" />
-                                        <!--<f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="handleAjax"/>-->
-                                        <f:ajax execute="@this" event="change" render="county-select"  onevent="handleAjax"/>
+                                        <!--<f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="validateInput"/>-->
+                                        <f:ajax execute="@this" event="change" render="county-select"  onevent="validateInput"/>
                                     </h:selectOneMenu>
                                     <!-- draw table with cols-->
                                     <div style="display: none">

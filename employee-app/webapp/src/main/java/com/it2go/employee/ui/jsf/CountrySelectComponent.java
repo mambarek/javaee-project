@@ -41,7 +41,8 @@ public class CountrySelectComponent extends UIInputComponent implements NamingCo
             if(!countryCode.isEmpty()){
                 Continent continent = Continent.getContinentContainingCountry(countryCode);
 
-                if (continent != null)
+                final Object continentSelectValue = continentSelect.getValue();
+                if (continent != null && continentSelectValue == null)
                     continentSelect.setValue(continent.getCode());
             }
         }

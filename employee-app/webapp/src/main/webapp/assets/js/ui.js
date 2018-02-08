@@ -306,7 +306,7 @@ function checkTabValidation(selector){
         // validate active tab
         var selectedTab = $(selector).find('a[aria-selected=true]');
         var form = $(selectedTab.attr('href'));
-        // submit the form to validate it
+        // submit the form to validate it on the server side using jsf
         form.find("input[type=submit]").click();
     })
 }

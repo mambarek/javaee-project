@@ -12,7 +12,7 @@
                              value="#{editEmployeeController.model.comment}" pt:data-valid="#{commentTextArea.valid}"
                              style="margin-top: 0px; margin-bottom: 0px; height: 123px;">
                 <f:validateLength minimum="50" maximum="500"/>
-                <f:ajax execute="@this" render="comment-block" event="change" onevent="handleAjax"/>
+                <f:ajax execute="@this" render="comment-block" event="change" onevent="validateInput"/>
             </h:inputTextarea>
         </div>
         <!-- error message output -->

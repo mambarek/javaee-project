@@ -13,6 +13,9 @@
 <h:body>
 
     <h:form id="myform" style="margin-top: 50px;margin-left: 50px">
+        <h:inputText >
+            <f:ajax render="@this"/>
+        </h:inputText>
         <h:inputText value="#{testController.firstName}" id="firstName">
             <f:validateLength minimum="3" maximum="50"/>
             <f:validateRequired/>

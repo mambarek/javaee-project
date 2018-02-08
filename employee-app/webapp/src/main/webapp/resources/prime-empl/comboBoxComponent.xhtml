@@ -45,10 +45,10 @@
                                        itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item.code}" />
                         <c:choose>
                             <c:when test="#{!empty cc.attrs.ajaxRender}">
-                                <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax" />
+                                <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="validateInput" />
                             </c:when>
                             <c:otherwise>
-                                <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="handleAjax"/>
+                                <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="validateInput"/>
                             </c:otherwise>
                         </c:choose>
                     </h:selectOneMenu>

@@ -17,12 +17,14 @@ $(document).ready(function(){
             }
 
             if(isIE()) {
-                var input = $('#' + encodeId(data.source.id));
-                validateInputStyle(input);
-                var form = input.closest("form")[0];
-                refreshFormEventListener(form, "click");
-                refreshFormEventListener(form, "change");
-                refreshFormEventListener(form, "blur")
+                var rootNodeId = getUpdatedRootNodeId(data.responseXML);
+                //var input = $('#' + encodeId(data.source.id));
+                //validateInputStyle(input);
+                //var form = input.closest("form")[0];
+                var container = $("#" + encodeId(rootNodeId));
+                refreshFormEventListener(container, "click");
+                refreshFormEventListener(container, "change");
+                refreshFormEventListener(container, "blur")
             }
         }
     });
@@ -99,6 +101,18 @@ function getViewState(responseXML) {
     for (var i = 0; i < updates.length; i++) {
         if (updates[i].getAttribute("id").match(/^([\w]+:)?javax\.faces\.ViewState(:[0-9]+)?$/)) {
             return updates[i].textContent || updates[i].innerText;
+        }
+    }
+
+    return null;
+}
+
+function getUpdatedRootNodeId(responseXML) {
+    var updates = responseXML.getElementsByTagName("update");
+
+    for (var i = 0; i < updates.length; i++) {
+        if (!updates[i].getAttribute("id").match(/^([\w]+:)?javax\.faces\.ViewState(:[0-9]+)?$/)) {
+            return updates[i].getAttribute("id");
         }
     }
 

@@ -38,7 +38,7 @@
                                         itemLabel="--Bitte wähl doch --" itemValue="#{masterdataService.nullValueContinent}" />
                                 <f:selectItems value="#{masterdataService.continents}" var="item"
                                                itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
-                                <f:ajax execute="@this" event="change" render="county-select"  onevent="handleAjax"/>
+                                <f:ajax execute="@this" event="change" render="county-select"  onevent="validateInput"/>
                             </h:selectOneMenu>
                             <!-- draw table with cols-->
                             <div style="display: none">
