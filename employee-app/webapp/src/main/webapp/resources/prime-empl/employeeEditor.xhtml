@@ -38,31 +38,47 @@
     <div class="card-block">
         <h:form id="employeeForm" styleClass="employeeForm" >
 
-            <pe:formRow value="#{cc.attrs.model.firstName}"
-                               label="#{cc.resourceBundleMap['employee.editor.firstName']}"
-                               isRequired="true" >
-                <f:validateLength minimum="3" maximum="50"/>
-            </pe:formRow>
 
-            <pe:formRow value="#{cc.attrs.model.lastName}"
-                               label="#{cc.resourceBundleMap['employee.editor.lastName']}"
-                               isRequired="true" ajaxValidation="true">
-                <f:validateLength minimum="3" maximum="50"/>
-            </pe:formRow>
+            <div id="accordion">
+            <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Collapsible Group Item #1
+                    </button>
+                </h5>
+            </div>
 
-            <pe:formRow value="#{cc.attrs.model.birthDate}"
-                               label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
-                               inputType="date"
-                               placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
-                <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
-            </pe:formRow>
-            <pe:formRow value="#{cc.attrs.model.salary}"
-                        label="#{cc.resourceBundleMap['employee.editor.salary']}">
-                <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
-            </pe:formRow>
-            <pe:formRow value="#{cc.attrs.model.gender}" inputType="custom-radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                               radioItems="#{masterdataService.genders}" isRequired="true">
-            </pe:formRow>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+
+
+
+                <pe:formRow value="#{cc.attrs.model.firstName}"
+                                   label="#{cc.resourceBundleMap['employee.editor.firstName']}"
+                                   isRequired="true" >
+                    <f:validateLength minimum="3" maximum="50"/>
+                </pe:formRow>
+
+                <pe:formRow value="#{cc.attrs.model.lastName}"
+                                   label="#{cc.resourceBundleMap['employee.editor.lastName']}"
+                                   isRequired="true" ajaxValidation="true">
+                    <f:validateLength minimum="3" maximum="50"/>
+                </pe:formRow>
+
+                <pe:formRow value="#{cc.attrs.model.birthDate}"
+                                   label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
+                                   inputType="date"
+                                   placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
+                    <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
+                </pe:formRow>
+                <pe:formRow value="#{cc.attrs.model.salary}"
+                            label="#{cc.resourceBundleMap['employee.editor.salary']}">
+                    <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+                </pe:formRow>
+                <pe:formRow value="#{cc.attrs.model.gender}" inputType="custom-radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                                   radioItems="#{masterdataService.genders}" isRequired="true">
+                </pe:formRow>
 
 <!--
             <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Prime-#{cc.resourceBundleMap['employee.editor.gender']}"
@@ -83,6 +99,24 @@
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
             </pe:formRow>-->
+
+
+            </div>
+            </div>
+            </div>
+            <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Collapsible Group Item #2
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+
+
+
             <pe:countrySelect value="#{testController.countryCode}" label="Test continent" isRequired="true" decorated="true"/>
             <!--<pe:countryComboBox value="#{testController.countryCode}" label="Test continent" isRequired="false"/>-->
 
@@ -125,6 +159,11 @@
                 </div>
             </div>
 
+
+            </div>
+            </div>
+            </div>
+            </div>
             <!--<pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}" >
                 <f:facet name="selectOnMenuTemplate">
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
