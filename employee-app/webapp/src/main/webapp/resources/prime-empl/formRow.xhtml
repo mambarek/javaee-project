@@ -58,7 +58,7 @@
                             <c:when test="#{cc.attrs.inputType eq 'text'}">
                                 <div class="input-group">
                                     <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{cc.input.valid}"
                                                  pt:placeholder="#{cc.placeHolder}">
 
@@ -73,7 +73,7 @@
                             <c:when test="#{cc.attrs.inputType eq 'date'}">
                                 <div class="input-group date" data-provide="datepicker" data-date-autoClose="true" jsf:id="datetimepicker" >
                                     <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  pt:placeholder="#{cc.placeHolder}">
                                         <f:ajax execute="@this" render="#{cc.clientId}" onevent="validateInput" event="change"/>
@@ -95,7 +95,7 @@
                             <c:when test="#{cc.attrs.inputType eq 'pdate'}">
                                 <div class="input-group">
                                     <p:calendar styleClass="form-control" binding="#{cc.input}" id="editableText"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{cc.input.valid}"
                                                  pt:placeholder="#{cc.placeHolder}"
                                                 locale="#{webFlowController.locale}" navigator="true" pattern="#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}">
@@ -113,7 +113,7 @@
                                         <div class="form-check form-check-inline">
                                             <div class="custom-control custom-radio">
                                                 <input class="form-check-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"
-                                                       jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}"
+                                                       jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                        pt:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
                                                     <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="validateInput"/>
                                                 </input>
@@ -150,8 +150,8 @@
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input class="custom-control-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"
-                                                   jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}"
-                                                   pt:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
+                                                   jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}" data-required="#{cc.attrs.isRequired}"
+                                                   checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
                                                 <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="validateInput"/>
                                             </input>
                                             <label jsf:id="label" class="custom-control-label" jsf:for="radio">#{masterdataService.getLocalizedNameFor(item)}</label>
@@ -181,7 +181,7 @@
                             <c:when test="#{cc.attrs.inputType eq 'newselect'}">
                                 <div class="input-group">
                                     <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
-                                                     style="width: 100%" binding="#{cc.input}" required="#{cc.attrs.isRequired}">
+                                                     style="width: 100%" binding="#{cc.input}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}">
                                         <f:selectItem
                                                 itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
@@ -234,7 +234,7 @@
 
                             <c:when test="#{cc.attrs.inputType eq 'prime-pselect'}">
                                 <p:selectOneMenu id="editableText" styleClass="form-control" value="#{cc.attrs.value}" pt:data-valid="#{component.valid}"
-                                                 binding="#{cc.input}" filter="true" filterMatchMode="startsWith" required="#{cc.attrs.isRequired}">
+                                                 binding="#{cc.input}" filter="true" filterMatchMode="startsWith" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}">
                                     <f:selectItem
                                             itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                                     <f:selectItems value="#{cc.attrs.radioItems}" var="item"
@@ -248,7 +248,7 @@
                             <!-- Radio -->
                             <c:when test="#{cc.attrs.inputType eq 'radio-classic'}">
                                 <div class="input-group form-control">
-                                    <h:selectOneRadio value="#{cc.attrs.value}" required="true" id="editableText" binding="#{cc.input}">
+                                    <h:selectOneRadio value="#{cc.attrs.value}" required="true" id="editableText" binding="#{cc.input}" pt:data-required="#{cc.attrs.isRequired}">
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
                                                        itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
                                     </h:selectOneRadio>

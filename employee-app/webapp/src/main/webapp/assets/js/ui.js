@@ -323,7 +323,44 @@ function checkValidationAndSelectTab(data){
         if(hasError(form)) {
             $(selectedTab).tab('show');
         }
-        else
+        else {
             $(lastClicked).tab('show');
+            //form = $(lastClicked.attr('href'));
+            // submit the form to validate it on the server side using jsf
+            //form.find("input[type=submit]").click();
+        }
     }
+}
+
+function hightlightMustFields(selector){
+    $('[data-required="true"]').each(function(){
+
+        if(this.type == "radio"){
+            if($('[name="'+this.name+'"]').filter('[checked]').length == 0){
+                $('[name="'+this.name+'"]').each(function(){
+                    $(this).removeClass("is-invalid").addClass('is-invalid');
+                })
+            }
+
+            return;
+        }
+
+        // dropdown: HTML select are display none
+        // the jqueryui select menu generates a span with
+        // select content. so highlight the span instead of
+        // the select
+        if($(this).is("select")) {
+            var target = $(this).siblings('span');
+            // add border
+            if(!this.value)
+                target.removeClass("form-control is-invalid").addClass("form-control is-invalid");
+
+            return;
+        }
+
+        if(!this.value){
+            $(this).removeClass("is-invalid").addClass('is-invalid');
+        }
+
+    })
 }

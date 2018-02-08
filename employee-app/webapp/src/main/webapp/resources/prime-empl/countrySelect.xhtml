@@ -34,7 +34,7 @@
                     <div jsf:id="continent-inputContainer" class="inputContainer">
                         <div class="input-group">
                             <h:selectOneMenu id="continent" styleClass="form-control" style="width: 100%" binding="#{cc.continentSelect}"
-                                             pt:data-valid="#{cc.continentSelect.valid}" required="#{cc.attrs.isRequired}">
+                                             pt:data-valid="#{cc.continentSelect.valid}" required="#{cc.attrs.isRequired}"  pt:data-required="#{cc.attrs.isRequired}">
                                 <f:selectItem
                                         itemLabel="#{cc.resourceBundleMap['employee.continentSelect.empty.text']}" itemValue="" />
                                 <f:selectItems value="#{masterdataService.continents}" var="item"
@@ -66,7 +66,7 @@
                             <div jsf:id="inputContainer" class="inputContainer">
                                 <div class="input-group">
                                     <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{cc.countrySelect.valid}"
-                                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}">
+                                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}" pt:data-required="#{cc.attrs.isRequired}">
                                         <f:selectItem
                                                 itemLabel="#{cc.resourceBundleMap['employee.countrySelect.empty.text']}" />
                                         <f:selectItems value="#{cc.countries}" var="item"
@@ -88,6 +88,7 @@
                                 </div>
                                 <h:outputScript>
                                     initSelectOneMenu(encodeId("#{cc.clientId}:editableText" ), encodeId("#{cc.clientId}-country-li-"), "#{cc.attrs.decorated}", false);
+                                    hightlightMustFields();
                                 </h:outputScript>
                             </div>
 

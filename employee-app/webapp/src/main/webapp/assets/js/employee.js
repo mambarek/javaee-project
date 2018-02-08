@@ -236,13 +236,16 @@ function validateInputStyle(component, hightlight_valid_input){
         target.removeClass("form-control").addClass("form-control");
     }
 
-    target.removeClass("is-valid is-invalid")
+    target.removeClass("is-valid is-invalid");
 
     // when disabled so no highlighting
     if(disabled && disabled != false) return;
 
     var rowForm = component.closest("[data-component-name='rowForm']");
     var countrySelect = component.closest("[data-component-name='countrySelect']");
+
+    var isComposedInput = component.closest("[data-component-name='composedInput-input']").length > 0;
+    var composedInput = component.closest("[data-component-name='composedInput']");
 
     if (valid == "false") {
         target.addClass('is-invalid');
@@ -254,8 +257,11 @@ function validateInputStyle(component, hightlight_valid_input){
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').show();
 
-        //if(rowForm.length > 0)
+        if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').show();
+
+        if(composedInput.length > 0)
+            composedInput.find(".error-container.collapse").show();
     }else {
         if(hightlight_valid_input) {
             target.addClass('is-valid');
@@ -269,8 +275,11 @@ function validateInputStyle(component, hightlight_valid_input){
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').hide();
 
-        //if(rowForm.length > 0)
+        if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').hide();
+
+        if(composedInput.length > 0)
+            composedInput.find(".error-container.collapse").hide();
     }
 
 }
