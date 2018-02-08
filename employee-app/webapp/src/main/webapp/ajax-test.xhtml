@@ -17,11 +17,13 @@
             <f:validateLength minimum="3" maximum="50"/>
             <f:validateRequired/>
         </h:inputText>
+
         <h:message for="firstName" errorClass="form-control-feedback" />
-        <h:commandButton value="Form1 Submit f:Ajax" >
-            <f:ajax execute="@form" render=":myform"/>
+        <h:commandButton value="Form1 Submit f:Ajax">
+            <f:ajax execute="@form" render="@none"/>
         </h:commandButton>
     </h:form>
-
+    <h:outputText id="timer" value="Es bleiben noch: #{applicationController.sessionTimeoutPeriod}"/>
+    <button  onclick="document.getElementById('timer').innerHTML = 'Es bleiben noch: #{applicationController.sessionTimeoutPeriod}'" >Click me</button>
 </h:body>
 </html>

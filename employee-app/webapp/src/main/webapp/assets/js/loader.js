@@ -396,7 +396,7 @@ var overlay =  overlay || (function ($) {
         getOnclick: function(functionName){
             var onclick = 'onclick="' + functionName+ '()"';
 
-                return functionName? onclick: "";
+            return functionName? onclick: "";
         },
 
         showConfirm2BtnDialog: function(options){

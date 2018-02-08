@@ -418,6 +418,22 @@ function handleAjaxSaveEvent(data){
     }
 }
 
+function showSessionTimeoutInfo(){
+    var options = {
+        title: "Sitzung abgelaufen",//employee_i18n['employee.overlay.info'],
+        message: "Ihre Sitzung ist abgelaufen. Bitte neu anmelden!",//employee_i18n['employee.overlay.savingSuccess'],
+        showOnlyRightBtn: true,
+        rightBtnLabel: "Anmelden",//employee_i18n['employee.overlay.ok']
+        rightBtnFuncName: "redirectToLogin"
+    };
+
+    overlay.showConfirm2BtnDialog(options);
+}
+
+function redirectToLogin(){
+    window.location.href="ajax-test.xhtml";
+}
+
 function handleAjaxDeleteEvent(data){
     var status = data.status;
 /*    var encodedId = encodeId(data.source.id);

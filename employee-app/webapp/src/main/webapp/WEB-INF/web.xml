@@ -37,9 +37,28 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <!-- Forbidden directory listing -->
+        <error-code>403</error-code>
+        <location>/pages/error/403.xhtml</location>
+    </error-page>
+    <error-page>
+        <!-- Missing resource -->
+        <error-code>404</error-code>
+        <location>/pages/error/404.xhtml</location>
+    </error-page>
 </web-app>

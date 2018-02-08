@@ -3,7 +3,9 @@ package com.it2go.employee.ui.controller;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -13,7 +15,7 @@ import java.util.ResourceBundle;
 
 @Named
 @ApplicationScoped
-public class ApplicationController {
+public class ApplicationController implements Serializable{
 
     public String getTranslations(){
         final StringBuilder builder = new StringBuilder();
@@ -32,5 +34,10 @@ public class ApplicationController {
         });
 
         return  builder.toString();
+    }
+
+    public long getSessionTimeoutPeriod() {
+
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
     }
 }
