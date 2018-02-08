@@ -8330,7 +8330,8 @@ $.fn.jqFilter = function( arg ) {
 			if(opC === 'ew' || opC === 'en') { val = "%"+val; }
 			if(opC === 'cn' || opC === 'nc') { val = "%"+val+"%"; }
 			if(opC === 'in' || opC === 'ni') { val = " ("+val+")"; }
-			if(p.errorcheck) { checkData(rule.data, cm); }
+			var uniqueOperator = ( opC === 'nn' || opC === 'nu');
+			if(p.errorcheck && !uniqueOperator) { checkData(rule.data, cm); }
 			if($.inArray(cm.searchtype, numtypes) !== -1 || opC === 'nn' || opC === 'nu') { ret = rule.field + " " + opUF + " " + val; }
 			else { ret = rule.field + " " + opUF + " \"" + val + "\""; }
 			return ret;
