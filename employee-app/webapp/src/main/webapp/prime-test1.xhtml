@@ -1,21 +1,354 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3c.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-<h:head></h:head>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+<h:head>
+    <title>Employees App</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- beta3 ist noch in der entwicklung so die view sieht kaputt aus. NICHT benutzen-->
+    <!--<link rel="stylesheet" href="bootstrap-4.0.0-beta.3-dist/css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="bootstrap-4.0.0-alpha.6-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.css"/>
+    <!--<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>-->
+    <link rel="stylesheet" href="fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css"/>
+    <link rel="stylesheet" href="assets/css/global.css"/>
+    <link rel="stylesheet" href="assets/css/corporate.css"/>
+    <link rel="stylesheet" href="assets/css/loader.css"/>
+    <link rel="stylesheet" href="assets/css/menu.css"/>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--    <script src="jquery-3.3.1/jquery-3.3.1.js"/>-->
+    <script src="jquery-ui-1.12.1/jquery-ui.js"/>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>-->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.js"/>-->
+    <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js" charset="UTF-8"/>
+
+
+    <script src="assets/js/util.js"/>
+    <script src="assets/js/employee.js"/>
+    <script src="assets/js/ui.js"/>
+
+    <script src="assets/js/loader.js"/>
+    <script src="assets/js/menu.js"/>
+</h:head>
 <h:body>
+    <f:view locale="#{webFlowController.locale}" encoding="utf-8">
+        <f:loadBundle var="employeeMsg" basename="com.it2go.EmployeeApp"/>
+        <f:loadBundle var="messages" basename="com.it2go.Messages"/>
+    </f:view>
+    <h:outputScript>
+        var employee_i18n = {#{applicationController.translations}};
+        sessionTimeOutSec = #{applicationController.sessionTimeoutPeriod}; /* $(document).ready(function(){
+        //initSessionTimeOutTimer();
+        });*/
+    </h:outputScript>
+    <header>
+        <!--// extend the session sending an empty ajax-->
+        <h:form>
+            <h:commandButton id="refreshSession" style="display: none;" styleClass="refreshSession">
+                <f:ajax execute="@this" render="@none"/>
+            </h:commandButton>
+        </h:form>
+        <!-- Logo and top menu not for mobile -->
+        <!-- Top menu begin -->
+        <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="themes/theme_blue/corp_logo.jpg" class="img-fluid" style="width: 150px"/>
+                </a>
 
-    <h:form id="myform">
-        <h:inputText value="#{testController.firstName}">
-            <p:ajax  update="out mylabel" />
-            <!--<f:ajax render="myform" execute="@this"/>-->
+                <div class="collapse navbar-collapse" id="m1">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text"
+                               placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                        <button class="btn btn-outline-primary my-2 my-sm-0"
+                                type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                    </form>
+                    <div class="pull-right ml-3">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
+                            </button>
+                            <div class="dropdown-menu">
+                                <h:form>
+                                    <h:commandLink styleClass="dropdown-item"
+                                                   action="#{webFlowController.changeLocal('en','employeeList')}"
+                                                   value="#{employeeMsg['employee.app.language.englisch']}"/>
+                                    <h:commandLink styleClass="dropdown-item"
+                                                   action="#{webFlowController.changeLocal('de','employeeList')}"
+                                                   value="#{employeeMsg['employee.app.language.german']}"/>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Top menu end -->
 
-        </h:inputText>
+        <!-- main menu for desktop and mobile with toggle function -->
+        <!-- main menu begin -->
+        <nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
 
-        <h:outputText id="out" value="Das ist dein Text: #{testController.firstName}" />
-        <br/>
-        <h:outputLabel value="Das ist dein Text: #{testController.getFirstName()}" id="mylabel"/>
-    </h:form>
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">E-Management</a>
+                    <!--<button type="button" class="navbar-toggle">-->
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                            data-target="#m2"
+                            aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation" >
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="bar-top"/>
+                        <span class="bar-middle"/>
+                        <span class="bar-bottom"/>
+                    </button>
+                </div>
+                <div class="overlay hidden-md-up"></div>
+                <!--<div class="navbar-collapse left-align">-->
+                <div class="collapse navbar-collapse left-align" id="m2">
+                    <div class="d-md-flex flex-md-row" style="width: 100%">
+
+                        <ul class="nav navbar-nav " style="padding-left:5px">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="left-slide.html"><i class="fa fa-home fa-fw"
+                                                                              aria-hidden="true"></i>&#xa0;Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-cog fa-fw" aria-hidden="true"/>&#xa0;Work</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-book fa-fw" aria-hidden="true"/>&#xa0;Course</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-envelope fa-fw" aria-hidden="true"/>&#xa0;Contact</a>
+                            </li>
+                        </ul>
+
+
+                        <ul class="nav navbar-nav ml-md-auto" style="padding-left:5px">
+                            <li class="divider"></li>
+                            <li><a class="nav-link" href="#"><span class="fas fa-user"></span> Sign In</a></li>
+                            <li><a class="nav-link" href="login.html"><span class="fas fa-sign-in-alt"></span> Login</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- main menu end -->
+    </header>
+    <div class="container">
+        <div class="row hidden-md-down">
+            <div class="col-lg-2"/>
+            <div class="col">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Data</li>
+                </ol>
+            </div>
+            <div class="col-2">
+                <h:form>
+                    <p:outputLabel for="console4" value="Basic:"/>
+                    <p:selectOneMenu id="console4" value="" style="width:125px">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One"/>
+                        <f:selectItem itemLabel="PS4" itemValue="PS4"/>
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U"/>
+                        <f:selectItems value="#{editEmployeeController.genderWrapperList}" var="item"
+                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}"/>
+                    </p:selectOneMenu>
+                </h:form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div class="card">
+                    <div class="card-header corp-block-header-left">
+                        <!--<div class="hidden-lg-up">-->
+                        <a data-toggle="collapse" href="#left-menu-block" role="button" aria-expanded="false"
+                           aria-controls="left-menu-block">
+                            <i class="fas fa-plus"/>
+                        </a>
+                        <!-- </div>-->
+                        Aktionen
+                    </div>
+                    <div id="left-menu-block" class="collapse">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Active</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#">Disabled</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown-left"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown-left">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" data-toggle="collapse" data-target="#toggleDemo" class="nav-link collapsed">
+                                    Submenu
+                                </a>
+                                <div class="collapse" id="toggleDemo" style="height: 0px;">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item"><a class="nav-link" href="#">Submenu 1</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Submenu 2</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Submenu 3</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8" id="content">
+                <div class="card" >
+                    <div class="card-header corp-block-header">
+                        #{employeeMsg['employee.table.title']}
+                    </div>
+                    <div class="card-block" style="padding: 0">
+                        <div class="table-responsive mb-5">
+                            <h:form>
+                                <table id="employeeList" class="table table-hover table-sm">
+                                    <thead class="table-header">
+                                    <tr>
+                                        <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                                        <th scope="col"/>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ui:repeat var="employee" value="#{employeeListController.allEmployees}"
+                                               varStatus="status">
+                                        <tr>
+                                            <td>
+                                                <h:commandLink>
+                                                    <i class="fas fa-edit" aria-hidden="true"/>
+                                                    <f:ajax execute="@this" render="content"
+                                                            listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                                            event="click"/>
+                                                </h:commandLink>
+                                            </td>
+                                            <td>
+                                                <h:commandLink value="#{employee.firstName}">
+                                                    <f:ajax execute="@this" render="content"
+                                                            listener="#{editEmployeeController.editEmployee(employee.id)}"
+                                                            event="click"/>
+                                                </h:commandLink>
+                                            </td>
+                                            <td>
+                                                <h:commandLink
+                                                        outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</h:commandLink>
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{employee.salary}"><f:convertNumber
+                                                        currencySymbol="$" minFractionDigits="2"/></h:outputText>
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{employee.birthDate}"><f:convertDateTime
+                                                        pattern="#{employeeMsg['employee.app.date.pattern']}"/></h:outputText>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <a tabindex="0" id="pop-#{status.index}" data-toggle="popover"
+                                                   data-placement="right" style="color: green">
+                                                    <i class="fas fa-address-card fa-2x"/>
+                                                    <h:outputScript>
+                                                        console.info("## der button",$('#pop-#{status.index}'));
+                                                        $('#pop-#{status.index}').popover({
+                                                        title: "My first pop",
+                                                        content: "All that text is for a button!",
+                                                        animation: true,
+                                                        container: 'body'
+                                                        })
+                                                    </h:outputScript>
+                                                </a></td>
+                                        </tr>
+                                    </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </h:form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                            <h:commandLink id="create_button" styleClass="btn btn-primary" type="submit" action="#{editEmployeeController.createNewEmployee()}">
+                                <i class="fa fa-user-plus"
+                                   aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+                <ui:fragment id="editorWrapper" rendered="#{!empty editEmployeeController.model}">
+
+                    <pe:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
+                                               id="editor">
+                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="editor"/>
+                        <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent"
+                                listener="#{editEmployeeController.ajaxSaveAction}"/>
+                        <f:ajax event="deleteConfirmed" render="content" onevent="handleAjaxDeleteEvent"
+                                listener="#{editEmployeeController.ajaxDeleteAction}"/>
+                    </pe:employeeEditor>
+
+                </ui:fragment>
+                <h:form>
+                    <p:outputLabel for="console1" value="Basic:"/>
+                    <p:selectOneMenu id="console1" value="" style="width:125px">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One"/>
+                        <f:selectItem itemLabel="PS4" itemValue="PS4"/>
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U"/>
+                    </p:selectOneMenu>
+                </h:form>
+            </div>
+
+
+            <div class="col-2">
+                <h:form id="myform">
+                    <h:inputText value="#{testController.firstName}">
+                        <p:ajax update="out mylabel"/>
+                        <f:ajax render="myform" execute="@this"/>
+
+                    </h:inputText>
+
+                    <h:outputText id="out" value="Das ist dein Text: #{testController.firstName}"/>
+                    <br/>
+                    <h:outputLabel value="Das ist dein Text: #{testController.getFirstName()}" id="mylabel"/>
+                    <br/>
+                    <p:outputLabel for="console" value="Basic:"/>
+                    <p:selectOneMenu id="console" value="" style="width:125px">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One"/>
+                        <f:selectItem itemLabel="PS4" itemValue="PS4"/>
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U"/>
+                    </p:selectOneMenu>
+                </h:form>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jsf-fixes.js"/>
 </h:body>
 </html>

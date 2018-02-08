@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+      xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+                xmlns:p="http://primefaces.org/ui">
+
+<composite:interface componentType="employee.component">
+    <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
+
+    <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
+    <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
+
+    <composite:clientBehavior name="saveConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:saveConfirmed"/>
+    <composite:actionSource name="saveConfirmedBtn" event="click" targets="saveConfirmed" />
+
+    <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
+    <composite:clientBehavior name="deleteConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:deleteConfirmed"/>
+    <composite:actionSource name="deleteConfirmedBtn" event="click" targets="deleteConfirmed" />
+
+    <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
+
+    <composite:attribute name="saveConfirmFunc" />
+    <composite:attribute name="deleteConfirmFunc" />
+    <composite:attribute name="renderAfterSave"/>
+    <composite:attribute name="renderAfterDelete"/>
+</composite:interface>
+<composite:implementation>
+
+<div id="#{cc.clientId}">
+<div class="card" >
+    <div class="card-header corp-block-form-header">
+        #{cc.resourceBundleMap['employee.editor.title']}
+    </div>
+    <div class="card-block">
+        <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
+        <div class="form-row">
+            <pe:formRow value="#{cc.attrs.model.firstName}"
+                               label="#{cc.resourceBundleMap['employee.editor.firstName']}"
+                               isRequired="true" >
+                <f:validateLength minimum="3" maximum="50"/>
+            </pe:formRow>
+
+            <pe:formRow value="#{cc.attrs.model.lastName}"
+                               label="#{cc.resourceBundleMap['employee.editor.lastName']}"
+                               isRequired="true" ajaxValidation="true">
+                <f:validateLength minimum="3" maximum="50"/>
+            </pe:formRow>
+
+            <pe:formRow value="#{cc.attrs.model.birthDate}"
+                               label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
+                        inputType="date"
+                               placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
+                <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
+            </pe:formRow>
+
+
+
+
+
+            <pe:formRow value="#{cc.attrs.model.salary}"
+                        label="#{cc.resourceBundleMap['employee.editor.salary']}">
+                <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+            </pe:formRow>
+            <pe:formRow value="#{cc.attrs.model.firstName}"
+                        label="#{cc.resourceBundleMap['employee.editor.firstName']}"
+                        isRequired="true" >
+                <f:validateLength minimum="3" maximum="50"/>
+            </pe:formRow>
+
+
+
+
+            <pe:formRow value="#{cc.attrs.model.firstName}"
+                        label="#{cc.resourceBundleMap['employee.editor.firstName']}"
+                        isRequired="true" >
+                <f:validateLength minimum="3" maximum="50"/>
+            </pe:formRow>
+            <pe:formRow inputType="spselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
+                        radioItems="#{editEmployeeController.genderWrapperList}"></pe:formRow>
+            <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                        radioItems="#{editEmployeeController.genderWrapperList}" >
+                <f:facet name="selectOnMenuTemplate">
+                    <!--<div style="color:darkgreen">-->
+                    <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
+                    <!--</div>-->
+                </f:facet>
+            </pe:formRow>
+            <div class="form-group row justify-content-end">
+                <div class="btn-group">
+                    <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel">
+                        <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
+                    </h:commandLink>
+
+                    <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{cc.attrs.model.isNew() == false}"
+                                   id="delete" pt:data-deleteFunc="clickDelete">
+                        <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
+                    </h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary mr-3 btn-sm-block" pt:data-saveFunc="clickSave">
+                        <i class="far fa-save" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
+                        <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
+                    </h:commandLink>
+                </div>
+            </div>
+
+        </div>
+    </h:form>
+
+     <div class="employeeFormErrorList" style="display: none">
+        <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
+                <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
+            </div>
+        </ui:repeat>
+     </div>
+        <!-- hidden form for confirmation dialog action delete-->
+        <h:form id="confirmHiddenForm">
+            <h:commandButton id="deleteConfirmed" style="display: none;" styleClass="deleteConfirmed">
+                <f:ajax execute="@this"  render="content"/>
+            </h:commandButton>
+            <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
+                <f:ajax execute="@this"  render="content"/>
+            </h:commandButton>
+        </h:form>
+    </div>
+</div>
+</div>
+
+</composite:implementation>
+
+</ui:composition>

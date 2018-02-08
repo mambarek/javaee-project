@@ -40,11 +40,11 @@
             <artifactId>persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>6.1</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
     <build>
         <plugins>
