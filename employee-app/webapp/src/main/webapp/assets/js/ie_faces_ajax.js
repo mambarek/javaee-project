@@ -135,10 +135,14 @@ function refreshAllRootEventListener(rootId) {
 
 function handleAjax(data) {
     var status = data.status;
-    var componentId = encodeId(data.source.id);
-
-    //var input = $("#" + componentId);
     var input = $(data.source);
+    // the input coming from ajax may be not bound in the dom
+    // so try to get the real input with its id, may be w user another attribute
+    // for searching but id should be in all inputs
+    if(data.source.id){
+        var componentId = encodeId(data.source.id);
+        input = $("#" + componentId);
+    }
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
