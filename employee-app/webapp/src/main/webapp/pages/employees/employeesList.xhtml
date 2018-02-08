@@ -13,62 +13,6 @@
         <div class="card-block" style="padding: 0">
             <div class="table-responsive mb-5">
                 <h:form>
-                    <p:dataTable var="employee" value="#{employeeListController.allEmployees}"  rowKey="#{employee.id}">
-                        <f:facet name="header">
-                            Checkbox
-                        </f:facet>
-                        <p:column selectionMode="multiple" style="width:46px;text-align:center"/>
-                        <p:column headerText="#{employeeMsg['employee.table.col.details']}" width="20px">
-                            <h:commandLink>
-                                <i class="fas fa-edit" aria-hidden="true"/>
-                                <f:ajax execute="@this" render="content"
-                                        listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                        event="click"/>
-                            </h:commandLink>
-                        </p:column>
-                        <p:column headerText="#{employeeMsg['employee.table.col.firstName']}">
-                            <h:outputText value="#{employee.firstName}" />
-                        </p:column>
-                        <p:column headerText="#{employeeMsg['employee.table.col.lastName']}">
-                            <h:outputText value="#{employee.lastName}" />
-                        </p:column>
-                        <p:column headerText="#{employeeMsg['employee.table.col.salary']}">
-                            <h:outputText value="#{employee.salary}"><f:convertNumber
-                                    currencySymbol="EUR" minFractionDigits="2"/></h:outputText>
-                        </p:column>
-                        <p:column headerText="#{employeeMsg['employee.table.col.birthDate']}">
-                            <h:outputText value="#{employee.birthDate}"><f:convertDateTime
-                                    pattern="#{employeeMsg['employee.app.date.pattern']}"/></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <div class="d-none">
-                                <div id="pop-content-#{employee.id}">
-                                    <img src="../../assets/images/avatar/avatar_#{employee.id}.svg" class="embed-responsive"/>
-                                    <table width="200px">
-                                        <tr><td/><td/></tr>
-                                        <tr><td>Name:</td><td>#{employee.firstName} #{employee.lastName}</td></tr>
-                                        <tr><td>Alter:</td><td>26</td></tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <a tabindex="0" id="pop-#{employee.id}" data-toggle="popover"
-                               data-placement="right" style="color: green">
-                                <i class="fas fa-address-card fa-2x"/>
-                                <h:outputScript>
-                                    initPopover('#pop-#{employee.id}',
-                                    {
-                                    title: "Information Card",
-                                    content: $('#pop-content-#{employee.id}').html()
-                                    }
-                                    );
-                                </h:outputScript>
-                            </a>
-                        </p:column>
-                    </p:dataTable>
-
-
-
                     <table id="employeeList" class="table table-hover table-sm">
                         <thead class="table-header">
                         <tr>
@@ -113,8 +57,8 @@
                                 </td>
                                 <td style="text-align: right;">
                                     <div class="d-none">
-                                        <div id="pop-content-#{status.index}">
-                                            <img src="../../assets/images/avatar/avatar_#{status.index}.svg" class="embed-responsive"/>
+                                        <div id="pop-content-#{employee.id}">
+                                            <img src="../../assets/images/avatar/avatar_#{employee.id}.svg" class="embed-responsive"/>
                                             <table width="200px">
                                                 <tr><td></td><td></td></tr>
                                                 <tr><td>Name:</td><td>#{employee.firstName} #{employee.lastName}</td></tr>
@@ -123,17 +67,9 @@
                                         </div>
                                     </div>
 
-                                    <a tabindex="0" id="pop-#{status.index}" data-toggle="popover"
-                                       data-placement="right" style="color: green">
+                                    <a tabindex="0" id="pop-#{employee.id}" data-toggle="popover"
+                                       data-placement="right" style="color: green" data-popover-selector="#{employee.id}">
                                         <i class="fas fa-address-card fa-2x"/>
-                                        <h:outputScript>
-                                            initPopover('#pop-#{status.index}',
-                                            {
-                                            title: "Information Card",
-                                            content: $('#pop-content-#{status.index}').html()
-                                            }
-                                            );
-                                        </h:outputScript>
                                     </a>
                                 </td>
                             </tr>
@@ -158,17 +94,47 @@
 
     <h:outputScript>
         //refreshAllEventListener('content');
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+            var initAllPopOver = function () {
+                $('[data-popover-selector]').each(function(){
+                    var index = $(this).attr('data-popover-selector');
+                    initPopover('#'+ this.id,
+                            {
+                                title: "Information Card",
+                                content: $('#pop-content-' + index).html()
+                            }
+                    );
+                })
+            };
+
+            var compDates = function(date1,date2){
+                //console.info("-- compDates",date1, date2);
+                if(!date1) return -1;
+                if(!date2) return 1;
+
+                var d1 = new Date(date1.split(".")[2],date1.split(".")[1] - 1,date1.split(".")[0]);
+                var d2 = new Date(date2.split(".")[2],date2.split(".")[1] - 1,date2.split(".")[0]);
+
+                //console.info("-- compDates date",d1, d2);
+                if(d1.getTime() &gt; d2.getTime()) return 1;
+                if(d1.getTime() === d2.getTime()) return 0;
+                if(d1.getTime() &lt; d2.getTime()) return -1;
+
+                return 0;
+            }
 
             $('#employeeList').datatable({
                 pageSize: 5,
-                sort: [false,true,true],
-                filters: [false,true, 'select'],
+                sort: [false, true, true, true, compDates, false],
+                filters: [false, true, 'select', true, true, false],
                 filterText: 'Type to filter... ',
-                pagingDivSelector: "#paging-first-datatable"
+                pagingDivSelector: "#paging-first-datatable",
+                pagingListClass: "pagination pagination-sm justify-content-center",
+                afterRefresh: initAllPopOver
             });
 
-
+            $("#paging-first-datatable").find('li').addClass('page-item').find('a').addClass('page-link');
         })
     </h:outputScript>
 </ui:composition>

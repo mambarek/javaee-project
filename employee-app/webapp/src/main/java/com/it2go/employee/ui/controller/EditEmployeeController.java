@@ -62,27 +62,6 @@ public class EditEmployeeController implements BaseViewController {
         this.model = model;
     }
 
-    //@PostConstruct
-    public void initView() throws EntityNotFoundException {
-
-        System.out.println("-- EditEmployeeController::initView before model: " + model);
-        viewParams = webFlowController.getViewParams(VIEW_ID);
-        Object id = null;
-        if (viewParams != null)
-            id = viewParams.get("id");
-
-        if (id != null) {
-            model = employeeRepository.findById((Long) id);
-        } else
-            model = new Employee();
-
-        System.out.println("-- EditEmployeeController::initView id = " + id + " model: " + model);
-
-/*        final Employee employee = employeeRepository.findById(employeeId);
-        System.out.println("## EditEmployeeController::initView employee = " + employee);
-        model = employee;*/
-    }
-
     public void createNewEmployee() {
         model = new Employee();
     }
@@ -101,8 +80,7 @@ public class EditEmployeeController implements BaseViewController {
             paramsMap.put("id", id);
             webFlowController.putViewParams(VIEW_ID, paramsMap);
             model = employeeRepository.findById((Long) id);
-        } else
-            model = new Employee();
+        }
     }
 
     public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {

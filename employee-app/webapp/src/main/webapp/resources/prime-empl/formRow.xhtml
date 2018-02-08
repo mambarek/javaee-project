@@ -85,7 +85,8 @@
                                         $(id).datepicker( "option", {
                                             "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],
                                             "changeMonth": true ,
-                                            "changeYear": true
+                                            "changeYear": true,
+                                            "yearRange": "c-100:c+100"
                                             });
                                         $(id).datepicker( "setDate",$(id).attr('value'));
                                     </h:outputScript>

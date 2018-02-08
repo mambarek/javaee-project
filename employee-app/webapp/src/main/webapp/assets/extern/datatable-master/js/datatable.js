@@ -11,16 +11,16 @@ var DataTable = function (table, opts) {
     for (var k in DataTable.defaultOptions) {
         if (DataTable.defaultOptions.hasOwnProperty(k)) {
             if (opts.hasOwnProperty(k)) {
-                this.options[k] = opts[k] ;
+                this.options[k] = opts[k];
             }
             else {
-                this.options[k] = DataTable.defaultOptions[k] ;
+                this.options[k] = DataTable.defaultOptions[k];
             }
         }
     }
 
     if (opts.hasOwnProperty('data')) {
-        this.options.data = opts.data ;
+        this.options.data = opts.data;
     }
 
     /* If nb columns not specified, count the number of column from thead. */
@@ -53,10 +53,10 @@ var DataTable = function (table, opts) {
 
     /* Compatibility issue (forceStrings => No defined data types). */
     if (this.options.forceStrings) {
-        this.options.dataTypes = false ;
+        this.options.dataTypes = false;
     }
 
-    var ths = this.table.tHead.rows[0].cells ;
+    var ths = this.table.tHead.rows[0].cells;
 
     if (!this.table.tBodies[0]) {
         this.table.tBodies[0] = document.createElement('tbody');
@@ -102,37 +102,43 @@ var DataTable = function (table, opts) {
     else if (this.table.tBodies[0].rows.length > 0) {
         this.data = [];
         var rows = this.table.tBodies[0].rows;
-        var nCols = rows[0].cells.length ;
+        var nCols = rows[0].cells.length;
         for (var i = 0; i < rows.length; ++i) {
-            this.data.push ([]) ;
+            this.data.push([]);
         }
-        for (var j = 0 ; j < nCols ; ++j) {
-            var dt = function (x) { return x ; } ;
+        for (var j = 0; j < nCols; ++j) {
+            var dt = function (x) {
+                return x;
+            };
             if (this.options.dataTypes instanceof Array) {
                 switch (this.options.dataTypes[j]) {
-                case 'int':
-                    dt = parseInt ;
-                    break ;
-                case 'float':
-                case 'double':
-                    dt = parseFloat ;
-                    break ;
-                case 'date':
-                case 'datetime':
-                    dt = function (x) { return new Date(x) ; } ;
-                    break ;
-                case false:
-                case true:
-                case 'string':
-                case 'str':
-                    dt = function (x) { return x ; } ;
-                    break ;
-                default:
-                    dt = this.options.dataTypes[j] ;
+                    case 'int':
+                        dt = parseInt;
+                        break;
+                    case 'float':
+                    case 'double':
+                        dt = parseFloat;
+                        break;
+                    case 'date':
+                    case 'datetime':
+                        dt = function (x) {
+                            return new Date(x);
+                        };
+                        break;
+                    case false:
+                    case true:
+                    case 'string':
+                    case 'str':
+                        dt = function (x) {
+                            return x;
+                        };
+                        break;
+                    default:
+                        dt = this.options.dataTypes[j];
                 }
             }
             for (var i = 0; i < rows.length; ++i) {
-                this.data[i].push(dt(rows[i].cells[j].innerHTML.trim())) ;
+                this.data[i].push(dt(rows[i].cells[j].innerHTML.trim()));
             }
         }
         if (this.options.dataTypes === true) {
@@ -155,14 +161,18 @@ var DataTable = function (table, opts) {
         }
     }
 
-    /* Add sorting class to all th and add callback. */
-    this.createSort();
+    if (this.data) {
 
-    /* Add filter where it's needed. */
-    this.createFilter();
+        /* Add sorting class to all th and add callback. */
+        this.createSort();
 
-    this.triggerSort();
-    this.filter();
+        /* Add filter where it's needed. */
+        this.createFilter();
+
+        this.triggerSort();
+
+        this.filter();
+    }
 
 };
 
@@ -467,6 +477,7 @@ DataTable.prototype = {
             }
             this.pagingLists[i].innerHTML = '';
             childs.forEach(function (e) {
+                $(e).addClass("page-item").find('a').addClass("page-link");
                 if (dataTable.options.pagingItemClass) {
                     e.classList.add(dataTable.options.pagingItemClass);
                 }
