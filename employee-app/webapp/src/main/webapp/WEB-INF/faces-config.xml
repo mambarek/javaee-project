@@ -14,7 +14,7 @@
             <supported-locale>en</supported-locale>
         </locale-config>
     </application>
-    <render-kit>
+<!--    <render-kit>
         <renderer>
             <component-family>javax.faces.SelectOne</component-family>
             <renderer-type>javax.faces.Menu</renderer-type>
@@ -25,5 +25,5 @@
             <renderer-type>javax.faces.Menu</renderer-type>
             <renderer-class>com.it2go.employee.ui.jsf.renderer.html.ExtendedMenuRenderer</renderer-class>
         </renderer>
-    </render-kit>
+    </render-kit>-->
 </faces-config>

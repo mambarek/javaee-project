@@ -1,15 +1,15 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml"
               xmlns:h="http://xmlns.jcp.org/jsf/html"
               xmlns:f="http://java.sun.com/jsf/core"
-              xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
               xmlns:cc="http://xmlns.jcp.org/jsf/composite"
               xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-              xmlns:jsf="http://xmlns.jcp.org/jsf"
-              xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+>
     <!--xmlns:p="http://primefaces.org/ui"-->
 
 
-<cc:interface componentType="AbstractFormRow">
+<cc:interface>
+    <cc:attribute name="value" required="true"
+                  shortDescription="The selected value." />
     <cc:attribute name="items" required="true"
                   shortDescription="The items list." />
     <cc:attribute name="label"
@@ -19,22 +19,55 @@
 
 <cc:implementation>
     <!-- draw invisible select -->
-    <div class="hidden">
+    <div id="${cc.clientId}" style="width: 100%">
         <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
             <f:selectItem
                     itemLabel="-- Bitte wählen --" itemValue=""/>
             <f:selectItems value="#{cc.attrs.items}" var="item"
                            itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
-            <!--<f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>-->
+            <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
         </h:selectOneMenu>
         <!-- draw table with cols-->
-        <ui:repeat value="items" var="item">
-            <cc:renderFacet name="template"/>
+        <div >
+            <ul>
+                <li id="#{cc.clientId}-li-0">-- Bitte wählen --</li>
+        <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
+            <li id="#{cc.clientId}-li-#{status.index + 1}">
+            <cc:renderFacet name="template">
+                <f:param name="item" value="#{item}"/>
+            </cc:renderFacet>
+            </li>
         </ui:repeat>
-
-
+            </ul>
+        </div>
+        <h:commandButton type="button">
+            <f:ajax render="${cc.clientId}" event="click"/>
+        </h:commandButton>
     </div>
+    <h:outputScript>
+        <!-- jqueryui takes info from table to generate ist-->
+        $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
+            _renderItem: function( ul, item ) {
+                var _id = '#' + encodeId("#{cc.clientId}-li-" + item.index);
+                //console.info("#+#+ _d: " + _id);
+                var _li = $(_id);
 
-    <!-- jqueryui takes info from table to generate ist-->
+                var li = $("&lt;li/&gt;");
+                var div = $("&lt;div&gt;");
+                li.append(div)
+                div.html(_li.html());
+                return li.appendTo( ul );
+            }
+        });
+
+        var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+        //console.info("**-- encodedId: " + encodedId);
+
+        $(encodedId).selectOneMenu({
+            // trigger onchange for select and fire ajax
+            change: function( event, ui ) {$(encodedId).trigger( "change" );}
+            });
+    </h:outputScript>
+
 </cc:implementation>
 </ui:component>

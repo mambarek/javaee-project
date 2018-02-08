@@ -72,14 +72,21 @@
 <!--            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genderList}" isRequired="true">
             </employees:formRow>-->
-            <employees:formRow value="#{cc.attrs.model.gender}" type="select" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+            <employees:formRow value="#{cc.attrs.model.gender}" type="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genderList}" isRequired="true">
-            </employees:formRow>
-            <employees:selectOneMenue items="#{editEmployeeController.genderList}">
                 <f:facet name="template">
-                    <div style="color:darkgreen">Test</div>
+                    <!--<div style="color:darkgreen">-->
+                    <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;Noch was
+                    <!--</div>-->
                 </f:facet>
-            </employees:selectOneMenue>
+            </employees:formRow>
+<!--            <employees:selectOneMenue items="#{editEmployeeController.genderList}" value="#{cc.attrs.model.gender}">
+                <f:facet name="template">
+                    &lt;!&ndash;<div style="color:darkgreen">&ndash;&gt;
+                        <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;Noch was
+                    &lt;!&ndash;</div>&ndash;&gt;
+                </f:facet>
+            </employees:selectOneMenue>-->
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
