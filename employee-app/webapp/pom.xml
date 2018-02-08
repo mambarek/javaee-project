@@ -82,6 +82,38 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- JAXWS client generator-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Needed with JAXP 1.5 sonst xsd access fehler-->
+                    <vmArgs>
+                        <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                    </vmArgs>
+                    <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+                    <packageName>com.it2go.employee.services.client.generated</packageName>
+                    <wsdlFiles>
+                        <wsdlFile>${basedir}/src/main/resources/wsdl/employees-service.wsdl</wsdlFile>
+                    </wsdlFiles>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

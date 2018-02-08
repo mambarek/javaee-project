@@ -1,6 +1,5 @@
 package com.it2go.employee.scheduler;
 
-import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -14,6 +13,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
+import java.util.Date;
 
 @WebListener
 public class QuartzListener extends QuartzInitializerListener {
@@ -27,11 +27,14 @@ public class QuartzListener extends QuartzInitializerListener {
         if(jobFactory == null) System.out.println("WAAAAAAAAAARNUNG jobFactory not initilized!!!");
         ServletContext ctx = sce.getServletContext();
         StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
-/*        try {
+        try {
             Scheduler scheduler = factory.getScheduler();
-            JobDetail jobDetail = JobBuilder.newJob(CreateEmployeesJob.class).build();
+            JobDetail jobDetail = JobBuilder.newJob(EmployeesInitJob.class).build();
+            //LocalTime lt = new LocalTime();
+            Date startTime = new Date((new Date()).getTime() + 50000L);
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
-                    SimpleScheduleBuilder.repeatSecondlyForTotalCount(5,2)).startNow().build();
+                    SimpleScheduleBuilder.repeatSecondlyForTotalCount(100,2)).startAt(startTime).build();
+                    //SimpleScheduleBuilder.repeatSecondlyForTotalCount(5,2)).startNow().build();
                     //SimpleScheduleBuilder.repeatSecondlyForever(2)).startNow().build();
                     //CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).startNow().build();
 
@@ -39,6 +42,6 @@ public class QuartzListener extends QuartzInitializerListener {
             scheduler.start();
         } catch (Exception e) {
             ctx.log("There was an error scheduling the job.", e);
-        }*/
+        }
     }
 }

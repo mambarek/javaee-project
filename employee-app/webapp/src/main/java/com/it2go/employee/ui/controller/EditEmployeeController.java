@@ -1,5 +1,6 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.employee.entities.Address;
 import com.it2go.employee.entities.EmailAddress;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.entities.EntityNotValidException;
@@ -64,11 +65,14 @@ public class EditEmployeeController implements BaseViewController {
 
     public void createNewEmployee() {
         model = new Employee();
+        model.setAddress(new Address());
     }
 
     public String editEmployee(Long id) throws EntityNotFoundException {
         if (id != null) {
             model = employeeRepository.findById((Long) id);
+            if(model.getAddress() == null)
+                model.setAddress(new Address());
         }
 
         return null;
@@ -80,6 +84,8 @@ public class EditEmployeeController implements BaseViewController {
             paramsMap.put("id", id);
             webFlowController.putViewParams(VIEW_ID, paramsMap);
             model = employeeRepository.findById((Long) id);
+            if(model.getAddress() == null)
+                model.setAddress(new Address());
         }
     }
 

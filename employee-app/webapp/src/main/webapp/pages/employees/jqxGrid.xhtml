@@ -27,8 +27,6 @@
             </h:form>
         </div>
     </div>
-
-
     <h:outputScript>
         //refreshAllEventListener('content');
         $(document).ready(function () {
@@ -39,11 +37,19 @@
                 id: "id",
                 datafields:
                 [
+                    {name: "id", type: "string"},
                     {name: "firstName", type: "string"},
                     {name: "lastName", type: "string"},
                     {name: "salary", type: "string"},
                     {name: "birthDate", type: "date", format: '#{employeeMsg['employee.app.date.pattern']}'}
-                ]
+                ],
+                pagenum: #{gridController.pageNum},
+                pagesize: #{gridController.pageSize},
+                pager: function (pagenum, pagesize, oldpagenum) {
+                    // callback called when a page or page size is changed.
+
+                }
+
             };
 
             var dataAdapter = new $.jqx.dataAdapter(source);
@@ -56,9 +62,24 @@
                         columnsresize: true,
                         autoheight: true,
                         sortable: true,
-                        //showfilterrow: true,
+                        pageable: true,
+                        autoloadstate: false,
+                        autosavestate: false,
+                        showfilterrow: true,
                         filterable: true,
                         columns: [
+                            { text: '', datafield: '',  sortable: false, filterable: false, width: '30px' ,
+                                cellsalign: 'center', align: 'center',
+                                cellsrenderer: function (rowIndex) {
+
+                                var dataRecord = $("#grid").jqxGrid('getrowdata', rowIndex);
+                                console.info("-- rowIndex", rowIndex, dataRecord);
+
+                                return "&lt;a href='jqxGrid-table.xhtml?id="+dataRecord.id+"'&gt;&lt;i class='fas fa-edit' aria-hidden='true'/&gt;&lt;/a&gt;";
+                                }, buttonclick: function (row) {
+                                    // open the popup window when the user clicks a button.
+                                console.info("-- row", row);
+                                editrow = row;}},
                             {text: '#{employeeMsg['employee.table.col.firstName']}', dataField: 'firstName', align: 'center', width: '25%'},
                             {text: '#{employeeMsg['employee.table.col.lastName']}', dataField: 'lastName', align: 'center', width: '25%'},
                             {text: '#{employeeMsg['employee.table.col.salary']}', dataField: 'salary', align: 'center', width: '25%'},
