@@ -59,7 +59,7 @@
                         label="#{cc.resourceBundleMap['employee.editor.salary']}">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </pe:formRow>
-            <pe:formRow value="#{cc.attrs.model.gender}" inputType="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+            <pe:formRow value="#{cc.attrs.model.gender}" inputType="custom-radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genders}" isRequired="true">
             </pe:formRow>
             <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Prime-#{cc.resourceBundleMap['employee.editor.gender']}"

@@ -104,17 +104,18 @@
     box-shadow: 10px 10px transparent;
 }
 
-@media only screen and (max-width: 767px) {
-    .overlay {
+@media only screen and (max-width: 768px) {
+    .blurry-overlay {
         background-color: #000;
         position: fixed;
         transition: all 0.8s ease-out;
         height: 100%;
         width: 100%;
-        right: -700px;
+        right: -800px;
         z-index: 950;
         opacity: 0.5;
     }
+
     .navbar-collapse.right-align {
         background-color: #ffc107;
         position: fixed;
@@ -141,13 +142,29 @@
         z-index: 1000;
         display: block;
     }
+
+    /* bootstrap 4.0*/
+    .navbar-dark .left-align .navbar-nav .nav-link{
+        color: #000;
+        padding-left: 8px;
+    }
+
+    .navbar-dark .right-align .navbar-nav .nav-link{
+        color: #000;
+        padding-right: 8px;
+    }
+
+    /* bootstrap 3.7*/
     .navbar-inverse .right-align .navbar-nav>li>a,
     .navbar-inverse .left-align .navbar-nav>li>a {
         color: #000;
     }
+
+    .navbar-dark .navbar-nav .nav-link
     .navbar-collapse {
         padding-right: 0px;
     }
+
     .divider {
         height: 2px;
         margin: 0px 15px 0px 0px;

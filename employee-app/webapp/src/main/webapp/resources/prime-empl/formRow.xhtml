@@ -108,7 +108,6 @@
                             <!-- Radio -->
                             <c:when test="#{cc.attrs.inputType eq 'radio'}">
                                 <div class="input-group" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
-
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="form-check form-check-inline">
                                             <div class="custom-control custom-radio">
@@ -143,19 +142,39 @@
                                         });
                                     </h:outputScript>
                                 </div>
+                            </c:when>
 
-                                <!--
-                                <div class="input-group">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                            <c:when test="#{cc.attrs.inputType eq 'custom-radio'}">
+                                <div class="input-group" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
+                                    <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
+                                        <div class="form-check form-check-inline custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"
+                                                   jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}"
+                                                   pt:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
+                                                <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
+                                            </input>
+                                            <label jsf:id="label" class="custom-control-label" jsf:for="radio">#{applicationController.getLocalizedNameFor(item)}</label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
-                                            <label class="form-check-label" for="inlineRadio2">Female</label>
-                                        </div>
-                                  </div>
-                                  -->
+                                    </ui:repeat>
+
+                                    <h:inputHidden id="editableText" binding="#{cc.hiddenInput}" value="#{cc.attrs.value}"
+                                                   required="#{cc.attrs.isRequired}" />
+                                    <h:outputScript >
+                                        // reset the hidden input
+                                        $(function() {
+                                        var id = '#' + encodeId('#{cc.clientId}');
+                                        var checked = $(id).find("input[type='radio']:checked").val();
+                                        //console.info("Found checked redios:",checked);
+                                        //console.info("Found checked redios undefined:",checked == undefined);
+                                        if(checked == undefined || checked.length == 0){
+                                        var hiddenId = '#' + encodeId('#{cc.clientId}:editableText');
+                                        //console.info("Found hidden input:",$(hiddenId));
+                                        $(hiddenId)[0].value = null;
+                                        }
+
+                                        });
+                                    </h:outputScript>
+                                </div>
                             </c:when>
 
                             <c:when test="#{cc.attrs.inputType eq 'newselect'}">
