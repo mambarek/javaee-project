@@ -284,7 +284,7 @@
             return cellvalue.weekday.en;
         }
 // formatCol = function (pos, rowInd, tv, rawObject, rowId, rdata)
-        function createGrid(data){
+        function createGrid(data, rowsPerPage){
             $("#jqGrid").jqGrid({
                 datatype: "local",
                 data: data,
@@ -311,7 +311,7 @@
                 hoverrows : true,
                 height: '100%',
                 width: 1200,
-                rowNum: 30,
+                rowNum: rowsPerPage,
                 records: 31,
                 caption : 'Prayer time',
                 sortable: true,
@@ -333,11 +333,29 @@
 
 
         xhrGet(url).then(function(data) {
+            var items = data.data;
+            var rowsPerPage = 10;
+            createGrid(items, rowsPerPage);
 
-                createGrid(data.data);
+            var now = new Date();
+            var nowIndex=0;
+            for(var i=0; i< items.length; i++) {
+                var item = items[i];
+                if (item.date.gregorian.date.startsWith(now.getDate())) {
+                    nowIndex = i;
+                    break;
+                    console.info("Break don#T work -------");
+                }
+            }
+
+            var selectedPage = Math.ceil(nowIndex / rowsPerPage);
+            //set page
+            $('#jqGrid').jqGrid('setGridParam', {page: selectedPage});
+
+            //refresh grid
+            $('#jqGrid').trigger( 'reloadGrid' );
 
             });
-
 
         });
 
