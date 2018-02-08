@@ -1,11 +1,11 @@
 $(document).ready(function(){
     //initSessionTimeoutTimer();
-    jsf.ajax.addOnEvent(function (data) {
+/*    jsf.ajax.addOnEvent(function (data) {
         if(data.status == 'success'){
             //console.info("-- jsf.ajax.addOnEvent() call -- so resetSessionTimeOutTimer()");
             resetSessionTimeOutTimer();
         }
-    })
+    })*/
 });
 
 var sessionTimeOutSec = 1800;
@@ -202,7 +202,9 @@ function validateElement(elem){
 
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
-    form.find("input[type=text], input[type=radio], select").each(function(){
+    //form-control
+    form.find(".form-control").each(function(){
+    //form.find("input[type=text], input[type=radio], select").each(function(){
         validateInputStyle($(this))
     });
 }

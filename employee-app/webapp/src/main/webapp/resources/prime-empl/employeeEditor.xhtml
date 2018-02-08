@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -60,7 +60,10 @@
                         label="#{cc.resourceBundleMap['employee.editor.salary']}">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </pe:formRow>
-            <pe:formRow inputType="spselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
+            <pe:formRow value="#{cc.attrs.model.gender}" inputType="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                               radioItems="#{editEmployeeController.genders}" isRequired="true">
+            </pe:formRow>
+            <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
                         radioItems="#{editEmployeeController.genderWrapperList}"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
@@ -95,10 +98,12 @@
 
      <div class="employeeFormErrorList" style="display: none">
         <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
-                <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
-            </div>
+            <ui:fragment rendered="#{facesMessage.severity eq 'ERROR'}">
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
+                    <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
+                </div>
+            </ui:fragment>
         </ui:repeat>
      </div>
         <!-- hidden form for confirmation dialog action delete-->

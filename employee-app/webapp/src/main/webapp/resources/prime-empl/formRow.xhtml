@@ -1,9 +1,10 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
+<ui:component
               xmlns:h="http://xmlns.jcp.org/jsf/html"
               xmlns:f="http://java.sun.com/jsf/core"
               xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
               xmlns:cc="http://xmlns.jcp.org/jsf/composite"
               xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:jsf="http://xmlns.jcp.org/jsf"
               xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
               xmlns:p="http://primefaces.org/ui">
 
@@ -47,14 +48,115 @@
     <cc:implementation>
         <div id="#{cc.clientId}" class="inputWidget">
             <div class="form-group row">
-                <h:outputLabel styleClass="col-form-label col-md-3" value="#{cc.attrs.label}-#{cc.attrs.inputType}"/>
+                <h:outputLabel styleClass="col-form-label col-md-3" value="#{cc.attrs.label}"/>
                 <div class="col">
-                    <h:panelGroup id="inputContainer" class="inputContainer">
+                    <div jsf:id="inputContainer" class="inputContainer">
 
                         <c:choose>
+                            <!-- CHOOSE BLOCK BEGIN-->
+                            <!-- text -->
+                            <c:when test="#{cc.attrs.inputType eq 'text'}">
+                                <div class="input-group">
+                                    <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 disabled="#{cc.attrs.disabled}" pt:data-valid="#{cc.input.valid}"
+                                                 pt:placeholder="#{cc.placeHolder}">
+
+                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="handleAjax"
+                                                event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
+
+                                    </h:inputText>
+                                    <cc:renderFacet name="inputGroupAddon"/>
+                                </div>
+                            </c:when>
+                            <!-- date -->
+                            <c:when test="#{cc.attrs.inputType eq 'date'}">
+                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true" jsf:id="datetimepicker" >
+                                    <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
+                                                 pt:placeholder="#{cc.placeHolder}">
+
+                                        <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
+                                    </h:inputText>
+                                    <div class="input-group-addon">
+                                        <i class="fas fa-calendar-alt" aria-hidden="true"/>
+                                    </div>
+                                    <h:outputScript >
+                                        $(function() {
+                                        var id = '#' + encodeId('#{cc.clientId}:datetimepicker');
+                                        console.info("Datepicker id: " + id);
+                                        $(id).datepicker({
+                                        language: employee_i18n['locale'],
+                                        autoclose: true,
+                                        todayHighlight: true,
+                                        format: employee_i18n['employee.app.javascript.date.pattern']
+                                        })
+                                        });
+                                    </h:outputScript>
+                                </div>
+                            </c:when>
+
+                            <!-- Radio -->
+                            <c:when test="#{cc.attrs.inputType eq 'radio'}">
+                                <div class="input-group form-control">
+
+                                    <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
+                                        <div class="form-check form-check-inline">
+                                            <div class="custom-control custom-radio">
+                                                <input class="form-check-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"
+                                                       jsf:id="radio" value="#{item}"
+                                                       pt:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
+                                                    <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
+                                                </input>
+
+                                                <div class="form-check-label" style="display: inline-flex">
+                                                    <div>#{applicationController.getLocalizedNameFor(item)}</div>
+                                                    <!--
+                                                                                                    <h:inputText style="margin-left: 5px" value="#{cc.attrs.value}" id="text" required="true" />
+                                                                                                    <h:message for="text" errorClass="form-control-feedback" />
+                                                    -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+
+                                    <h:inputHidden id="editableText" binding="#{cc.hiddenInput}" value="#{cc.attrs.value}"
+                                                   required="#{cc.attrs.isRequired}" />
+                                    <h:outputScript >
+                                        // reset the hidden input
+                                        $(function() {
+                                        var id = '#' + encodeId('#{cc.clientId}');
+                                        var checked = $(id).find("input[type='radio']:checked").val();
+                                        console.info("Found checked redios:",checked);
+                                        console.info("Found checked redios undefined:",checked == undefined);
+                                        if(checked == undefined || checked.length == 0){
+                                        var hiddenId = '#' + encodeId('#{cc.clientId}:editableText');
+                                        console.info("Found hidden input:",$(hiddenId));
+                                        $(hiddenId)[0].value = null;
+                                        }
+
+                                        });
+                                    </h:outputScript>
+                                </div>
+
+                                <!--
+                                <div class="input-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                                        </div>
+                                  </div>
+                                  -->
+                            </c:when>
                             <c:when test="#{cc.attrs.inputType eq 'newselect'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%" binding="#{cc.input}">
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control"
+                                                     style="width: 100%" binding="#{cc.input}">
                                         <f:selectItem
                                                 itemLabel="-- Bitte wählen --" itemValue=""/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
@@ -85,7 +187,7 @@
 
                                     var li = $("&lt;li/&gt;");
                                     var div = $("&lt;div&gt;");
-                                    li.append(div)
+                                    li.append(div);
                                     div.html(_li.html());
                                     return li.appendTo( ul );
                                     }
@@ -100,44 +202,16 @@
                                     });
                                 </h:outputScript>
                             </c:when>
-                            <c:when test="#{cc.attrs.inputType eq 'xxx'}">
-                                <h:inputText value="Test" binding="#{cc.input}" id="editableText"/>
-                                <!-- <span style="font-weight: bold;color: red"> Test xxx: #{cc.attrs.inputType} #{cc.attrs.inputType eq 'xxx'}</span>-->
-                            </c:when>
-                            <!-- text -->
-                            <c:when test="#{cc.attrs.inputType eq 'text'}">
-                                <div class="input-group">
-                                    <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
-                                                 disabled="#{cc.attrs.disabled}" pt:data-valid="#{cc.input.valid}"
-                                                 pt:placeholder="#{cc.placeHolder}">
 
-                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="handleAjax"
-                                                event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
-
-                                    </h:inputText>
-                                    <cc:renderFacet name="inputGroupAddon"/>
-                                </div>
-                            </c:when>
-
-
-                            <c:when test="#{cc.attrs.inputType eq 'spselect'}">
-
-                                    <p:selectOneMenu id="editableText" value="#{cc.attrs.value}" style="width:100%"
-                                                     binding="#{cc.input}" filter="true" filterMatchMode="startsWith">
-
-                                        <f:selectItems value="#{editEmployeeController.genderWrapperList}" var="item"
-                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}"/>
-
-                                        <p:column >
-                                            <h:outputText value="Test" />
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{item.value.name}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
-
+                            <c:when test="#{cc.attrs.inputType eq 'prime-pselect'}">
+                                <p:selectOneMenu id="editableText" styleClass="form-control" value="#{cc.attrs.value}"
+                                                 binding="#{cc.input}" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem
+                                            itemLabel="-- Bitte wählen --" itemValue=""/>
+                                    <f:selectItems value="#{editEmployeeController.genderWrapperList}" var="item"
+                                                   itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}"/>
+                                    <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
+                                </p:selectOneMenu>
                             </c:when>
                             <!-- Radio -->
 
@@ -145,70 +219,18 @@
                             <!-- Radio -->
                             <c:when test="#{cc.attrs.inputType eq 'radio-classic'}">
                                 <div class="input-group form-control">
-                                    <h:selectOneRadio value="#{cc.attrs.value}" required="true" id="editableText">
+                                    <h:selectOneRadio value="#{cc.attrs.value}" required="true" id="editableText" binding="#{cc.input}">
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
                                     </h:selectOneRadio>
                                 </div>
                             </c:when>
-
-                            <!-- text -->
-
-
-
-
-                            <!-- pselect -->
-                            <c:when test="#{cc.attrs.inputType eq 'pselect'}">
-                                <div class="input-group">
-                                    <p:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
-<!--                                                                    <f:selectItem
-                                                      itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="#{null}"/>-->
-                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item"
-                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
-                                        <p:column style="width:50%">
-                                            <h:outputText  value="TEST"/>
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{item.getLocalizedLabel()}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
-                                </div>
-                            </c:when>
-
-                            <!-- date -->
-                            <c:when test="#{cc.attrs.inputType eq 'date'}">
-                                <h:panelGroup class="input-group date" data-provide="datepicker" data-date-autoClose="true" id="datetimepicker" >
-                                    <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
-                                                 disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
-                                                 pt:placeholder="#{cc.placeHolder}">
-
-                                        <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
-                                    </h:inputText>
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar" aria-hidden="true"/>
-                                    </div>
-                                    <h:outputScript >
-                                        $(function() {
-                                        var id = '#' + encodeId('#{cc.clientId}:datetimepicker');
-                                        //console.info("Datepicker id: " + id);
-                                        $(id).datepicker({
-                                        language: employee_i18n['locale'],
-                                        autoClose: true,
-                                        todayHighlight: true,
-                                        format: employee_i18n['employee.app.javascript.date.pattern']
-                                        })
-                                        });
-                                    </h:outputScript>
-                                </h:panelGroup>
-                            </c:when>
-                            <!-- End choose -->
+      <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
                         <h:message id="message" for="editableText" errorClass="form-control-feedback" />
 
-                    </h:panelGroup>
+                    </div>
                     <!-- if readonly so render the display value. the input is not rendered s. class AbstractFormRow -->
                     <c:if test="#{cc.attrs.readOnly}">
                         <span>#{cc.displayValue}</span>
