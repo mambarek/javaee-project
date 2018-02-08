@@ -1,14 +1,17 @@
 <ui:composition
         template="../templates/masterTemplate.xhtml"
         xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="mainContent">
         <ui:include src="jqxGrid.xhtml"/>
+        <div jsf:id="editor">
         <ui:fragment rendered="#{!empty editEmployeeController.model}">
             <!--<ui:include src="editor/accordion-editor.xhtml"/>-->
             <ui:include src="editor/tab-editor.xhtml"/>
         </ui:fragment>
+        </div>
     </ui:define>
 
 </ui:composition>

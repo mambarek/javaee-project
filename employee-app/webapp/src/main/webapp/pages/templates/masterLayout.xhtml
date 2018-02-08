@@ -74,6 +74,8 @@
 
     <!-- body javascript -->
     <ui:insert name="footerScripts"/>
-
+    <h:outputScript>
+        refreshAllEventListener('content');
+    </h:outputScript>
 </h:body>
 </html>

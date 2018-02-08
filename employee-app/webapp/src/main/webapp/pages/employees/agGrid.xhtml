@@ -14,7 +14,7 @@
             <div class="table-responsive mb-5">
                 <h:form>
                     <div style='margin-top: 10px;' id="grid"/>
-                    <div id="myGrid" style="height: 300px;width:100%;" class="ag-theme-balham"></div>
+                    <div id="myGrid" style="height: 320px;width:100%;" class="ag-theme-blue"></div>
                 </h:form>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 <h:commandLink id="create_button" styleClass="btn btn-primary" >
                     <i class="fa fa-user-plus"
                        aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
-                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="editor"/>
                 </h:commandLink>
             </h:form>
         </div>
@@ -36,17 +36,53 @@
 
         // specify the columns
             var columnDefs = [
-                {headerName: "#{employeeMsg['employee.table.col.firstName']}", field: "firstName"},
+                {
+                    headerName: "#{employeeMsg['employee.table.col.firstName']}",
+                    field: "firstName",
+                    filterParams: {newRowsAction: 'keep'},
+                    checkboxSelection: function(params) {
+                    // we put checkbox on the name if we are not doing grouping
+                    return params.columnApi.getRowGroupColumns().length === 0;
+                    },
+                    headerCheckboxSelection: function(params) {
+                    // we put checkbox on the name if we are not doing grouping
+                    return params.columnApi.getRowGroupColumns().length === 0;
+                    }
+                },
                 {headerName: "#{employeeMsg['employee.table.col.lastName']}", field: "lastName"},
                 {headerName: "#{employeeMsg['employee.table.col.salary']}", field: "salary"},
                 {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate"}
             ];
 
+            var autoGroupColumnDef = {
+            headerName: 'Group',
+            width: 200,
+            field: 'firstName',
+            valueGetter: function(params) {
+            if (params.node.group) {
+            return params.node.key;
+            } else {
+            return params.data[params.colDef.field];
+            }
+            },
+            headerCheckboxSelection: true,
+            // headerCheckboxSelectionFilteredOnly: true,
+            cellRenderer:'agGroupCellRenderer',
+            cellRendererParams: {
+            checkbox: true
+            }
+            };
             // let the grid know which columns and what data to use
             var gridOptions = {
             columnDefs: columnDefs,
             enableSorting: true,
-            enableFilter: true
+            enableFilter: true,
+            enableColResize: true,
+            pagination: true,
+            paginationPageSize: 10,
+            paginationAutoPageSize: false,
+            autoGroupColumnDef: autoGroupColumnDef
+
             };
 
             // lookup the container we want the Grid to use
@@ -55,9 +91,7 @@
             // create the grid passing in the div to use together with the columns data we want to use
             new agGrid.Grid(eGridDiv, gridOptions);
 
-            fetch('http://localhost:8080/webapp/rest/EmployeeService/employees').then(function(response) {
-            return response.json();
-            }).then(function(data) {
+            xhrGet('http://localhost:8080/webapp/rest/EmployeeService/employees').then(function(data) {
             gridOptions.api.setRowData(data);
             })
         })

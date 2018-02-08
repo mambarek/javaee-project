@@ -510,6 +510,12 @@ function musterRefreshEventListener(rootId){
     });
 }
 
+/**
+ * f:ajax generates an onclick in the submit button. by clicking the first time the form is submitted and the form is rerendered after Ajax is finish.
+ * the onclick is in new generated html but in IE there is no Eventlistener registred for click you can see this analysing the button properties in IE DevTools.
+ * so the solution is to add manually the Eventlistener after an ajax call for new rendered elments. ist not easy but this works.
+ * i add manually every click function for new rendered elements. It works. now i have no trouble with reloading page
+ * **/
 function refreshEventListener(rootId, eventName){
     var form = $('#' + rootId);
     var oneventName = 'on' + eventName;

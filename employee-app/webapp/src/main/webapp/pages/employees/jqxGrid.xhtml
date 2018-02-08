@@ -22,7 +22,7 @@
                 <h:commandLink id="create_button" styleClass="btn btn-primary" >
                     <i class="fa fa-user-plus"
                        aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
-                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="editor"/>
                 </h:commandLink>
             </h:form>
         </div>
