@@ -1,0 +1,104 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- Logo and top menu not for mobile -->
+    <!-- Top menu begin -->
+    <nav class="navbar navbar-light bg-faded hidden-md-down">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../../themes/theme_blue/corp_logo.jpg" class="img-fluid" style="width: 150px"/>
+            </a>
+            <div class="navbar-nav">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <div class="vertical">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text"
+                               placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                        <button class="btn btn-outline-primary my-2 my-sm-0"
+                                type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pull-right ml-3">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
+                        </button>
+                        <div class="dropdown-menu">
+                            <h:form>
+                                <h:commandLink styleClass="dropdown-item"
+                                               action="#{webFlowController.changeLocal('en','employeeList')}"
+                                               value="#{employeeMsg['employee.app.language.englisch']}"/>
+                                <h:commandLink styleClass="dropdown-item"
+                                               action="#{webFlowController.changeLocal('de','employeeList')}"
+                                               value="#{employeeMsg['employee.app.language.german']}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Top menu end -->
+
+    <!-- main menu for desktop and mobile with toggle function -->
+    <!-- main menu begin -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2"
+                    aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation" >
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="bar-top"/>
+                <span class="bar-middle"/>
+                <span class="bar-bottom"/>
+            </button>
+            <div class="collapse navbar-collapse" id="m2">
+                <a class="navbar-brand" href="#">E-Management</a>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-home fa-fw" aria-hidden="true"/>&#xa0;Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="#"><i class="fas fa-cog fa-fw" aria-hidden="true"/>&#xa0;Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="#"><i class="fas fa-book fa-fw" aria-hidden="true"/>&#xa0;Course</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="#"><i class="fas fa-envelope fa-fw" aria-hidden="true"/>&#xa0;Contact</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="divider"/>
+                    <li><a class="nav-link"  href="#"><span class="fas fa-user"/> Sign In</a></li>
+                    <li><a class="nav-link"  href="#"><span class="fas fa-sign-in-alt"/> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- main menu end -->
+</ui:composition>

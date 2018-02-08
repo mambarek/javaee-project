@@ -10,12 +10,12 @@
 
     <h:outputScript>
         /* set the translated documemnt title */
-        document.title = "#{employeeMsg['employee.app.applicationName']}";
+        setDocumentTitel("#{employeeMsg['employee.app.applicationName']}");
+        i18nInit({#{applicationController.translations}});
+        setSessionTimeOutSec(#{applicationController.sessionTimeoutPeriod});
 
-        var employee_i18n = {#{applicationController.translations}};
-        sessionTimeOutSec = #{applicationController.sessionTimeoutPeriod};
         $(document).ready(function(){
-        initSessionTimeOutTimer();
+            initSessionTimeOutTimer();
         });
     </h:outputScript>
 </ui:composition>

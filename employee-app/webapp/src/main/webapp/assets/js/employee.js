@@ -1,17 +1,31 @@
 $(document).ready(function(){
     //initSessionTimeoutTimer();
-/*    jsf.ajax.addOnEvent(function (data) {
+    // reset the session timer after ajax call. this is a user activity
+    jsf.ajax.addOnEvent(function (data) {
         if(data.status == 'success'){
             //console.info("-- jsf.ajax.addOnEvent() call -- so resetSessionTimeOutTimer()");
             resetSessionTimeOutTimer();
         }
-    })*/
+    })
 });
 
+var employee_i18n = null;
 var sessionTimeOutSec = 1800;
 var sessionTimeoutCounterInterval = null;
 var sessionTimeoutInterval = null;
 var counter = null;
+
+function i18nInit(i18n){
+    employee_i18n = i18n;
+}
+
+function setSessionTimeOutSec(sec){
+    sessionTimeOutSec = sec;
+}
+
+function setDocumentTitel(title){
+    document.title = title;
+}
 
 function extendSession() {
     //reload page
@@ -43,7 +57,7 @@ function initSessionTimeOutTimer(){
 }
 
 function resetSessionTimeOutTimer(){
-    console.info("-- resetSessionTimeOutTimer timeout: "+ timeout);
+
     if (sessionTimeoutCounterInterval){
         clearTimeout(sessionTimeoutCounterInterval);
     }
