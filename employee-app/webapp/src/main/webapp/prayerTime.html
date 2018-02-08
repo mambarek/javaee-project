@@ -344,10 +344,10 @@
                 if (item.date.gregorian.date.startsWith(now.getDate())) {
                     nowIndex = i;
                     break;
-                    console.info("Break don#T work -------");
                 }
             }
 
+            // round it to next integer
             var selectedPage = Math.ceil(nowIndex / rowsPerPage);
             //set page
             $('#jqGrid').jqGrid('setGridParam', {page: selectedPage});

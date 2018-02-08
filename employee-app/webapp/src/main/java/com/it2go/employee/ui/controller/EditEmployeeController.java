@@ -13,6 +13,7 @@ import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.masterdata.Continent;
+import lombok.Data;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 @Named
 @ViewScoped
+@Data
 public class EditEmployeeController implements BaseViewController {
 
     public static final String VIEW_ID = "editEmployee";
@@ -45,6 +47,7 @@ public class EditEmployeeController implements BaseViewController {
 
     private Map<String, Object> viewParams;
 
+    private Long employeeId;
     private Employee model;
 
     // this must be moved to a country view select
@@ -78,6 +81,13 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
+    public String editEmployee() throws EntityNotFoundException {
+        if(this.model != null && this.model.getId() != null && this.model.getId().equals(this.employeeId))
+            return null;
+
+        return editEmployee(this.employeeId);
+    }
+
     public void editEmployeeAjax(Long id) throws EntityNotFoundException {
         if (id != null) {
             Map<String, Object> paramsMap = new HashMap<>();
@@ -89,7 +99,7 @@ public class EditEmployeeController implements BaseViewController {
         }
     }
 
-    public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
+    public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
 
         System.out.println("## EditEmployeeController::saveEmployee model = " + model);
 
@@ -104,9 +114,10 @@ public class EditEmployeeController implements BaseViewController {
         // reset the view
         this.resetView();
 
+        return "/pages/employees/jqGrid-table.xhtml";
     }
 
-    public void deleteEmployee() throws EntityNotPersistedException {
+    public String deleteEmployee() throws EntityNotPersistedException {
         System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
         if (this.model == null || this.model.isNew())
             throw new EntityNotPersistedException();
@@ -116,16 +127,20 @@ public class EditEmployeeController implements BaseViewController {
         this.resetView();
 
         // return "employeeList?faces-redirect=true";
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
     }
 
-    public void cancel() {
+    public String cancel() {
         // reset the view
         this.resetView();
 
         // return "employeeList?faces-redirect=true";
+        //return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
     }
 
     private void resetView() {
+        this.employeeId = null;
         if (viewParams != null)
             viewParams.remove("id");
 
@@ -174,17 +189,19 @@ public class EditEmployeeController implements BaseViewController {
 
     /*** Ajax events handling ***/
 
-    public void ajaxSaveAction(AjaxBehaviorEvent event) {
+    public String ajaxSaveAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
 
         try {
-            this.saveEmployee();
+            return this.saveEmployee();
         } catch (BaseException e) {
             this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
+
+        return null;
     }
 
     public void ajaxDeleteAction(AjaxBehaviorEvent event) {

@@ -568,6 +568,10 @@ function confirmDelete(data) {
     }
 }
 
+function redirectToList(){
+    window.location.href = "jqGrid-table.xhtml";
+}
+
 function handleAjaxSaveEvent(data){
     var status = data.status;
     //var encodedId = encodeId(data.source.id);
@@ -611,6 +615,7 @@ function handleAjaxSaveEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
+                    rightBtnFuncName: redirectToList,
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 };
             }
@@ -618,6 +623,8 @@ function handleAjaxSaveEvent(data){
             break;
     }
 }
+
+
 
 function handleAjaxDeleteEvent(data){
     var status = data.status;

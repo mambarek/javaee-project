@@ -6,9 +6,10 @@
 
     <div class="form-group row justify-content-end">
         <div class="btn-group">
-            <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel"
-                           actionListener="#{editEmployeeController.cancel}">
+            <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel"
+                           action="#{editEmployeeController.cancel}" >
                 <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.cancel']}
+                <f:ajax />
             </h:commandLink>
 
             <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{!editEmployeeController.model.isNew()}"

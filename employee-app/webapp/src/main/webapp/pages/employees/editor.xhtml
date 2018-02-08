@@ -9,15 +9,12 @@
         <f:event type="preRenderView" listener="#{editEmployeeController.editEmployee()}"/>
     </f:metadata>
     <ui:define name="mainContent">
-        <ui:include src="jqGrid.xhtml"/>
-        <!--<ui:include src="jqGrid-bootstrap4.html"/>-->
-<!--        <a id="test">Test</a>
         <div jsf:id="editor">
             <ui:fragment rendered="#{!empty editEmployeeController.model}">
-                &lt;!&ndash;<ui:include src="editor/accordion-editor.xhtml"/>&ndash;&gt;
+                <!--<ui:include src="editor/accordion-editor.xhtml"/>-->
                 <ui:include src="editor/tab-editor.xhtml"/>
             </ui:fragment>
-        </div>-->
+        </div>
     </ui:define>
 
 </ui:composition>
