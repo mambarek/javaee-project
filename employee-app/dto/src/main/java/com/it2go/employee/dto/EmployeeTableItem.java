@@ -2,10 +2,13 @@ package com.it2go.employee.dto;
 
 import lombok.Data;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class EmployeeTableItem {
+@XmlRootElement
+public class EmployeeTableItem implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
@@ -17,27 +20,12 @@ public class EmployeeTableItem {
     public EmployeeTableItem() {
     }
 
-    public EmployeeTableItem(Long id, String firstName, String lastName, Date createdAt) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.createdAt = createdAt;
-    }
-
     public EmployeeTableItem(Long id, String firstName, String lastName, Date birthDate, Double salary, String createdByName, Date createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.salary = salary;
-        this.createdByName = createdByName;
-        this.createdAt = createdAt;
-    }
-
-    public EmployeeTableItem(Long id, String firstName, String lastName, String createdByName, Date createdAt) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.createdByName = createdByName;
         this.createdAt = createdAt;
     }

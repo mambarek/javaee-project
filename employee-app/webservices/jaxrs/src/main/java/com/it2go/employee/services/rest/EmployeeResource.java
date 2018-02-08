@@ -1,6 +1,7 @@
 package com.it2go.employee.services.rest;
 
 
+import com.it2go.employee.dto.EmployeeTableItem;
 import com.it2go.employee.entities.Employee;
 import com.it2go.framework.dao.EntityNotFoundException;
 
@@ -36,4 +37,9 @@ public interface EmployeeResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/employees")
     List<Employee> findAll();
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/employee/viewitems")
+    List<EmployeeTableItem> findAllEmployeeItems();
 }

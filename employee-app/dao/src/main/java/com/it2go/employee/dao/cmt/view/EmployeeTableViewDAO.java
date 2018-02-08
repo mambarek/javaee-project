@@ -31,7 +31,7 @@ public class EmployeeTableViewDAO {
     private EntityManager entityManager;
 
     public List<EmployeeTableItem> getEmployeeItems() {
-        String query = "select new com.it2go.employee.dto.EmployeeTableItem(empl.id, empl.firstName, empl.lastName, p.firstName, empl.createdAt)" +
+        String query = "select new com.it2go.employee.dto.EmployeeTableItem(empl.id, empl.firstName, empl.lastName, empl.birthDate, empl.salary, p.firstName, empl.createdAt)" +
                 " from Employee as empl left outer join empl.createdBy as p";
 
         final List<EmployeeTableItem> result;

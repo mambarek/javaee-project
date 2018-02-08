@@ -16,7 +16,7 @@
                     <table id="employeeList" class="table table-hover table-sm">
                         <thead class="table-header">
                         <tr>
-                           <!-- <th scope="col">#{employeeMsg['employee.table.col.details']}</th>-->
+                            <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
                             <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
                             <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
                             <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
@@ -49,21 +49,33 @@
         //refreshAllEventListener('content');
         $(document).ready(function () {
 
-        $('#employeeList').DataTable( {
-            ajax: {
-                url: 'http://localhost:8080/webapp/rest/EmployeeService/employees',
-                dataSrc: ''
-            },
-            "processing": true,
-            //"serverSide": true,
-            //"ajax": "http://localhost:8080/webapp/rest/EmployeeService/employees",
-        columns: [
-        { "data": "firstName" },
-        { "data": "lastName" },
-        { "data": "salary" },
-        { "data": "birthDate" }
-        ]
-        } );
+            var t = $('#employeeList').DataTable( {
+                    ajax: {
+                        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/viewitems',
+                        dataSrc: ''
+                    },
+                    /*"processing": true,
+                    "serverSide": true,*/
+                    "deferRender": true,
+                    //"ajax": "http://localhost:8080/webapp/rest/EmployeeService/employees",
+                    columns: [
+                        { "data": "id" },
+                        { "data": "firstName" },
+                        { "data": "lastName" },
+                        { "data": "salary" },
+                        { "data": "birthDate" }
+
+                    ],
+
+        "columnDefs": [ {
+        "targets": [0],
+        "data": null,
+        "defaultContent": "<button>Click!</button>"
+        } ]
+
+                } );
+
+
 
         });
     </h:outputScript>

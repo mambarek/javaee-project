@@ -1,9 +1,11 @@
 package com.it2go.employee.services.rest;
 
 
+import com.it2go.employee.dto.EmployeeTableItem;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
+import com.it2go.employee.persistence.view.EmployeesViewRepository;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityRemovedException;
@@ -17,6 +19,9 @@ public class EmployeeResourceImpl implements EmployeeResource {
 
     @Inject
     private IEmployeeRepository employeeRepository;
+
+    @Inject
+    private EmployeesViewRepository employeesViewRepository;
 
     @Inject
     private UserSession userSession;
@@ -55,6 +60,11 @@ public class EmployeeResourceImpl implements EmployeeResource {
     public List<Employee> findAll() {
         System.out.println("### EmployeeResourceImpl findAll call!");
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public List<EmployeeTableItem> findAllEmployeeItems() {
+        return employeesViewRepository.getEmployeeItems();
     }
 
 }
