@@ -1,0 +1,70 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']}
+        </div>
+        <div class="card-block" style="padding: 0">
+            <div class="table-responsive mb-5">
+                <h:form>
+                    <table id="employeeList" class="table table-hover table-sm">
+                        <thead class="table-header">
+                        <tr>
+                           <!-- <th scope="col">#{employeeMsg['employee.table.col.details']}</th>-->
+                            <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <div id="paging-first-datatable"/>
+                    <div style='margin-top: 10px;' id="grid"/>
+                </h:form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+
+    <h:outputScript>
+        //refreshAllEventListener('content');
+        $(document).ready(function () {
+
+        $('#employeeList').DataTable( {
+            ajax: {
+                url: 'http://localhost:8080/webapp/rest/EmployeeService/employees',
+                dataSrc: ''
+            },
+            "processing": true,
+            //"serverSide": true,
+            //"ajax": "http://localhost:8080/webapp/rest/EmployeeService/employees",
+        columns: [
+        { "data": "firstName" },
+        { "data": "lastName" },
+        { "data": "salary" },
+        { "data": "birthDate" }
+        ]
+        } );
+
+        });
+    </h:outputScript>
+</ui:composition>
