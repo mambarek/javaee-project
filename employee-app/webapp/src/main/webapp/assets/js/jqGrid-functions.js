@@ -100,6 +100,35 @@ function createEmployeesGrid(selector, colModel, data, rowsPerPage, locale){
 
 }
 
+function fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid) {
+    $.ajax({
+        url: url,
+        data: postdata,
+        dataType: "json",
+        complete: function (jsonData, stat) {
+            if (stat == "success") {
+                if (minPage == currPage) {
+                    data[minPage] = data[currPage] = jsonData.responseJSON.slice(0, rowsPerPage);
+                    data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
+                }
+                else {
+                    if (currPage == totalPages) {
+                        data[minPage] = jsonData.responseJSON.slice(0, rowsPerPage);
+                        data[currPage] = data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
+                    }
+                    else {
+                        data[minPage] = jsonData.responseJSON.slice(0, rowsPerPage);
+                        data[currPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
+                        data[maxPage] = jsonData.responseJSON.slice(2 * rowsPerPage, 3 * rowsPerPage);
+                    }
+                }
+
+                thegrid.addJSONData(data[currPage]);
+            }
+        }
+    })
+}
+
 /* cached items grid*/
 function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, currentPage, locale){
     var pagerId = "#gridPager"; // muss als param übergebne
@@ -111,6 +140,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         datatype: function(postdata) {
             var thegrid = this;
             var currPage = $(this).getGridParam('page');
+            var fetchdata = false;
             //if(currPage == 0) currPage = 1;
 
             var minPage = currPage - 1;
@@ -123,68 +153,39 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             //postdata.page = (minPage-1);
             postdata.offset = (minPage-1)*rowsPerPage
 
+            if(!thegrid.lastPostdata)
+                fetchdata = true;
+
+            if(thegrid.lastPostdata && (
+                    thegrid.lastPostdata.filters != postdata.filters ||
+                    thegrid.lastPostdata.offset != postdata.offset ||
+                    thegrid.lastPostdata.sidx != postdata.sidx ||
+                    thegrid.lastPostdata.sord != postdata.sord)){
+                    fetchdata = true;
+            }
+
+
             if(data[currPage]) {
                 thegrid.addJSONData(data[currPage]);
             }
             else{
-                data = {};
-                $.ajax({
-                    url: url,
-                    data:postdata,
-                    dataType:"json",
-                    complete: function(jsonData,stat){
-                        if(stat=="success") {
-                            if(minPage == currPage){
-                                data[minPage] = data[currPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2*rowsPerPage);
-                            }
-                            else{
-                                if(currPage == totalPages){
-                                    data[minPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                    data[currPage] = data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2*rowsPerPage);
-                                }
-                                else{
-                                    data[minPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                    data[currPage] = jsonData.responseJSON.slice(rowsPerPage ,2*rowsPerPage);
-                                    data[maxPage] = jsonData.responseJSON.slice(2*rowsPerPage, 3*rowsPerPage);
-                                }
-                            }
-
-                            thegrid.addJSONData(data[currPage]);
-                        }
-                    }
-                })
+                fetchdata = true;
             }
 
             if(!data[maxPage]){
+                fetchdata = true;
+            }
+            if(fetchdata){
                 data = {};
-                $.ajax({
-                    url: url,
-                    data:postdata,
-                    dataType:"json",
-                    complete: function(jsonData,stat){
-                        if(stat=="success") {
-                            if(minPage == currPage){
-                                data[minPage] = data[currPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2*rowsPerPage);
-                            }
-                            else{
-                                if(currPage == totalPages){
-                                    data[minPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                    data[currPage] = data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2*rowsPerPage);
-                                }
-                                else{
-                                    data[minPage] = jsonData.responseJSON.slice(0,rowsPerPage);
-                                    data[currPage] = jsonData.responseJSON.slice(rowsPerPage, 2*rowsPerPage);
-                                    data[maxPage] = jsonData.responseJSON.slice(2*rowsPerPage, 3*rowsPerPage);
-                                }
-                            }
-                        }
-                    }
-                })
+                fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid);
             }
 
-
+            // save the postdata to compare it
+            thegrid.lastPostdata = {};
+            thegrid.lastPostdata.filters = postdata.filters;
+            thegrid.lastPostdata.offset = postdata.offset;
+            thegrid.lastPostdata.sidx = postdata.sidx;
+            thegrid.lastPostdata.sord = postdata.sord;
 
 
         },

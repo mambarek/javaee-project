@@ -70,11 +70,11 @@
 
         grid.jqGrid({
         regional: '#{facesContext.viewRoot.locale.language}',
-        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter',
+        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/search',
         mtype: "GET",
         //styleUI : 'Bootstrap4',
         //iconSet : 'fontAwesome',
-        datatype: "json",
+        datatype: "jsonp",
         //minColWidth: 75,
         colModel: [
 
@@ -106,15 +106,7 @@
         altRows : false,
         pager: pagerId,
         page:#{editEmployeeController.currentTabPage},
-        jsonReader: {
-        repeatitems: false,
-        id: "id",
-        root: function (obj) { return obj; },
-        //page: function (obj) { return 3; },
-        total: function (obj) { return 10; }, // total page number
-        records: function (obj) { return 100; } // total records number
 
-        }
 
         });
 

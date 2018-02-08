@@ -2,6 +2,7 @@ package com.it2go.employee.services.rest;
 
 
 import com.it2go.employee.dto.EmployeeTableItem;
+import com.it2go.employee.dto.search.SearchResult;
 import com.it2go.employee.entities.Employee;
 import com.it2go.framework.dao.EntityNotFoundException;
 
@@ -54,7 +55,7 @@ public interface EmployeeResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/employee/search")
-    List<EmployeeTableItem> findAllEmployeeItems(
+    SearchResult findAllEmployeeItems(
 
             @QueryParam("rows") final int rows,
             @QueryParam("offset") final int offset,
@@ -62,6 +63,7 @@ public interface EmployeeResource {
             @QueryParam("sord") final String sord,
             @QueryParam("searchField") final String searchField,
             @QueryParam("searchString") final String searchString,
-            @QueryParam("searchOper") final String searchOper
+            @QueryParam("searchOper") final String searchOper,
+            @QueryParam("filters") final String filters
     );
 }
