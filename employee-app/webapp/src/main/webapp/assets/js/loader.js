@@ -66,87 +66,7 @@ var progressDialog = progressDialog || (function ($) {
 
 })(jQuery);
 
-var confirm2BtnDialog = confirm2BtnDialog || (function ($) {
-    'use strict';
 
-    // Creating modal dialog's DOM
-    var $dialog = $(
-        '<div class="modal fade confirm2BtnDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
-            '<div class="modal-dialog modal-m">' +
-                '<div class="modal-content">' +
-                    '<div class="modal-header">'+
-                        '<h5 class="modal-title">Title</h5>' +
-                    '</div>'+
-                    '<div class="modal-body">' +
-                        '<p class="modal-message">Give your message here!</p>' +
-                    '</div>' +
-                    '<div class="modal-footer">'+
-                        '<button id="modal-btn-left" type="button" class="btn btn-primary" data-dismiss="modal" >Left</button>'+
-                        '<button id="modal-btn-right" type="button" class="btn btn-secondary" data-dismiss="modal" >Right</button>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-        '</div>');
-
-    return {
-        /**
-         * Opens our dialog
-         * @param message Custom message
-         * @param options Custom options:
-         * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
-         * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
-         */
-        show: function (options) {
-            // Assigning defaults
-            if (typeof options === 'undefined') {
-                options = {};
-            }
-
-            var defaultOptions = {
-                dialogSize: 'm',
-                title: 'Title',
-                message: 'Give your message here!',
-                leftBtnLabel:'Left',
-                rightBtnLabel: 'Right',
-                leftBtnFunc: null,
-                rightBtnFunc: null,
-                onHide: null // This callback runs after the dialog was hidden
-            }
-
-            var settings = $.extend(defaultOptions, options);
-
-            // Configuring dialog
-            $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
-
-            $dialog.find('.modal-title').text(settings.title);
-            $dialog.find('.modal-message').text(settings.message);
-            $dialog.find('#modal-btn-left').html(settings.leftBtnLabel);
-            $dialog.find('#modal-btn-right').html(settings.rightBtnLabel);
-
-            $dialog.find('#modal-btn-left').off('click').click(settings.leftBtnFunc);
-            $dialog.find('#modal-btn-right').off('click').click(settings.rightBtnFunc);
-
-
-            // Adding callbacks
-            if (typeof settings.onHide === 'function') {
-                $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
-                    settings.onHide.call($dialog);
-                });
-            }
-            // Opening dialog
-            $dialog.modal();
-        },
-        /**
-         * Closes dialog
-         */
-        hide: function () {
-            $dialog.modal('hide');
-        }
-
-
-    };
-
-})(jQuery);
 
 /**
  * Module for displaying "Waiting for..." dialog using Bootstrap
@@ -313,37 +233,28 @@ var overlay =  overlay || (function ($) {
             this.startTime = new Date().getTime();
 
             var _this = this;
+
             this.dialog.off('shown.bs.modal').on('shown.bs.modal', function (e) {
-                _this.visible = true;
+                // AFTER ADD TO DOM
                 if(_this.dialog.find('#modal-btn-left').length > 0)
                     _this.dialog.find('#modal-btn-left').focus();
                 else
                     _this.dialog.find('#modal-btn-right').focus();
+
+                _this.visible = true;
+
+                dfd.resolve();
             });
 
             this.dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
                 _this.visible = false;
             });
 
+            // set the dialog content
             this.dialog.html(content);
+
             // show the dialog
             this.dialog.modal();
-
-            // AFTER ADD TO DOM
-            // IE: PROBLEM must add the click event manually
-            if(isIE()) {
-                if (settings && settings.leftBtnFuncName)
-                    document.getElementById("modal-btn-left").addEventListener("click", eval(settings.leftBtnFuncName));
-
-                if (settings && settings.rightBtnFuncName)
-                    document.getElementById("modal-btn-left").addEventListener("click", eval(settings.rightBtnFuncName));
-            }
-
-            while(!this.visible){
-                // wait until visible
-            }
-
-            dfd.resolve();
 
             return dfd.promise();
         },
@@ -442,10 +353,12 @@ var overlay =  overlay || (function ($) {
 
             if(settings.rightBtnDismiss)
                 dialogContent +=
-                    '<button id="modal-btn-right" class="'+btnClass+'" data-dismiss="modal" '+this.getOnclick(settings.rightBtnFuncName) + '>' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" class="'+btnClass+'" data-dismiss="modal" '+this.getOnclick(settings.rightBtnFuncName) + '>' + settings.rightBtnLabel+
+                    '</button>';
             else
                 dialogContent +=
-                    '<button id="modal-btn-right" class="'+btnClass+'" '+this.getOnclick(settings.rightBtnFuncName) + '>' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" class="'+btnClass+'" '+this.getOnclick(settings.rightBtnFuncName) + '>' + settings.rightBtnLabel+
+                    '</button>';
 
             dialogContent +=
                 '</div>'+
@@ -453,10 +366,20 @@ var overlay =  overlay || (function ($) {
                 '</div>';
 
 
-            return this.showContent(dialogContent, settings);
+            var promise = this.showContent(dialogContent, settings);
+            promise.then(function(){
+                if(isIE()) {
+                    // IE: PROBLEM must add the click event manually
+                    if (settings && settings.leftBtnFuncName)
+                        document.getElementById("modal-btn-left").addEventListener("click", eval(settings.leftBtnFuncName));
+
+                    if (settings && settings.rightBtnFuncName)
+                        document.getElementById("modal-btn-left").addEventListener("click", eval(settings.rightBtnFuncName));
+                }
+            })
+
+            return promise;
         },
-
-
 
         /**
          * Closes dialog

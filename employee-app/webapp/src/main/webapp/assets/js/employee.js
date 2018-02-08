@@ -1,54 +1,99 @@
-function ConfirmYesNo(modalSelector, message) {
-    var dfd = jQuery.Deferred();
-    var confirm = $(modalSelector);
-    confirm.find('.modal-message').html(message);
-    confirm.modal('show');
-    // $('#myModalLabel').html(title);
-    // $('#myModalText').html(msg);
-    $('#modal-ok').off('click').click(function () {
-        confirm.modal('hide');
-        dfd.resolve(1);
-        return 1;
-    });
-    $('#modal-cancel').off('click').click(function () {
-        confirm.modal('hide');
-        dfd.reject("cancel");
-        return 0;
-    });
-    return dfd.promise();
+$(document).ready(function(){
+    //initSessionTimeoutTimer();
+    jsf.ajax.addOnEvent(function (data) {
+        if(data.status == 'success'){
+            console.info("-- jsf.ajax.addOnEvent() call -- so resetTimer()");
+            resetTimer();
+        }
+    })
+});
+
+var sessionTimeOutSec = 1800;
+var sessionTimeoutCounterInterval = null;
+var sessionTimeoutInterval = null;
+var counter = null;
+
+function extendSession() {
+    //reload page
+    //location.reload();
+    // extend the session sending an empty ajax
+    $('.refreshSession').click();
+    //window.location.replace(window.location.href);
+    initSessionTimeOutTimer();
 }
 
-var yesFunction = function () {
-    console.info("-- yesFunction() call!");
-    $('#inputForm').submit()
-};
-
-var yesFunctionAjax = function (event) {
-    console.info("-- yesFunctionAjax() call");
-    //$('#inputForm').submit()
-    jsf.ajax.request(this, event, {render: '@form', execute: '@form'})
-};
-
-function ShowConfirmYesNo(event, modalSelector, yesFunc, noFunc, message) {
-    // stop the event and trigger asynchron promise
-    if(event)
-        event.preventDefault();
-
-    //event.stopPropagation();
-    var promise = ConfirmYesNo(modalSelector, message);
-    promise.then(yesFunc
-        , function (reason) {
-            console.info("-- ShowConfirmYesNo() no succes reason:", reason);
-        })
-    console.info("-- ShowConfirmYesNo() Event: ", event);
+function resetSession() {
+    //reload page
+    location.reload();
+    //window.location.replace(window.location.href);
+    initSessionTimeOutTimer();
 }
 
-/**    new     */
-//function showConfirmationDialog(element, event, execute, render, oneventFunc, onerrorFunc){
-function showConfirmationDialog(element, event, yesFunc){
-    //var promise = ConfirmYesNo(modalSelector, message);
-    var ajax = makeAjax(element, event, '@form', '@form', ShowConfirmYesNo(null,'#myModal',yesFunc,null, "Message...."), null);
+function initSessionTimeOutTimer(){
+
+    resetTimer();
+
+    // restart session timer, not on login mask
+/*
+    if($("#sub-navi").children().length > 0){
+        resetTimer();
+    }
+*/
 }
+
+function resetTimer(){
+    console.info("-- resetTimer timeout: "+ timeout);
+    if (sessionTimeoutCounterInterval){
+        clearTimeout(sessionTimeoutCounterInterval);
+    }
+
+    if (sessionTimeoutInterval){
+        clearTimeout(sessionTimeoutInterval);
+    }
+
+    if(counter) clearInterval(counter);
+
+    var timeout = sessionTimeOutSec * 1000 - 30000; // 3 sec puffer???
+    sessionTimeoutCounterInterval = setTimeout('showSessionTimeOutCounter()', timeout - 10000); // - 10 sek for countdown
+    // 10 sec countdown
+    sessionTimeoutInterval = setTimeout('showSessionTimeOutInfo()', timeout);
+}
+
+function showSessionTimeOutCounter(){
+    var count = 10;
+    var options = {
+        title: "Sitzung läuft bald ab",//employee_i18n['employee.overlay.info'],
+        message: "Ihre Session läuft in <span style='font-weight: bold' id=\"timer\">"+count+"</span> sek. ab!",//employee_i18n['employee.overlay.savingSuccess'],
+        showOnlyRightBtn: true,
+        rightBtnLabel: "Sitzung verlängern",//employee_i18n['employee.overlay.ok']
+        rightBtnFuncName: "extendSession"
+    };
+
+    overlay.showConfirm2BtnDialog(options);
+
+    counter = setInterval(function (args) {
+        count--;
+        document.getElementById("timer").innerHTML = count;
+    }, 1000);
+}
+
+function showSessionTimeOutInfo(){
+    if(counter) clearInterval(counter);
+    var options = {
+        title: "Sitzung abgelaufen",//employee_i18n['employee.overlay.info'],
+        message: "Ihre Sitzung ist abgelaufen. Bitte neu anmelden!",//employee_i18n['employee.overlay.savingSuccess'],
+        showOnlyRightBtn: true,
+        rightBtnLabel: "Anmelden",//employee_i18n['employee.overlay.ok']
+        rightBtnFuncName: "resetSession"
+    };
+
+    overlay.showConfirm2BtnDialog(options);
+}
+
+
+
+/*-----------------------------------------------------------------------------*/
+
 
 
 function makeAjax(element, event, execute, render, oneventFunc, onerrorFunc){
@@ -145,7 +190,6 @@ function validateElement(elem){
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
     form.find("input[type=text], input[type=radio], select").each(function(){
-
         validateInputStyle($(this))
     });
 }
@@ -160,28 +204,15 @@ function validateWidget(widget){
     });
 }
 
-function prepaireView(selector){
-    $(selector).find("input[type=text], select").each(function(){
-        this.startValue = this.value;
-    });
-}
-
 function handleAjax(data) {
     var status = data.status;
-    var componentId = data.source.id.replace(new RegExp(':', 'g'), "\\:");
-    var c1 = $("#j_idt23\\:employeeForm\\:firstName");
-    var id = "j_idt23\\:employeeForm\\:firstName";
-    var c111 = $("#" + id);
-    var encodedId = encodeId(data.source.id);
-    var c21 = $("#" + encodedId);
-
+    var componentId = encodeId(data.source.id);
 
     var input = $("#" + componentId);
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
-            //document.getElementsByTagName('body')[0].className = 'loading';
-            console.info("handleAjaxCall begin");
+            //console.info("handleAjaxCall begin");
             break;
 
         case "complete":
@@ -190,18 +221,14 @@ function handleAjax(data) {
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            //document.getElementsByTagName('body')[0].className = '';
-            console.info("ComponentId: " + data.source.id);
-            console.info("Component valid: " + $("#j_idt23\\:employeeForm\\:firstName").attr("data-valid"));
-            console.info("checkInputStyle success valid:" + data.source.getAttribute("data-valid"), data.source);
-            var valid = $("#" + componentId).attr("data-valid");
-            console.info("checkInputStyle success jquery valid: " + valid);
+
+            //var valid = $("#" + componentId).attr("data-valid");
+            //console.info("checkInputStyle success jquery valid: " + valid);
 
             validateInputStyle(input);
             var inputContainer = input.closest(".inputContainer")[0];
             refreshAllEventListener(encodeId(inputContainer.id));
-            //var date = $(data.source.getParent()).hasClass('date');
-            //if(date) initDatepicker();
+
             break;
     }
 }
@@ -222,8 +249,6 @@ function checkValidation(data){
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
-            //document.getElementsByTagName('body')[0].className = 'loading';
-            console.info("checkValidation begin");
             break;
 
         case "complete":
@@ -232,10 +257,8 @@ function checkValidation(data){
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            //document.getElementsByTagName('body')[0].className = '';
-
             validateForm(form);
-            //$('#saveHiddenForm\\:saveOk').click();
+
             break;
     }
 }
@@ -257,20 +280,6 @@ function checkValidationAndConfirmSave(data) {
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            if(isIE()){
-               // data.source.addEventListener("click", data.source.getAttribute('onclick'));
-                //document.getElementById(data.source.id).addEventListener("click", clickSave);
-
-                //data.source.addEventListener("click", function(){eval(data.source.getAttribute('onclick'))},false);
-                //document.getElementById(data.source.id).addEventListener("click", function(){eval(data.source.getAttribute('onclick'))},true);
-                //data.source.addEventListener("click", clickSave);
-                // data.source.addEventListener("click", function(event) {eval(data.source.getAttribute('onclick'))});
-                //data.source.addEventListener("click", new Function (data.source.getAttribute('onclick')));
-                //document.getElementById(data.source.id)
-                //document.getElementById(data.source.id).onclick = new Function (data.source.getAttribute('onclick'));
-                //refreshEvtnListener();
-            }
-
             validateForm(form);
             var error = hasError(form);
             if (!error) {
@@ -416,22 +425,6 @@ function handleAjaxSaveEvent(data){
             overlay.showConfirm2BtnDialog(options);
             break;
     }
-}
-
-function showSessionTimeoutInfo(){
-    var options = {
-        title: "Sitzung abgelaufen",//employee_i18n['employee.overlay.info'],
-        message: "Ihre Sitzung ist abgelaufen. Bitte neu anmelden!",//employee_i18n['employee.overlay.savingSuccess'],
-        showOnlyRightBtn: true,
-        rightBtnLabel: "Anmelden",//employee_i18n['employee.overlay.ok']
-        rightBtnFuncName: "redirectToLogin"
-    };
-
-    overlay.showConfirm2BtnDialog(options);
-}
-
-function redirectToLogin(){
-    window.location.href="ajax-test.xhtml";
 }
 
 function handleAjaxDeleteEvent(data){

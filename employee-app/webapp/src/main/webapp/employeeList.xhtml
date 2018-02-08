@@ -30,8 +30,19 @@
     </f:view>
     <h:outputScript>
         var employee_i18n = {#{applicationController.translations}};
+        sessionTimeOutSec = #{applicationController.sessionTimeoutPeriod};
+        $(document).ready(function(){
+            initSessionTimeOutTimer();
+        });
     </h:outputScript>
     <header>
+        <!--// extend the session sending an empty ajax-->
+        <h:form>
+            <h:commandButton id="refreshSession" style="display: none;" styleClass="refreshSession">
+               <f:ajax execute="@this"  render="@none"/>
+            </h:commandButton>
+        </h:form>
+
         <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m1" aria-controls="m1" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,6 +183,7 @@
                     </div>
                     <div class="card-block" style="padding: 0">
                         <div class="table-responsive mb-5">
+                            <h:form>
                             <table jsf:id="employeeList" class="table table-hover table-sm">
                             <thead  class="table-header">
                             <tr>
@@ -186,20 +198,20 @@
                             <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
                                 <tr>
                                     <td>
-                                        <form jsf:id="id_link">
-                                            <a href="#" jsf:id="edit">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"/>
-                                                <f:ajax execute="@this" render="content"
-                                                    listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                                    event="click"/>
-                                            </a>
-                                        </form>
+                                        <h:commandLink>
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"/>
+                                            <f:ajax execute="@this" render="content"
+                                               listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                               event="click"/>
+                                        </h:commandLink>
                                     </td>
                                     <td>
-                                        <form jsf:id="firstName_link">
-                                            <a jsf:id="edit"
-                                               jsf:action="#{employeeListController.editEmployeeOnNewPage(employee.id)}">#{employee.firstName}</a>
-                                        </form>
+                                        <h:commandLink value="#{employee.firstName}">
+
+                                            <f:ajax execute="@this" render="content"
+                                                    listener="#{editEmployeeController.editEmployee(employee.id)}"
+                                                    event="click"/>
+                                        </h:commandLink>
                                     </td>
                                     <td><a jsf:id="lastName_link"
                                            jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
@@ -209,6 +221,7 @@
                             </ui:repeat>
                             </tbody>
                             </table>
+                            </h:form>
                         </div>
                      </div>
                     <div class="card-footer">
