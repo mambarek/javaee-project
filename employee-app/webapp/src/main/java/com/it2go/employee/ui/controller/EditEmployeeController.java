@@ -14,6 +14,7 @@ import lombok.Data;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversation;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
+import javax.activation.MimeType;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -26,9 +27,11 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -385,6 +388,8 @@ public class EditEmployeeController implements BaseViewController {
 
 
     public String uploadFile() {
+        if(file == null) return null;
+
         try {
             String contentType = file.getContentType();
             String filename = file.getSubmittedFileName();
@@ -421,6 +426,30 @@ public class EditEmployeeController implements BaseViewController {
     public void upload(File file) {
         if(file != null){
             this.model.addDocument(file);
+        }
+    }
+
+    public void downloadFile(File file) throws IOException {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+
+        response.reset(); // Some JSF component library or some Filter might have set some headers in the buffer beforehand. We want to get rid of them, else it may collide.
+        response.setContentType(file.getContentType()); // Check http://www.iana.org/assignments/media-types for all types. Use if necessary ServletContext#getMimeType() for auto-detection based on filename.
+        response.setContentLength(file.getContent().length); // Set it with the file size. This header is optional. It will work if it's omitted, but the download progress will be unknown.
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\""); // The Save As popup magic is done here. You can give it any file name you want, this only won't work in MSIE, it will use current request URL as file name instead.
+
+        OutputStream output = response.getOutputStream();
+        // Now you can write the InputStream of the file to the above OutputStream the usual way.
+        // ...
+        output.write(file.getContent());
+        output.flush();
+        output.close();
+        fc.responseComplete(); // Important! Otherwise JSF will attempt to render the response which obviously will fail since it's already written with a file and closed.
+    }
+
+    public void deleteFile(File file) {
+        if(file != null){
+            this.model.remoDocument(file);
         }
     }
 }

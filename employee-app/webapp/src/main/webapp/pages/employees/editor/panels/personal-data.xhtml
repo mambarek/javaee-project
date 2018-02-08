@@ -34,7 +34,7 @@
         <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.personal.data.nationality']}"/>
         <div class="flex-column col-sm-9">
             <it2go:comboBoxComponent value="#{editEmployeeController.model.nationality}" items="#{masterdataService.getAllCountries(facesContext.viewRoot.locale)}"
-                                   decorated="true" label="#{employeeMsg['employee.editor.personal.data.nationality']}" isRequired="true">
+                                   decorated="true" label="#{employeeMsg['employee.editor.personal.data.nationality']}" isRequired="false">
                 <f:facet name="selectOneMenuTemplate">
                     <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="11px"/>&#160;  #{item.name}
                 </f:facet>

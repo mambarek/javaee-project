@@ -98,20 +98,35 @@
                                 </h:commandButton>
                             </div>
                         </h:form>
-                        <it2go:fileUploadForm2 ajaxRender="files" label="File upload" fileUploadBean="#{editEmployeeController}" >
-                            <f:ajax event="click" listener="#{editEmployeeController.testActionListener()}"/>
-                            <f:actionListener for="upload" binding="#{editEmployeeController.testActionListener()}"/>
-                        </it2go:fileUploadForm2>
+                        <it2go:fileUploadForm ajaxRender="files" label="File upload"
+                            value="#{editEmployeeController.file}" action="#{editEmployeeController.uploadFile()}">
+                        </it2go:fileUploadForm>
                         <!--<it2go:fileUploadForm  label="File upload" fileUploadBean="#{editEmployeeController}"/>
                         <div class="form-group row">-->
-                        <div class="col inputContainer p-0" data-component-name='rowForm' jsf:id="files">
-                            <h:outputLabel styleClass="col-form-label" value="Files"/>
-                            <div class="input-group">
-                                <ul>
-                                <ui:repeat value="#{editEmployeeController.model.documents}" var="document">
-                                        <li>#{document.name} #{document.contentType} </li>
-                                </ui:repeat>
-                                </ul>
+                        <div class="form-group row">
+                            <h:outputLabel styleClass="col-sm-3 col-form-label" value="Dokumente"/>
+                            <div class="col-sm-9" jsf:id="files">
+                                <h:form>
+                                    <h:dataTable styleClass="table table-hover table-sm"
+                                                 headerClass="table-header"
+                                                 value="#{editEmployeeController.model.documents}" var="document">
+                                        <h:column>
+                                            <f:facet name="header">Dokumentname</f:facet>
+                                            #{document.name}
+                                        </h:column>
+                                        <h:column>
+                                            <h:commandLink actionListener="#{editEmployeeController.downloadFile(document)}">
+                                                <i class="fa fa-download" aria-hidden="true"/>
+                                            </h:commandLink>
+                                        </h:column>
+                                        <h:column>
+                                            <h:commandLink actionListener="#{editEmployeeController.deleteFile(document)}">
+                                                <i class="far fa-trash-alt" aria-hidden="true"/>
+                                                <f:ajax render="@form"/>
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:form>
                             </div>
                         </div>
                     </div>

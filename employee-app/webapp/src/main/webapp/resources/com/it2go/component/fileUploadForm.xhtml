@@ -12,8 +12,6 @@
                       shortDescription="The selected value." />
         <cc:attribute name="label"
                       shortDescription="the label." />
-        <cc:attribute name="fileUploadBean"
-                      shortDescription="fileUploadBean." required="true"/>
         <cc:attribute name="isRequired" default="false" type="boolean"
                       shortDescription="if the value is required"/>
         <cc:attribute name="disabled" default="false" type="boolean"
@@ -26,38 +24,40 @@
                       shortDescription="enable onChange event ajax validation. default true"/>
         <cc:attribute name="ajaxRender"
                       shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:attribute name="action" method-signature="java.lang.String action()"/>
+        <cc:actionSource name="upload" targets="#{cc.clientId}:upload-button"/>
         <cc:editableValueHolder name="input" targets="file"/>
         <cc:clientBehavior name="changed" event="change" targets="file"/>
-        <cc:clientBehavior name="click" event="click" targets="file"/>
+        <cc:clientBehavior name="click" event="click" targets="#{cc.clientId}:upload-button"/>
 
     </cc:interface>
 
     <cc:implementation>
+        <h:form id="form" enctype="multipart/form-data" prependId="false">
         <div id="#{cc.clientId}" class="inputWidget" data-component-name="fileUploadForm">
-            <div class="col inputContainer p-0" data-component-name='rowForm'>
-                <h:outputLabel styleClass="col-form-label" value="#{cc.attrs.label}"/>
-                <c:if test="#{!cc.attrs.readOnly}">
+            <div class="form-group row">
+                <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
+                <div class="col-sm-9">
+                    <div  class="inputContainer" style="height: 100%">
                     <div class="input-group">
-                        <h:form id="form" enctype="multipart/form-data" prependId="false">
-                            <h:inputFile id="file" styleClass="form-control" value="#{cc.attrs.fileUploadBean.file}">
 
-                            </h:inputFile>
-                            <h:commandButton id="button" value="Upload" action="#{cc.attrs.fileUploadBean.uploadFile}">
-                                <f:ajax execute="file" render="@all"/>
-                            </h:commandButton>
-                        </h:form>
+                        <h:inputFile id="file" styleClass="form-control" value="#{cc.attrs.value}">
+
+                        </h:inputFile>
+                        <h:commandButton id="upload-button" value="Upload" action="#{cc.attrs.action}">
+                            <f:ajax execute="@this file" render="#{cc.attrs.ajaxRender}"/>
+                        </h:commandButton>
 
                     </div>
                     <!-- error message output -->
                     <div class="invalid-feedback">
                         <h:message id="message" for="file"/>
                     </div>
-                </c:if>
-                <c:if test="#{cc.attrs.readOnly}">
-                    <span>#{cc.displayValue}</span>
-                </c:if>
+                </div>
+                </div>
             </div>
 
         </div>
+        </h:form>
     </cc:implementation>
 </ui:component>
