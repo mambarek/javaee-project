@@ -50,7 +50,7 @@
             <div class="form-group row">
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
-                    <div jsf:id="inputContainer" class="inputContainer">
+                    <div jsf:id="inputContainer" class="inputContainer" style="height: 100%">
 
                         <c:choose>
                             <!-- CHOOSE BLOCK BEGIN-->
@@ -252,6 +252,20 @@
                                                        itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
                                     </h:selectOneRadio>
                                 </div>
+                            </c:when>
+
+                            <!-- text -->
+                            <c:when test="#{cc.attrs.inputType eq 'checkbox'}">
+                                <div class="custom-control custom-checkbox" style="height: 100%;padding-left: 0px;" id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="custom-control-input"
+                                                              value="#{cc.attrs.value}"
+                                                              disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox >
+                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                </div>
+                                <h:outputScript>
+                                    $(encodeId("#" + "#{cc.clientId}:checkbox-wrapper")).closest(".inputContainer").css("padding-top","5px");
+                                </h:outputScript>
                             </c:when>
       <!-- End choose -->
                         </c:choose>

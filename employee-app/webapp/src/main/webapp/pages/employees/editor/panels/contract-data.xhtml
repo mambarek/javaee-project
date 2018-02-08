@@ -1,0 +1,18 @@
+<ui:composition
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:p="http://primefaces.org/ui">
+
+        <pe:formRow value="#{editEmployeeController.model.salary}"
+                    label="#{employeeMsg['employee.editor.salary']}">
+            <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+        </pe:formRow>
+        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="checkbox" label="Bereitschft für Wochenendarbeit"/>
+        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="checkbox" label="Reisebereitschft"/>
+
+</ui:composition>

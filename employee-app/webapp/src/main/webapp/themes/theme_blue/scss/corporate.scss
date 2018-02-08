@@ -623,25 +623,23 @@ label {
   background-position: 98% 50%;
   display: block;
 }
-/* select with custom icons */
-.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item-wrapper {
-  padding: 0.5em 0 0.5em 3em;
-}
-.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item .ui-icon {
-  height: 24px;
-  width: 24px;
-  top: 0.1em;
-}
-.ui-icon.video {
-  background: url("images/24-video-square.png") 0 0 no-repeat;
-}
-.ui-icon.podcast {
-  background: url("images/24-podcast-square.png") 0 0 no-repeat;
-}
-.ui-icon.rss {
-  background: url("images/24-rss-square.png") 0 0 no-repeat;
-}
 
+/*.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  border: 1px solid #0b127f;
+  background: #0b127f;
+  color: #ffffff;
+}*/
+.ui-state-checked {
+  border: 1px solid #ffffff;
+  background: #ffffff;
+}
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+  color: #777620;
+}
 /* select with CSS avatar icons */
 option.avatar {
   background-repeat: no-repeat !important;

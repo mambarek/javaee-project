@@ -4,7 +4,8 @@
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:define name="mainContent">
-        <ui:include src="administration.xhtml"/>
+        <!--<ui:include src="administration.xhtml"/>-->
+        <ui:include src="employeesList.xhtml"/>
         <ui:fragment rendered="#{!empty editEmployeeController.model}">
             <!--<ui:include src="editor/accordion-editor.xhtml"/>-->
             <ui:include src="editor/tab-editor.xhtml"/>

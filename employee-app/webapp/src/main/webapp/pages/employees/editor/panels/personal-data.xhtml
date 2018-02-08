@@ -26,10 +26,6 @@
                     placeholder="#{employeeMsg['employee.app.date.pattern']}">
             <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
         </pe:formRow>
-        <pe:formRow value="#{editEmployeeController.model.salary}"
-                    label="#{employeeMsg['employee.editor.salary']}">
-            <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
-        </pe:formRow>
         <pe:formRow value="#{editEmployeeController.model.gender}" inputType="custom-radio" label="#{employeeMsg['employee.editor.gender']}"
                     radioItems="#{masterdataService.genders}" isRequired="true">
         </pe:formRow>

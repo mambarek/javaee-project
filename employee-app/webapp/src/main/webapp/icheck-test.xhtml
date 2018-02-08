@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+
+    <title>Starter Template icheck</title>
+    <!-- CSS files (include only one of the two files!) -->
+    <!--<link rel="stylesheet" href="assets/extern/icheck-1.x/demo/css/custom.css?v=1.0.2"/>-->
+    <link rel="stylesheet" href="assets/extern/icheck-1.x/skins/all.css?v=1.0.2"/>
+
+    <!-- JS files -->
+
+
+
+    <!-- Add the following if you want to use the jQuery wrapper (you still need datatable.min.js): -->
+    <script type="text/javascript" src="assets/extern/icheck-1.x/demo/js/jquery.js"/>
+    <!--<script type="text/javascript" src="assets/extern/jquery-3.3.1/jquery-3.3.1.js"/>-->
+    <script type="text/javascript" src="assets/extern/icheck-1.x/icheck.js?v=1.0.2"/>
+    <!--<script type="text/javascript" src="assets/extern/icheck-1.x/demo/js/custom.min.js?v=1.0.2"/>-->
+</head>
+
+<body style="padding: 15px">
+
+
+
+<div class="demo-list clear">
+    <ul>
+        <li>
+            <input tabindex="1" type="checkbox" id="input-1"/>
+            <label for="input-1">Checkbox, <span>#input-1</span></label>
+        </li>
+        <li>
+            <input tabindex="2" type="checkbox" id="input-2" checked="checked"/>
+            <label for="input-2">Checkbox, <span>#input-2</span></label>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input tabindex="3" type="radio" id="input-3" name="demo-radio"/>
+            <label for="input-3">Radio button, <span>#input-3</span></label>
+        </li>
+        <li>
+            <input tabindex="4" type="radio" id="input-4" name="demo-radio" checked="checked"/>
+            <label for="input-4">Radio button, <span>#input-4</span></label>
+        </li>
+    </ul>
+    <script>
+        $(document).ready(function(){
+
+            $('.demo-list input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
+</div>
+
+
+
+</body>
+</html>

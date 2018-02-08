@@ -3,7 +3,9 @@ package com.it2go.employee.entities;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -20,7 +22,14 @@ import java.util.Objects;
 @XmlRootElement
 public class Employee extends Person {
 
+    @Basic
+    @Column(name = "SALARY")
     private Double salary;
+
+    @Column(name = "WEEKEND_WORK")
+    private boolean weekendWork;
+    @Column(name = "TRAVELING")
+    private boolean traveling;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Project> projects = new ArrayList<>();

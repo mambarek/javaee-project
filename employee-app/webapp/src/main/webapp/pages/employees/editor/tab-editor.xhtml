@@ -20,6 +20,10 @@
                            aria-controls="address-tab" aria-selected="false">#{employeeMsg['employee.editor.address.data.panel.title']}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="contract-tab" data-toggle="tab" href="#contract-data" role="tab" data-last-clicked="false"
+                           aria-controls="contract-tab" aria-selected="false">Vertragsdaten</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab" data-last-clicked="false"
                            aria-controls="comment" aria-selected="false">#{employeeMsg['employee.editor.comment.panel.title']}</a>
                     </li>
@@ -42,6 +46,17 @@
                             <ui:include src="panels/address-data.xhtml"/>
                             <div style="display: none">
                                 <h:commandButton id="address-data-submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="tab-pane fade mt-4" id="contract-data" role="tabpanel" aria-labelledby="contract-tab" style="height:100%">
+                        <h:form id="contract-data-form">
+                            <!-- include address data -->
+                            <ui:include src="panels/contract-data.xhtml"/>
+                            <div style="display: none">
+                                <h:commandButton id="contract-data-submit-button" type="submit">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
