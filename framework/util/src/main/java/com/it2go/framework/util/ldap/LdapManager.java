@@ -19,9 +19,6 @@ import java.util.Hashtable;
 
 public class LdapManager {
 
-    private final static String ldapURI = "ldap://localhost:10389";//"ldaps://ldap.server.com/dc=ldap,dc=server,dc=com";
-    private final static String LdapAdmin = "admin";
-    private final static String LdapAdminPassword = "secret";
     private final static String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
     private static final int SALT_LENGTH = 4;
 
@@ -31,8 +28,9 @@ public class LdapManager {
     }
 
     private static DirContext ldapContext (Hashtable <String,String>env) throws Exception {
+        final LdapConfiguration ldapConfig = LdapConfiguration.getINSTANCE();
         env.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
-        env.put(Context.PROVIDER_URL, ldapURI);
+        env.put(Context.PROVIDER_URL, ldapConfig.getLdapURI());
         DirContext ctx = new InitialDirContext(env);
         return ctx;
     }
@@ -107,6 +105,7 @@ public class LdapManager {
                 Base64.getEncoder().encodeToString(hashPlusSalt);
     }
 
+    // Apache directory (AD)
     public static String encodeADPassword(String password) throws NoSuchAlgorithmException {
         String algorithm = "SHA-1";
 
@@ -124,20 +123,20 @@ public class LdapManager {
     }
 
     public static void setUserPassword(String user, String newPassword){
-
+        final LdapConfiguration ldapConfig = LdapConfiguration.getINSTANCE();
         //.first check newPassword format
         // TODO boolean pwdOk = PasswordChecker.check(newPassword);
 
         String dn = null;
         try {
-            dn = getUid( LdapAdmin );
+            dn = getUid( ldapConfig.getLdapAdmin() );
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (dn != null) {
             DirContext adminContext = null;
             try {
-                adminContext = getAdminContext(dn, LdapAdminPassword);
+                adminContext = getAdminContext(dn, ldapConfig.getLdapAdminPassword());
 
                 final String pwdHash = encodeADPassword(newPassword);
                 ModificationItem[] mods = new ModificationItem[1];
@@ -162,8 +161,7 @@ public class LdapManager {
 
         }
         else {
-            System.out.println( "Admin '" + LdapAdmin + "' not found" );
-            System.exit(1);
+            System.out.println( "Admin '" + ldapConfig.getLdapAdmin() + "' not found" );
         }
     }
 
@@ -178,12 +176,30 @@ public class LdapManager {
             }
             else {
                 System.out.println( "user '" + user + "' authentication failed" );
-                System.exit(1);
             }
         }
         else {
             System.out.println( "user '" + user + "' not found" );
-            System.exit(1);
+        }
+    }
+
+    public static boolean authenticateUser(String user, String password) throws Exception {
+        String dn = getUid( user );
+
+        if (dn != null) {
+            /* Found user - test password */
+            if ( testBind( dn, password ) ) {
+                System.out.println( "user '" + user + "' authentication succeeded" );
+                return true;
+            }
+            else {
+                System.out.println( "user '" + user + "' authentication failed" );
+                return false;
+            }
+        }
+        else {
+            System.out.println( "user '" + user + "' not found" );
+            return false;
         }
     }
 

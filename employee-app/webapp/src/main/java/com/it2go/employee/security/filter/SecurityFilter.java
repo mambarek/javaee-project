@@ -3,6 +3,7 @@ package com.it2go.employee.security.filter;
 import com.it2go.employee.entities.ApplicationUser;
 import com.it2go.employee.entities.Person;
 import com.it2go.employee.ui.controller.LoginController;
+import com.it2go.framework.util.ldap.LdapManager;
 
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
@@ -46,6 +47,14 @@ public class SecurityFilter implements Filter {
                 ApplicationUser user = new ApplicationUser();
                 user.setUserName(userPrincipal.getName());
                 controller.setLoggedInUser(user);
+            }
+
+            boolean auth = false;
+            try {
+                auth = LdapManager.authenticateUser(userPrincipal.getName(), "secret");
+                System.out.println(">>> User auth = " + auth);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

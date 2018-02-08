@@ -1,0 +1,10 @@
+<properties>
+    <ldapURI>ldap://localhost:10389</ldapURI>
+    <ldapAdmin>admin</ldapAdmin>
+    <ldapAdminPassword>secret</ldapAdminPassword>
+</properties>
+
+
+
+
+
