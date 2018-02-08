@@ -14,6 +14,8 @@ $lineHeight: 1rem;
 $fontSize: 0.875rem;
 $blockHeaderHeight:$heigth-10;
 
+$placeHolderFontSize: 0.8rem;
+
 $bold:500;
 /* green */
 $primaryFontColor: #ffffff;
@@ -82,6 +84,21 @@ a:hover, a:active{
   text-decoration: none;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  //color: red;
+  //opacity: 1; /* Firefox */
+  font-size: $placeHolderFontSize;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  //color: red;
+  font-size: $placeHolderFontSize;
+}
+
+:-ms-input-placeholder { /* Microsoft Edge */
+  //color: red;
+  font-size: $placeHolderFontSize;
+}
 /*-----------------------------------------------------*/
 
 .corp-block-header{
@@ -264,7 +281,7 @@ a:hover, a:active{
   background-color: #e6e6e6;
   border-color: #adadad;
 }
-/*--------------- btn secondory --------------------------*/
+/*--------------- btn secondary --------------------------*/
 .btn-secondary:hover {
   color: #292b2c;
   background-color: #e6e6e6;

@@ -69,12 +69,12 @@
                                label="#{cc.resourceBundleMap['employee.editor.salary']}" readOnly="true">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>-->
-            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                               radioItems="#{editEmployeeController.genderList}" isRequired="true">
-            </employees:formRow>
-<!--            <employees:formRow value="#{cc.attrs.model.gender}" type="select" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+<!--            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genderList}" isRequired="true">
             </employees:formRow>-->
+            <employees:formRow value="#{cc.attrs.model.gender}" type="select" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                               radioItems="#{editEmployeeController.genderList}" isRequired="false">
+            </employees:formRow>
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">

@@ -4,17 +4,15 @@ import lombok.Data;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import java.io.IOException;
 import java.util.Arrays;
 
 @Data
 @FacesComponent(value = "AbstractFormRow")
-public class AbstractFormRow extends UIInput implements NamingContainer {
+public class AbstractFormRow extends UIInputComponent implements NamingContainer {
 
     final static String START_VALUE = "startValue";
 
@@ -33,7 +31,7 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
 
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
-        if(input != null) {
+        if (input != null) {
 /*        Converter converter = (Converter) getAttributes().get("converter");
         if (converter != null) {
             input.setConverter(converter);
@@ -52,19 +50,28 @@ public class AbstractFormRow extends UIInput implements NamingContainer {
             super.encodeBegin(context);
     }
 
-    public String getDisplayValue(){
+    public String getDisplayValue() {
 
-        if(this.getConverter() == null)
-            return getValue() != null ? getValue().toString(): "";
+        if (this.getConverter() == null)
+            return getValue() != null ? getValue().toString() : "";
 
-        return this.getConverter().getAsString(FacesContext.getCurrentInstance(),input,getValue() );
+        return this.getConverter().getAsString(FacesContext.getCurrentInstance(), input, getValue());
     }
 
-    public Object getStartValue(){
+    public String getPlaceHolder() {
+
+        String placeHolder = (String) this.getAttributes().get("placeholder");
+        if ((placeHolder == null || placeHolder.isEmpty()) && (boolean) this.getAttributes().get("isRequired"))
+            placeHolder = "Bitte angeben";
+
+        return placeHolder;
+    }
+
+    public Object getStartValue() {
         return this.getStateHelper().get(START_VALUE);
     }
 
-    public void setStartValue(Object startValue){
-        this.getStateHelper().put(START_VALUE,startValue);
+    public void setStartValue(Object startValue) {
+        this.getStateHelper().put(START_VALUE, startValue);
     }
 }

@@ -57,7 +57,7 @@
                                            jsf:value="#{cc.attrs.value}" data-valid="#{cc.input.valid}"
                                            jsf:required="#{cc.attrs.isRequired}"
                                            jsf:disabled="#{cc.attrs.disabled}"
-                                           placeholder="#{cc.attrs.placeholder}">
+                                           placeholder="#{cc.placeHolder}">
 
                                         <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="handleAjax"
                                                 event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
@@ -153,7 +153,7 @@
                                 <div class="input-group form-control">
                                     <h:selectOneRadio value="#{cc.attrs.value}" required="true" id="editableText">
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
-                                                       itemLabel="#{item.getLocalizedName(facesContext.viewRoot.locale)}" itemValue="#{c}" />
+                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
                                     </h:selectOneRadio>
                                 </div>
                             </c:when>
@@ -161,9 +161,11 @@
                             <!-- text -->
                             <c:when test="#{cc.attrs.type eq 'select'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText">
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="btn-primary" >
+                                        <f:selectItem styleClass="btn-danger"
+                                         itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="#{null}"/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
-                                                       itemLabel="#{item.getLocalizedName(facesContext.viewRoot.locale)}" itemValue="#{item}" />
+                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
                                     </h:selectOneMenu>
                                 </div>
                             </c:when>

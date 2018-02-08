@@ -3,6 +3,7 @@ package com.it2go.employee.ui.controller;
 import com.it2go.employee.entities.*;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
+import com.it2go.employee.ui.jsf.SelectItemWrapper;
 import com.it2go.framework.dao.BaseException;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
@@ -23,6 +24,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -207,12 +209,25 @@ public class EditEmployeeController implements BaseViewController{
 
     }
 
-    public Gender[] getGenderList(){
-        Gender[] res = new Gender[2];
-        res[0] = Gender.MALE;
-        res[1] = Gender.FEMALE;
+    public SelectItemWrapper[] getGenderList(){
 
-        return res;
+        SelectItemWrapper[] resArray = new SelectItemWrapper[Gender.values().length];
+        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+
+        // add null item for select
+/*        SelectItemWrapper<Gender> nullValue = new SelectItemWrapper<>(null);
+        nullValue.setLocalizedLabel("-- Bitte wählen Sie --");
+        resArray[0] = nullValue;*/
+
+        int i=0;
+        for (Gender gender:Gender.values()) {
+            SelectItemWrapper<Gender> selectItemWrapper = new SelectItemWrapper<>(gender);
+            selectItemWrapper.setLocalizedLabel(Gender.getLocalizedNameFor(gender,locale));
+            resArray[i] = selectItemWrapper;
+            i++;
+        }
+
+        return resArray;
     }
 
     public SelectItem[] getGenderItems(){

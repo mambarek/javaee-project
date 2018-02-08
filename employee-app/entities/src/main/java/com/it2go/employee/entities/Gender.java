@@ -23,9 +23,17 @@ public enum Gender {
         return name;
     }
 
-    public String getLocalizedName(Locale locale){
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/gender/gender",locale);
+    public static String getLocalizedNameFor(Gender gender, Locale locale){
+        String resLabel;
 
-        return resourceBundle.getString(this.toString());
+        try {
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/gender/gender", locale);
+            resLabel = resourceBundle.getString(gender.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            resLabel = gender.name;
+        }
+
+        return resLabel;
     }
 }
