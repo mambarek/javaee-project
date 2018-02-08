@@ -2,6 +2,7 @@ package com.it2go.employee.ui.controller;
 
 import com.it2go.employee.entities.Gender;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;

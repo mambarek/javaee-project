@@ -153,7 +153,7 @@ function validateInputStyle(component){
 
     var target = component;
     var isSelect = component.is("select");
-    if(component[0].type == "radio" ) {
+    if(component.attr('type') == "radio" ) {
         target = component.closest(".input-group");
         // add border
         target.addClass("form-control");
