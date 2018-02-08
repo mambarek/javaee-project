@@ -1,7 +1,10 @@
 package com.it2go.masterdata;
 
+import com.it2go.employee.entities.Employee_;
+import com.it2go.employee.entities.Person;
 import org.junit.Test;
 
+import javax.persistence.metamodel.SingularAttribute;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,5 +32,11 @@ public class ContinentTest {
         Continent.ASIA.getCountries(Locale.GERMAN).forEach(System.out::println);
         /*final Continent europe = Continent.getContinentWithName(Continent.EUROPE.getName());
         System.out.println(europe);*/
+    }
+
+    @Test
+    public void testGenerated(){
+        final SingularAttribute<Person, String> firstName = Employee_.firstName;
+        System.out.println("firstName = " + firstName);
     }
 }

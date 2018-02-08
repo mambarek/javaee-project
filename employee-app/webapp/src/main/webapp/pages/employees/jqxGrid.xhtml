@@ -43,8 +43,8 @@
                     {name: "salary", type: "string"},
                     {name: "birthDate", type: "date", format: '#{employeeMsg['employee.app.date.pattern']}'}
                 ],
-                pagenum: #{gridController.pageNum},
-                pagesize: #{gridController.pageSize},
+                pagenum: #{employeesGridController.pageNum},
+                pagesize: #{employeesGridController.pageSize},
                 pager: function (pagenum, pagesize, oldpagenum) {
                     // callback called when a page or page size is changed.
 

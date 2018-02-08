@@ -1,12 +1,16 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.employee.dto.EmployeeTableItem;
+import com.it2go.employee.dto.EmployeesSearchTemplate;
 import com.it2go.employee.entities.EmailAddress;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
+import com.it2go.employee.persistence.view.EmployeesViewRepository;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityRemovedException;
+import lombok.Getter;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -19,22 +23,27 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class EmployeeListController implements BaseViewController{
 
     @Inject
-    IEmployeeRepository employeeRepository;
+    private IEmployeeRepository employeeRepository;
 
     @Inject
-    UserSession userSession;
+    private EmployeesViewRepository employeesViewRepository;
 
     @Inject
-    EditEmployeeController editEmployeeController;
+    private UserSession userSession;
 
     @Inject
-    WebFlowController webFlowController;
+    private EditEmployeeController editEmployeeController;
+
+    @Inject
+    private WebFlowController webFlowController;
 
     private Employee model = new Employee();
+    @Getter
+    private EmployeesSearchTemplate employeesSearchTemplate = new EmployeesSearchTemplate();
 
     public List<Employee> getAllEmployees(){
        // System.out.println("### EmployeeListController findAll call!");
@@ -42,6 +51,11 @@ public class EmployeeListController implements BaseViewController{
        // System.out.println("EmployeeListController -- > employees found= " + employees.size());
 
         return employees;
+    }
+
+    public List<EmployeeTableItem> getEmplpoyees(){
+
+        return employeesViewRepository.filterEmployees(employeesSearchTemplate);
     }
 
     public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException {
@@ -101,5 +115,11 @@ public class EmployeeListController implements BaseViewController{
     @Override
     public String getPage() {
         return null;
+    }
+
+    public void filterEmployees(){
+        employeesSearchTemplate.setMaxResult(10);
+        //employeesSearchTemplate.getEmployeeTableItem().setFirstName("9");
+        //employeesViewRepository.filterEmployees(employeesSearchTemplate);
     }
 }

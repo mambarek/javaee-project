@@ -24,7 +24,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <ui:repeat var="employee" value="#{employeeListController.allEmployees}"
+                        <tr>
+                            <td/>
+                            <td><h:inputText value="#{employeeListController.employeesSearchTemplate.employeeTableItem.firstName}">
+                                <f:ajax execute="@this" render="content" event="keyup" />
+                            </h:inputText></td>
+                            <td><h:inputText value="#{employeeListController.employeesSearchTemplate.employeeTableItem.lastName}">
+                                <f:ajax execute="@this" render="content" event="keyup" />
+                            </h:inputText></td>
+                            <td><h:inputText/></td>
+                            <td><h:inputText/></td>
+                            <td/>
+                        </tr>
+                        <ui:repeat var="employee" value="#{employeeListController.emplpoyees}"
                                    varStatus="status">
                             <tr>
                                 <td>
@@ -92,6 +104,10 @@
                     <i class="fa fa-user-plus"
                        aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
                     <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+                <h:commandLink id="test" styleClass="btn btn-primary" >
+                    Test Critera
+                    <f:ajax listener="#{employeeListController.filterEmployees}" render="content"/>
                 </h:commandLink>
             </h:form>
         </div>

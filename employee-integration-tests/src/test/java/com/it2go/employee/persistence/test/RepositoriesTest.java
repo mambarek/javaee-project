@@ -10,7 +10,7 @@ import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.IPersonRepository;
 import com.it2go.employee.persistence.ITruckRepository;
 import com.it2go.employee.persistence.UserSession;
-import com.it2go.employee.persistence.view.EmployeeViewRepository;
+import com.it2go.employee.persistence.view.EmployeesViewRepository;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
@@ -53,7 +53,7 @@ public class RepositoriesTest {
     @EJB
     private ITruckRepository truckRepository;
     @EJB
-    private EmployeeViewRepository employeeViewRepository;
+    private EmployeesViewRepository employeeViewRepository;
 
     // test for concurrency uodate
     private static Employee cachedEmplJohn;
