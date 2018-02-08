@@ -18,9 +18,13 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -267,11 +271,61 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
-    public String testActionListener(){
+    public String testActionListener(ValueChangeEvent e){
 
         String s = "xxx";
 
 
         return null;
     }
+
+    public String ajaxTestAction(AjaxBehaviorEvent event) {
+
+        final UIComponent component = event.getComponent();
+        final String componentId = component.getId();
+        final Object model = component.getAttributes().get("model");
+
+
+        return null;
+    }
+
+    public String ajaxActionCheckProjectDuration(AjaxBehaviorEvent event) {
+
+        final UIComponent component = event.getComponent();
+        final String componentId = component.getId();
+        final Object model = component.getAttributes().get("model");
+
+        if(model == null) return null;
+
+        Project project = (Project)model;
+        final LocalDate begin = convertToLocalDate(project.getBegin());
+        final LocalDate end = convertToLocalDate(project.getEnd());
+        if(end != null){
+            Period period = Period.between(begin, end);
+            if(period.isNegative()){
+                ((UIInput)component).setValid(false);
+                String msg = "Datum stimmt doch nicht!";
+                FacesContext.getCurrentInstance().addMessage(event.getComponent().getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+
+            }
+        }
+
+        return null;
+    }
+
+    public LocalDate convertToLocalDate(java.util.Date dateToConvert) {
+        if(dateToConvert == null) return null;
+
+        /*if(dateToConvert instanceof java.sql.Date)
+            return ((java.sql.Date)dateToConvert).toLocalDate();
+
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();*/
+
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
+
 }

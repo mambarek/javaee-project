@@ -9,10 +9,8 @@
               xmlns:p="http://primefaces.org/ui">
 
     <cc:interface componentType="AbstractFormRow">
-
-        <cc:attribute name="actionListener"
-                      shortDescription="The actionListener." />
-
+        <cc:attribute name="model" type="java.lang.Object"
+                      shortDescription="The model value." />
         <cc:attribute name="value" required="true"
                       shortDescription="The selected value." />
         <cc:attribute name="label"
@@ -82,10 +80,11 @@
                                     <h:inputText styleClass="form-control" binding="#{cc.input}" id="editableText"
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
-                                                 label="#{cc.attrs.label}" valueChangeListener="#{cc.attrs.actionListener}"
+                                                 label="#{cc.attrs.label}"
                                                  pt:placeholder="#{cc.placeHolder}">
                                         <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                                         <f:ajax execute="@this" render="#{cc.clientId}" onevent="validateInput" event="change"/>
+                                        <f:attribute name="model" value="#{cc.attrs.model}"/>
                                     </h:inputText>
                                     <h:outputScript >
                                         var id = '#' + encodeId('#{cc.clientId}:editableText');

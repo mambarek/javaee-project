@@ -27,22 +27,30 @@
                                     isRequired="true" >
                             <f:validateLength minimum="3" maximum="100"/>
                         </pe:formRow>
-                        <pe:formRow value="#{project.begin}" inputType="date" actionListener="#{editEmployeeController.checkProjectDuration(project)}"
+
+                        <pe:formRow value="#{project.begin}" inputType="date" model="#{project}"
                                     label="#{employeeMsg['employee.editor.projects.begin']}"
                                     isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
                             <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                            <f:actionListener  binding="#{editEmployeeController.checkProjectDuration(project)}" for=""/>
+                            <f:validator validatorId="ProjectDurationValidator"/>
+                            <!--<f:attribute name="project" value="#{project}"/>-->
+                            <!--<f:ajax event="changed" listener="#{editEmployeeController.ajaxActionCheckProjectDuration}" onevent="validateInput" render="@form"/>-->
                         </pe:formRow>
+
                         <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
                             <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields"/>
                         </pe:formRow>
+
                         <div jsf:id="lastProjectDate" jsf:rendered="#{!project.tilToday}">
-                            <pe:formRow value="#{project.end}" inputType="date"
+                            <pe:formRow value="#{project.end}" inputType="date" model="#{project}"
                                         label="#{employeeMsg['employee.editor.projects.end']}"
                                         isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
                                 <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                                <f:validator validatorId="ProjectDurationValidator"/>
+                                <!--<f:ajax event="changed" listener="#{editEmployeeController.ajaxActionCheckProjectDuration}"/>-->
                             </pe:formRow>
                         </div>
+
                         <pe:textArea value="#{project.description}" label="#{employeeMsg['employee.editor.projects.desc']}">
                             <!--<f:validateLength minimum="50" maximum="500"/>-->
                         </pe:textArea>
