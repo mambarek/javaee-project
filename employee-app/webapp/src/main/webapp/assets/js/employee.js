@@ -267,16 +267,17 @@ function validateInputStyle(component){
 
 }
 
-function validateElementWithId(id){
-    var element = $("#" + id.replace(new RegExp(':', 'g'),"\\:"));
+function validateElementWithId(selector){
+    //var element = $("#" + id.replace(new RegExp(':', 'g'),"\\:"));
     //var allInputFields = form.filter('input[type=text], select');
-    element.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+    $(selector).find("input[type=text], input[type=radio], select, textarea")
+        .each(function(){validateInputStyle($(this))});
 }
 
 function validateElement(elem){
     var element = $("#" + elem.id.replace(new RegExp(':', 'g'),"\\:"));
     //var allInputFields = form.filter('input[type=text], select');
-    element.find("input[type=text], select").each(function(){validateInputStyle($(this))});
+    element.find("input[type=text], input[type=radio], select, textarea").each(function(){validateInputStyle($(this))});
 }
 
 function validateForm(form){

@@ -291,5 +291,26 @@ function initComboBox(targetWidgetId, itemIdPrefix){
     $( "#" + targetWidgetId).combobox({
 
     });
+}
 
+function checkTab(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+        e.target // newly activated tab
+        e.relatedTarget // previous active tab
+
+        var form = $(e.relatedTarget.hash).find('form').first();
+        // submit the form
+        form.find("input[type=submit]").click();
+
+        validateForm(form);
+
+        if(hasError(form)) {
+            e.preventDefault();
+        }
+/*        else {
+            //$(e.relatedTarget).find('a').tab('show');
+            $(e.relatedTarget).tab('show');
+        }*/
+    })
 }

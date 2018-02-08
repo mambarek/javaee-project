@@ -1,0 +1,65 @@
+<ui:composition
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div class="card">
+        <div class="card-header corp-block-form-header">
+            #{employeeMsg['employee.editor.title']}
+        </div>
+        <div class="card-block">
+            <!--<h:form id="employeeForm" styleClass="employeeForm">-->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="personal-data-tab" data-toggle="tab" href="#personal-data" role="tab"
+                           aria-controls="personal-data" aria-selected="true">#{employeeMsg['employee.editor.personal.data.panel.title']}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address-data" role="tab"
+                           aria-controls="address-tab" aria-selected="false">#{employeeMsg['employee.editor.address.data.panel.title']}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+                           aria-controls="comment" aria-selected="false">#{employeeMsg['employee.editor.comment.panel.title']}</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active mt-4" id="personal-data" role="tabpanel" aria-labelledby="personal-data-tab">
+                        <h:form id="personal-data-form">
+                            <!-- include personal data -->
+                            <ui:include src="panels/personal-data.xhtml"/>
+                            <div style="display: none">
+                                <h:commandButton id="submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidation"/>
+                                </h:commandButton>
+                            </div>
+
+                        </h:form>
+                    </div>
+                    <div class="tab-pane fade mt-4" id="address-data" role="tabpanel" aria-labelledby="address-tab">
+                        <h:form id="address-data-form">
+                            <!-- include address data -->
+                            <ui:include src="panels/address-data.xhtml"/>
+                        </h:form>
+                    </div>
+                    <div class="tab-pane fade mt-4" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                        <h:form id="comment-form">
+                            <!-- include address data -->
+                            <ui:include src="panels/comment.xhtml"/>
+                        </h:form>
+                    </div>
+                </div>
+            <h:form id="buttons-form">
+                <!-- include editor buttons save, cancel and delete-->
+                <ui:include src="editor-buttons.xhtml"/>
+            </h:form>
+            <!--</h:form>-->
+            <!-- include footer including error list and hidden buttons -->
+            <ui:include src="editor-footer.xhtml"/>
+        </div>
+    </div>
+    <h:outputScript >
+        checkTab();
+    </h:outputScript>
+</ui:composition>
