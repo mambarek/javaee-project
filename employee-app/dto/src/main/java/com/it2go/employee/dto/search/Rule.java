@@ -9,5 +9,5 @@ public class Rule {
     private Operation op;
     private String data;
     // text, number, date
-    private String type;
+    private String type = "string";
 }

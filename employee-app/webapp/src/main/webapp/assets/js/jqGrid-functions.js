@@ -116,7 +116,7 @@ function fetchData(url, postdata, colModel, minPage, currPage, data, rowsPerPage
             var rule = searchTemplate.filters.rules[i];
             for(var j=0; j<colModel.length; j++){
                 var col = colModel[j];
-                if(col.name == rule.field)
+                if(col.name == rule.field && col.searchtype)
                     rule.type = col.searchtype;
             }
         }
