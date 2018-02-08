@@ -27,7 +27,7 @@
     </cc:interface>
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
-        <div id="#{cc.clientId}" data-component-nsme="countrySelect">
+        <div id="#{cc.clientId}" data-component-name="countrySelect">
             <div class="form-group row">
                 <h:outputLabel styleClass="col-md-3 pr-md-0 col-sm-6 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-md-3 pr-md-0">
@@ -158,7 +158,7 @@
             </div>
             <div class="form-group row">
                 <h:outputLabel styleClass="col-md-3 pr-md-0 col-sm-6 col-form-label" value=" "/>
-                <div class="col-md-3">
+                <div class="col-md-6 col-sm-12">
                     <!-- error message output -->
                     <div class="invalid-feedback">
                         <h:message id="message" for="editableText"/>

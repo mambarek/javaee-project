@@ -226,11 +226,7 @@ function validateInputStyle(component){
     if(component.is("select")) {
         target = component.siblings('span');
         // add border
-        target.addClass("form-control");
-    }
-
-    if(component.attr('type') == "radio") {
-        inputContainer.addClass("was-validated")
+        target.removeClass("form-control").addClass("form-control");
     }
 
     target.removeClass("is-valid is-invalid")
@@ -238,24 +234,34 @@ function validateInputStyle(component){
     // when disabled so no highlighting
     if(disabled && disabled != false) return;
 
-    var countrySelect = component.closest("[data-component-nsme='countrySelect']");
+    var rowForm = component.closest("[data-component-name='rowForm']");
+    var countrySelect = component.closest("[data-component-name='countrySelect']");
 
     if (valid == "false") {
         target.addClass('is-invalid');
         //target.siblings('.invalid-feedback').show();
-
-        if(countrySelect)
+        if(component.attr('type') == "radio") {
+            // all radios should have the same color valid/invalid
+            $('input[name="'+encodeId(component.attr('name'))+'"').addClass('is-invalid');
+        }
+        if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').show();
-        else
+
+        if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').show();
     }
     else {
         target.addClass('is-valid');
         //target.siblings('.invalid-feedback').hide();
+        if(component.attr('type') == "radio") {
+            // all radios should have the same color valid/invalid
+            $('input[name="'+encodeId(component.attr('name'))+'"').addClass('is-valid');
+        }
 
-        if(countrySelect)
+        if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').hide();
-        else
+
+        if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').hide();
     }
 
@@ -573,14 +579,15 @@ function handleAjaxDeleteEvent(data){
 
 function hasError(element){
     var res = false;
-    element.find(".form-control").each(function(){
+    element.find(".form-control, .custom-control-input").each(function(){
         var target = $(this);
         var valid = target.attr("data-valid");
         if($(this)[0].type == "radio") {
             target = $(this).closest(".input-group");
         }
-        var erro = target.hasClass('form-control-danger');
-        if(valid == "false" || erro){
+        var error = target.hasClass('form-control-danger');
+        if(valid == "false" || error){
+        //if(valid == "false"){
             res = true;
             return false;}
          }
@@ -684,7 +691,7 @@ function showOverlay(message, callback){
 
 
 function clickSave() {
-    console.info('##### clickSave call');
+    //console.info('##### clickSave call');
     $('.saveConfirmed').click();
 }
 

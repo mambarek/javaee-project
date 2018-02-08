@@ -74,6 +74,16 @@ public class AbstractFormRow extends UIInputComponent implements NamingContainer
         return "";
     }
 
+    @Override
+    public void resetValue() {
+        super.resetValue();
+        if(this.input != null)
+            this.input.resetValue();
+
+        if(this.hiddenInput != null)
+            this.hiddenInput.resetValue();
+    }
+
     public Object getStartValue() {
         return this.getStateHelper().get(START_VALUE);
     }

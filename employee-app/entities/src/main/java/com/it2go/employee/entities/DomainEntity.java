@@ -75,7 +75,7 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
         return super.equals(o);
     }
 
-    @Override
+/*    @Override
     public int hashCode() {
         int hashCode = 11; // willkürlicher Initialwert
         int multi = 29; // nicht zu große, zufällig gewählte Primzahl als Multiplikator
@@ -85,7 +85,7 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
             hashCode = hashCode * multi + this.getUpdatedAt().hashCode();
 
         return hashCode;
-    }
+    }*/
 
     public boolean isValid(){
         Set<Field> allFields = ReflectionUtils.getAllFields(this.getClass());

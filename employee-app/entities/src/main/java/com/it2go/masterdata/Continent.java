@@ -87,4 +87,20 @@ public enum Continent {
         //return Arrays.stream(Continent.values()).map(continent -> continent.getName().equals(name));
         return Arrays.stream(Continent.values()).filter(continent -> continent.getName().equals(name)).findFirst().get();
     }
+
+    public static Continent getContinentContainingCountry(String countryCode) {
+        if(Objects.isNull(countryCode) || countryCode.length() == 0)
+            return null;
+
+        //return Arrays.stream(Continent.values()).map(continent -> continent.getName().equals(name));
+        return Arrays.stream(Continent.values()).filter(continent -> Arrays.asList(continent.getCountryCodes()).contains(countryCode)).findFirst().get();
+    }
+
+    public static Continent getContinentWithCode(String code) {
+        if(Objects.isNull(code) || code.length() == 0)
+            return null;
+
+        //return Arrays.stream(Continent.values()).map(continent -> continent.getName().equals(name));
+        return Arrays.stream(Continent.values()).filter(continent -> continent.getCode().equals(code)).findFirst().get();
+    }
 }

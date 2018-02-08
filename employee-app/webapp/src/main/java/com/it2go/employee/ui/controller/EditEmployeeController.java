@@ -15,6 +15,7 @@ import com.it2go.masterdata.Continent;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -22,6 +23,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -143,6 +146,21 @@ public class EditEmployeeController implements BaseViewController {
             viewParams.remove("id");
 
         this.model = null;
+        // reset all components
+        resetComponent(FacesContext.getCurrentInstance().getViewRoot().getFacetsAndChildren());
+    }
+
+    private void resetComponent(Iterator<UIComponent> componentIterator){
+        while(componentIterator.hasNext()) {
+            UIComponent component = componentIterator.next();
+            if(component instanceof UIInput){
+                UIInput input = (UIInput)component;
+                input.resetValue();
+            }
+            else{
+                resetComponent(component.getFacetsAndChildren());
+            }
+        }
     }
 
     public String addNewEmail() {
