@@ -645,3 +645,7 @@ function isIE() {
     // other browser
     return false;
 }
+
+function jqui_select() {
+
+}

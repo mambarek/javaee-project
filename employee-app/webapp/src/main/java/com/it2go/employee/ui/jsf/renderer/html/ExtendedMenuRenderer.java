@@ -71,6 +71,17 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         String valueString = getFormattedValue(context, component, curItem.getValue(), converter);
         writer.writeAttribute("value", valueString, "value");
 
+        final Object labelStyle = (String)selectComponent.getAttributes().get("data-label-style");
+        if(labelStyle != null)
+            writer.writeAttribute("data-label-style", labelStyle, null);
+
+        final Object dataClass = (String)selectComponent.getAttributes().get("data-class");
+        if(dataClass != null)
+            writer.writeAttribute("data-class", dataClass, null);
+        final Object dataStyle = (String)selectComponent.getAttributes().get("data-style");
+        if(dataStyle != null)
+            writer.writeAttribute("data-style", dataStyle, null);
+
         // Write 'selected' attribute.
         Object valuesArray;
         Object itemValue;

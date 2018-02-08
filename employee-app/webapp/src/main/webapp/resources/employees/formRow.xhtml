@@ -161,13 +161,22 @@
                             <!-- text -->
                             <c:when test="#{cc.attrs.type eq 'select'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="btn-primary" >
-                                        <f:selectItem styleClass="btn-danger"
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
+                                        <f:selectItem data-label-style="color:#999;"
                                          itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="#{null}"/>
-                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item"
+                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item" data-class="avatar" data-style="background-image: url(&apos;http://www.gravatar.com/avatar/b3e04a46e85ad3e165d66f5d927eb609?d=monsterid&amp;r=g&amp;s=16&apos;);"
                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
+
                                     </h:selectOneMenu>
+                                    <h:outputScript>
+                                        var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                                        console.info("-- encodedId: " + encodedId);
+                                        $(encodedId).iconselectmenu().iconselectmenu( "menuWidget").addClass( "ui-menu-icons avatar" );
+
+
+                                    </h:outputScript>
                                 </div>
+
                             </c:when>
 
                             <!-- End choose -->
