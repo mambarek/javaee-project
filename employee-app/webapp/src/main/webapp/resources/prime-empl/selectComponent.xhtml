@@ -33,16 +33,17 @@
         <div jsf:id="inputContainer" class="inputContainer">
             <div class="input-group">
                 <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
-                                 style="width: 100%" required="#{cc.attrs.isRequired}" binding="#{cc.input}">
+                                 style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.input}">
                     <f:selectItem
                             itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                     <f:selectItems value="#{cc.attrs.items}" var="item"
                                    itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
-                    <c:choose>
+                   <!-- <c:choose>
                         <c:when test="#{!empty cc.attrs.ajaxRender}">
                             <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax"/>
                         </c:when>
-                    </c:choose>
+                    </c:choose>-->
+                    <f:ajax execute="@this" event="change" render="#{cc.attrs.ajaxRender}" onevent="handleAjax"/>
                 </h:selectOneMenu>
                 <!-- draw table with cols-->
                 <div style="display: none">
@@ -91,7 +92,7 @@
                 change: function( event, ui ) {$(encodedId).trigger( "change" );}
                 });
 
-
+                $(encodedId).addClass("select-overflow");
             </h:outputScript>
         </div>
         </div>

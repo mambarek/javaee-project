@@ -1,6 +1,7 @@
 package com.it2go.employee.ui.controller;
 
 import com.it2go.masterdata.Continent;
+import com.it2go.masterdata.Country;
 import com.it2go.masterdata.Gender;
 
 import javax.faces.context.FacesContext;
@@ -21,6 +22,7 @@ public class MasterdataService {
         return Arrays.asList(Continent.values());
     }
 
+    //public List<Country>
     public String getLocalizedNameFor(Object dataObject) {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 
@@ -50,6 +52,13 @@ public class MasterdataService {
             }
 
             return resLabel;
+        }
+
+        if (dataObject instanceof Country) {
+
+            Country country = (Country) dataObject;
+            Locale l = new Locale(country.getCode());
+            return l.getDisplayCountry(locale);
         }
 
         return "";

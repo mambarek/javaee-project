@@ -3,7 +3,7 @@ package com.it2go.masterdata;
 import java.text.Collator;
 import java.util.Locale;
 
-class Country implements Comparable<Country> {
+public class Country implements Comparable<Country> {
     private String code;
     private String name;
 

@@ -64,10 +64,10 @@ public enum Continent {
         return resLabel;
     }
 
-    public List<Country> getCountries(String locale){
+    public List<Country> getCountries(Locale locale){
         return Arrays.stream(countryCodes).map(code ->
-                new Country(code,new Locale(locale, code).getDisplayCountry()))
-                .sorted(countryComparator(Locale.forLanguageTag(locale)))
+                new Country(code,new Locale("", code).getDisplayCountry(locale)))
+                .sorted(countryComparator(locale))
                 .collect(Collectors.toList());
     }
 
