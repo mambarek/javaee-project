@@ -27,6 +27,7 @@
         <cc:editableValueHolder name="input" targets="editableText"/>
         <cc:clientBehavior name="changed" event="change" targets="editableText"/>
         <cc:facet name="selectOneMenuTemplate"/>
+        <cc:facet name="itemDetails"/>
         <cc:attribute name="decorated" default="false" type="boolean"
                       shortDescription="make the contnent of display widget the same as the selected item from dropdown"/>
     </cc:interface>
@@ -54,7 +55,7 @@
                     <ul>
                         <li id="#{cc.clientId}-li-0">-- Bitte wählen #{cc.attrs.decorated} --</li>
                         <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
-                            <li id="#{cc.clientId}-li-#{status.index + 1}">
+                            <li id="#{cc.clientId}-li-#{status.index + 1}" title="#{item.name}">
                                 <c:choose>
                                     <c:when test="#{cc.facets.containsKey('selectOneMenuTemplate')}">
                                         <cc:renderFacet name="selectOneMenuTemplate">
@@ -65,6 +66,11 @@
                                         #{item.toString()}
                                     </c:otherwise>
                                 </c:choose>
+                                <div class="d-none item-details">
+                                    <cc:renderFacet name="itemDetails">
+                                        <f:param name="item" value="#{item}"/>
+                                    </cc:renderFacet>
+                                </div>
                             </li>
                         </ui:repeat>
                     </ul>

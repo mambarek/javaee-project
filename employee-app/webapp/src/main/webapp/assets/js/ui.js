@@ -1,4 +1,29 @@
+/********************** popover ***********************************/
+function initPopover(selector, yourOptions){
+    // Assigning defaults
+    if (typeof yourOptions === 'undefined') {
+        yourOptions = {};
+    }
 
+    var options = $.extend({
+        showOnMobile: false,
+        title: "Information Card",
+        content: "Set your content",
+        html: true,
+        animation: true,
+        container: 'body',
+        trigger: 'hover ', //click | hover | focus | manual
+        //fallbackPlacement: 'flip',
+        placement: 'right',
+        boundary: 'viewport'
+    }, yourOptions);
+
+    // mobile
+    if(!options.showOnMobile && window.innerWidth <= 800)
+        return;
+
+    $(selector).popover(options);
+}
 /********************** selectOneMenu ***********************************/
 function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated) {
     $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
@@ -7,16 +32,53 @@ function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated) {
             //console.info("#+#+ _d: " + _id);
             var _li = $(_id);
 
+            var content = item.label;
+            if(_li.find('.item-details').length > 0){
+                content = _li.find('.item-details').html();
+            }
+
             var li = $("<li/>");
             var div = $("<div>");
+            //div.attr('title', item.label);
+            //div.tooltip( {"position": {my: "right+150 center", at: "right center" } });
+
+            // popover not for mobile
+            if(window.innerWidth > 800){
+                div.popover({
+                    title: item.label,
+                    //content: _li.find('.item-details').first().html(),
+                    content: content,
+                    html: true,
+                    animation: true,
+                    container: 'body',
+                    trigger: 'hover ', //click | hover | focus | manual
+                    //fallbackPlacement: 'flip',
+                    placement: 'right',
+                    boundary: 'viewport'
+                });
+            }
+
             li.append(div);
             div.html(_li.html());
+            //div.tooltip({placement:"left"});
             return li.appendTo( ul );
         },
 
         _renderButtonItem: function( item ) {
-            var buttonItem = $( "<span>", {
+            var buttonItem = $( "<div>", {
                 "class": "ui-selectmenu-text"
+            });
+
+            buttonItem.popover({
+                title: "Information Card",
+                content: item.label,
+                html: true,
+                animation: true,
+                container: 'body',
+                trigger: 'hover ', //click | hover | focus | manual
+                //fallbackPlacement: 'flip',
+                placement: 'bottom',
+                boundary: 'viewport'
             });
 
             if(decorated){

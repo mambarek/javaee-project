@@ -70,18 +70,12 @@
                                        data-placement="right" style="color: green">
                                         <i class="fas fa-address-card fa-2x"/>
                                         <h:outputScript>
-                                            //console.info("## der button",$('#pop-#{status.index}'));
-                                            $('#pop-#{status.index}').popover({
-                                                title: "Information Card",
-                                                content: $('#pop-content-#{status.index}').html(),
-                                                html: true,
-                                                animation: true,
-                                                container: 'body',
-                                                trigger: 'hover ', //click | hover | focus | manual
-                                                fallbackPlacement: 'flip',
-                                                placement: 'auto'
-                                            });
-                                            //$('#pop-#{status.index}').popover.html = $('#pop-content').html;
+                                            initPopover('#pop-#{status.index}',
+                                            {
+                                            title: "Information Card",
+                                            content: $('#pop-content-#{status.index}').html()
+                                            }
+                                            );
                                         </h:outputScript>
                                     </a>
                                 </td>

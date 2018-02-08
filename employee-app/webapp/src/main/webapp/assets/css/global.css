@@ -33,6 +33,7 @@
 .custom-combobox {
     position: relative;
     display: inline-block;
+    /*margin-right: auto;*/
 }
 .custom-combobox-toggle {
     position: absolute;
