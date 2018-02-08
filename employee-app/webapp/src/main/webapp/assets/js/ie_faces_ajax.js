@@ -45,7 +45,7 @@ function encodeId(id) {
 }
 
 function refreshInputEventListener(_input, eventName) {
-    var input = $('#' + encodeId(_input.id)).get(0);
+    var input = _input;//$('#' + encodeId(_input.id)).get(0);
     var oneventName = 'on' + eventName;
     if(input.removeEventListeners)
         input.removeEventListeners(eventName,input[oneventName], true);
