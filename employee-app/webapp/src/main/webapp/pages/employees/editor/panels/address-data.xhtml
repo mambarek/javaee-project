@@ -1,0 +1,100 @@
+<ui:composition
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:p="http://primefaces.org/ui">
+
+    <div jsf:id="street-inputContainer" class="inputContainer">
+        <div class="form-group row" jsf:id="street-container">
+            <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.address.streetone']}"/>
+            <div class="col pr-md-2">
+                <div class="input-group">
+                    <h:inputText styleClass="form-control" id="streetOne" binding="#{streetOneInput}"
+                                 value="#{editEmployeeController.model.address.streetOne}" required="true"
+                                 pt:data-valid="#{component.valid}"
+                                 pt:placeholder="Strasse">
+
+                        <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
+
+                    </h:inputText>
+                </div>
+            </div>
+            <div class="col-sm-2 ml-md-0 pl-md-0">
+
+                <div class="input-group">
+                    <h:inputText styleClass="form-control" id="buildingNr" binding="#{hausNrInput}"
+                                 value="#{editEmployeeController.model.address.buildingNr}" required="true"
+                                 pt:data-valid="#{component.valid}"
+                                 pt:placeholder="Nr.">
+
+                        <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
+
+                    </h:inputText>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group row" jsf:id="street-error-container" jsf:rendered="#{!empty facesContext.getMessageList(streetOneInput.clientId) or !empty facesContext.getMessageList(hausNrInput.clientId)}">
+            <div class="col-sm-3" />
+            <div class="col-sm-9">
+                <div class="invalid-feedback" style="display: block">
+                    <ul class="m-md-0 p-md-0 ml-md-3">
+                        <li jsf:rendered="#{!empty facesContext.getMessageList(streetOneInput.clientId)}"><h:message id="message1" for="streetOne"/></li>
+                        <li jsf:rendered="#{!empty facesContext.getMessageList(hausNrInput.clientId)}"><h:message id="message2" for="buildingNr"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pe:formRow value="#{editEmployeeController.model.address.streetTwo}" label="#{employeeMsg['employee.editor.address.streettwo']}">
+        <f:validateLength minimum="3" maximum="50"/>
+    </pe:formRow>
+    <div jsf:id="zip-city-inputContainer" class="inputContainer">
+        <div class="form-group row" jsf:id="zip-city-container">
+            <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.address.zip.city']}"/>
+            <div class="col-sm-2 pr-md-0">
+                <div class="input-group">
+                    <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}"
+                                 value="#{editEmployeeController.model.address.zipCode}" required="true"
+                                 pt:data-valid="#{component.valid}"
+                                 pt:placeholder="Zip">
+                        <f:validateLength minimum="5" maximum="5"/>
+                        <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
+
+                    </h:inputText>
+                </div>
+            </div>
+            <div class="col ml-md-0 pl-md-2">
+                <div class="input-group">
+                    <h:inputText styleClass="form-control" id="citiy" binding="#{cityInput}"
+                                 value="#{editEmployeeController.model.address.city}" required="true"
+                                 pt:data-valid="#{component.valid}"
+                                 pt:placeholder="City">
+                        <f:validateLength minimum="3" maximum="50"/>
+                        <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
+
+                    </h:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row" jsf:id="zip-city-error-container"
+             jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId) or !empty facesContext.getMessageList(cityInput.clientId)}">
+            <div class="col-sm-3" />
+            <div class="col-sm-9">
+                <div class="invalid-feedback" style="display: block">
+                    <ul class="m-md-0 p-md-0 ml-md-3">
+                        <li jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId)}"><h:message id="zip-message" for="zip-code"/></li>
+                        <li jsf:rendered="#{!empty facesContext.getMessageList(cityInput.clientId)}"><h:message id="city-message" for="citiy" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <pe:countrySelect value="#{editEmployeeController.model.address.countryCode}" label="#{employeeMsg['employee.editor.address.state']}" isRequired="true" decorated="true"/>
+
+</ui:composition>

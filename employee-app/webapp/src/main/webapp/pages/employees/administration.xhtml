@@ -97,16 +97,7 @@
         </div>
     </div>
 
-    <div jsf:id="editorWrapper" jsf:rendered="#{!empty editEmployeeController.model}">
-        <pe:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
-                           id="editor">
-            <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
-            <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent"
-                    listener="#{editEmployeeController.ajaxSaveAction}"/>
-            <f:ajax event="deleteConfirmed" render="content" onevent="handleAjaxDeleteEvent"
-                    listener="#{editEmployeeController.ajaxDeleteAction}"/>
-        </pe:employeeEditor>
-    </div>
+
     <h:outputScript>
         refreshAllEventListener('content');
     </h:outputScript>

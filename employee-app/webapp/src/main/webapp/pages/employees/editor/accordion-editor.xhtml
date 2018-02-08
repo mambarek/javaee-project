@@ -1,212 +1,54 @@
 <ui:composition
         xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-        xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-        xmlns:jsf="http://xmlns.jcp.org/jsf"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <composite:interface componentType="uiCompositeComponent">
-        <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
-
-        <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
-        <composite:clientBehavior name="save" event="click" targets="#{cc.clientId}:employeeForm:save"/>
-
-        <composite:clientBehavior name="saveConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:saveConfirmed"/>
-        <composite:actionSource name="saveConfirmedBtn" event="click" targets="saveConfirmed" />
-
-        <composite:actionSource name="delete" targets="#{cc.clientId}:employeeForm:delete"/>
-        <composite:clientBehavior name="deleteConfirmed" event="click" targets="#{cc.clientId}:confirmHiddenForm:deleteConfirmed"/>
-        <composite:actionSource name="deleteConfirmedBtn" event="click" targets="deleteConfirmed" />
-
-        <composite:clientBehavior name="cancel" event="click" targets="#{cc.clientId}:employeeForm:cancel"/>
-
-        <composite:attribute name="saveConfirmFunc" />
-        <composite:attribute name="deleteConfirmFunc" />
-        <composite:attribute name="renderAfterSave"/>
-        <composite:attribute name="renderAfterDelete"/>
-    </composite:interface>
-    <composite:implementation>
-
-        <div id="#{cc.clientId}">
-            <div class="card" >
-                <div class="card-header corp-block-form-header">
-                    #{cc.resourceBundleMap['employee.editor.title']}
-                </div>
-                <div class="card-block">
-                    <h:form id="employeeForm" styleClass="employeeForm" >
-
-
-                        <div id="accordion" class="accordion">
-                            <div class="card panel">
-                                <div class="card-header header" id="headingOne">
-                                    <div class="mb-0">
-                                        <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="return false;">
-                                            <i class="fas fa-caret-right fa-lg"/> #{cc.resourceBundleMap['employee.editor.personal.data.panel.title']}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="collapseOne" class="show" aria-labelledby="headingOne" >
-                                    <div class="card-body">
-                                        <ui:include src="accordion-editor.xhtml"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ##########  Adress data panel ############-->
-
-                            <div class="card panel">
-                                <div class="card-header header" id="headingTwo">
-                                    <div class="mb-0">
-                                        <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
-                                            <i class="fas fa-caret-right fa-lg"/> #{cc.resourceBundleMap['employee.editor.address.data.panel.title']}
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="collapseTwo" class="show" aria-labelledby="headingTwo" >
-                                    <div class="card-body">
-                                        <div jsf:id="street-inputContainer" class="inputContainer">
-                                            <div class="form-group row" jsf:id="street-container">
-                                                <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.resourceBundleMap['employee.editor.address.streetone']}"/>
-                                                <div class="col pr-md-2">
-                                                    <div class="input-group">
-                                                        <h:inputText styleClass="form-control" id="streetOne" binding="#{streetOneInput}"
-                                                                     value="#{cc.attrs.model.address.streetOne}" required="true"
-                                                                     pt:data-valid="#{component.valid}"
-                                                                     pt:placeholder="Strasse">
-
-                                                            <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
-
-                                                        </h:inputText>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2 ml-md-0 pl-md-0">
-
-                                                    <div class="input-group">
-                                                        <h:inputText styleClass="form-control" id="buildingNr" binding="#{hausNrInput}"
-                                                                     value="#{cc.attrs.model.address.buildingNr}" required="true"
-                                                                     pt:data-valid="#{component.valid}"
-                                                                     pt:placeholder="Nr.">
-
-                                                            <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
-
-                                                        </h:inputText>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="form-group row" jsf:id="street-error-container" jsf:rendered="#{!empty facesContext.getMessageList(streetOneInput.clientId) or !empty facesContext.getMessageList(hausNrInput.clientId)}">
-                                                <div class="col-sm-3" />
-                                                <div class="col-sm-9">
-                                                    <div class="invalid-feedback" style="display: block">
-                                                        <ul class="m-md-0 p-md-0 ml-md-3">
-                                                            <li jsf:rendered="#{!empty facesContext.getMessageList(streetOneInput.clientId)}"><h:message id="message1" for="streetOne"/></li>
-                                                            <li jsf:rendered="#{!empty facesContext.getMessageList(hausNrInput.clientId)}"><h:message id="message2" for="buildingNr"/></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <pe:formRow value="#{cc.attrs.model.address.streetTwo}" label="#{cc.resourceBundleMap['employee.editor.address.streettwo']}">
-                                            <f:validateLength minimum="3" maximum="50"/>
-                                        </pe:formRow>
-                                        <div jsf:id="zip-city-inputContainer" class="inputContainer">
-                                            <div class="form-group row" jsf:id="zip-city-container">
-                                                <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.resourceBundleMap['employee.editor.address.zip.city']}"/>
-                                                <div class="col-sm-2 pr-md-0">
-                                                    <div class="input-group">
-                                                        <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}"
-                                                                     value="#{cc.attrs.model.address.zipCode}" required="true"
-                                                                     pt:data-valid="#{component.valid}"
-                                                                     pt:placeholder="Zip">
-                                                            <f:validateLength minimum="5" maximum="5"/>
-                                                            <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
-
-                                                        </h:inputText>
-                                                    </div>
-                                                </div>
-                                                <div class="col ml-md-0 pl-md-2">
-                                                    <div class="input-group">
-                                                        <h:inputText styleClass="form-control" id="citiy" binding="#{cityInput}"
-                                                                     value="#{cc.attrs.model.address.city}" required="true"
-                                                                     pt:data-valid="#{component.valid}"
-                                                                     pt:placeholder="City">
-                                                            <f:validateLength minimum="3" maximum="50"/>
-                                                            <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
-
-                                                        </h:inputText>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row" jsf:id="zip-city-error-container"
-                                                 jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId) or !empty facesContext.getMessageList(cityInput.clientId)}">
-                                                <div class="col-sm-3" />
-                                                <div class="col-sm-9">
-                                                    <div class="invalid-feedback" style="display: block">
-                                                        <ul class="m-md-0 p-md-0 ml-md-3">
-                                                            <li jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId)}"><h:message id="zip-message" for="zip-code"/></li>
-                                                            <li jsf:rendered="#{!empty facesContext.getMessageList(cityInput.clientId)}"><h:message id="city-message" for="citiy" /></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="#{cc.resourceBundleMap['employee.editor.address.state']}" isRequired="true" decorated="true"/>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row justify-content-end">
-                            <div class="btn-group">
-                                <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel">
-                                    <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
-                                </h:commandLink>
-
-                                <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{cc.attrs.model.isNew() == false}"
-                                               id="delete" pt:data-deleteFunc="clickDelete">
-                                    <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
-                                    <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
-                                </h:commandLink>
-                                <h:commandLink styleClass="btn btn-primary mr-3 btn-sm-block" pt:data-saveFunc="clickSave">
-                                    <i class="far fa-save" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
-                                    <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
-                                </h:commandLink>
-                            </div>
-                        </div>
-
-
-                    </h:form>
-
-                    <div class="employeeFormErrorList" style="display: none">
-                        <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
-                            <ui:fragment rendered="#{facesMessage.severity eq editEmployeeController.severityError}">
-                                <!--<ui:fragment >-->
-                                <div class="alert alert-danger alert-dismissable">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
-                                    <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
-                                    <!--<strong>#{facesMessage.severity} </strong> #{facesMessage.summary}-->
-                                </div>
-                            </ui:fragment>
-                        </ui:repeat>
-                    </div>
-                    <!-- hidden form for confirmation dialog action delete-->
-                    <h:form id="confirmHiddenForm">
-                        <h:commandButton id="deleteConfirmed" style="display: none;" styleClass="deleteConfirmed">
-                            <f:ajax execute="@this"  render="content"/>
-                        </h:commandButton>
-                        <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
-                            <f:ajax execute="@this"  render="content"/>
-                        </h:commandButton>
-                    </h:form>
-                </div>
-            </div>
+    <div class="card" >
+        <div class="card-header corp-block-form-header">
+            #{employeeMsg['employee.editor.title']}
         </div>
+        <div class="card-block">
+            <h:form id="employeeForm" styleClass="employeeForm" >
+                <div id="accordion" class="accordion">
+                    <div class="card panel">
+                        <div class="card-header header" id="headingOne">
+                            <div class="mb-0">
+                                <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne" onclick="return false;">
+                                    <i class="fas fa-caret-right fa-lg"/> #{employeeMsg['employee.editor.personal.data.panel.title']}
+                                </button>
+                            </div>
+                        </div>
+                        <div id="collapseOne" class="show" aria-labelledby="headingOne" >
+                            <div class="card-body">
+                                <!-- include personal data -->
+                                <ui:include src="panels/personal-data.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card panel">
+                        <div class="card-header header" id="headingTwo">
+                            <div class="mb-0">
+                                <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseTwo"
+                                        aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
+                                    <i class="fas fa-caret-right fa-lg"/> #{employeeMsg['employee.editor.address.data.panel.title']}
+                                </button>
+                            </div>
+                        </div>
+                        <div id="collapseTwo" class="show" aria-labelledby="headingTwo" >
+                            <div class="card-body">
+                                <!-- include address data -->
+                                <ui:include src="panels/address-data.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- include editor buttons save, cancel and delete-->
+                <ui:include src="editor-buttons.xhtml"/>
 
-    </composite:implementation>
+            </h:form>
+            <!-- include footer including error list and hidden buttons -->
+            <ui:include src="editor-footer.xhtml"/>
+        </div>
+    </div>
 
 </ui:composition>

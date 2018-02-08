@@ -5,7 +5,9 @@
 
     <ui:define name="mainContent">
         <ui:include src="administration.xhtml"/>
-        <ui:include src="editor/accordion-editor.xhtml"/>
+        <ui:fragment rendered="#{!empty editEmployeeController.model}">
+            <ui:include src="editor/accordion-editor.xhtml"/>
+        </ui:fragment>
     </ui:define>
 
 </ui:composition>
