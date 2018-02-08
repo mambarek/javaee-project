@@ -164,7 +164,7 @@ function initComboBox(targetWidgetId, itemIdPrefix){
 
 
 
-        _source: function( request, response ) { console.info("-source call");
+        _source: function( request, response ) {
             var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
             response( this.element.children( "option" ).map(function() {
                 var text = $( this ).text();

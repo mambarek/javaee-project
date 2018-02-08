@@ -7,6 +7,7 @@ import java.lang.reflect.Proxy;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -28,8 +29,17 @@ public class Country implements Comparable<Country> {
         return "[" + code + "] " + name;
     }
 
+    public static Comparator<Country> countryComparator(Locale locale) {
+        return Comparator.comparing(Country::getName, localeCollatorComparator(locale));
+    }
+
+    public static Comparator<String> localeCollatorComparator(Locale locale) {
+        return Collator.getInstance(locale)::compare;
+    }
+
     public static List<Country> getAllCountries(Locale locale) {
-        return Arrays.stream(Continent.values()).flatMap(cont -> cont.getCountries(locale).stream()).collect(Collectors.toList());
+        return Arrays.stream(Continent.values()).flatMap(cont -> cont.getCountries(locale)
+                .stream()).sorted(countryComparator(locale)).collect(Collectors.toList());
     }
 
     static List<Integer> get() {
