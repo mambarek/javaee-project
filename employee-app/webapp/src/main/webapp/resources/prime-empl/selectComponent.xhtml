@@ -53,7 +53,7 @@
                 <!-- draw table with cols-->
                 <div style="display: none">
                     <ul>
-                        <li id="#{cc.clientId}-li-0">-- Bitte wählen #{cc.attrs.decorated} --</li>
+                        <li id="#{cc.clientId}-li-0">#{cc.resourceBundleMap['employee.selectone.empty.text']}</li>
                         <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
                             <li id="#{cc.clientId}-li-#{status.index + 1}" title="#{item.name}">
                                 <c:choose>

@@ -44,7 +44,7 @@
             <div class="card-header header" id="headingOne">
                 <div class="mb-0">
                     <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="return false;">
-                        <i class="fas fa-caret-right fa-lg"/> Persönliche Daten
+                        <i class="fas fa-caret-right fa-lg"/> #{cc.resourceBundleMap['employee.editor.personal.data.panel.title']}
                     </button>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             <div class="card-header header" id="headingTwo">
                 <div class="mb-0">
                     <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
-                       <i class="fas fa-caret-right fa-lg"/> Adressdaten
+                       <i class="fas fa-caret-right fa-lg"/> #{cc.resourceBundleMap['employee.editor.address.data.panel.title']}
                     </button>
                 </div>
             </div>
@@ -98,7 +98,7 @@
             <div class="card-body">
                 <div jsf:id="street-inputContainer" class="inputContainer">
                     <div class="form-group row" jsf:id="street-container">
-                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="Str./HausNr."/>
+                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.resourceBundleMap['employee.editor.address.streetone']}"/>
                         <div class="col pr-md-2">
                             <div class="input-group">
                                 <h:inputText styleClass="form-control" id="streetOne" binding="#{streetOneInput}"
@@ -139,12 +139,12 @@
                     </div>
                 </div>
 
-                <pe:formRow value="#{cc.attrs.model.address.streetTwo}" label="Zusatz Adr.">
+                <pe:formRow value="#{cc.attrs.model.address.streetTwo}" label="#{cc.resourceBundleMap['employee.editor.address.streettwo']}">
                     <f:validateLength minimum="3" maximum="50"/>
                 </pe:formRow>
                 <div jsf:id="zip-city-inputContainer" class="inputContainer">
                     <div class="form-group row" jsf:id="zip-city-container">
-                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="Str./HausNr."/>
+                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.resourceBundleMap['employee.editor.address.zip.city']}"/>
                         <div class="col-sm-2 pr-md-0">
                             <div class="input-group">
                                 <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}"
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-            <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="Land" isRequired="true" decorated="true"/>
+            <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="#{cc.resourceBundleMap['employee.editor.address.state']}" isRequired="true" decorated="true"/>
 
             </div>
             </div>

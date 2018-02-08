@@ -43,7 +43,7 @@ function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated, showPopover)
             //div.tooltip( {"position": {my: "right+150 center", at: "right center" } });
 
             // popover not for mobile
-            if(window.innerWidth > 800){
+            if(showPopover && window.innerWidth > 800){
                 div.popover({
                     title: item.label,
                     //content: _li.find('.item-details').first().html(),
@@ -78,17 +78,19 @@ function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated, showPopover)
                 content = _li.find('.item-details').html();
             }
 
-            buttonItem.popover({
-                title: "Information Card",
-                content: content,
-                html: true,
-                animation: true,
-                container: 'body',
-                trigger: 'hover ', //click | hover | focus | manual
-                //fallbackPlacement: 'flip',
-                placement: 'bottom',
-                boundary: 'viewport'
-            });
+            if(showPopover){
+                buttonItem.popover({
+                    title: "Information Card",
+                    content: content,
+                    html: true,
+                    animation: true,
+                    container: 'body',
+                    trigger: 'hover ', //click | hover | focus | manual
+                    //fallbackPlacement: 'flip',
+                    placement: 'bottom',
+                    boundary: 'viewport'
+                })
+            }
 
             if(decorated){
                 // set the span content to the selected item content
