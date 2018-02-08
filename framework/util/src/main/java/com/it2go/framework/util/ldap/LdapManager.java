@@ -189,7 +189,7 @@ public class LdapManager {
         if (dn != null) {
             /* Found user - test password */
             if ( testBind( dn, password ) ) {
-                System.out.println( "user '" + user + "' authentication succeeded" );
+                //System.out.println( "user '" + user + "' authentication succeeded" );
                 return true;
             }
             else {

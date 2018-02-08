@@ -27,10 +27,11 @@
                                     isRequired="true" >
                             <f:validateLength minimum="3" maximum="100"/>
                         </pe:formRow>
-                        <pe:formRow value="#{project.begin}" inputType="date"
+                        <pe:formRow value="#{project.begin}" inputType="date" actionListener="#{editEmployeeController.checkProjectDuration(project)}"
                                     label="#{employeeMsg['employee.editor.projects.begin']}"
                                     isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
                             <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                            <f:actionListener  binding="#{editEmployeeController.checkProjectDuration(project)}" for=""/>
                         </pe:formRow>
                         <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
                             <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields"/>

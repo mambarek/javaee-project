@@ -27,7 +27,7 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println(">> SecurityFilter Init...");
+        //System.out.println(">> SecurityFilter Init...");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SecurityFilter implements Filter {
             boolean auth = false;
             try {
                 auth = LdapManager.authenticateUser(userPrincipal.getName(), "secret");
-                System.out.println(">>> User auth = " + auth);
+                //System.out.println(">>> User auth = " + auth);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -21,6 +21,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -253,5 +254,22 @@ public class EditEmployeeController implements BaseViewController {
 
     public FacesMessage.Severity getSeverityError(){
         return FacesMessage.SEVERITY_ERROR;
+    }
+
+    public String checkProjectDuration(Project project){
+
+        final Date begin = project.getBegin();
+        final Date end = project.getEnd();
+
+
+        return null;
+    }
+
+    public String testActionListener(){
+
+        String s = "xxx";
+
+
+        return null;
     }
 }
