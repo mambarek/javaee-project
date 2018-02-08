@@ -1,0 +1,30 @@
+<ui:composition
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div class="form-group row justify-content-end">
+        <div class="btn-group">
+            <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel"
+                           actionListener="#{editEmployeeController.cancel}">
+                <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.cancel']}
+            </h:commandLink>
+
+            <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{!editEmployeeController.model.isNew()}"
+                           id="delete" pt:data-deleteFunc="clickDelete">
+                <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.delete']}
+                <f:ajax execute="@form" render="@form" onevent="confirmDelete"/>
+            </h:commandLink>
+            <h:commandLink styleClass="btn btn-primary mr-3 btn-sm-block" >
+                <i class="far fa-save" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.save']}
+                <f:ajax execute="@form" render="@form" onevent="validateTabAndProcessSave"/>
+            </h:commandLink>
+            <h:commandLink styleClass="d-none tabSendSave" pt:data-saveFunc="clickSave">
+                <i class="far fa-save" aria-hidden="true"/>&#xA0; Save Tab
+                <f:ajax execute="@form" render="@form" onevent="checkTabValidationAndConfirmSave"/>
+            </h:commandLink>
+        </div>
+    </div>
+
+</ui:composition>

@@ -23,8 +23,8 @@
     <ui:insert name="bodyInitilizer"/>
     <header>
         <!--// extend the session sending an empty ajax-->
-        <h:form>
-            <h:commandButton id="refreshSession" style="display: none;" styleClass="refreshSession">
+        <h:form styleClass="d-none">
+            <h:commandButton id="refreshSession" styleClass="refreshSession">
                 <f:ajax execute="@this"  render="@none"/>
             </h:commandButton>
         </h:form>
