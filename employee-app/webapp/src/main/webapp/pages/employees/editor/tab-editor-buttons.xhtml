@@ -16,16 +16,12 @@
             <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{!editEmployeeController.model.isNew()}"
                            id="delete" pt:data-deleteFunc="clickDelete">
                 <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.delete']}
-                <f:ajax execute="@form" render="@this" onevent="confirmDelete"/>
+                <f:ajax execute="@form" render="@none" onevent="confirmDelete"/>
             </h:commandLink>
-            <h:commandLink styleClass="btn btn-primary mr-3 btn-sm-block" >
+            <a class="btn btn-primary mr-3 btn-sm-block" href="#" onclick="$('.personal-data-submit-button').click()">
                 <i class="far fa-save" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.save']}
-                <f:ajax execute="@form" render="@this" onevent="validateTabAndProcessSave"/>
-            </h:commandLink>
-            <h:commandLink styleClass="d-none tabSendSave" pt:data-saveFunc="clickSave" >
-                <i class="far fa-save" aria-hidden="true"/>&#xA0; Save Tab
-                <f:ajax onevent="checkTabValidationAndConfirmSave"/>
-            </h:commandLink>
+            </a>
+            <a class="d-none tabSendSave" href="#" onclick="checkTabValidationAndConfirmSave()" ></a>
         </div>
     </div>
 

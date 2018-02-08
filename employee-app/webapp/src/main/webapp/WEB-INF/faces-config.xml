@@ -18,18 +18,7 @@
             <supported-locale>en</supported-locale>
         </locale-config>
     </application>
-<!--    <render-kit>
-        <renderer>
-            <component-family>javax.faces.SelectOne</component-family>
-            <renderer-type>javax.faces.Menu</renderer-type>
-            <renderer-class>com.it2go.employee.ui.jsf.renderer.html.ExtendedMenuRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>javax.faces.SelectMany</component-family>
-            <renderer-type>javax.faces.Menu</renderer-type>
-            <renderer-class>com.it2go.employee.ui.jsf.renderer.html.ExtendedMenuRenderer</renderer-class>
-        </renderer>
-    </render-kit>-->
+
     <navigation-rule>
         <from-view-id>/pages/employees/jqGrid-table.xhtml</from-view-id>
         <navigation-case>

@@ -3,9 +3,10 @@ function editEmployee(e, cellvalue, options, rowObject){
     e.preventDefault();
     e.stopPropagation();
     var currentPage = $('#grid').getGridParam('page');
-    $('#'+encodeId('hiddenCreateForm:currentTabPage')).val(currentPage);
-    $('#'+encodeId('hiddenCreateForm:edit_employee_id')).val(cellvalue);
-    $('#'+encodeId('hiddenCreateForm:editEmployee')).click();
+    $(encodeId('#hiddenCreateForm:currentTabPage')).val(currentPage);
+    $(encodeId('#hiddenCreateForm:edit_employee_id')).val(cellvalue);
+    $(encodeId('#hiddenCreateForm:create_employee')).val(false);
+    $(encodeId('#hiddenCreateForm:editEmployee')).click();
     //window.location.href = 'editor.xhtml?id='+cellvalue + "&page=" + currentPage;
 }
 
@@ -322,10 +323,10 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             //alert("I was clicked");
             var currentPage = $('#grid').getGridParam('page');
             $('#create_employee').val(true);
-            $('#'+encodeId('hiddenCreateForm:currentTabPage')).val(currentPage);
-            $('#'+encodeId('hiddenCreateForm:edit_employee_id')).val("");
-            $('#'+encodeId('hiddenCreateForm:create_employee')).val(true);
-            $('#'+encodeId('hiddenCreateForm:editEmployee')).click();
+            $(encodeId('#hiddenCreateForm:currentTabPage')).val(currentPage);
+            $(encodeId('#hiddenCreateForm:edit_employee_id')).val("");
+            $(encodeId('#hiddenCreateForm:create_employee')).val(true);
+            $(encodeId('#hiddenCreateForm:editEmployee')).click();
             //window.location.href = 'editor.xhtml?page=' + currentPage;
         }
     )

@@ -39,7 +39,12 @@
                             <!-- include personal data -->
                             <ui:include src="panels/personal-data.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="personal-data-submit-button" type="submit">
+                                <h:commandButton id="personal-data-submit-button" type="submit" styleClass="tabSubmit personal-data-submit-button">
+                                    <f:ajax execute="@form" render="@form" onevent="function(data){validateNextTab(data,'#personal-data-tab', '.address-data-submit-button');}"/>
+                                </h:commandButton>
+                            </div>
+                            <div style="display: none">
+                                <h:commandButton id="personal-data-change-selection" type="submit"  styleClass="tabChangeSelection">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
@@ -50,7 +55,12 @@
                             <!-- include address data -->
                             <ui:include src="panels/address-data.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="address-data-submit-button" type="submit">
+                                <h:commandButton id="address-data-submit-button" type="submit" styleClass="tabSubmit address-data-submit-button">
+                                    <f:ajax execute="@form" render="@form" onevent="function(data){validateNextTab(data,'#address-tab', '.contract-data-submit-button');}"/>
+                                </h:commandButton>
+                            </div>
+                            <div style="display: none">
+                                <h:commandButton id="address-data-change-selection" type="submit" styleClass="tabChangeSelection">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
@@ -61,7 +71,12 @@
                             <!-- include address data -->
                             <ui:include src="panels/contract-data.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="contract-data-submit-button" type="submit">
+                                <h:commandButton id="contract-data-submit-button" type="submit" styleClass="tabSubmit contract-data-submit-button">
+                                    <f:ajax execute="@form" render="@form" onevent="function(data){validateNextTab(data,'#contract-tab', '.projects-submit-button');}"/>
+                                </h:commandButton>
+                            </div>
+                            <div style="display: none">
+                                <h:commandButton id="contract-data-change-selection" type="submit"  styleClass="tabChangeSelection">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
@@ -72,7 +87,12 @@
                             <!-- include address data -->
                             <ui:include src="panels/projects.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="projects-submit-button" type="submit">
+                                <h:commandButton id="projects-submit-button" type="submit" styleClass="tabSubmit projects-submit-button">
+                                    <f:ajax execute="@form" render="@form" onevent="function(data){validateNextTab(data,'#projects-tab', '.comment-submit-button');}"/>
+                                </h:commandButton>
+                            </div>
+                            <div style="display: none">
+                                <h:commandButton id="projects-data-change-selection" type="submit"  styleClass="tabChangeSelection">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
@@ -83,7 +103,12 @@
                             <!-- include address data -->
                             <ui:include src="panels/comment.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="comment-submit-button" type="submit">
+                                <h:commandButton id="comment-submit-button" type="submit" styleClass="tabSubmit comment-submit-button">
+                                    <f:ajax execute="@form" render="@form" onevent="validateTabAndProcessSave"/>
+                                </h:commandButton>
+                            </div>
+                            <div style="display: none">
+                                <h:commandButton id="comment-data-change-selection" type="submit"  styleClass="tabChangeSelection">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>

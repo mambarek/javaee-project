@@ -449,59 +449,20 @@ function checkValidationAndConfirmSave(data) {
     }
 }
 
-function validateTabAndProcessSave(data) {
-    var status = data.status;
-    var encodedId = encodeId(data.source.id);
-    var button = $('#'+encodedId);
-    var form = button.closest("form");
-    var saveFunc = button.attr("data-saveFunc");
-    switch (status) {
-        case "begin":
-            // This is the start of the AJAX request.
-            break;
+function validateTab(data) {
 
-        case "complete":
-            // This is invoked right after AJAX response is returned.
-            break;
+    $('ul[role=tablist] a[role=tab]').each(function(index){
 
-        case "success":
-            var noError = true;
-            // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-            $('ul[role=tablist] a[role=tab]').each(function(index){
+            var form = $($(this).attr('href'));
+            // submit the form to validate it
+            form.find(".tabSubmit").click();
+        }
+    );
 
-                    var form = $($(this).attr('href'));
-                    // submit the form to validate it
-                    form.find("input[type=submit]").click();
-                    if(hasError(form)) {
-                        noError = false;
-                        $(this).tab('show');
-                        return false;
-                    }
-                }
-            );
-            $('.tabSendSave').click();
-
-            break;
-
-    }
 }
 
 function checkTabValidationAndConfirmSave(data) {
-    var status = data.status;
-    var encodedId = encodeId(data.source.id);
-    var button = $('#'+encodedId);
 
-    var saveFunc = button.attr("data-saveFunc");
-    switch (status) {
-        case "begin":
-            // This is the start of the AJAX request.
-            break;
-
-        case "complete":
-            // This is invoked right after AJAX response is returned.
-            break;
-
-        case "success":
             var noError = true;
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
             $('ul[role=tablist] a[role=tab]').each(function(index){
@@ -511,7 +472,7 @@ function checkTabValidationAndConfirmSave(data) {
                         noError = false;
                     }
                 }
-            )
+            );
 
             if(noError) {
                 var dialogOptions = {
@@ -519,7 +480,7 @@ function checkTabValidationAndConfirmSave(data) {
                     message: employee_i18n['employee.overlay.saveDataQuestion'],
                     leftBtnLabel: employee_i18n['employee.overlay.save'],
                     rightBtnLabel: employee_i18n['employee.overlay.cancel'],
-                    leftBtnFuncName: saveFunc,
+                    leftBtnFuncName: "clickSave",
                     leftBtnDismiss: false,
                     rightBtnFunc: null
                 };
@@ -527,9 +488,7 @@ function checkTabValidationAndConfirmSave(data) {
                 overlay.showConfirm2BtnDialog(dialogOptions);
             }
 
-            break;
 
-    }
 }
 
 function clickTabSave() {

@@ -307,7 +307,9 @@ function checkTabValidation(selector){
         var selectedTab = $(selector).find('a[aria-selected=true]');
         var form = $(selectedTab.attr('href'));
         // submit the form to validate it on the server side using jsf
-        form.find("input[type=submit]").click();
+        //form.find("input[type=submit]").click();
+        form.find(".tabChangeSelection").click();
+
     })
 }
 
@@ -329,6 +331,48 @@ function checkValidationAndSelectTab(data){
             // submit the form to validate it on the server side using jsf
             //form.find("input[type=submit]").click();
         }
+    }
+}
+
+function validateNextTab(data, tabId, nextSubmitId){
+    var status = data.status;
+    var encodedId = encodeId(data.source.id);
+    var button = $('#'+encodedId);
+    var form = button.closest("form");
+    if(status == "success"){
+
+        validateForm(form);
+
+        if(hasError(form)) {
+
+            $(tabId).tab('show');
+            return false;
+        }
+
+        $(nextSubmitId).click();
+    }
+}
+
+function validateTabAndProcessSave(data){
+    var status = data.status;
+//    checkValidation(data);
+    if(status == "success"){
+
+        var noError = true;
+        // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+        $('ul[role=tablist] a[role=tab]').each(function(index){
+
+                var form = $($(this).attr('href'));
+                validateForm(form);
+                if(hasError(form)) {
+                    noError = false;
+                    $(this).tab('show');
+                    return false;
+                }
+            }
+        );
+        $('.tabSendSave').click();
+
     }
 }
 
