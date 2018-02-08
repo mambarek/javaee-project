@@ -164,12 +164,16 @@
                             <c:when test="#{cc.attrs.type eq 'select'}">
                                 <div class="input-group">
                                     <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%"
-                                                     required="#{cc.attrs.isRequired}" a:data-valid="#{cc.input.valid}" binding="#{cc.input}">
+                                                     required="#{cc.attrs.isRequired}" a:data-valid="#{cc.input.valid}" binding="#{cc.input}"
+                                                     converter="com.it2go.employee.ui.jsf.converter.SelectItemConverter" >
                                         <f:selectItem
-                                         itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
-                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item" data-class="avatar"
-                                                       data-style="background-image: url(&apos;http://www.gravatar.com/avatar/b3e04a46e85ad3e165d66f5d927eb609?d=monsterid&amp;r=g&amp;s=16&apos;);"
-                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
+                                         itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="" data-test="tests"/>
+-                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item"
+                                                       data-icon-class="#{item.toString()}"
+                                                       data-two="three"
+                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" >
+
+                                    </f:selectItems>
                                         <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
                                     </h:selectOneMenu>
                                     <h:outputScript>
@@ -179,8 +183,6 @@
                                             // trigger onchange for select and fire ajax
                                             change: function( event, ui ) {$(encodedId).trigger( "change" );}
                                         }).iconselectmenu( "menuWidget").addClass( "ui-menu-icons avatar" );
-
-
                                     </h:outputScript>
                                 </div>
 

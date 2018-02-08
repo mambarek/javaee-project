@@ -5,29 +5,27 @@ $( function() {
             var li = $("<li/>");
             var wrapper = $("<div/>");
 
-            if ( item.disabled ) {
+/*            if ( item.disabled ) {
                 li.addClass( "ui-state-disabled" );
-            }
-
-            var labelSpan = $('<span style="'+item.element.attr('data-label-style')+'"/>');
-            labelSpan.html(item.label);
-
-            /*
-                                                            if(item.element.attr( "data-label-style" )){
-                                                                labelSpan.style = {item.element.attr( "data-label-style" )};
-                                                            }
-            */
+            }*/
 
             var iconSpan = $("<span/>");
 
-            if(item.element.attr( "data-style" )){
+            if(item.element.attr( "data-icon-style" )){
                 iconSpan.attr('style',item.element.attr( "data-style" ));
             }
 
-            if( item.element.attr( "data-class" )){
+            if( item.element.attr( "data-icon-class" )){
                 iconSpan.addClass("ui-icon");
-                iconSpan.addClass( item.element.attr( "data-class" ))
+                iconSpan.addClass( item.element.attr( "data-icon-class" ))
             }
+
+            var labelSpan = $('<span/>');
+            if(item.element.attr('data-label-style')){
+                labelSpan.attr('style',item.element.attr( "data-label-style" ));
+            }
+
+            labelSpan.html(item.label);
 
             iconSpan.appendTo( wrapper );
             labelSpan.appendTo( wrapper );

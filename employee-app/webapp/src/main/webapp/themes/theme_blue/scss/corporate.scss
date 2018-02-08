@@ -580,3 +580,22 @@ option.avatar {
 .avatar .ui-icon {
   background-position: left top;
 }
+
+.gender-male, .gender-female{
+  position:relative;
+}
+.gender-male::before{
+  font-family: FontAwesome;
+  top:0;
+  left:-5px;
+  padding-right:10px;
+  content: "\f183";
+}
+
+.gender-female::before{
+  font-family: FontAwesome;
+  top:0;
+  left:-5px;
+  padding-right:10px;
+  content: "\f182";
+}

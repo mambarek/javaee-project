@@ -8,9 +8,11 @@ import com.sun.faces.renderkit.SelectItemsIterator;
 import com.sun.faces.renderkit.html_basic.MenuRenderer;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
@@ -55,6 +57,8 @@ public class ExtendedMenuRenderer extends MenuRenderer {
     private static final Attribute[] ATTRIBUTES =
             AttributeManager.getAttributes(AttributeManager.Key.SELECTMANYMENU);
 
+    private String afterContent = "<UL>";
+
     @Override
     protected boolean renderOption(FacesContext context,
                                    UIComponent component,
@@ -66,7 +70,8 @@ public class ExtendedMenuRenderer extends MenuRenderer {
                                    OptionComponentInfo optionInfo) throws IOException{
 
         // Copied from MenuRenderer#renderOption() (and a bit rewritten, but that's just me) ------
-
+        final String template = (String)selectComponent.getAttributes().get("template");
+        afterContent += "<li>"+curItem.getLabel()+"</li>";
         // Get writer.
         ResponseWriter writer = context.getResponseWriter();
         assert (writer != null);
@@ -153,9 +158,16 @@ public class ExtendedMenuRenderer extends MenuRenderer {
             writer.writeAttribute("class", labelClass, "labelClass");
         }
 
+        //writer.write(((UISelectItem)selectComponent).getItemDescription());
+        final String templateAttr = (String)selectComponent.getAttributes().get("data-template");
         // Write option body (the option label).
         if (curItem.isEscape()) {
+            //String template = ((UISelectItem)selectComponent).getItemDescription();
             String label = curItem.getLabel();
+/*            if(templateAttr != null && !templateAttr.isEmpty())
+                label = String.format(templateAttr,curItem.getLabel());*/
+            //String label = ((UISelectItem)selectComponent).getItemDescription() + curItem.getLabel();
+
             if (label == null) {
                 label = valueString;
             }
@@ -171,4 +183,16 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         return true;
     }
 
+    @Override
+    protected void renderSelect(FacesContext context, UIComponent component) throws IOException {
+        super.renderSelect(context, component);
+        afterContent += "</UL>";
+        // Get writer.
+        ResponseWriter writer = context.getResponseWriter();
+        assert (writer != null);
+
+        writer.startElement("div",null);
+        writer.write(afterContent);
+        writer.endElement("div");
+    }
 }
