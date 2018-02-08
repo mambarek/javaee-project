@@ -1,3 +1,14 @@
 <jboss-web>
-   <!-- <security-domain>exampleApplicationDomain</security-domain>-->
+    <!--<security-domain>ApplicationDomain</security-domain>-->
+   <!--<security-domain>java:/jaas/ldap_security_domain</security-domain>-->
+
+   <security-role>
+
+      <description>example of mapping an app role name to real group name. This way we can  take advantage of already existing groups</description>
+
+      <role-name>AppUser</role-name><!-- the role name appearing in the standard web.xml dd  -->
+
+      <principal-name>EmployeeAppUser</principal-name><!-- the existing role in your credential repo -->
+
+   </security-role>
 </jboss-web>

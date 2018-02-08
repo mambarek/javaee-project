@@ -18,30 +18,32 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-//@Named
+@ApplicationScoped
 public class EmployeesInitJob implements Job {
 
-   /* @Inject
-    private EmployeeRepository employeeRepository;
+    @Inject
+    private IEmployeeRepository employeeRepository;
 
     @Inject
-    private UserSession userSession;*/
+    private UserSession userSession;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         System.out.println("-- EmployeesInitJob::execute");
-
-        try {
+        cdiJob();
+        /*try {
             webserviceJob();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
+        }*/
 
 /*        final List<Employee> all = employeeRepository.findAll();
         Employee employee = new Employee();
@@ -60,6 +62,28 @@ public class EmployeesInitJob implements Job {
         } catch (EntityRemovedException e) {
             e.printStackTrace();
         }*/
+    }
+
+    private void cdiJob() {
+
+        final List<Employee> all = employeeRepository.findAll();
+
+        Employee employee = new Employee();
+
+        employee.setFirstName("Name_"+all.size());
+        employee.setLastName("Lastname_"+all.size());
+
+        if(all.size() % 2 == 0)
+            employee.setGender(Gender.FEMALE);
+        else
+            employee.setGender(Gender.MALE);
+
+        try {
+            final Employee employee1 = employeeRepository.persist(employee,null);
+            System.out.println("-- EmployeesInitJob::execute employee persisted " + employee1);
+        } catch (EntityConcurrentModificationException | EntityRemovedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void webserviceJob() throws MalformedURLException {

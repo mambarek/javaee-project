@@ -11,6 +11,7 @@ import com.it2go.framework.dao.IEntityDAO;
 import com.it2go.masterdata.Gender;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Date;

@@ -9,17 +9,24 @@ import org.quartz.TriggerBuilder;
 import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.quartz.impl.StdSchedulerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 import java.util.Date;
 
+@ApplicationScoped
 @WebListener
 public class QuartzListener extends QuartzInitializerListener {
 
-    @Inject
+
     private CDIJobFactory jobFactory;
+
+    @Inject
+    public QuartzListener(final CDIJobFactory jobFactory) {
+        this.jobFactory = jobFactory;
+    }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -29,6 +36,10 @@ public class QuartzListener extends QuartzInitializerListener {
         StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
         try {
             Scheduler scheduler = factory.getScheduler();
+
+            // Use the CDI managed job factory
+            scheduler.setJobFactory(jobFactory);
+
             JobDetail jobDetail = JobBuilder.newJob(EmployeesInitJob.class).build();
             //LocalTime lt = new LocalTime();
             Date startTime = new Date((new Date()).getTime() + 50000L);
