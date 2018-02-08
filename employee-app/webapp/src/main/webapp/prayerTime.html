@@ -127,9 +127,12 @@
                 var min = minutes < 10 ? "0"+ minutes: minutes;
                 var sec = seconds < 10 ? "0"+ seconds: seconds;
                 $(selector).html(hours+":"+min+":"+sec);
-                if(hours+":"+min+":"+sec == "3:50:30") {
+                if(hours+":"+min+":"+sec == "0:00:00") {
                     console.info("Yes ist gleich " + hours+":"+min+":"+sec);
                     playAdhan();
+                    // empty table
+                    $('#dayTable > tbody > tr').remove();
+                    // redraw it again
                     fillDayTable(cachedDayData);
                 }
             }, 1000);
