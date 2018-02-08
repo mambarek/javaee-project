@@ -7,7 +7,7 @@
               xmlns:jsf="http://xmlns.jcp.org/jsf"
               xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <cc:interface >
+    <cc:interface componentType="Row">
         <cc:attribute name="model" type="java.lang.Object"
                       shortDescription="The model value." />
         <cc:attribute name="value" required="true"
@@ -52,7 +52,7 @@
     <cc:implementation>
         <div id="#{cc.clientId}" class="inputWidget" data-component-name="rowForm">
             <div class="form-group row">
-                <h:outputLabel styleClass="col-sm-3 col-form-label" value="x-#{cc.attrs.label}"/>
+                <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
                     <c:if test="#{!cc.attrs.readOnly}">
                         <div  class="inputContainer" style="height: 100%">
@@ -62,7 +62,7 @@
                             <!-- text -->
                             <c:when test="#{cc.attrs.inputType eq 'text'}">
                                 <div class="input-group">
-                                    <h:inputText styleClass="form-control"  id="editableText"
+                                    <h:inputText styleClass="form-control"  id="editableText" binding="#{cc.input}"
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
                                                  pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
@@ -78,7 +78,7 @@
                             <!-- date -->
                             <c:when test="#{cc.attrs.inputType eq 'date'}">
                                 <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                                    <h:inputText styleClass="form-control"  id="editableText"
+                                    <h:inputText styleClass="form-control"  id="editableText" binding="#{cc.input}"
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  label="#{cc.attrs.label}"

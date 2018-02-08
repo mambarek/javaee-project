@@ -24,6 +24,7 @@
         <navigation-case>
             <from-outcome>editEmployee</from-outcome>
             <to-view-id>/pages/employees/editor.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>

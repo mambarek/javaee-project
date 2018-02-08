@@ -11,6 +11,8 @@ import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.framework.util.StringUtils;
 import com.it2go.masterdata.Continent;
 import lombok.Data;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversation;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -34,11 +36,14 @@ import java.util.Locale;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@ConversationScoped
 @Data
 public class EditEmployeeController implements BaseViewController {
 
     public static final String VIEW_ID = "editEmployee";
+
+    @Inject
+    private Conversation conversation;
 
     @Inject
     private IEmployeeRepository employeeRepository;
@@ -133,8 +138,8 @@ public class EditEmployeeController implements BaseViewController {
         }
         //}
 
-        //return "/pages/employees/editor.xhtml?faces-redirect";
-        return "editEmployee";
+        return "/pages/employees/editor.xhtml?faces-redirect=true";
+        //return "editEmployee?faces-redirect=true";
     }
 
     public void editEmployeeAjax(Long id) throws EntityNotFoundException {
@@ -163,7 +168,7 @@ public class EditEmployeeController implements BaseViewController {
         // reset the view
         this.resetView();
 
-        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
+        return null;//redirectToList();
     }
 
     public String deleteEmployee() throws EntityNotPersistedException {
@@ -176,7 +181,7 @@ public class EditEmployeeController implements BaseViewController {
         this.resetView();
 
         // return "employeeList?faces-redirect=true";
-        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
+        return null;
     }
 
     public String cancel() {
@@ -186,17 +191,22 @@ public class EditEmployeeController implements BaseViewController {
         // return "employeeList?faces-redirect=true";
         //return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
 
+        return redirectToList();
+    }
+
+    public String redirectToList(){
+        conversation.close();
         return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
     }
 
     private void resetView() {
-        this.employeeId = null;
+/*        this.employeeId = null;
         if (viewParams != null)
             viewParams.remove("id");
 
         this.model = null;
         // reset all components
-        resetComponent(FacesContext.getCurrentInstance().getViewRoot().getFacetsAndChildren());
+        resetComponent(FacesContext.getCurrentInstance().getViewRoot().getFacetsAndChildren());*/
     }
 
     private void resetComponent(Iterator<UIComponent> componentIterator){

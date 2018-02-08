@@ -24,11 +24,11 @@
                 </div>
                 <div id="collapseOne_#{index}" class="show" aria-labelledby="headingOne_#{index}" >
                     <div class="card-body">
-                        <pe:formRow value="#{project.name}"
+                        <empl:row value="#{project.name}"
                                     label="#{employeeMsg['employee.editor.projects.name']}"
                                     isRequired="true" >
                             <f:validateLength minimum="3" maximum="100" for="input"/>
-                        </pe:formRow>
+                        </empl:row>
                         <div jsf:id="DateRangeValidator_BEGIN">
                             <empl:row value="#{project.begin}" inputType="date" model="#{project}"
                                         label="#{employeeMsg['employee.editor.projects.begin']}" ajaxRender=":DateRangeValidator_END"

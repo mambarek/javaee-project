@@ -41,6 +41,9 @@ public class UIInputComponent extends UIInput {
         return UINamingContainer.COMPONENT_FAMILY;
     }
 
+    /*
+    ** Fix für composit component Bundle können nicht gefunden werden
+     */
     @Override
     public Map<String, String> getResourceBundleMap() {
         ResourceBundle resourceBundle = null;

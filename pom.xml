@@ -14,7 +14,7 @@
         <java.min.version>1.8</java.min.version>
         <maven.min.version>3.0.0</maven.min.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+        <codi.version>1.0.6</codi.version>
     </properties>
     
     <prerequisites>
@@ -45,6 +45,48 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>1.4.195</version>
+            </dependency>
+            <!-- MyFaces CODI -->
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
+                <artifactId>myfaces-extcdi-core-api</artifactId>
+                <version>${codi.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
+                <artifactId>myfaces-extcdi-core-impl</artifactId>
+                <version>${codi.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+                <artifactId>myfaces-extcdi-jsf20-module-api</artifactId>
+                <version>${codi.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+                <artifactId>myfaces-extcdi-jsf20-module-impl</artifactId>
+                <version>${codi.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+                <artifactId>myfaces-extcdi-jpa1-module-api</artifactId>
+                <version>${codi.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+                <artifactId>myfaces-extcdi-jpa1-module-impl</artifactId>
+                <version>${codi.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <dependency>
                 <groupId>org.reflections</groupId>

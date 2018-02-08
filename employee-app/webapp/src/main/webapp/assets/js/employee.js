@@ -578,9 +578,16 @@ function confirmDelete(data) {
     }
 }
 
-function redirectToList(){
-    var currentPage = $('#grid').getGridParam('page');
-    window.location.href = "jqGrid-table.xhtml";
+function saveSuccess(){
+    //var currentPage = $('#grid').getGridParam('page');
+    //window.location.href = "jqGrid-table.xhtml";
+    $('.saveSuccess').click();
+}
+
+function deleteSuccess(){
+    //var currentPage = $('#grid').getGridParam('page');
+    //window.location.href = "jqGrid-table.xhtml";
+    $('.deleteSuccess').click();
 }
 
 function handleAjaxSaveEvent(data){
@@ -626,7 +633,7 @@ function handleAjaxSaveEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
-                    rightBtnFuncName: "redirectToList", // redirect explicite to list
+                    rightBtnFuncName: "saveSuccess", // redirect explicite to list
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 };
             }
@@ -681,7 +688,7 @@ function handleAjaxDeleteEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.deletingSuccess'],
                     showOnlyRightBtn: true,
-                    rightBtnFuncName: "redirectToList", // redirect explicite to list
+                    rightBtnFuncName: "deleteSuccess", // redirect explicite to list
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 }
             }
