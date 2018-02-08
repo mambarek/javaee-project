@@ -21,7 +21,7 @@
     <!-- hidden form for confirmation dialog action delete-->
     <h:form id="confirmHiddenForm">
         <h:commandButton id="deleteConfirmed" styleClass="d-none deleteConfirmed">
-            <f:ajax render="content" listener="#{editEmployeeController.ajaxDeleteAction}" onevent="handleAjaxDeleteEvent"/>
+            <f:ajax render="footer" listener="#{editEmployeeController.ajaxDeleteAction}" onevent="handleAjaxDeleteEvent"/>
         </h:commandButton>
         <h:commandButton id="saveConfirmed" styleClass="d-none saveConfirmed">
             <f:ajax render="footer" listener="#{editEmployeeController.ajaxSaveAction}" onevent="handleAjaxSaveEvent"/>

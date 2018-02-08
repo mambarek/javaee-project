@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -40,6 +41,31 @@ public interface EmployeeResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/employee/viewitems")
-    List<EmployeeTableItem> findAllEmployeeItems();
+    // http://localhost:8080/webapp/rest/EmployeeService/employee/filter?_search=false&nd=1528382176889&rows=8&page=0&sidx=&sord=asc
+    @Path("/employee/filter")
+    List<EmployeeTableItem> findAllEmployeeItems(
+
+            @QueryParam("_search") final boolean _search,
+            @QueryParam("nd") final Long nd,
+            @QueryParam("rows") final int rows,
+            @QueryParam("page") final int page,
+            @QueryParam("sidx") final String sidx,
+            @QueryParam("sord") final String sord
+    );
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/employee/search")
+    List<EmployeeTableItem> findAllEmployeeItems(
+
+            @QueryParam("_search") final boolean _search,
+            @QueryParam("nd") final Long nd,
+            @QueryParam("rows") final int rows,
+            @QueryParam("page") final int page,
+            @QueryParam("sidx") final String sidx,
+            @QueryParam("sord") final String sord,
+            @QueryParam("searchField") final String searchField,
+            @QueryParam("searchString") final String searchString,
+            @QueryParam("searchOper") final String searchOper
+    );
 }

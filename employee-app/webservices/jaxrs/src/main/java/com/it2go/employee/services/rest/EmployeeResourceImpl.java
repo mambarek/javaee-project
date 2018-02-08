@@ -2,6 +2,7 @@ package com.it2go.employee.services.rest;
 
 
 import com.it2go.employee.dto.EmployeeTableItem;
+import com.it2go.employee.dto.EmployeesSearchTemplate;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
@@ -62,9 +63,30 @@ public class EmployeeResourceImpl implements EmployeeResource {
         return employeeRepository.findAll();
     }
 
-    @Override
+
     public List<EmployeeTableItem> findAllEmployeeItems() {
         return employeesViewRepository.getEmployeeItems();
     }
 
+    @Override
+    public List<EmployeeTableItem> findAllEmployeeItems(boolean _search, Long nd, int rows, int page, String sidx, String sord) {
+        EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
+        searchTemplate.setMaxResult(rows);
+        searchTemplate.setOffset(rows*page);
+        searchTemplate.setOrderBy(sidx);
+        searchTemplate.setOrderDirection(sord);
+
+        return employeesViewRepository.filterEmployees(searchTemplate);
+    }
+
+    @Override
+    public List<EmployeeTableItem> findAllEmployeeItems(boolean _search, Long nd, int rows, int page, String sidx, String sord, String searchField, String searchString, String searchOper) {
+        EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
+        searchTemplate.setMaxResult(rows);
+        searchTemplate.setOffset(rows*page);
+        searchTemplate.setOrderBy(sidx);
+        searchTemplate.setOrderDirection(sord);
+
+        return employeesViewRepository.filterEmployees(searchTemplate);
+    }
 }

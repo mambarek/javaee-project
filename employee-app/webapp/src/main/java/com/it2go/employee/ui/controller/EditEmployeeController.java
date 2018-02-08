@@ -121,7 +121,7 @@ public class EditEmployeeController implements BaseViewController {
         // reset the view
         this.resetView();
 
-        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
     }
 
     public String deleteEmployee() throws EntityNotPersistedException {
@@ -134,7 +134,7 @@ public class EditEmployeeController implements BaseViewController {
         this.resetView();
 
         // return "employeeList?faces-redirect=true";
-        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
     }
 
     public String cancel() {
@@ -212,17 +212,19 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
-    public void ajaxDeleteAction(AjaxBehaviorEvent event) {
+    public String ajaxDeleteAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
 
         try {
-            this.deleteEmployee();
+            return this.deleteEmployee();
         } catch (BaseException e) {
             this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
+
+        return null;
     }
 
     private void handleBaseEcption(BaseException e, String clientId) {

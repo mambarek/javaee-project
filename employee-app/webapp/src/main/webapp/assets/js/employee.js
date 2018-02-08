@@ -616,7 +616,7 @@ function handleAjaxSaveEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
-                    rightBtnFuncName: "redirectToList",
+                    rightBtnFuncName: "redirectToList", // redirect explicite to list
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 };
             }
@@ -671,6 +671,7 @@ function handleAjaxDeleteEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.deletingSuccess'],
                     showOnlyRightBtn: true,
+                    rightBtnFuncName: "redirectToList", // redirect explicite to list
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 }
             }
