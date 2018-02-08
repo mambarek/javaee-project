@@ -569,7 +569,8 @@ function confirmDelete(data) {
 }
 
 function redirectToList(){
-    window.location.href = "jqGrid-table.xhtml";
+    var currentPage = $('#grid').getGridParam('page');
+    window.location.href = "jqGrid-table.xhtml?page=" + currentPage;
 }
 
 function handleAjaxSaveEvent(data){

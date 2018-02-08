@@ -15,6 +15,7 @@ import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.masterdata.Continent;
 import lombok.Data;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -31,7 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Named
-@ViewScoped
+@SessionScoped
 @Data
 public class EditEmployeeController implements BaseViewController {
 
@@ -49,6 +50,7 @@ public class EditEmployeeController implements BaseViewController {
 
     private Long employeeId;
     private Employee model;
+    private int currentTabPage;
 
     // this must be moved to a country view select
     // contains continents and countries
@@ -77,6 +79,11 @@ public class EditEmployeeController implements BaseViewController {
             if(model.getAddress() == null)
                 model.setAddress(new Address());
         }
+        else{
+            if(model == null)
+                createNewEmployee();
+        }
+
 
         return null;
     }
@@ -136,7 +143,8 @@ public class EditEmployeeController implements BaseViewController {
 
         // return "employeeList?faces-redirect=true";
         //return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
-        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
+
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
     }
 
     private void resetView() {

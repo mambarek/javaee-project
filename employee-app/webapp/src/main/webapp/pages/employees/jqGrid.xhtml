@@ -55,11 +55,12 @@
         //styleUI : 'Bootstrap4',
         //iconSet : 'fontAwesome',
         datatype: "json",
-        minColWidth: 75,
+        //minColWidth: 75,
         colModel: [
 
-        { label: '#{employeeMsg['employee.table.col.details']}', name: 'id', key: true, width: 75,
-            formatter: editButton
+        { label: ' ', name: 'id', width: 30,
+            formatter: editButton, filter: false, sort: false,
+        resizable: false, minWidth: 30, fixed: true
         },
         { label: '#{employeeMsg['employee.table.col.firstName']}', name: 'firstName', width: 150, coloptions: {columns: false} },
         { label: '#{employeeMsg['employee.table.col.lastName']}', name: 'lastName', width: 150 },
@@ -73,14 +74,15 @@
         responsive: true,
         menubar: true,
         caption : 'Aktionen',
-        loadonce: true,
+
         colMenu : true,
         shrinkToFit: true,
         /*forceFit: true,
         gridview: true,*/
         rowNum: 8,
-        altRows : true,
+        altRows : false,
         pager: pagerId,
+        page:#{editEmployeeController.currentTabPage}
 
         });
 
@@ -99,7 +101,7 @@
         add: true,
         edit: false,
         del: false,
-        refresh: true
+        refresh: false
         });
 
 
@@ -139,6 +141,23 @@
         var newWidth = grid.closest(".ui-jqgrid").parent().width();
         grid.jqGrid("setGridWidth", newWidth, true);
 
+        $('td#add_grid.ui-pg-button').off('click').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        //alert("I was clicked");
+        window.location.href = 'editor.xhtml';
+        }
+        )
+
+        // $('#grid').getGridParam('page')
+        //$("#grid").trigger("reloadGrid",[{page:#{editEmployeeController.currentTabPage}}]);
+       // grid.trigger("reloadGrid",[{page:10}]);
+        //grid.trigger("reloadGrid");
+        //set page
+        $('#grid').jqGrid('setGridParam', {page: #{editEmployeeController.currentTabPage}});
+
+        //refresh grid
+        $('#grid').trigger( 'reloadGrid' );
         });
 
 /*
@@ -151,6 +170,8 @@
 
 
         */
+
+
 
     </h:outputScript>
 </ui:composition>

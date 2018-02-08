@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>jqGrid Loading Data - Alternate Row Background</title>
+    <title>Ramadhan 2018</title>
     <!-- The jQuery library is a prerequisite for all jqSuite products -->
     <script type="text/ecmascript" src="./assets/extern/jquery-3.3.1/jquery-3.3.1.js"></script>
     <script type="text/ecmascript" src="./assets/extern/jquery-ui-1.12.1/jquery-ui.js"></script>
@@ -134,10 +134,14 @@
                 $(selector).html(hours+":"+min+":"+sec);
                 if(hours+":"+min+":"+sec == "0:00:00") {
                     console.info("Yes ist gleich " + hours+":"+min+":"+sec);
-                    // empty table
-                    $('#dayTable > tbody > tr').remove();
-                    // redraw it again
-                    fillDayTable(cachedDayData);
+                    // wait one second and refresh tabel
+                    setTimeout(function() {
+                        // empty table
+                        $('#dayTable > tbody > tr').remove();
+                        // redraw it again
+                        fillDayTable(cachedDayData);
+                    }, 1000);
+
                     playAdhan();
                 }
             }, 1000);
@@ -309,7 +313,7 @@
                     { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80, formatter: formatTime, cellattr : formatNowCell , align: "center"},
                     { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 120, formatter: formatTime, cellattr : formatNowCell , align: "center"}
                 ],
-                loadonce: true,
+
                 //altRows : true,
                 rownumbers : true,
                 colMenu : true,
@@ -336,10 +340,10 @@
             console.log(method);
             if(!method) method = 2;
         //var url = 'http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018';
-        var url = 'http://api.aladhan.com/v1/hijriCalendarByCity?city=Kaiserslautern&country=de&method=' + method +'&month=09&year=1439';
+        var aladhanUrl = 'http://api.aladhan.com/v1/hijriCalendarByCity?city=Kaiserslautern&country=de&method=' + method +'&month=09&year=1439';
 
 
-        xhrGet(url).then(function(data) {
+        xhrGet(aladhanUrl).then(function(data) {
             var items = data.data;
             var rowsPerPage = 10;
             createGrid(items, rowsPerPage);
