@@ -24,6 +24,8 @@ public class ContinentTest {
         Locale l = new Locale(country.getCode());
         System.out.println("l.getDisplayCountry() = " + l.getDisplayCountry());;
         System.out.println("l.getDisplayCountry(de) = " + l.getDisplayCountry(Locale.GERMANY));
+
+        Country.getAllCountries(Locale.GERMAN).forEach(System.out::println);
     }
 
     @Test

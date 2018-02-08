@@ -26,6 +26,8 @@
         <cc:editableValueHolder name="input" targets="editableText"/>
         <cc:clientBehavior name="changed" event="change" targets="editableText"/>
         <cc:facet name="selectOneMenuTemplate"/>
+        <cc:attribute name="decorated" default="false"
+                      shortDescription="make the contnent of display widget the same as the selected item from dropdown"/>
     </cc:interface>
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
@@ -46,7 +48,6 @@
                             <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="handleAjax"/>
                         </c:otherwise>
                     </c:choose>
-
                 </h:selectOneMenu>
                 <!-- draw table with cols-->
                 <div style="display: none">
@@ -82,7 +83,25 @@
                 li.append(div);
                 div.html(_li.html());
                 return li.appendTo( ul );
+                },
+
+                _renderButtonItem: function( item ) {
+                var buttonItem = $( "&lt;span&gt;", {
+                "class": "ui-selectmenu-text"
+                })
+
+                if(#{cc.attrs.decorated}){
+                var _id = '#' + encodeId("#{cc.clientId}-country-li-" + item.index);
+                var _li = $(_id);
+                // set the span content to the selected item content
+                buttonItem.html(_li.html());
                 }
+                else
+                buttonItem.text(item.label);
+                //this._setText( buttonItem, _li.html() );
+                return buttonItem;
+                }
+
                 });
 
                 <!--var encodedId = "#" + encodeId("#{cc.clientId}:editableText");

@@ -70,4 +70,7 @@ public class MasterdataService {
     }
 
 
+    public List<Country> getAllCountries(Locale locale){
+        return Country.getAllCountries(locale);
+    }
 }

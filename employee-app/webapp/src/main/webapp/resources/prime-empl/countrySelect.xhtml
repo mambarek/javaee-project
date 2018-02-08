@@ -22,13 +22,15 @@
                       shortDescription="readOnlx means the comonent is rendered as string"/>
         <cc:attribute name="ajaxRender"
                       shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:attribute name="decorated" default="false"
+                      shortDescription="make the contnent of display widget the same as the selected item from dropdown"/>
     </cc:interface>
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
         <div id="#{cc.clientId}">
             <div class="form-group row">
                 <h:outputLabel styleClass="col-md-3 pr-0 col-sm-6 col-form-label" value="Region"/>
-                <div class="col pr-0">
+                <div class="col-md-3 pr-0">
                     <div jsf:id="continent-inputContainer" class="inputContainer">
                         <div class="input-group">
                             <h:selectOneMenu value="#{testController.continent}" id="continent" styleClass="form-control"
@@ -126,13 +128,14 @@
                                     "class": "ui-selectmenu-text"
                                     })
 
-
-                                    //buttonItem.css( "background-color", item.value )
-
-                                    var _id = '#' + encodeId("#{cc.clientId}-country-li-" + item.index);
-                                    var _li = $(_id);
-
-                                    buttonItem.html(_li.html());
+                                    if(#{cc.attrs.decorated}){
+                                        var _id = '#' + encodeId("#{cc.clientId}-country-li-" + item.index);
+                                        var _li = $(_id);
+                                        // set the span content to the selected item content
+                                        buttonItem.html(_li.html());
+                                    }
+                                    else
+                                        buttonItem.text(item.label);
                                     //this._setText( buttonItem, _li.html() );
                                     return buttonItem;
                                     }

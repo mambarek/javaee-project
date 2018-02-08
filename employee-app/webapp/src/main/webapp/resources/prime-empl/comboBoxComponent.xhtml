@@ -1,0 +1,254 @@
+<ui:component
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface componentType="selectComponentImpl">
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+        <cc:attribute name="items"/>
+        <cc:attribute name="isRequired" default="false" type="boolean"
+                      shortDescription="if the value is required"/>
+        <cc:attribute name="disabled" default="false" type="boolean"
+                      shortDescription="the input is rendered but disabled"/>
+        <cc:attribute name="readOnly" default="false" type="boolean"
+                      shortDescription="readOnlx means the comonent is rendered as string"/>
+        <cc:attribute name="ajaxRender"
+                      shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:clientBehavior name="changed" event="change" targets="editableText"/>
+        <cc:facet name="selectOneMenuTemplate"/>
+        <cc:attribute name="decorated" default="false"
+                      shortDescription="make the contnent of display widget the same as the selected item from dropdown"/>
+    </cc:interface>
+    <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <div jsf:id="inputContainer" class="inputContainer">
+                <div class="input-group">
+                    <h:selectOneMenu id="editableText" value="#{cc.attrs.value}" styleClass="form-control"  pt:data-valid="#{cc.input.valid}"
+                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.input}">
+                        <f:selectItem
+                                itemLabel="-- Bitte wählen --" itemValue=""/>
+                        <f:selectItems value="#{cc.attrs.items}" var="item"
+                                       itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
+<!--                        <c:choose>
+                            <c:when test="#{!empty cc.attrs.ajaxRender}">
+                                <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax" />
+                            </c:when>
+                            <c:otherwise>
+                                <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="handleAjax"/>
+                            </c:otherwise>
+                        </c:choose>-->
+                    </h:selectOneMenu>
+                    <!-- draw table with cols-->
+                    <div style="display: none">
+                        <ul>
+                            <li id="#{cc.clientId}-li-0">-- Bitte wählen --</li>
+                            <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
+                                <li id="#{cc.clientId}-li-#{status.index + 1}">
+                                    <c:choose>
+                                        <c:when test="#{cc.facets.containsKey('selectOneMenuTemplate')}">
+                                            <cc:renderFacet name="selectOneMenuTemplate">
+                                                <f:param name="item" value="#{item}"/>
+                                            </cc:renderFacet>
+                                        </c:when>
+                                        <c:otherwise>
+                                            #{item.toString()}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+                <h:outputScript>
+                    $( function() {
+                    $.widget( "custom.combobox", {
+                    _create: function() {
+                    this.wrapper = $( "&lt;div&gt;" )
+                    .addClass( "custom-combobox" )
+                    .insertAfter( this.element );
+
+                    this.element.hide();
+                    this._createAutocomplete();
+                    //this._createDisplay();
+                    this._createShowAllButton();
+
+                    },
+
+                    _createDisplay: function(){
+                    var _this = this;
+                    this.display = $("&lt;span&gt;").hide();
+                    this.display.appendTo( this.wrapper )
+                    .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                    .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy( this, "_source" )
+
+                    });
+                    this.display.on("click",function(){
+                    _this.display.hide();
+                    _this.input.show();
+                    _this.input.focus();
+                    })
+                    },
+
+                    _createAutocomplete: function() {
+                    var selected = this.element.children( ":selected" ),
+                    value = selected.val() ? selected.text() : "";
+
+                    this.input = $( "&lt;input&gt;" )
+                    .appendTo( this.wrapper )
+                    .val( value )
+                    .attr( "title", "" )
+                    .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                    .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy( this, "_source" ),
+                    // bei collision at the bottom of browser show menu on the oposite (top)
+                    position:{collision: "flip"}
+
+                    });
+
+                    this.input.data("uiAutocomplete")._renderItem = function( ul, item ) {
+                    var _id = '#' + encodeId("#{cc.clientId}-country-li-" + item.option.index);
+                    //console.info("#+#+ _d: " + _id, item);
+                    var _li = $(_id);
+
+                    var li = $("&lt;li/&gt;");
+                    var div = $("&lt;div&gt;");
+                    li.append(div);
+                    div.html(_li.html());
+                    return li.appendTo( ul );
+                    }
+
+                    this._on( this.input, {
+                    autocompleteselect: function( event, ui ) {
+                    ui.item.option.selected = true;
+                    this._trigger( "select", event, {
+                    item: ui.item.option
+                    });
+
+                    var _id = '#' + encodeId("#{cc.clientId}-country-li-" + ui.item.option.index);
+                    //console.info("#+#+ _d: " + _id, item);
+                    var _li = $(_id);
+
+                    /*this.display.html(_li.html());
+                    this.display.show();
+                    this.input.hide();*/
+
+                    },
+
+                    autocompletechange: "_removeIfInvalid"
+                    });
+                    },
+
+                    _createShowAllButton: function() {
+                    var input = this.input,
+                    wasOpen = false;
+
+                    $( "&lt;a&gt;" )
+                    .attr( "tabIndex", -1 )
+                    .attr( "title", "Show All Items" )
+                    .tooltip()
+                    .appendTo( this.wrapper )
+                    .button({
+                    icons: {
+                    primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                    })
+                    .removeClass( "ui-corner-all" )
+                    .addClass( "ui-corner-right ui-button-icon ui-combobox-button custom-combobox-button" )
+                    .on( "mousedown", function() {
+                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                    })
+                    .on( "click", function() {
+                    input.trigger( "focus" );
+
+                    // Close if already visible
+                    if ( wasOpen ) {
+                    return;
+                    }
+
+                    // Pass empty string as value to search for, displaying all results
+                    input.autocomplete( "search", "" );
+                    });
+                    },
+
+
+
+                    _source: function( request, response ) {
+                    var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+                    response( this.element.children( "option" ).map(function() {
+                    var text = $( this ).text();
+                    if ( this.value &#38;&#38; ( !request.term || matcher.test(text) ) )
+                    return {
+                    label: text,
+                    value: text,
+                    option: this
+                    };
+                    }) );
+                    },
+
+                    _removeIfInvalid: function( event, ui ) {
+
+                    // Selected an item, nothing to do
+                    if ( ui.item ) {
+                    return;
+                    }
+
+                    // Search for a match (case-insensitive)
+                    var value = this.input.val(),
+                    valueLowerCase = value.toLowerCase(),
+                    valid = false;
+                    this.element.children( "option" ).each(function() {
+                    if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                    this.selected = valid = true;
+                    return false;
+                    }
+                    });
+
+                    // Found a match, nothing to do
+                    if ( valid ) {
+                    return;
+                    }
+
+                    // Remove invalid value
+                    this.input
+                    .val( "" )
+                    .attr( "title", value + " didn't match any item" )
+                    .tooltip( "open" );
+                    this.element.val( "" );
+                    this._delay(function() {
+                    this.input.tooltip( "close" ).attr( "title", "" );
+                    }, 2500 );
+                    this.input.autocomplete( "instance" ).term = "";
+                    },
+
+                    _destroy: function() {
+                    this.wrapper.remove();
+                    this.element.show();
+                    }});
+
+                    $( "#" + encodeId("#{cc.clientId}:editableText" )).combobox({
+
+                    });
+
+                    } );
+                </h:outputScript>
+            </div>
+        </div>
+    </cc:implementation>
+</ui:component>
