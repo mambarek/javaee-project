@@ -44,20 +44,7 @@ function encodeId(id) {
     return id.replace(new RegExp(':', 'g'), "\\:").toString();
 }
 
-function refreshInputEventListener(_input, eventName) {
-    var input = _input;//$('#' + encodeId(_input.id)).get(0);
-    var oneventName = 'on' + eventName;
-    if(input.removeEventListeners)
-        input.removeEventListeners(eventName,input[oneventName], true);
-
-    var eventFunc = input.getAttribute(oneventName);
-
-    if(eventFunc && !input[oneventName]) {
-        console.info("## refreshEventListener " + input.id + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
-        input[oneventName] = new Function(eventFunc);
-        input.addEventListener(eventName, input[oneventName]);
-    }
-}
+var _eventHandler = {};
 
 /**
  * f:ajax generates an onclick in the submit button. by clicking the first time the form is submitted and the form is rerendered after Ajax is finish.
@@ -66,66 +53,35 @@ function refreshInputEventListener(_input, eventName) {
  * i add manually every click function for new rendered elements. It works. now i have no trouble with reloading page
  * **/
 function refreshRootEventListener(rootId, eventName){
-    var form = $('#' + rootId);
+    var root = $('#' + encodeId(rootId));
     var oneventName = 'on' + eventName;
 
     // form.find("input[type=text], input[type=radio], select").each(function(){
-    form.find('['+oneventName+']').each(function(index, input){
-        if(input.removeEventListeners)
-            input.removeEventListeners(eventName,input[oneventName], true);
+    root.find('['+oneventName+']').each(function(index, input){
 
+        var handlerIndex  = rootId + "_" + index + "_" + eventName;
         var eventFunc = input.getAttribute(oneventName);
+        var handler = _eventHandler[handlerIndex];
 
-        if(eventFunc && !input[oneventName]) {
-            console.info("## refreshEventListener " + input.id + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
-            input[oneventName] = new Function(eventFunc);
-            input.addEventListener(eventName, input[oneventName]);
-        }
+        if(eventFunc){
+            // if no handler so create one
+            if(!handler){
+                handler = new Function(eventFunc);
+                _eventHandler[handlerIndex] = handler;
+            }
 
-    });
-}
-
-function refreshEventListener(root, eventName) {
-
-    //var form = $('#' + rootId);
-    var oneventName = 'on' + eventName;
-    //console.info("-- refreshEventListener fired", rootId, form,oneventName);
-    // form.find("input[type=text], input[type=radio], select").each(function(){
-    root.find('[' + oneventName + ']').each(function (index, input) {
-        //refreshInputEventListener(input, eventName);
-        if(input.removeEventListeners)
-            input.removeEventListeners(eventName,input[oneventName], true);
-
-        var eventFunc = input.getAttribute(oneventName);
-
-        if(eventFunc && !input[oneventName]) {
-            console.info("## refreshEventListener " + input.id + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
-            input[oneventName] = new Function(eventFunc);
-            input.addEventListener(eventName, input[oneventName]);
+            // check if the input have an event handler
+            if(!input[oneventName]) {
+                //console.info("## refreshEventListener " + handlerIndex + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
+                input.removeEventListener(eventName,handler);
+                input.addEventListener(eventName, handler, true);
+            }
         }
     });
-}
-
-function refreshAllInputEventListener(input) {
-    //console.info("++ refreshAllEventListener fire", rootId, event);
-    if (isIE()) {
-        refreshInputEventListener(input, "click");
-        refreshInputEventListener(input, "change");
-        refreshInputEventListener(input, "blur");
-    }
-}
-
-function refreshAllEventListener(root) {
-    //console.info("++ refreshAllEventListener fire", rootId, event);
-    if (isIE()) {
-        refreshEventListener(root, "click");
-        refreshEventListener(root, "change");
-        refreshEventListener(root, "blur");
-    }
 }
 
 function refreshAllRootEventListener(rootId) {
-    //console.info("++ refreshAllEventListener fire", rootId, event);
+    console.info("++ refreshAllRootEventListener fired", rootId, event);
     if (isIE()) {
         refreshRootEventListener(rootId, "click");
         refreshRootEventListener(rootId, "change");
@@ -133,7 +89,8 @@ function refreshAllRootEventListener(rootId) {
     }
 }
 
-function handleAjax(data) {
+function handleAjax(data, containerId) {
+
     var status = data.status;
     var input = $(data.source);
     // the input coming from ajax may be not bound in the dom
@@ -143,6 +100,7 @@ function handleAjax(data) {
         var componentId = encodeId(data.source.id);
         input = $("#" + componentId);
     }
+
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
@@ -155,27 +113,17 @@ function handleAjax(data) {
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
-
-            //var valid = $("#" + componentId).attr("data-valid");
-            //console.info("checkInputStyle success jquery valid: " + valid);
-
-            /*validateInputStyle(input);
-            var inputContainer = input.closest(".inputContainer")[0];*/
-
+            console.info("$$ handleAjax success fired!");
             validateFormInput(input);
-            //var inputContainer = $(input.closest("form")[0]);
-            var inputContainer = input.closest("form")[0];
-            //var inputContainer = $(input.closest("form"));
-
-            if(inputContainer) {
-                //var t1 = $(inputContainer);
-                //var t2 = $('#' + encodeId(inputContainer.id));
-                refreshAllRootEventListener(encodeId(inputContainer.id));
-                //refreshAllEventListener($(inputContainer));
-                //refreshAllEventListener($('#' + encodeId(inputContainer.id)));
+            var _containerId = containerId;
+            if(!_containerId) {
+                var form = input.closest("form")[0];
+                if(form)
+                    _containerId = form.id;
             }
-            else
-                refreshAllInputEventListener(data.source);
+
+            if(_containerId)
+                refreshAllRootEventListener(encodeId(_containerId));
 
             break;
     }
