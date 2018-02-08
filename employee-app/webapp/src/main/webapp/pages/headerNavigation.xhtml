@@ -1,0 +1,107 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- Logo and top menu not for mobile -->
+    <!-- Top menu begin -->
+    <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md hidden-md-down">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../../themes/theme_blue/corp_logo.jpg" class="img-fluid" style="width: 150px"/>
+            </a>
+
+            <div class="collapse navbar-collapse" id="m1">
+                <ul class="navbar-nav mr-auto">
+                    <!--
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">Link</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link disabled" href="#">Disabled</a>
+                                            </li>
+                    -->
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text"
+                           placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                    <button class="btn btn-outline-primary my-2 my-sm-0"
+                            type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                </form>
+                <div class="pull-right ml-3">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
+                        </button>
+                        <div class="dropdown-menu">
+                            <h:form>
+                                <h:commandLink styleClass="dropdown-item"
+                                               action="#{webFlowController.changeLocal('en','employeeList')}"
+                                               value="#{employeeMsg['employee.app.language.englisch']}"/>
+                                <h:commandLink styleClass="dropdown-item"
+                                               action="#{webFlowController.changeLocal('de','employeeList')}"
+                                               value="#{employeeMsg['employee.app.language.german']}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Top menu end -->
+
+    <!-- main menu for desktop and mobile with toggle function -->
+    <!-- main menu begin -->
+    <nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">E-Management</a>
+                <!--<button type="button" class="navbar-toggle">-->
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2"
+                        aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation" >
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="bar-top"/>
+                    <span class="bar-middle"/>
+                    <span class="bar-bottom"/>
+                </button>
+            </div>
+            <div class="overlay hidden-md-up"></div>
+            <!--<div class="navbar-collapse left-align">-->
+            <div class="collapse navbar-collapse left-align" id="m2">
+                <div class="d-md-flex flex-md-row" style="width: 100%">
+
+                    <ul class="nav navbar-nav " style="padding-left:5px">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="left-slide.html"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&#xa0;Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="#"><i class="fas fa-cog fa-fw" aria-hidden="true"/>&#xa0;Work</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="#"><i class="fas fa-book fa-fw" aria-hidden="true"/>&#xa0;Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="#"><i class="fas fa-envelope fa-fw" aria-hidden="true"/>&#xa0;Contact</a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="nav navbar-nav ml-md-auto" style="padding-left:5px">
+                        <li class="divider"></li>
+                        <li><a class="nav-link"  href="#"><span class="fas fa-user"></span> Sign In</a></li>
+                        <li><a class="nav-link"  href="login.html"><span class="fas fa-sign-in-alt"></span> Login</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- main menu end -->
+</ui:composition>

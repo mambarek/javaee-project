@@ -99,7 +99,7 @@
 
                             <!-- Radio -->
                             <c:when test="#{cc.attrs.inputType eq 'radio'}">
-                                <div class="input-group form-control">
+                                <div class="input-group form-control" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
 
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="form-check form-check-inline">
@@ -153,12 +153,13 @@
                                   </div>
                                   -->
                             </c:when>
+
                             <c:when test="#{cc.attrs.inputType eq 'newselect'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control"
-                                                     style="width: 100%" binding="#{cc.input}">
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
+                                                     style="width: 100%" binding="#{cc.input}" required="#{cc.attrs.isRequired}">
                                         <f:selectItem
-                                                itemLabel="-- Bitte wählen --" itemValue=""/>
+                                                itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
                                         <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
@@ -204,10 +205,10 @@
                             </c:when>
 
                             <c:when test="#{cc.attrs.inputType eq 'prime-pselect'}">
-                                <p:selectOneMenu id="editableText" styleClass="form-control" value="#{cc.attrs.value}"
-                                                 binding="#{cc.input}" filter="true" filterMatchMode="startsWith">
+                                <p:selectOneMenu id="editableText" styleClass="form-control" value="#{cc.attrs.value}" pt:data-valid="#{component.valid}"
+                                                 binding="#{cc.input}" filter="true" filterMatchMode="startsWith" required="#{cc.attrs.isRequired}">
                                     <f:selectItem
-                                            itemLabel="-- Bitte wählen --" itemValue=""/>
+                                            itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                                     <f:selectItems value="#{editEmployeeController.genderWrapperList}" var="item"
                                                    itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}"/>
                                     <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>

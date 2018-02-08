@@ -1,0 +1,102 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']}
+        </div>
+        <div class="card-block" style="padding: 0">
+            <div class="table-responsive mb-5">
+                <h:form>
+                    <table id="employeeList" class="table table-hover table-sm">
+                        <thead class="table-header">
+                        <tr>
+                            <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                            <th scope="col"/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat var="employee" value="#{employeeListController.allEmployees}"
+                                   varStatus="status">
+                            <tr>
+                                <td>
+                                    <h:commandLink>
+                                        <i class="fas fa-edit" aria-hidden="true"/>
+                                        <f:ajax execute="@this" render="content"
+                                                listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                                event="click"/>
+                                    </h:commandLink>
+                                </td>
+                                <td>
+                                    <h:commandLink value="#{employee.firstName}">
+                                        <f:ajax execute="@this" render="content"
+                                                listener="#{editEmployeeController.editEmployee(employee.id)}"
+                                                event="click"/>
+                                    </h:commandLink>
+                                </td>
+                                <td>
+                                    <h:commandLink
+                                            outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</h:commandLink>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{employee.salary}"><f:convertNumber
+                                            currencySymbol="$" minFractionDigits="2"/></h:outputText>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{employee.birthDate}"><f:convertDateTime
+                                            pattern="#{employeeMsg['employee.app.date.pattern']}"/></h:outputText>
+                                </td>
+                                <td style="text-align: right;">
+                                    <a tabindex="0" id="pop-#{status.index}" data-toggle="popover"
+                                       data-placement="right" style="color: green">
+                                        <i class="fas fa-address-card fa-2x"/>
+                                        <h:outputScript>
+                                            console.info("## der button",$('#pop-#{status.index}'));
+                                            $('#pop-#{status.index}').popover({
+                                            title: "My first pop",
+                                            content: "All that text is for a button!",
+                                            animation: true,
+                                            container: 'body'
+                                            })
+                                        </h:outputScript>
+                                    </a></td>
+                            </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                </h:form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+    <div jsf:id="editorWrapper" jsf:rendered="#{!empty editEmployeeController.model}">
+        <pe:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
+                           id="editor">
+            <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
+            <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent"
+                    listener="#{editEmployeeController.ajaxSaveAction}"/>
+            <f:ajax event="deleteConfirmed" render="content" onevent="handleAjaxDeleteEvent"
+                    listener="#{editEmployeeController.ajaxDeleteAction}"/>
+        </pe:employeeEditor>
+    </div>
+    <h:outputScript>
+        refreshAllEventListener('content');
+    </h:outputScript>
+</ui:composition>

@@ -1,0 +1,75 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<!-- Search and language for Tablet-->
+<div class="row hidden-xs-down hidden-lg-up">
+    <div class="col-12 d-flex">
+        <div class="d-flex flex-row" style="width: 100%">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+            </form>
+            <div class="ml-md-auto align-self-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
+                    </button>
+                    <div class="dropdown-menu">
+                        <h:form>
+                            <h:commandLink styleClass="dropdown-item"
+                                           action="#{webFlowController.changeLocal('en','employeeList')}"
+                                           value="#{employeeMsg['employee.app.language.englisch']}"/>
+                            <h:commandLink styleClass="dropdown-item"
+                                           action="#{webFlowController.changeLocal('de','employeeList')}"
+                                           value="#{employeeMsg['employee.app.language.german']}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Search and language for Mobile-->
+<div class="row hidden-sm-up">
+<div class="col-12">
+    <div style="width:100%">
+        <div class="btn-group" style="margin-top: 5px;float: right;">
+            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
+            </button>
+            <div class="dropdown-menu">
+                <h:form>
+                    <h:commandLink styleClass="dropdown-item"
+                                   action="#{webFlowController.changeLocal('en','employeeList')}"
+                                   value="#{employeeMsg['employee.app.language.englisch']}"/>
+                    <h:commandLink styleClass="dropdown-item"
+                                   action="#{webFlowController.changeLocal('de','employeeList')}"
+                                   value="#{employeeMsg['employee.app.language.german']}"/>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row hidden-sm-up">
+<div class="col-12">
+    <form class="form-inline my-2 my-lg-0">
+        <!--                        <div class="input-group">
+                                <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                                <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                                </div>-->
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fas fa-search"/>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</ui:composition>

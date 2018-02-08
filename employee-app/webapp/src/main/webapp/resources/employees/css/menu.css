@@ -1,0 +1,175 @@
+.bar-top,
+.bar-middle,
+.bar-bottom {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #fff;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+.transparent {
+    background-color: transparent !important
+}
+
+.transparent.inverse {
+    border-color: transparent;
+}
+
+.change {
+    /*background-color: #000*/
+}
+
+.change .bar-top {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-6px, 6px);
+    /* background-color: #000*/
+}
+
+.change .bar-middle {
+    opacity: 0;
+}
+
+.change .bar-bottom {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-2px, -2px);
+    /*background-color: #000*/
+}
+
+.indexcity {
+    z-index: 9999;
+}
+
+.right {
+    right: 0 !important;
+}
+
+.left {
+    left: 0 !important;
+}
+
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 30px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+    padding-left: 20px;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.blurry-text {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px transparent;
+}
+
+@media only screen and (max-width: 767px) {
+    .overlay {
+        background-color: #000;
+        position: fixed;
+        transition: all 0.8s ease-out;
+        height: 100%;
+        width: 100%;
+        right: -700px;
+        z-index: 950;
+        opacity: 0.5;
+    }
+    .navbar-collapse.right-align {
+        background-color: #ffc107;
+        position: fixed;
+        top: 0;
+        transition: all 0.8s ease-out;
+        height: 100%;
+        width: 65%;
+        right: -700px;
+        z-index: 1000;
+    }
+    /* warum .navbar-collapse .left-align funktioniert nicht???
+        achte auf leerzeichen zwischen den zwei Klassen. wann man ihn entfernt funktioniert's
+        WARUM ???????
+    */
+    .navbar-collapse.left-align {
+        background-color: #ffc107;
+        position: fixed;
+        top: 0;
+        transition: all 0.8s ease-out;
+        height: 100%;
+        max-height: 100%;
+        width: 65%;
+        left: -700px;
+        z-index: 1000;
+        display: block;
+    }
+    .navbar-inverse .right-align .navbar-nav>li>a,
+    .navbar-inverse .left-align .navbar-nav>li>a {
+        color: #000;
+    }
+    .navbar-collapse {
+        padding-right: 0px;
+    }
+    .divider {
+        height: 2px;
+        margin: 0px 15px 0px 0px;
+        overflow: hidden;
+        background-color: transparent;
+    }
+    .left-align .divider,
+    .right-align .divider {
+        height: 2px;
+        margin: 0px 15px 0px 0px;
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    .navbar-toggle:hover,
+    .navbar-toggle:focus {
+         border-color: rgba(255,255,255,.1);
+        background-color: transparent;
+        outline: none !important;
+    }
+
+    .btn {
+        outline: none !important;
+    }
+}

@@ -152,24 +152,16 @@ function validateInputStyle(component){
     inputContainer.removeClass('has-danger has-success');
 
     var target = component;
-/*    var isSelect = component.is("select");
-    var isRadio = target.attr("data-isRadio");
-    if(isRadio == "true"){
-        component.find('radio').forEach(function(radio){
-            var radioValid = radio.attr("data-valid");
-            if(radioValid ==)
-        })
-    }
-
+    var isSelect = component.is("select");
     if(component.attr('type') == "radio" ) {
         target = component.closest(".input-group");
         // add border
         target.addClass("form-control");
-    }*/
+    }
 
     // dropdown: HTML select are display none
     // the jqueryui select menu generates a span with
-    // select content. so highlight the span instead of
+    // select content. so heighleight th span instead of
     // the select
     if(component.is("select")) {
         target = component.siblings('span');
@@ -505,7 +497,7 @@ function handleAjaxDeleteEvent(data){
 
 function hasError(element){
     var res = false;
-    element.find(".form-control").each(function(){
+    element.find("input[type=text], input[type=radio], select").each(function(){
         var target = $(this);
         var valid = target.attr("data-valid");
         if($(this)[0].type == "radio") {

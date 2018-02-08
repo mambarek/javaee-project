@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <title>
+        <ui:insert name="windowTitle">
+            Masterlayout Title
+        </ui:insert>
+    </title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <ui:insert name="metaTags"/>
+    <ui:insert name="cssLinks"/>
+    <ui:insert name="jsHeadLinks"/>
+</h:head>
+
+<h:body>
+    <ui:insert name="bodyInitilizer"/>
+    <header>
+        <!--// extend the session sending an empty ajax-->
+        <h:form>
+            <h:commandButton id="refreshSession" style="display: none;" styleClass="refreshSession">
+                <f:ajax execute="@this"  render="@none"/>
+            </h:commandButton>
+        </h:form>
+        <ui:insert name="headerNavigation"/>
+    </header>
+
+    <div class="container">
+        <div class="row hidden-md-down">
+            <div class="col-lg-2"/>
+            <div class="col">
+                <ui:insert name="breadcrumb"/>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+
+        <!-- for moble and teblet may be you move elemts from header to show it here -->
+        <ui:insert name="mobile_tablet_extra"/>
+
+        <div class="row ">
+            <!-- Left col  -->
+            <div class="col-lg-2">
+                <ui:insert name="leftColContent"/>
+            </div>
+            <!-- main content -->
+            <div class="col-md-12 col-lg-8" jsf:id="content">
+                <ui:insert name="mainContent"/>
+            </div>
+            <!-- right col content -->
+            <div class="col-md-12 col-lg-2">
+                <ui:insert name="rightColContent"/>
+
+            </div>
+        </div>
+
+        <hr/>
+
+        <footer>
+            <ui:insert name="footer"/>
+        </footer>
+    </div> <!-- /Container-->
+
+    <!-- body javascript -->
+    <ui:insert name="footerScripts"/>
+
+</h:body>
+</html>

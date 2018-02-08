@@ -64,10 +64,10 @@
                                radioItems="#{editEmployeeController.genders}" isRequired="true">
             </pe:formRow>
             <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genderWrapperList}"/>
+                        radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genderWrapperList}" >
+                        radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true">
                 <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
                     <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>

@@ -1,0 +1,55 @@
+<ui:composition
+        template="masterLayout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="windowTitle">
+        Employees app
+    </ui:define>
+
+    <ui:define name="cssLinks">
+        <ui:include src="cssLinks.xhtml"/>
+    </ui:define>
+
+    <ui:define name="jsHeadLinks">
+        <ui:include src="jsHeadLinks.xhtml"/>
+    </ui:define>
+
+    <ui:define name="bodyInitilizer">
+        <ui:include src="../bodyInitilizer.xhtml"/>
+    </ui:define>
+
+    <ui:define name="headerNavigation">
+        <ui:include src="../headerNavigation.xhtml"/>
+    </ui:define>
+
+    <ui:define name="breadcrumb">
+        <ui:include src="../breadcrumb.xhtml"/>
+    </ui:define>
+
+    <!-- for moble and teblet may be you move elemts from header to show it here -->
+    <ui:define name="mobile_tablet_extra">
+        <ui:include src="../mobile_tablet_extra.xhtml"/>
+    </ui:define>
+
+    <ui:define name="leftColContent">
+        <ui:include src="../leftColContent.xhtml"/>
+    </ui:define>
+
+    <ui:define name="mainContent">
+        <h1>Put your own content!</h1><br/>
+        define the "mainContent".
+    </ui:define>
+
+    <ui:define name="rightColContent">
+        <ui:include src="../rightColContent.xhtml"/>
+    </ui:define>
+    <ui:define name="footer">
+        <ui:include src="../footer.xhtml"/>
+    </ui:define>
+    <!-- body javascript -->
+    <ui:define name="footerScripts">
+        <ui:include src="footerScripts.xhtml"/>
+    </ui:define>
+
+</ui:composition>
