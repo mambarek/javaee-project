@@ -69,10 +69,10 @@ public class EmployeeResourceImpl implements EmployeeResource {
     }
 
     @Override
-    public List<EmployeeTableItem> findAllEmployeeItems(boolean _search, Long nd, int rows, int page, String sidx, String sord) {
+    public List<EmployeeTableItem> findAllEmployeeItems(int rows, int offset, String sidx, String sord) {
         EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
         searchTemplate.setMaxResult(rows);
-        searchTemplate.setOffset(rows*page);
+        searchTemplate.setOffset(offset);
         searchTemplate.setOrderBy(sidx);
         searchTemplate.setOrderDirection(sord);
 
@@ -80,10 +80,10 @@ public class EmployeeResourceImpl implements EmployeeResource {
     }
 
     @Override
-    public List<EmployeeTableItem> findAllEmployeeItems(boolean _search, Long nd, int rows, int page, String sidx, String sord, String searchField, String searchString, String searchOper) {
+    public List<EmployeeTableItem> findAllEmployeeItems(int rows, int offset, String sidx, String sord, String searchField, String searchString, String searchOper) {
         EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
         searchTemplate.setMaxResult(rows);
-        searchTemplate.setOffset(rows*page);
+        searchTemplate.setOffset(offset);
         searchTemplate.setOrderBy(sidx);
         searchTemplate.setOrderDirection(sord);
 

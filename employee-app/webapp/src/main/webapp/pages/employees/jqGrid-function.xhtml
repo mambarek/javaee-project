@@ -41,45 +41,81 @@
         }
     </style>
     <h:outputScript>
-
-        /*
-        prmNames	array	The default value of this property is:
-        {page:"page",rows:"rows", sort:"sidx", order:"sord", search:"_search", nd:"nd", id:"id", oper:"oper", editoper:"edit", addoper:"add", deloper:"del", subgridid:"id", npage:null, totalrows:"totalrows"}.
-
-        prmNames: {
-        nd: null,
-        search: null,
-        page: 'page',
-        rows: 'pageSize',
-        sort: 'sortKey',
-        order: 'sortOrder',
-        totalrows: 'totalQty'
-        },
-        jsonReader: {
-        root: 'data.entries',
-        // page: 'data.pager.page',
-        total: 'data.pager.totalPages',
-        records: 'data.pager.totalQty'
-        }
-        */
-        //refreshAllEventListener('content');
         $(document).ready(function () {
 
         var grid = $('#grid');
         var pagerId = '#gridPager';
+        var currentPage = #{editEmployeeController.currentTabPage};
+        var data = [];
 
         grid.jqGrid({
         regional: '#{facesContext.viewRoot.locale.language}',
-        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter',
-        mtype: "GET",
         //styleUI : 'Bootstrap4',
         //iconSet : 'fontAwesome',
-        datatype: "json",
+        datatype: function(postdata) {
+        var thegrid = this;
+        var currPage = $(this).getGridParam('page');
+
+        if(currPage == 0 &amp;&amp; data.length &lt; 20){
+        postdata.rows = 20;
+
+        if(data.length &lt; currPage*10){
+            data = [];
+        postdata.rows = currPage*10;
+        };
+
+        if(data.length == 0)
+        $.ajax({
+        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter',
+        data:postdata,
+        dataType:"json",
+        complete: function(jsonData,stat){
+        if(stat=="success") {
+        //var thegrid = jQuery("#list")[0];
+        //thegrid.addJSONData(jsonData.responseJSON.slice(0,10));
+
+        Array.prototype.push.apply(data, jsonData.responseJSON);
+        thegrid.addJSONData(data);
+        }
+        }
+        });
+        }
+        else{
+        thegrid.addJSONData(data.slice(data.length-10, data.length));
+        }
+
+        if(data.length &gt; 20 &amp;&amp; data.length &lt; currPage*10){
+        $.ajax({
+        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter',
+        data:postdata,
+        dataType:"json",
+        complete: function(jsonData,stat){
+        if(stat=="success") {
+        //var thegrid = jQuery("#list")[0];
+        //thegrid.addJSONData(jsonData.responseJSON.slice(0,10));
+        Array.prototype.push.apply(data, jsonData.responseJSON);
+
+        }
+        }
+        })};
+
+
+        },
+
+        jsonReader: {
+        repeatitems: false,
+        id: "id",
+        root: function (obj) { return obj; },
+        //page: function (obj) { return 3; },
+        total: function (obj) { return 10; }, // total page number
+        records: function (obj) { return 100; } // total records number
+
+        },
         //minColWidth: 75,
         colModel: [
 
         { label: ' ', name: 'id', width: 30,
-            formatter: editButton, filter: false, sort: false,
+        formatter: editButton, filter: false, sort: false,
         resizable: false, minWidth: 30, fixed: true
         },
         { label: '#{employeeMsg['employee.table.col.firstName']}', name: 'firstName', width: 150, coloptions: {columns: false} },
@@ -105,16 +141,8 @@
         //totalrows: 100,
         altRows : false,
         pager: pagerId,
-        page:#{editEmployeeController.currentTabPage},
-        jsonReader: {
-        repeatitems: false,
-        id: "id",
-        root: function (obj) { return obj; },
-        //page: function (obj) { return 3; },
-        total: function (obj) { return 10; }, // total page number
-        records: function (obj) { return 100; } // total records number
+        page: currentPage
 
-        }
 
         });
 

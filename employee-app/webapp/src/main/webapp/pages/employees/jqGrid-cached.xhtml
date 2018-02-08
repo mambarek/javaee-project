@@ -1,0 +1,71 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+
+
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']} - jqGrid
+        </div>
+        <div class="card-block" style="padding: 0" id="gridContainer">
+
+                <table style='width: 100% !important;' id="grid"/>
+                <div id="gridPager"/>
+
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="editor"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+    <script>
+        $.jgrid.defaults.width = 780;
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap4';
+        $.jgrid.defaults.iconSet = "Octicons";
+    </script>
+    <style>
+        .ui-jqgrid
+        {
+            font-size:0.8rem
+        }
+    </style>
+    <h:outputScript>
+
+
+
+        //refreshAllEventListener('content');
+        $(document).ready(function () {
+        var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter';
+        var colModel = [
+
+        { label: ' ', name: 'id', width: 30,
+        formatter: editButton, filter: false, sort: false,
+        resizable: false, minWidth: 30, fixed: true
+        },
+        { label: '#{employeeMsg['employee.table.col.firstName']}', name: 'firstName', width: 150, coloptions: {columns: false} },
+        { label: '#{employeeMsg['employee.table.col.lastName']}', name: 'lastName', width: 150 },
+        { label: '#{employeeMsg['employee.table.col.salary']}', name: 'salary', width: 150 },
+        { label: '#{employeeMsg['employee.table.col.birthDate']}', name: 'birthDate', width: 150 }
+        ];
+
+        createCachedEmployeesGrid('#grid', url, colModel, 10, #{editEmployeeController.currentTabPage}, '#{facesContext.viewRoot.locale.language}');
+        //(selector, url, colModel, rowsPerPage, locale)
+
+        });
+
+
+
+
+    </h:outputScript>
+</ui:composition>

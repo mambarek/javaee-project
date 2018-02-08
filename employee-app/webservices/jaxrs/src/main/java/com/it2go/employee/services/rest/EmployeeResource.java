@@ -45,10 +45,8 @@ public interface EmployeeResource {
     @Path("/employee/filter")
     List<EmployeeTableItem> findAllEmployeeItems(
 
-            @QueryParam("_search") final boolean _search,
-            @QueryParam("nd") final Long nd,
             @QueryParam("rows") final int rows,
-            @QueryParam("page") final int page,
+            @QueryParam("offset") final int offset,
             @QueryParam("sidx") final String sidx,
             @QueryParam("sord") final String sord
     );
@@ -58,10 +56,8 @@ public interface EmployeeResource {
     @Path("/employee/search")
     List<EmployeeTableItem> findAllEmployeeItems(
 
-            @QueryParam("_search") final boolean _search,
-            @QueryParam("nd") final Long nd,
             @QueryParam("rows") final int rows,
-            @QueryParam("page") final int page,
+            @QueryParam("offset") final int offset,
             @QueryParam("sidx") final String sidx,
             @QueryParam("sord") final String sord,
             @QueryParam("searchField") final String searchField,
