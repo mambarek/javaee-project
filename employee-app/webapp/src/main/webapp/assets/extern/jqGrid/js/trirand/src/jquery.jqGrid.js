@@ -3803,10 +3803,11 @@ $.fn.jqGrid = function( pin ) {
 			$(ts).jqGrid("remapColumns", cols, true);
 			$(ts).jqGrid("setFrozenColumns");
 		},
-		buildColMenu = function( index, left, top ){
+		buildColMenu = function( index, left, top, cell ){
 			//$("#sopt_menu").remove();
 			left=parseInt(left,10);
-			top=parseInt(top,10) + 10;
+			//top=parseInt(top,10) + 10;
+            top=parseInt(top,10) + 30;
 			var strb = '<ul id="column_menu" role="menu" tabindex="0">',
 			str = '',
 			stre = "</ul>",
@@ -4247,16 +4248,27 @@ $.fn.jqGrid = function( pin ) {
 
 				var colindex = $.jgrid.getCellIndex(e.target);
 				if(colindex === -1) { return;}
-				var offset = $(this).offset(),
+				//var offset = $(this).offset(),
+				// Ali Mbarek fix 16.05.2018 take the relativ coordinates instead of absolute because css:left
+				// down from the top edge of its nearest positioned ancestor
+                var offset = $(this).position(),
 				left = ( offset.left ),
 				top = ( offset.top);
 				if(ts.p.direction === "ltr") {
 					left += $(this).outerWidth();
 				}
-				buildColMenu(colindex, left, top, t );
+
+				if($(".ui-jqgrid-titlebar") && $(".ui-jqgrid-titlebar").css('display') != "none"){
+                    top += $(".ui-jqgrid-titlebar").height() + 10;
+				}
+
+                buildColMenu(colindex, left, top, t );
+
 				if(ts.p.menubar === true) {
 					$("#"+ts.p.id+"_menubar").hide();
 				}
+
+
 				e.stopPropagation();
 				return;
 			}
