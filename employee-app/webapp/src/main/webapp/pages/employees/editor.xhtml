@@ -7,7 +7,7 @@
     <f:metadata>
         <f:viewParam name="id" value="#{editEmployeeController.employeeId}"/>
         <f:viewParam name="page" value="#{editEmployeeController.currentTabPage}"/>
-        <f:event type="preRenderView" listener="#{editEmployeeController.editEmployee()}"/>
+        <f:event type="preRenderView" listener="#{editEmployeeController.editEmployee(editEmployeeController.employeeId)}"/>
     </f:metadata>
     <ui:define name="mainContent">
         <div jsf:id="editor">

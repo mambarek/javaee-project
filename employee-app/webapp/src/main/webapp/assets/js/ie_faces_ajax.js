@@ -65,14 +65,13 @@ function initHandler(eventName){
  * so the solution is to add manually the Eventlistener after an ajax call for new rendered elments. ist not easy but this works.
  * i add manually every click function for new rendered elements. It works. now i have no trouble with reloading page
  * **/
-function refreshRootEventListener(rootId, eventName){
-    var root = $('#' + encodeId(rootId));
+function refreshFormEventListener(form, eventName){
+
     var oneventName = 'on' + eventName;
 
-    // form.find("input[type=text], input[type=radio], select").each(function(){
-    root.find('['+oneventName+']').each(function(index, input){
+    form.find('['+oneventName+']').each(function(index, input){
 
-        var handlerIndex  = rootId + "_" + index + "_" + eventName;
+        var handlerIndex  = form.id + "_" + index + "_" + eventName;
         var eventFunc = input.getAttribute(oneventName);
         var handler = _eventHandler[handlerIndex];
 
@@ -86,7 +85,7 @@ function refreshRootEventListener(rootId, eventName){
             // check if the input have an event handler
             if(!input[oneventName]) {
                 //console.info("## refreshEventListener " + handlerIndex + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
-                input.removeEventListener(eventName,handler);
+                //input.removeEventListener(eventName,handler);
                 // this is not working on IE
                 //input.addEventListener(eventName, handler, false);
                 // works  fine
@@ -96,6 +95,14 @@ function refreshRootEventListener(rootId, eventName){
             }
         }
     });
+}
+
+function refreshRootEventListener(rootId, eventName){
+    var root = $('#' + encodeId(rootId));
+    var oneventName = 'on' + eventName;
+
+    refreshFormEventListener(root, eventName);
+
 }
 
 function refreshAllRootEventListener(rootId) {

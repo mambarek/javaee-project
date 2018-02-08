@@ -302,7 +302,8 @@ function validateWidget(widget){
     });
 }
 
-function handleAjax(data) {
+function handleAjax(data) {}
+function handleAjax_old(data) {
     var status = data.status;
     var componentId = encodeId(data.source.id);
 
@@ -427,7 +428,7 @@ function validateTabAndProcessSave(data) {
                         return false;
                     }
                 }
-            )
+            );
             $('.tabSendSave').click();
 
             break;
@@ -570,7 +571,7 @@ function confirmDelete(data) {
 
 function redirectToList(){
     var currentPage = $('#grid').getGridParam('page');
-    window.location.href = "jqGrid-table.xhtml?page=" + currentPage;
+    window.location.href = "jqGrid-table.xhtml";
 }
 
 function handleAjaxSaveEvent(data){

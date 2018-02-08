@@ -56,8 +56,9 @@
         }
         //refreshAllEventListener('content');
         $(document).ready(function () {
+            var url = applicationFullPath() + '/rest/EmployeeService/employee/search';
         //var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/search';
-        var url = 'https://localhost:8443/webapp/rest/EmployeeService/employee/search';
+        //var url = 'https://localhost:8443/webapp/rest/EmployeeService/employee/search';
         var colModel = [
 
         { label: ' ', name: 'id', width: 30,
@@ -109,6 +110,11 @@
         ];
 
         createCachedEmployeesGrid('#grid', url, colModel, 10, #{editEmployeeController.currentTabPage}, '#{facesContext.viewRoot.locale.language}');
+        // rebind all events for the grid. IE only
+        $('#grid').bind('jqGridAfterGridComplete', function(){
+        refreshContainerEvents('gridContainer');
+        })
+
 
         });
 

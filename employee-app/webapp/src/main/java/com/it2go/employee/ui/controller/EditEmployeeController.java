@@ -74,16 +74,16 @@ public class EditEmployeeController implements BaseViewController {
     }
 
     public String editEmployee(Long id) throws EntityNotFoundException {
-        if (id != null) {
-            model = employeeRepository.findById((Long) id);
-            if(model.getAddress() == null)
-                model.setAddress(new Address());
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            if (id != null) {
+                model = employeeRepository.findById((Long) id);
+                if (model.getAddress() == null)
+                    model.setAddress(new Address());
+            } else {
+                if (model == null)
+                    createNewEmployee();
+            }
         }
-        else{
-            if(model == null)
-                createNewEmployee();
-        }
-
 
         return null;
     }

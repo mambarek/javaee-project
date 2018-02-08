@@ -67,10 +67,13 @@
 
         var grid = $('#grid');
         var pagerId = '#gridPager';
-
+        var restUri = '/webapp/rest/EmployeeService/employee/search';
+        //var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/search';
+        //var url = 'https://localhost:8443/webapp/rest/EmployeeService/employee/search';
+        var url = window.location.origin + restUri;
         grid.jqGrid({
         regional: '#{facesContext.viewRoot.locale.language}',
-        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/search',
+        url: url,
         mtype: "GET",
         //styleUI : 'Bootstrap4',
         //iconSet : 'fontAwesome',

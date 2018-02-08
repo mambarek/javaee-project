@@ -64,9 +64,14 @@
         postdata.rows = currPage*10;
         };
 
+        var restUri = '/webapp/rest/EmployeeService/employee/search';
+        //var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/search';
+        //var url = 'https://localhost:8443/webapp/rest/EmployeeService/employee/search';
+        var url = window.location.origin + restUri;
+
         if(data.length == 0)
         $.ajax({
-        url: 'http://localhost:8080/webapp/rest/EmployeeService/employee/filter',
+        url: url,
         data:postdata,
         dataType:"json",
         complete: function(jsonData,stat){

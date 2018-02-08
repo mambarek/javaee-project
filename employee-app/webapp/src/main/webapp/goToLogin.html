@@ -2,7 +2,12 @@
 <body>
 
    <script type="application/javascript">
-       window.location.href = "./login.xhtml";
+       console.info("-- goToLogin call!");
+       var ctxPath = "/";
+       if (location.pathname.split('/').length > 1)
+           ctxPath = "/" + location.pathname.split('/')[1];
+
+       location.href = location.origin + ctxPath + "/login.xhtml";
 
     </script>
 
