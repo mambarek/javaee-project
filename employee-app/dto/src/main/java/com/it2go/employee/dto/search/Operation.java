@@ -30,6 +30,7 @@ public enum Operation {
     GREATHER_OR_EQUAL("ge","greater or equal"),
     BEGINS_WITH("bw","begins with"),
     NOT_BEGIN_WITH("bn","does not begin with"),
+    IN("in","is in"),
     NOT_IN("ni","is not in"),
     ENDS_WITH("ew","ends with"),
     NOT_ENDS_WITH("en","does not end with"),

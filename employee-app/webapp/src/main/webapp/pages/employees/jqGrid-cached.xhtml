@@ -55,8 +55,8 @@
         },
         { label: '#{employeeMsg['employee.table.col.firstName']}', name: 'firstName', width: 150, coloptions: {columns: false} },
         { label: '#{employeeMsg['employee.table.col.lastName']}', name: 'lastName', width: 150 },
-        { label: '#{employeeMsg['employee.table.col.salary']}', name: 'salary', width: 150 },
-        { label: '#{employeeMsg['employee.table.col.birthDate']}', name: 'birthDate', width: 150 }
+        { label: '#{employeeMsg['employee.table.col.salary']}', name: 'salary', width: 150, searchtype: "number" },
+        { label: '#{employeeMsg['employee.table.col.birthDate']}', name: 'birthDate', width: 150, searchtype: "date" }
         ];
 
         createCachedEmployeesGrid('#grid', url, colModel, 10, #{editEmployeeController.currentTabPage}, '#{facesContext.viewRoot.locale.language}');

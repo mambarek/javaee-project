@@ -8,4 +8,6 @@ public class Rule {
     private String field;
     private Operation op;
     private String data;
+    // text, number, date
+    private String type;
 }

@@ -101,7 +101,7 @@ function createEmployeesGrid(selector, colModel, data, rowsPerPage, locale){
 }
 
 
-function fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid) {
+function fetchData(url, postdata, colModel, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid) {
 
     var searchTemplate = {
         maxResult: postdata.rows,
@@ -110,8 +110,17 @@ function fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage,
         orderDirection: postdata.sord
     };
 
-    if(postdata.filters)
+    if(postdata.filters) {
         searchTemplate.filters = JSON.parse(postdata.filters);
+        for(var i=0; i<searchTemplate.filters.rules.length; i++){
+            var rule = searchTemplate.filters.rules[i];
+            for(var j=0; j<colModel.length; j++){
+                var col = colModel[j];
+                if(col.name == rule.field)
+                    rule.type = col.searchtype;
+            }
+        }
+    }
 
     $.ajax({
         url:url,
@@ -200,7 +209,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             }
             if(fetchdata){
                 data = {};
-                fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid);
+                fetchData(url, postdata, this.p.colModel, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid);
             }
 
             // save the postdata to compare it

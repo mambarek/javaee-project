@@ -23,9 +23,12 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,14 +74,14 @@ public class EmployeeTableViewDAO {
 
     public List<EmployeeTableItem> filterEmployees(EmployeesSearchTemplate employeesSearchTemplate){
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-        CriteriaQuery<EmployeeTableItem> criteriaQuery = criteriaBuilder.createQuery(EmployeeTableItem.class);
+        CriteriaQuery<EmployeeTableItem> criteriaQuery = cb.createQuery(EmployeeTableItem.class);
         Root<Employee> employeeRoot = criteriaQuery.from(Employee.class);
 
         Join<Employee,Person> join = employeeRoot.join(Employee_.createdBy, JoinType.LEFT);
 
-        final CompoundSelection<EmployeeTableItem> compoundSelection = criteriaBuilder.construct(EmployeeTableItem.class,
+        final CompoundSelection<EmployeeTableItem> compoundSelection = cb.construct(EmployeeTableItem.class,
                 employeeRoot.get(Employee_.id),
                 employeeRoot.get(Employee_.firstName),
                 employeeRoot.get(Employee_.lastName),
@@ -89,13 +92,14 @@ public class EmployeeTableViewDAO {
 
         final CriteriaQuery<EmployeeTableItem> select = criteriaQuery.select(compoundSelection);
 
+        Map<String,Object> paramMap = new HashMap<>();
         if(employeesSearchTemplate != null){
             List<Predicate> predicates = new ArrayList<>();
             // firstName
             final String firstName = employeesSearchTemplate.getEmployeeTableItem().getFirstName();
             if(StringUtils.exists(firstName)){
                 Expression<String> namePath = employeeRoot.get(Employee_.firstName);
-                final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.firstName), "%" + firstName + "%");
+                final Predicate predicate = cb.like(employeeRoot.get(Employee_.firstName), "%" + firstName + "%");
                 //select.where(predicate);
                 //predicates.add(predicate);
             }
@@ -104,10 +108,11 @@ public class EmployeeTableViewDAO {
             final String lastName = employeesSearchTemplate.getEmployeeTableItem().getLastName();
             if(StringUtils.exists(lastName)){
                 Expression<String> namePath = employeeRoot.get(Employee_.lastName);
-                final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.lastName), "%" + lastName + "%");
+                final Predicate predicate = cb.like(employeeRoot.get(Employee_.lastName), "%" + lastName + "%");
                 //select.where(predicate);
                 //predicates.add(predicate);
             }
+
 
             if(employeesSearchTemplate.getFilters() != null){
                 Group group = employeesSearchTemplate.getFilters();
@@ -116,9 +121,66 @@ public class EmployeeTableViewDAO {
 
                 for (Rule rule: group.getRules()) {
                     Predicate rulePredicate = null;
-                    if(rule.getOp() == Operation.CONTAINS){
-                        rulePredicate = criteriaBuilder.like(employeeRoot.get(rule.getField()), "%" + rule.getData() + "%");
+                    switch (rule.getOp()){
+                        case CONTAINS:
+                            rulePredicate = cb.like(employeeRoot.get(rule.getField()), "%" + rule.getData() + "%");
+                            break;
+                        case LESS:
+                            rulePredicate = cb.lessThan(employeeRoot.get(rule.getField()), rule.getData());
+                            break;
+                        case LESS_OR_EQUAL:
+                            rulePredicate = cb.lessThanOrEqualTo(employeeRoot.get(rule.getField()), rule.getData());
+                            break;
+                        case NULL:
+                            rulePredicate = cb.isNull(employeeRoot.get(rule.getField()));
+                            break;
+                        case NOT_NULL:
+                            rulePredicate = cb.isNotNull(employeeRoot.get(rule.getField()));
+                            break;
+                        case EQUAL:
+                            rulePredicate = cb.equal(employeeRoot.get(rule.getField()),  rule.getData());
+                            break;
+                        case NOT_EQUAL:
+                            rulePredicate = cb.notEqual(employeeRoot.get(rule.getField()),  rule.getData());
+                            break;
+                        case IN:{
+                            ParameterExpression<String> nameParameter = cb.parameter(String.class, rule.getField());
+                            paramMap.put(rule.getField(), rule.getData());
+                            final Expression<Integer> locate = cb.locate(nameParameter, employeeRoot.get(rule.getField()));
+                            rulePredicate = cb.gt(locate,0);
+                            break;}
+                        case NOT_IN:{
+                            ParameterExpression<String> nameParameter = cb.parameter(String.class, rule.getField());
+                            paramMap.put(rule.getField(), rule.getData());
+                            final Expression<Integer> locate = cb.locate(nameParameter, employeeRoot.get(rule.getField()));
+                            rulePredicate = cb.equal(locate,0);
+                            break;}
+                        case BETWEEN:
+                            break;
+                        case GREATHER:
+                            rulePredicate = cb.greaterThan(employeeRoot.get(rule.getField()), rule.getData());
+                            break;
+                        case ENDS_WITH:
+                            rulePredicate = cb.like(employeeRoot.get(rule.getField()), "%" + rule.getData());
+                            break;
+                        case BEGINS_WITH:
+                            rulePredicate = cb.like(employeeRoot.get(rule.getField()), rule.getData() + "%");
+                            break;
+                        case NOT_CONTAINS:
+                            rulePredicate = cb.notLike(employeeRoot.get(rule.getField()), "%" + rule.getData() + "%");
+                            break;
+                        case NOT_ENDS_WITH:
+                            rulePredicate = cb.notLike(employeeRoot.get(rule.getField()), "%" + rule.getData());
+                            break;
+                        case NOT_BEGIN_WITH:
+                            rulePredicate = cb.notLike(employeeRoot.get(rule.getField()), rule.getData() + "%");
+                            break;
+                        case GREATHER_OR_EQUAL:
+                            rulePredicate = cb.greaterThanOrEqualTo(employeeRoot.get(rule.getField()), rule.getData());
+                            break;
+
                     }
+
 
                     if(rulePredicate != null){
                         rulesPredicate.add(rulePredicate);
@@ -127,10 +189,10 @@ public class EmployeeTableViewDAO {
 
                 switch (group.getGroupOp()){
                     case AND:
-                        groupPredicat = criteriaBuilder.and(rulesPredicate.toArray(new Predicate[0]));
+                        groupPredicat = cb.and(rulesPredicate.toArray(new Predicate[0]));
                         break;
                     case OR:
-                        groupPredicat = criteriaBuilder.or(rulesPredicate.toArray(new Predicate[0]));
+                        groupPredicat = cb.or(rulesPredicate.toArray(new Predicate[0]));
                         break;
                 }
 
@@ -147,10 +209,10 @@ public class EmployeeTableViewDAO {
             if(StringUtils.exists(employeesSearchTemplate.getOrderBy())) {
                 switch (employeesSearchTemplate.getOrderDirection()) {
                     case "asc":
-                        orderBy = criteriaBuilder.asc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
+                        orderBy = cb.asc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
                         break;
                     case "desc":
-                        orderBy = criteriaBuilder.desc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
+                        orderBy = cb.desc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
                         break;
                 }
             }
@@ -162,6 +224,10 @@ public class EmployeeTableViewDAO {
 
 
         final TypedQuery<EmployeeTableItem> query = entityManager.createQuery(select);
+
+        // set query parameter if exists
+        paramMap.forEach(query::setParameter);
+
         if(employeesSearchTemplate != null) {
             if(employeesSearchTemplate.getMaxResult() > 0)
                 query.setMaxResults(employeesSearchTemplate.getMaxResult());
