@@ -18,7 +18,7 @@
 }
 
 .change {
-    background-color: #000
+    /*background-color: #000*/
 }
 
 .change .bar-top {
@@ -152,7 +152,7 @@
         height: 2px;
         margin: 0px 15px 0px 0px;
         overflow: hidden;
-        background-color: #fff;
+        background-color: transparent;
     }
     .left-align .divider,
     .right-align .divider {
@@ -160,5 +160,16 @@
         margin: 0px 15px 0px 0px;
         overflow: hidden;
         background-color: #000;
+    }
+
+    .navbar-toggle:hover,
+    .navbar-toggle:focus {
+         border-color: rgba(255,255,255,.1);
+        background-color: transparent;
+        outline: none !important;
+    }
+
+    .btn {
+        outline: none !important;
     }
 }

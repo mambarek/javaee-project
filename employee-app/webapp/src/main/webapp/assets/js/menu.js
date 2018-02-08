@@ -30,4 +30,22 @@ jQuery(function($) {
         //$('.navbar-toggle').toggleClass('hidden');
     });
 
+    $('.overlay').off('click').on('click',function(){
+        $('.navbar-toggler').toggleClass("change");
+
+        if ($('.navbar-collapse').hasClass('right-align')) {
+            // zeige/verstecke menue
+            $('.navbar-collapse').toggleClass('right');
+            // kreuz auf hellem hintergrund, also mach in schwarz
+            // damit bessersichtbar
+            $('.change .bar-top').css('background-color', '#000');
+            $('.change .bar-bottom').css('background-color', '#000');
+        }
+
+        if ($('.navbar-collapse').hasClass('left-align')) {
+            $('.navbar-collapse').toggleClass('left');
+            $('.overlay').toggleClass('left');
+            $('#main-content').toggleClass('blurry-text');
+        }
+    })
 });

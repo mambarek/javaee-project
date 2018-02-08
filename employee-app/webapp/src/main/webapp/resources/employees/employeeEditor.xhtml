@@ -87,44 +87,26 @@
                     &lt;!&ndash;</div>&ndash;&gt;
                 </f:facet>
             </employees:selectOneMenue>-->
-            <div class="form-group row justify-content-end hidden-sm-down">
+            <div class="form-group row justify-content-end">
                 <div class="btn-group">
-                    <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
-                        <i class="fa fa-reply" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
+                    <button type="submit" class="btn btn-primary mr-2 btn-sm-block" jsf:immediate="true" jsf:id="cancel">
+                        <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
                     </button>
 
-                    <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
+                    <button type="submit" class="btn btn-primary mr-2 btn-sm-block" jsf:rendered="#{cc.attrs.model.isNew() == false}"
                             jsf:id="delete" data-deleteFunc="clickDelete">
-                        <i class="fa fa-trash-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
+                        <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
                     </button>
 
-                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" data-saveFunc="clickSave">
+                    <button type="submit" class="btn btn-primary mr-3 btn-sm-block" jsf:id="save" data-saveFunc="clickSave">
                             <!--onclick="makeAjax(this,event,'@form','content',checkValidationAndConfirmSave)">-->
-                        <i class="fa fa-floppy-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
+                        <i class="far fa-save" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
                     </button>
                 </div>
             </div>
-            <ui:remove>
-            <div class="form-group row hidden-md-up">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary btn-block" jsf:immediate="true" jsf:id="cancel">
-                        #{cc.resourceBundleMap['employee.editor.button.cancel']}
-                    </button>
-                </div>
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary  btn-block" jsf:id="delete">
-                        #{cc.resourceBundleMap['employee.editor.button.delete']}
-                    </button>
-                </div>
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary  btn-block" jsf:id="save">
-                        #{cc.resourceBundleMap['employee.editor.button.save']}
-                    </button>
-                </div>
-            </div>
-            </ui:remove>
+
         </div>
     </h:form>
 

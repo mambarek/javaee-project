@@ -64,6 +64,7 @@ html{
 
 body {
   font-size: $fontSize;
+  height: 100%;
   /*line-height: $lineHeight;*/
 }
 
@@ -584,6 +585,7 @@ option.avatar {
 .gender-male, .gender-female{
   position:relative;
 }
+
 .gender-male::before{
   font-family: FontAwesome;
   top:0;

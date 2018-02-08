@@ -15,6 +15,7 @@
     <!--<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>-->
     <link rel="stylesheet" href="fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css"/>
     <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css"/>
+    <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/corporate.css"/>
     <link rel="stylesheet" href="assets/css/loader.css" />
     <link rel="stylesheet" href="assets/css/menu.css" />
@@ -82,11 +83,11 @@
 
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
-                        <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
                     </form>
                     <div class="pull-right ml-3">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
                             </button>
                             <div class="dropdown-menu">
@@ -110,7 +111,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">E-Management</a>
                     <!--<button type="button" class="navbar-toggle">-->
-                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2" aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2"
+                            aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation" >
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="bar-top"/>
                         <span class="bar-middle"/>
@@ -146,27 +148,6 @@
 
                     </div>
                 </div>
-<!--                <div class="collapse navbar-collapse" id="m2">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>-->
             </div>
         </nav>
         <!-- main menu end -->
@@ -174,7 +155,7 @@
 
     <div class="container">
         <div class="row hidden-md-down">
-            <div class="col-lg-3"/>
+            <div class="col-lg-2"/>
             <div class="col">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -184,16 +165,16 @@
             </div>
         </div>
         <!-- Search and language for Tablet-->
-        <div class="row d-sm-none hidden-lg-up">
+        <div class="row hidden-xs-down hidden-lg-up">
             <div class="col-12 d-flex">
                 <div class="d-flex flex-row" style="width: 100%">
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
-                        <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
                     </form>
                     <div class="ml-md-auto align-self-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
                             </button>
                             <div class="dropdown-menu">
@@ -208,11 +189,11 @@
             </div>
         </div>
         <!-- Search and language for Mobile-->
-        <div class="row hidden-md-up">
+        <div class="row hidden-sm-up">
             <div class="col-12">
                     <div style="width:100%">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="btn-group" style="margin-top: 5px;float: right;">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
                             </button>
                             <div class="dropdown-menu">
@@ -225,21 +206,37 @@
                     </div>
             </div>
         </div>
-        <div class="row hidden-md-up">
+        <div class="row hidden-sm-up">
             <div class="col-12">
                     <form class="form-inline my-2 my-lg-0">
+<!--                        <div class="input-group">
                         <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
                         <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
+                        </div>-->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="fas fa-search"/>
+                                </button>
+                            </div>
+                        </div>
                     </form>
             </div>
         </div>
-        <!-- Left col menu-->
+        <!-- Left col menu BEGIN -->
         <div class="row ">
             <div class="col-lg-2">
                 <div class="card">
                     <div class="card-header corp-block-header-left">
+                        <!--<div class="hidden-lg-up">-->
+                            <a data-toggle="collapse" href="#left-menu-block" role="button" aria-expanded="false" aria-controls="left-menu-block">
+                                <i class="fas fa-plus"/>
+                            </a>
+                       <!-- </div>-->
                         Aktionen
                     </div>
+                    <div  id="left-menu-block" class="collapse">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Active</a>
@@ -274,6 +271,7 @@
                             </div>
                         </li>
                     </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 col-lg-8" jsf:id="content">
@@ -319,7 +317,7 @@
                                         <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
                                         <td style="text-align: right;">
                                             <a tabindex="0" id="pop-#{status.index}" data-toggle="popover" data-placement="right" style="color: green">
-                                            <i class="fa fa-address-card fa-2x"/>
+                                            <i class="fas fa-address-card fa-2x"/>
                                             <h:outputScript>
                                                 console.info("## der button",$('#pop-#{status.index}'));
                                                 $('#pop-#{status.index}').popover({
@@ -381,7 +379,7 @@
 
         <footer>
             <!-- Example row of columns -->
-            <div class="row corp-footer mt-3">
+ <!--           <div class="row corp-footer mt-3">
                 <div class="col-lg-4 p-5">
                     <h2>Heading 1</h2>
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -397,7 +395,7 @@
                     <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
                     <p><a class="btn btn-primary" href="#" role="button">View details &#187;</a></p>
                 </div>
-            </div>
+            </div>-->
         </footer>
         </div> <!-- /Container-->
     <!-- Optional JavaScript -->

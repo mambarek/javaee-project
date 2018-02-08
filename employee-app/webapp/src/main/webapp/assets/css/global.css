@@ -1,0 +1,14 @@
+@media (max-width: 576px) {
+    .display-sm-none {
+        display: none !important;
+    }
+
+    .btn-sm-container{
+        width:100%;
+    }
+    .btn-sm-block{
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
