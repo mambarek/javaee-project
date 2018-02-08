@@ -79,6 +79,10 @@
                 return 'class=\"testClass\"';
             }
 
+            if(cm.name == "Maghrib" ) {
+                return 'class=\"testClass2\"';
+            }
+
             return null;
         }
 
@@ -119,8 +123,8 @@
                 formatCol: formatCol,
                 data: data,
                 colModel: [
-                    { label: 'Date', name: 'date', jsonmap: 'date.readable', formatter: dateFormatter, width: 100},
-                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', formatter: dateFormatter, width: 80},
+                    { label: 'Date', name: 'date', jsonmap: 'date.readable', formatter: dateFormatter, cellattr : formatNowCell, width: 100},
+                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', formatter: dateFormatter, cellattr : formatNowCell, width: 80},
                     { label: 'Fajr', name: 'Fajr', jsonmap: 'timings.Fajr', width: 80, cellattr : formatNowCell , align: "center"},
                     { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 80, cellattr : formatNowCell , align: "center" },
                     { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 80, cellattr : formatNowCell , align: "center"},
