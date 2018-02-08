@@ -43,6 +43,5 @@ public class LoginController implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

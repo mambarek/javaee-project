@@ -87,6 +87,7 @@
                         <li><a class="nav-link"  href="#"><span class="fas fa-sign-in-alt"/> Login</a></li>
                     </ui:fragment>
                     <ui:fragment rendered="#{loginController.userLoggedIn}">
+                        <li class="nav-link">Sie sind angemeldet als: #{loginController.loggedInUser.userName}</li>
                         <li><a class="nav-link"  href="#" jsf:id="logout" jsf:action="#{loginController.logout}"><span class="fas fa-sign-in-alt"/> Logout</a></li>
                     </ui:fragment>
                 </ul>

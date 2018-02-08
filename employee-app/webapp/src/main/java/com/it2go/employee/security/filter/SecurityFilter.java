@@ -14,6 +14,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -21,7 +22,7 @@ import java.security.Principal;
 public class SecurityFilter implements Filter {
 
     @Inject
-    private LoginController loginController;
+    private Instance<LoginController> loginController;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,9 +41,12 @@ public class SecurityFilter implements Filter {
         if(userPrincipal == null)
             System.out.println(">> SecurityFilter userPrincipal is null !!! ");
         else {
-            ApplicationUser user = new ApplicationUser();
-            user.setUserName(userPrincipal.getName());
-            loginController.setLoggedInUser(user);
+            LoginController controller = loginController.get();
+            if(controller.getLoggedInUser() == null) {
+                ApplicationUser user = new ApplicationUser();
+                user.setUserName(userPrincipal.getName());
+                controller.setLoggedInUser(user);
+            }
         }
 
         chain.doFilter(request, response);

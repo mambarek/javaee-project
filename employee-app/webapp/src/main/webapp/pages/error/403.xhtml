@@ -43,27 +43,9 @@
     </h:outputScript>
 
 
-    <h3>Pages 403 Es ist ein Fehler aufgetreten!</h3>
+    <h3>403: Access to this resource denieded! Pleas contact your Admin to change your rights.</h3>
 
-    <div class="employeeFormErrorList" style="display: block">
-        <ui:repeat value="#{facesContext.externalContext.requestMap.keySet}" var="key">
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
-                <strong>#{key} </strong> #{facesContext.externalContext.getRequestMap().get(key)}
-                <!--<strong>#{facesMessage.severity} </strong> #{facesMessage.summary}-->
-            </div>
-        </ui:repeat>
-        <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
-            <ui:fragment rendered="true">
-                <!--<ui:fragment >-->
-                <div class="alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
-                    <strong>#{employeeMsg['employee.messgaes.error']} </strong> #{facesMessage.summary}
-                    <!--<strong>#{facesMessage.severity} </strong> #{facesMessage.summary}-->
-                </div>
-            </ui:fragment>
-        </ui:repeat>
-    </div>
+
 
 </h:body>
 </html>
