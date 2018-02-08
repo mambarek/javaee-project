@@ -213,8 +213,11 @@
 
         function formatNowCell  (rowId, cellvalue, rawObject, cm, rdata){
             var now = new Date();
+            var date = new Date(rawObject.date.readable);
             //if(rowObject.date.gregorian.day == now.getDate()) {
-            if(rdata.date.date.startsWith(now.getDate())) {
+            //if(rdata.date.date.startsWith(now.getDate())) {
+            //if(now.getTime() == date.getTime()) {
+            if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getFullYear() == date.getFullYear()){
                 //if(options.colModel.name == "Maghrib" ) {
                 return 'class=\"nowCell\"';
             }
@@ -224,8 +227,11 @@
 
         function formatDayNowCell  (rowId, cellvalue, rawObject, cm, rdata){
             var now = new Date();
+            var date = new Date(rawObject.date.readable);
             //if(rowObject.date.gregorian.day == now.getDate()) {
-            if(rdata.day.date.startsWith(now.getDate())) {
+            //if(rdata.date.date.startsWith(now.getDate())) {
+            //if(now.getTime() == date.getTime()) {
+            if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getFullYear() == date.getFullYear()){
                 //if(options.colModel.name == "Maghrib" ) {
                 return 'class=\"nowCell\"';
             }
@@ -235,8 +241,9 @@
 
         function formatMaghribCell  (rowId, cellvalue, rawObject, cm, rdata){
             var now = new Date();
+            var date = new Date(rawObject.date.readable);
             //if(rowObject.date.gregorian.day == now.getDate()) {
-            if(rdata.date.date.startsWith(now.getDate())) {
+            if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getFullYear() == date.getFullYear()){
                 //if(options.colModel.name == "Maghrib" ) {
                 return 'class=\"testClass\"';
             }
@@ -341,7 +348,9 @@
             var nowIndex=0;
             for(var i=0; i< items.length; i++) {
                 var item = items[i];
-                if (item.date.gregorian.date.startsWith(now.getDate())) {
+                var date = new Date(item.date.readable);
+                //if (item.date.gregorian.date.startsWith(now.getDate())) {
+                if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getFullYear() == date.getFullYear()){
                     nowIndex = i;
                     break;
                 }

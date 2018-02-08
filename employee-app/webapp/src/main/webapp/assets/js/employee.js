@@ -615,7 +615,7 @@ function handleAjaxSaveEvent(data){
                     title: employee_i18n['employee.overlay.info'],
                     message: employee_i18n['employee.overlay.savingSuccess'],
                     showOnlyRightBtn: true,
-                    rightBtnFuncName: redirectToList,
+                    rightBtnFuncName: "redirectToList",
                     rightBtnLabel: employee_i18n['employee.overlay.ok']
                 };
             }

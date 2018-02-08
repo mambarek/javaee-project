@@ -114,7 +114,7 @@ public class EditEmployeeController implements BaseViewController {
         // reset the view
         this.resetView();
 
-        return "/pages/employees/jqGrid-table.xhtml";
+        return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
     }
 
     public String deleteEmployee() throws EntityNotPersistedException {

@@ -1,4 +1,5 @@
 <ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -23,7 +24,7 @@
             </h:commandLink>
             <h:commandLink styleClass="d-none tabSendSave" pt:data-saveFunc="clickSave">
                 <i class="far fa-save" aria-hidden="true"/>&#xA0; Save Tab
-                <f:ajax execute="@form" render="@form" onevent="checkTabValidationAndConfirmSave"/>
+                <f:ajax onevent="checkTabValidationAndConfirmSave"/>
             </h:commandLink>
         </div>
     </div>
