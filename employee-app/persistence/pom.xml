@@ -5,30 +5,30 @@
     <parent>
         <artifactId>employee-app</artifactId>
         <groupId>com.it2go.employee</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>persistence</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>Java EE Project: javaee-project - employee-app - persistence</name>
 
     <dependencies>
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>dao</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>entities</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>dto</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
