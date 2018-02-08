@@ -9,7 +9,7 @@
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:p="http://primefaces.org/ui">
 
-    <cc:interface>
+    <cc:interface componentType="countrySelect">
         <cc:attribute name="value" required="true"
                       shortDescription="The selected value." />
         <cc:attribute name="label"
@@ -18,12 +18,27 @@
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
         <div id="#{cc.clientId}">
-            <pe:formRow value="" inputType="newselect" label="Region"
-                        radioItems="#{applicationController.continents}" >
-                <f:facet name="selectOnMenuTemplate">
-                    <span>#{applicationController.getLocalizedNameFor(item)}</span>
-                </f:facet>
-            </pe:formRow>
+            <div class="form-group row">
+                <h:outputLabel styleClass="col-md-2 col-sm-3 col-form-label" value="Region"/>
+                <div class="col-lg-4 col-sm-3">
+                    <pe:selectComponent value="#{cc.continent}" items="#{masterdataService.continents}"
+                                        ajaxRender="#{cc.clientId}">
+                        <f:facet name="selectOnMenuTemplate">
+                            <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                        </f:facet>
+                    </pe:selectComponent>
+                </div>
+                <ui:fragment rendered="#{!empty cc.continent}">
+                    <h:outputLabel styleClass="col-md-2 col-sm-6 col-form-label" value="Land"/>
+                    <div class="col-lg-4 col-sm-3">
+                        <pe:selectComponent value="#{cc.attrs.value}" items="#{masterdataService.continents}">
+                            <f:facet name="selectOnMenuTemplate">
+                                <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                            </f:facet>
+                        </pe:selectComponent>
+                    </div>
+                </ui:fragment>
+            </div>
         </div>
     </cc:implementation>
 </ui:component>

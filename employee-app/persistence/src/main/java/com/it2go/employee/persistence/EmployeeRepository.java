@@ -2,13 +2,13 @@ package com.it2go.employee.persistence;
 
 import com.it2go.employee.dao.DomainEntity;
 import com.it2go.employee.entities.Employee;
-import com.it2go.employee.entities.Gender;
 import com.it2go.employee.entities.Person;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.framework.dao.IEntityDAO;
+import com.it2go.masterdata.Gender;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Stateless
-public class EmployeeRepository implements IEmployeeRepository{
+public class EmployeeRepository implements IEmployeeRepository {
 
     @Inject
     @DomainEntity(clazz = Employee.class)
@@ -59,9 +59,9 @@ public class EmployeeRepository implements IEmployeeRepository{
     public Employee persist(Employee employee, Person user) throws EntityConcurrentModificationException, EntityRemovedException {
         Objects.requireNonNull(employee);
 
-        if(employee.isNew()){
+        if (employee.isNew()) {
             employee.setCreatedBy(user);
-        }else{
+        } else {
             employee.setUpdatedBy(user);
         }
         // check children
@@ -113,7 +113,7 @@ public class EmployeeRepository implements IEmployeeRepository{
         return employeeDAO.getByQuery(query, gender);
     }
 
-    public Date getLastUpdate(Employee employee){
+    public Date getLastUpdate(Employee employee) {
         return employeeDAO.getLastUpdateTime(employee);
     }
 }

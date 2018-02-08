@@ -7,7 +7,7 @@
       xmlns:employees="http://xmlns.jcp.org/jsf/composite/employees"
       xmlns:behavior="http://it2go.com/employee">
 
-<composite:interface componentType="employee.component">
+<composite:interface componentType="uiCompositeComponent">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
 
     <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>

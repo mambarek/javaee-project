@@ -7,7 +7,7 @@
       xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
       xmlns:p="http://primefaces.org/ui">
 
-<composite:interface componentType="employee.component">
+<composite:interface componentType="uiCompositeComponent">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
 
     <composite:actionSource name="saveButton" event="click" targets="#{cc.clientId}:employeeForm:save"/>
@@ -35,7 +35,7 @@
         #{cc.resourceBundleMap['employee.editor.title']}
     </div>
     <div class="card-block">
-        <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
+        <h:form id="employeeForm" styleClass="employeeForm" >
 
             <pe:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
@@ -60,25 +60,32 @@
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </pe:formRow>
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="custom-radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                               radioItems="#{editEmployeeController.genders}" isRequired="true">
+                               radioItems="#{masterdataService.genders}" isRequired="true">
             </pe:formRow>
             <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Prime-#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true"/>
+                        radioItems="#{masterdataService.genders}" isRequired="true"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genders}" isRequired="true">
+                        radioItems="#{masterdataService.genders}" isRequired="true">
                 <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
-                    <i class="fas fa-#{item.name.toLowerCase()}"/>&#160;  #{applicationController.getLocalizedNameFor(item)} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
+                    <i class="fas fa-#{item.name.toLowerCase()}"/>&#160;  #{masterdataService.getLocalizedNameFor(item)} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
                     <!--</div>-->
                 </f:facet>
             </pe:formRow>
             <pe:formRow value="" inputType="newselect" label="Region"
-                        radioItems="#{applicationController.continents}" >
+                        radioItems="#{masterdataService.continents}" >
                 <f:facet name="selectOnMenuTemplate">
-                    <span>#{applicationController.getLocalizedNameFor(item)}</span>
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
             </pe:formRow>
+            <pe:countrySelect value="#{testController.continent}" label="Test continent"/>
+            <pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}">
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:selectComponent>
+
             <div class="form-group row justify-content-end">
                 <div class="btn-group">
                     <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel">

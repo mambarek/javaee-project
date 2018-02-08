@@ -1,38 +1,33 @@
 package com.it2go.employee.ui.controller;
 
-import com.it2go.employee.entities.*;
+import com.it2go.employee.entities.EmailAddress;
+import com.it2go.employee.entities.Employee;
+import com.it2go.employee.entities.EntityNotValidException;
+import com.it2go.employee.entities.Person;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
-import com.it2go.employee.ui.jsf.SelectItemWrapper;
 import com.it2go.framework.dao.BaseException;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
+import com.it2go.masterdata.Continent;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.annotation.FacesConfig;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
 @Named
 @ViewScoped
-public class EditEmployeeController implements BaseViewController{
+public class EditEmployeeController implements BaseViewController {
 
     public static final String VIEW_ID = "editEmployee";
 
@@ -70,13 +65,12 @@ public class EditEmployeeController implements BaseViewController{
         System.out.println("-- EditEmployeeController::initView before model: " + model);
         viewParams = webFlowController.getViewParams(VIEW_ID);
         Object id = null;
-        if(viewParams != null)
+        if (viewParams != null)
             id = viewParams.get("id");
 
-        if(id != null){
-            model = employeeRepository.findById((Long)id);
-        }
-        else
+        if (id != null) {
+            model = employeeRepository.findById((Long) id);
+        } else
             model = new Employee();
 
         System.out.println("-- EditEmployeeController::initView id = " + id + " model: " + model);
@@ -86,26 +80,25 @@ public class EditEmployeeController implements BaseViewController{
         model = employee;*/
     }
 
-    public void createNewEmployee(){
+    public void createNewEmployee() {
         model = new Employee();
     }
 
     public String editEmployee(Long id) throws EntityNotFoundException {
-        if(id != null){
-            model = employeeRepository.findById((Long)id);
+        if (id != null) {
+            model = employeeRepository.findById((Long) id);
         }
 
         return null;
     }
 
     public void editEmployeeAjax(Long id) throws EntityNotFoundException {
-        if(id != null){
+        if (id != null) {
             Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put("id",id);
+            paramsMap.put("id", id);
             webFlowController.putViewParams(VIEW_ID, paramsMap);
-            model = employeeRepository.findById((Long)id);
-        }
-        else
+            model = employeeRepository.findById((Long) id);
+        } else
             model = new Employee();
     }
 
@@ -113,10 +106,10 @@ public class EditEmployeeController implements BaseViewController{
 
         System.out.println("## EditEmployeeController::saveEmployee model = " + model);
 
-        if(!model.isValid()) throw new EntityNotValidException();
+        if (!model.isValid()) throw new EntityNotValidException();
 
         Person loggedInUser = userSession.getTestUpdateUser();
-        if(model.isNew())
+        if (model.isNew())
             loggedInUser = userSession.getTestCreationUser();
 
         employeeRepository.persist(model, loggedInUser);
@@ -128,31 +121,31 @@ public class EditEmployeeController implements BaseViewController{
 
     public void deleteEmployee() throws EntityNotPersistedException {
         System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
-        if(this.model == null || this.model.isNew())
+        if (this.model == null || this.model.isNew())
             throw new EntityNotPersistedException();
 
         employeeRepository.remove(this.model);
 
         this.resetView();
 
-       // return "employeeList?faces-redirect=true";
+        // return "employeeList?faces-redirect=true";
     }
 
-    public void cancel(){
+    public void cancel() {
         // reset the view
         this.resetView();
 
-       // return "employeeList?faces-redirect=true";
+        // return "employeeList?faces-redirect=true";
     }
 
-    private void resetView(){
-        if(viewParams != null)
+    private void resetView() {
+        if (viewParams != null)
             viewParams.remove("id");
 
         this.model = null;
     }
 
-    public String addNewEmail(){
+    public String addNewEmail() {
         System.out.println("*** EditController::addNewEmail before emails size " + this.model.getEmails().size());
         this.model.addEmail(new EmailAddress());
         System.out.println("*** EditController::addNewEmail after emails size " + this.model.getEmails().size());
@@ -170,16 +163,16 @@ public class EditEmployeeController implements BaseViewController{
         return "editEmployee.xhtml";
     }
 
-    public void onChange(ActionEvent actionEvent){
+    public void onChange(ActionEvent actionEvent) {
         final String clientId = actionEvent.getComponent().getClientId();
-        String compId = clientId +":"+ actionEvent.getComponent().getId();
-        compId = compId.replace(":","\\:");
+        String compId = clientId + ":" + actionEvent.getComponent().getId();
+        compId = compId.replace(":", "\\:");
     }
 
 
     /*** Ajax events handling ***/
 
-    public void ajaxSaveAction(AjaxBehaviorEvent event)  {
+    public void ajaxSaveAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
@@ -205,45 +198,12 @@ public class EditEmployeeController implements BaseViewController{
         }
     }
 
-    private void handleBaseEcption(BaseException e, String clientId){
+    private void handleBaseEcption(BaseException e, String clientId) {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         String msg = e.getLocalizedMessage(locale);
         FacesContext.getCurrentInstance().addMessage(clientId,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 
-    }
-
-    public Gender[] getGenders(){
-        return Gender.values();
-    }
-
-    public SelectItemWrapper[] getGenderWrapperList(){
-
-        SelectItemWrapper[] resArray = new SelectItemWrapper[Gender.values().length];
-        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-
-        // add null item for select
-/*        SelectItemWrapper<Gender> nullValue = new SelectItemWrapper<>(null);
-        nullValue.setLocalizedLabel("-- Bitte wählen Sie --");
-        resArray[0] = nullValue;*/
-
-        int i=0;
-        for (Gender gender:Gender.values()) {
-            SelectItemWrapper<Gender> selectItemWrapper = new SelectItemWrapper<>(gender);
-            selectItemWrapper.setLocalizedLabel(Gender.getLocalizedNameFor(gender,locale));
-            resArray[i] = selectItemWrapper;
-            i++;
-        }
-
-        return resArray;
-    }
-
-    public SelectItem[] getGenderItems(){
-        SelectItem[] res = new SelectItem[2];
-        res[0] = new SelectItem(Gender.MALE, Gender.MALE.getName());
-        res[1] = new SelectItem(Gender.FEMALE, Gender.FEMALE.getName());
-
-        return res;
     }
 
     public Continent getSelectedContinent() {

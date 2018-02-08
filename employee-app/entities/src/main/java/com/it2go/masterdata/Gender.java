@@ -1,4 +1,4 @@
-package com.it2go.employee.entities;
+package com.it2go.masterdata;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -27,7 +27,7 @@ public enum Gender {
         String resLabel;
 
         try {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/gender/gender", locale);
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/masterdata/i18n/gender/gender", locale);
             resLabel = resourceBundle.getString(gender.toString());
         }catch (Exception e){
             e.printStackTrace();

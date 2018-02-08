@@ -1,7 +1,6 @@
 package com.it2go.employee.entities;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.it2go.framework.util.json.JsonStdDateSerializer;
+import com.it2go.masterdata.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,7 +69,7 @@ public class Person extends DomainEntity {
     private EmailAddress embeddedEmail;
 
     @ElementCollection
-    @CollectionTable(name = "EMAIL", joinColumns=@JoinColumn(name="OWNER_ID"))
+    @CollectionTable(name = "EMAIL", joinColumns = @JoinColumn(name = "OWNER_ID"))
     //private List<String> emails = new ArrayList<>();
     private List<EmailAddress> emails = new ArrayList<>();
 
@@ -94,7 +93,7 @@ public class Person extends DomainEntity {
     @OneToOne
     private Person mother;*/
 
-    public void addChild(Person child){
+    public void addChild(Person child) {
         Objects.requireNonNull(child);
 
         child.addParent(this);
@@ -102,7 +101,7 @@ public class Person extends DomainEntity {
         this.children.add(child);
     }
 
-    public void addParent(Person parent){
+    public void addParent(Person parent) {
         this.parents.add(parent);
     }
 
@@ -111,8 +110,8 @@ public class Person extends DomainEntity {
         return String.format("Person[(%s)%s %s]", this.getId(), this.getFirstName(), this.getLastName());
     }
 
-    public void addEmail(EmailAddress emailAddress){
-        if(!this.emails.contains(emailAddress))
+    public void addEmail(EmailAddress emailAddress) {
+        if (!this.emails.contains(emailAddress))
             this.emails.add(emailAddress);
     }
 }

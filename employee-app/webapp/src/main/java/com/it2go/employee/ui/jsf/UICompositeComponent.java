@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 However that is obviously a bug in the Mojarra and I hope it will be fixed soon.
 Problem: CC can not find resource bundles for translations
   */
-@FacesComponent("employee.component")
+@FacesComponent("uiCompositeComponent")
 public class UICompositeComponent extends UINamingContainer {
     private static final String PROPERTIES_EXT = ".properties";
 

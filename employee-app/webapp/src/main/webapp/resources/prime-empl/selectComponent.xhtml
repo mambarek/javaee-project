@@ -1,0 +1,92 @@
+<ui:component
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface componentType="selectComponentImpl">
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+        <cc:attribute name="items"/>
+        <cc:attribute name="isRequired" default="false" type="boolean"
+                      shortDescription="if the value is required"/>
+        <cc:attribute name="disabled" default="false" type="boolean"
+                      shortDescription="the input is rendered but disabled"/>
+        <cc:attribute name="readOnly" default="false" type="boolean"
+                      shortDescription="readOnlx means the comonent is rendered as string"/>
+        <cc:attribute name="ajaxRender"
+                      shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:facet name="selectOnMenuTemplate"/>
+    </cc:interface>
+    <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <div class="input-group">
+                <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
+                                 style="width: 100%" required="#{cc.attrs.isRequired}" binding="#{cc.input}">
+                    <f:selectItem
+                            itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
+                    <f:selectItems value="#{cc.attrs.items}" var="item"
+                                   itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
+                    <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax"/>
+                </h:selectOneMenu>
+                <!-- draw table with cols-->
+                <div style="display: none">
+                    <ul>
+                        <li id="#{cc.clientId}-li-0">-- Bitte wählen --</li>
+                        <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
+                            <li id="#{cc.clientId}-li-#{status.index + 1}">
+                                <c:choose>
+                                    <c:when test="#{cc.facets.containsKey('selectOnMenuTemplate')}">
+                                        <cc:renderFacet name="selectOnMenuTemplate">
+                                            <f:param name="item" value="#{item}"/>
+                                        </cc:renderFacet>
+                                    </c:when>
+                                    <c:otherwise>
+                                        #{item.toString()}
+                                    </c:otherwise>
+                                </c:choose>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div>
+            <h:outputScript>
+                <!-- jqueryui takes info from table to generate ist-->
+                $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
+                _renderItem: function( ul, item ) {
+                var _id = '#' + encodeId("#{cc.clientId}-li-" + item.index);
+                //console.info("#+#+ _d: " + _id);
+                var _li = $(_id);
+
+                var li = $("&lt;li/&gt;");
+                var div = $("&lt;div&gt;");
+                li.append(div);
+                div.html(_li.html());
+                return li.appendTo( ul );
+                }
+                });
+
+                var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                //console.info("**-- encodedId: " + encodedId);
+                // apply the menu
+                $(encodedId).selectOneMenu({
+                // bei collision at the bottom of browser show menu on the oposite (top)
+                position:{collision: "flip"},
+                // trigger onchange for select and fire ajax
+                change: function( event, ui ) {$(encodedId).trigger( "change" );}
+                });
+
+
+            </h:outputScript>
+        </div>
+    </cc:implementation>
+</ui:component>

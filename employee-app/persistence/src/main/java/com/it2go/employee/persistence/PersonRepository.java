@@ -1,13 +1,13 @@
 package com.it2go.employee.persistence;
 
 import com.it2go.employee.dao.DomainEntity;
-import com.it2go.employee.entities.Gender;
 import com.it2go.employee.entities.Person;
 import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
 import com.it2go.framework.dao.IEntityDAO;
+import com.it2go.masterdata.Gender;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -57,10 +57,10 @@ public class PersonRepository implements IPersonRepository {
     public Person persist(Person person, Person user) throws EntityConcurrentModificationException, EntityRemovedException {
         Objects.requireNonNull(person);
 
-        if(person.isNew()){
+        if (person.isNew()) {
             person.setCreatedAt(new Date());
             person.setCreatedBy(user);
-        }else{
+        } else {
             person.setUpdatedBy(user);
             person.setUpdatedAt(new Date());
         }
@@ -110,7 +110,7 @@ public class PersonRepository implements IPersonRepository {
     }
 
     @Override
-    public List<Person> findByGender(Gender gender){
+    public List<Person> findByGender(Gender gender) {
         String query = "SELECT p from Person p WHERE p.gender = ?1";
 
         return personDAO.getByQuery(query, gender);
