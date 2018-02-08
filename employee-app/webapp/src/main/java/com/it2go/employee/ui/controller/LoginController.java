@@ -1,5 +1,8 @@
 package com.it2go.employee.ui.controller;
 
+
+import com.it2go.employee.entities.ApplicationUser;
+import com.it2go.employee.entities.Person;
 import lombok.Data;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,7 +16,10 @@ import java.security.Principal;
 
 @SessionScoped
 @Named
+@Data
 public class LoginController implements Serializable {
+
+    private ApplicationUser loggedInUser;
 
     public boolean isUserLoggedIn() {
 
@@ -27,6 +33,7 @@ public class LoginController implements Serializable {
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         try {
             request.logout();
+            this.loggedInUser = null;
         } catch (ServletException e) {
             e.printStackTrace();
         }

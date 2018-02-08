@@ -1,5 +1,11 @@
 package com.it2go.employee.security.filter;
 
+import com.it2go.employee.entities.ApplicationUser;
+import com.it2go.employee.entities.Person;
+import com.it2go.employee.ui.controller.LoginController;
+
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,6 +19,9 @@ import java.security.Principal;
 
 @WebFilter(urlPatterns = "/*")
 public class SecurityFilter implements Filter {
+
+    @Inject
+    private LoginController loginController;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,6 +39,11 @@ public class SecurityFilter implements Filter {
         //userPrincipal.
         if(userPrincipal == null)
             System.out.println(">> SecurityFilter userPrincipal is null !!! ");
+        else {
+            ApplicationUser user = new ApplicationUser();
+            user.setUserName(userPrincipal.getName());
+            loginController.setLoggedInUser(user);
+        }
 
         chain.doFilter(request, response);
     }
