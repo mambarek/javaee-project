@@ -4,11 +4,11 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <div class="form-group row justify-content-end" style="position:absolute;margin-top:30px;right:0;">
+    <div class="form-group row justify-content-end">
         <div class="btn-group">
             <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" id="cancel"
                            action="backToList">
-                <!--<f:actionListener binding="#{editEmployeeController.closeConversation()}"/>-->
+                <f:actionListener binding="#{editEmployeeController.closeConversation()}"/>
                 <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.cancel']}
             </h:commandLink>
 

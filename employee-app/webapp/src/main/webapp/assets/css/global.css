@@ -40,11 +40,12 @@
 }
 
 .custom-combobox {
-    position: absolute;
+    /*position: absolute;
     left: 0px;
-    right: 40px; /* platz für 32px bild lassen*/
+    right: 40px;
     display: inline-block;
-    padding-bottom: 2px;
+    padding-bottom: 2px;*/
+    width: 100%;
     white-space: nowrap; /* one line: no wrap*/
 }
 
@@ -54,6 +55,7 @@
 }
 
 .custom-combobox.is-valid {
+    padding: 1px;
     border: 1px solid;
     border-color:#28a745;
 }
@@ -71,8 +73,8 @@
     width: 100%
 }
 .custom-combobox-button {
-    position: absolute;
-    right: -1px;
-    height: 95%;
+    border:0;
+    left: -30px;
+    height: 90%;
 }
 

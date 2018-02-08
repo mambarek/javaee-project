@@ -34,13 +34,13 @@
         <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.personal.data.nationality']}"/>
         <div class="flex-column col-sm-9">
             <it2go:comboBoxComponent value="#{editEmployeeController.model.nationality}" items="#{masterdataService.getAllCountries(facesContext.viewRoot.locale)}"
-                                   decorated="true" label="#{employeeMsg['employee.editor.personal.data.nationality']}" isRequired="false">
+                                   decorated="true" label="#{employeeMsg['employee.editor.personal.data.nationality']}" isRequired="true">
                 <f:facet name="selectOneMenuTemplate">
                     <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="11px"/>&#160;  #{item.name}
                 </f:facet>
                 <f:facet name="postTemplate">
                     <ui:fragment rendered="#{!empty editEmployeeController.model.nationality}">
-                        <div class="mt-1 ml-2;" style="right: 0; position: absolute;">
+                        <div class="mt-1 ml-2;" style="right: 40px; position: absolute;">
                             <img src="../../assets/images/flags/icons/png/#{editEmployeeController.model.nationality.toLowerCase()}.png" alt=" " width="32px" height="22px"/>
                         </div>
                     </ui:fragment>
