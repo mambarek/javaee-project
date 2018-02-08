@@ -142,7 +142,6 @@ public class EmployeeTableViewDAO {
 
                     paramMap.put(rule.getField(), value);
 
-
                     switch (rule.getOp()) {
                         case EQUAL: {
                             rulePredicate = cb.equal(path, namedParameter);
@@ -253,6 +252,8 @@ public class EmployeeTableViewDAO {
                 employeeRoot.get(Employee_.lastName),
                 employeeRoot.get(Employee_.birthDate),
                 employeeRoot.get(Employee_.salary),
+                employeeRoot.get(Employee_.traveling),
+                employeeRoot.get(Employee_.weekendWork),
                 employeeRoot.get(Employee_.createdBy).get(Person_.firstName),
                 employeeRoot.get(Employee_.createdAt));
 

@@ -233,10 +233,11 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             } // total records number
 
         },
+
         colModel: colModel,
         //altRows : true,
         rownumbers : false,
-        colMenu : true,
+        colMenu : false,
         menubar: true,
         viewrecords : true,
         hoverrows : true,
@@ -245,7 +246,8 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         sortable: true,
         //altRows: true, This does not work in boostrarap
         // altclass: '....'
-        pager: "#gridPager",
+        pager: "#gridPager"
+
         // set table stripped class in table style in bootsrap
         //page: currentPage
 
@@ -265,6 +267,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         {
             // search options - define multiple search
             multipleSearch: true,
+            closeAfterSearch: false
             //multipleGroup: true,
             //showQuery: true
         });

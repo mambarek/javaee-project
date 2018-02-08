@@ -42,21 +42,69 @@
     </style>
     <h:outputScript>
 
+        datePick = function(elem)
+        {
+        jQuery(elem).datepicker({
+        dateFormat: "yy-mm-dd"
+        });
+        }
 
-
+        checkBox = function(elem){
+            var p = $(elem).parent();
+            $(elem).remove();
+            p.append('&lt;input type="checkbox" /&gt;');
+        }
         //refreshAllEventListener('content');
         $(document).ready(function () {
         var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/search';
         var colModel = [
 
         { label: ' ', name: 'id', width: 30,
-        formatter: editButton, filter: false, sort: false,
+        formatter: editButton, filter: false, sort: false, search: false,
         resizable: false, minWidth: 30, fixed: true
         },
-        { label: '#{employeeMsg['employee.table.col.firstName']}', name: 'firstName', width: 150, coloptions: {columns: false} },
-        { label: '#{employeeMsg['employee.table.col.lastName']}', name: 'lastName', width: 150 },
-        { label: '#{employeeMsg['employee.table.col.salary']}', name: 'salary', width: 150, searchtype: "number" },
-        { label: '#{employeeMsg['employee.table.col.birthDate']}', name: 'birthDate', width: 150, searchtype: "date" }
+        {
+            label: '#{employeeMsg['employee.table.col.firstName']}',
+            name: 'firstName', width: 150, coloptions: {columns: false}
+        },
+        {
+            label: '#{employeeMsg['employee.table.col.lastName']}',
+            name: 'lastName', width: 150
+        },
+        {
+            label: 'WE/Work',
+            name: 'weekendWork', width: 110,
+            colmenu: false,
+        formatter:'checkbox',
+        align: "center",
+        search: true,
+        formatoptions : {
+        disabled : true
+        },
+        searchoptions: {
+        dataInit: checkBox
+        }
+        },
+        {
+            label: '#{employeeMsg['employee.table.col.salary']}',
+            name: 'salary', width: 150, searchtype: "number",
+            formatter:'currency',
+            formatoptions:{
+                deaultValue: "null"
+            },
+            searchrules:{required:true, number:true}
+        },
+        {
+            label: '#{employeeMsg['employee.table.col.birthDate']}',
+            name: 'birthDate', width: 150, searchtype: "date" ,
+            datefmt : 'Y-m-d',
+            searchoptions: {
+                dataInit: datePick,
+                title: 'Select Date'
+            },
+            searchrules:{required:true, date:true}
+        }
+
         ];
 
         createCachedEmployeesGrid('#grid', url, colModel, 10, #{editEmployeeController.currentTabPage}, '#{facesContext.viewRoot.locale.language}');
