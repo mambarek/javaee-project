@@ -2,7 +2,7 @@ $(document).ready(function(){
     //initSessionTimeoutTimer();
     jsf.ajax.addOnEvent(function (data) {
         if(data.status == 'success'){
-            console.info("-- jsf.ajax.addOnEvent() call -- so resetTimer()");
+            //console.info("-- jsf.ajax.addOnEvent() call -- so resetTimer()");
             resetTimer();
         }
     })
