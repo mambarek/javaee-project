@@ -37,6 +37,7 @@
                   shortDescription="adds bootstrap addon button to input"/>
         <cc:editableValueHolder name="input" targets="editableText"/>
         <cc:clientBehavior name="changed" event="change" targets="editableText"/>
+        <cc:clientBehavior name="click" event="click" targets="editableText"/>
         <!-- Radio buttons -->
         <cc:attribute name="radioItems"/>
         <cc:attribute name="radioLabel"/>
@@ -76,11 +77,13 @@
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"  label="#{cc.attrs.label}"
                                                  pt:placeholder="#{cc.placeHolder}">
+                                        <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                                         <f:ajax execute="@this" render="#{cc.clientId}" onevent="validateInput" event="change"/>
                                     </h:inputText>
                                     <h:outputScript >
                                         var id = '#' + encodeId('#{cc.clientId}:editableText');
-                                        //console.info("Datepicker id: " + id);
+                                        var pattern =  employee_i18n['employee.app.date.pattern'];
+                                        console.info("Datepicker id: " + id + " Pattern: " + pattern);
                                         $(id).datepicker($.datepicker.regional[employee_i18n['locale']]);
                                         $(id).datepicker( "option", {
                                             "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],
@@ -88,7 +91,8 @@
                                             "changeYear": true,
                                             "yearRange": "c-100:c+100"
                                             });
-                                        $(id).datepicker( "setDate",$(id).attr('value'));
+                                        $(id).datepicker( "setDate",$(id).attr('value')).inputmask(employee_i18n['employee.app.date,inputmask.format'],
+                                        {placeholder: employee_i18n['employee.app.date,inputmask.pattern'], showMaskOnHover: false});
                                     </h:outputScript>
                                 </div>
                             </c:when>
@@ -256,7 +260,7 @@
                                 </div>
                             </c:when>
 
-                            <!-- text -->
+                            <!-- checkbox -->
                             <c:when test="#{cc.attrs.inputType eq 'checkbox'}">
                                 <div class="custom-control custom-checkbox" style="height: 100%;padding-left: 0px;" id="#{cc.clientId}:checkbox-wrapper">
                                     <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="custom-control-input"
@@ -267,6 +271,25 @@
                                 </div>
                                 <h:outputScript>
                                     $(encodeId("#" + "#{cc.clientId}:checkbox-wrapper")).closest(".inputContainer").css("padding-top","5px");
+                                </h:outputScript>
+                            </c:when>
+
+                            <!-- switch -->
+                            <c:when test="#{cc.attrs.inputType eq 'switch'}">
+                                <div class="custom-control" style="height: 100%;padding-left: 0px;" id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="d-none"
+                                                              value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
+                                                              disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox >
+                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                </div>
+                                <h:outputScript>
+                                    var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                                    new DG.OnOffSwitch({
+                                        el: encodedId,
+                                        textOn: "#{employeeMsg['employee.app.boolean.yes']}",
+                                        textOff: "#{employeeMsg['employee.app.boolean.no']}"
+                                    });
                                 </h:outputScript>
                             </c:when>
       <!-- End choose -->

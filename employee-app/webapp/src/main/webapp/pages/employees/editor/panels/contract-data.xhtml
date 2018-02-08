@@ -13,7 +13,7 @@
                     label="#{employeeMsg['employee.editor.contract.slary']}">
             <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
         </pe:formRow>
-        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="checkbox" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
-        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="checkbox" label="#{employeeMsg['employee.editor.contract.traveling']}"/>
+        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="switch" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
+        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="switch" label="#{employeeMsg['employee.editor.contract.traveling']}"/>
 
 </ui:composition>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <link href="#{request.contextPath}/css/styles.css" rel="stylesheet" type="text/css"/>
+    <title>Fehler</title>
+</h:head>
+
+<h:body>
+    <div class="highlighted errorMessage">
+        <h:outputText escape="false"
+                      value="Ein Fehler ist augetreten!"/>
+    </div>
+    <br/><br/>
+    <div class="errorDetails">
+        Error details: <br/>
+        #{flash.keep.errorDetails}
+    </div>
+</h:body>
+</html>
