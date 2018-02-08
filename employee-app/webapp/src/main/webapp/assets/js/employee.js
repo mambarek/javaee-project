@@ -283,7 +283,7 @@ function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
     //form-control
     //form.find(".form-control, input[type=radio]").each(function(){
-    form.find("input[type=text], input[type=radio], select").each(function(){
+    form.find("input[type=text], input[type=radio], select, textarea").each(function(){
         validateInputStyle($(this))
     });
 

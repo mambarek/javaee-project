@@ -41,6 +41,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card panel">
+                        <div class="card-header header" id="comment">
+                            <div class="mb-0">
+                                <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseComment"
+                                        aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
+                                    <i class="fas fa-caret-right fa-lg"/> #{employeeMsg['employee.editor.comment.panel.title']}
+                                </button>
+                            </div>
+                        </div>
+                        <div id="collapseComment" class="show" aria-labelledby="comment" >
+                            <div class="card-body">
+                                <!-- include address data -->
+                                <ui:include src="panels/comment.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- include editor buttons save, cancel and delete-->
                 <ui:include src="editor-buttons.xhtml"/>
