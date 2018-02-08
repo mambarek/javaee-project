@@ -28,6 +28,14 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/pages/employees/editor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>backToList</from-outcome>
+            <to-view-id>/pages/employees/jqGrid-table.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>error</from-outcome>

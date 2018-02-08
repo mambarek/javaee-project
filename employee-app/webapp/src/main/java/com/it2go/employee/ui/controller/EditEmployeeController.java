@@ -118,7 +118,7 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
-    public String initEditEmployeeAction() throws EntityNotFoundException {
+    public void initEditEmployeeAction() throws EntityNotFoundException {
         //if (!FacesContext.getCurrentInstance().isPostback()) {
         final String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:edit_employee_id");
         if(StringUtils.exists(id))
@@ -137,7 +137,7 @@ public class EditEmployeeController implements BaseViewController {
 
         if (employeeId != null){
             model = employeeRepository.findById((Long) employeeId);
-            if(model == null) return "error";
+           // if(model == null) return "error";
 
             if (model.getAddress() == null)
                 model.setAddress(new Address());
@@ -147,7 +147,7 @@ public class EditEmployeeController implements BaseViewController {
         }
         //}
 
-        return "/pages/employees/editor.xhtml?faces-redirect=true";
+        //return "/pages/employees/editor.xhtml?faces-redirect=true";
         //return "editEmployee?faces-redirect=true";
     }
 
@@ -180,33 +180,28 @@ public class EditEmployeeController implements BaseViewController {
         return null;//redirectToList();
     }
 
-    public String deleteEmployee() throws EntityNotPersistedException {
+    public void deleteEmployee() throws EntityNotPersistedException {
         System.out.println("## EditEmployeeController::deleteEmployee model = " + model);
         if (this.model == null || this.model.isNew())
             throw new EntityNotPersistedException();
 
         employeeRepository.remove(this.model);
 
-        this.resetView();
-
-        // return "employeeList?faces-redirect=true";
-        return null;
     }
 
-    public String cancel() {
-        // reset the view
-        this.resetView();
+    public void cancel() {
 
-        // return "employeeList?faces-redirect=true";
-        //return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true";
-
-        return redirectToList();
+        closeConversation();
     }
 
-    public String redirectToList(){
+    public void closeConversation(){
+        conversation.close();
+    }
+
+/*    public String redirectToList(){
         conversation.close();
         return "/pages/employees/jqGrid-table.xhtml?faces-redirect=true&page=" + this.currentTabPage;
-    }
+    }*/
 
     private void resetView() {
 /*        this.employeeId = null;
@@ -285,19 +280,18 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
-    public String ajaxDeleteAction(AjaxBehaviorEvent event) {
+    public void ajaxDeleteAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
 
         try {
-            return this.deleteEmployee();
+            this.deleteEmployee();
         } catch (BaseException e) {
             this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
 
-        return null;
     }
 
     private void handleBaseEcption(BaseException e, String clientId) {

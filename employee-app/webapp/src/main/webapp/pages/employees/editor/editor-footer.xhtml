@@ -26,8 +26,12 @@
         <h:commandButton id="saveConfirmed" styleClass="d-none saveConfirmed">
             <f:ajax render="footer" listener="#{editEmployeeController.ajaxSaveAction}" onevent="handleAjaxSaveEvent"/>
         </h:commandButton>
-        <h:commandButton id="saveSuccess" styleClass="d-none saveSuccess" action="#{editEmployeeController.redirectToList}"/>
-        <h:commandButton id="deleteSuccess" styleClass="d-none deleteSuccess" action="#{editEmployeeController.redirectToList}"/>
+        <h:commandButton id="saveSuccess" styleClass="d-none saveSuccess" action="backToList">
+            <f:actionListener binding="#{editEmployeeController.closeConversation()}"/>
+        </h:commandButton>
+        <h:commandButton id="deleteSuccess" styleClass="d-none deleteSuccess" action="backToList">
+            <f:actionListener binding="#{editEmployeeController.closeConversation()}"/>
+        </h:commandButton>
     </h:form>
 </div>
 </ui:composition>
