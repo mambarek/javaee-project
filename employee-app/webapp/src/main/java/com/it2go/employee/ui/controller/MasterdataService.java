@@ -22,6 +22,11 @@ public class MasterdataService {
         return Arrays.asList(Continent.values());
     }
 
+    public Continent getNullValueContinent(){
+
+        return null;//Continent.AFRICA;
+    }
+
     //public List<Country>
     public String getLocalizedNameFor(Object dataObject) {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();

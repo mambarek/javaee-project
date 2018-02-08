@@ -25,7 +25,7 @@
                       shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
         <cc:editableValueHolder name="input" targets="editableText"/>
         <cc:clientBehavior name="changed" event="change" targets="editableText"/>
-        <cc:facet name="selectOnMenuTemplate"/>
+        <cc:facet name="selectOneMenuTemplate"/>
     </cc:interface>
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
@@ -38,12 +38,15 @@
                             itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                     <f:selectItems value="#{cc.attrs.items}" var="item"
                                    itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
-                   <!-- <c:choose>
+                    <c:choose>
                         <c:when test="#{!empty cc.attrs.ajaxRender}">
-                            <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax"/>
+                            <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax" />
                         </c:when>
-                    </c:choose>-->
-                    <f:ajax execute="@this" event="change" render="#{cc.attrs.ajaxRender}" onevent="handleAjax"/>
+                        <c:otherwise>
+                            <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="handleAjax"/>
+                        </c:otherwise>
+                    </c:choose>
+
                 </h:selectOneMenu>
                 <!-- draw table with cols-->
                 <div style="display: none">
@@ -52,8 +55,8 @@
                         <ui:repeat value="#{cc.attrs.items}" var="item" varStatus="status">
                             <li id="#{cc.clientId}-li-#{status.index + 1}">
                                 <c:choose>
-                                    <c:when test="#{cc.facets.containsKey('selectOnMenuTemplate')}">
-                                        <cc:renderFacet name="selectOnMenuTemplate">
+                                    <c:when test="#{cc.facets.containsKey('selectOneMenuTemplate')}">
+                                        <cc:renderFacet name="selectOneMenuTemplate">
                                             <f:param name="item" value="#{item}"/>
                                         </cc:renderFacet>
                                     </c:when>
@@ -82,14 +85,14 @@
                 }
                 });
 
-                var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
-                console.info("**-- encodedId: " + encodedId);
+                <!--var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                console.info("**&#45;&#45; encodedId: " + encodedId);-->
                 // apply the menu
-                $(encodedId).selectOneMenu({
+                $("#" + encodeId("#{cc.clientId}:editableText")).selectOneMenu({
                 // bei collision at the bottom of browser show menu on the opposite (top)
                 position:{collision: "flip"},
                 // trigger onchange for select and fire ajax
-                change: function( event, ui ) {$(encodedId).trigger( "change" );}
+                change: function( event, ui ) {$("#" + encodeId("#{cc.clientId}:editableText")).trigger( "change" );}
                 }).selectOneMenu( "menuWidget" )
                 .addClass("select-overflow"); // set max height for scrolling
 

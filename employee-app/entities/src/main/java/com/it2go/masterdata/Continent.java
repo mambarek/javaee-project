@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,13 @@ public enum Continent {
 
     private Comparator<String> localeCollatorComparator(Locale locale) {
         return Collator.getInstance(locale)::compare;
+    }
+
+    public static Continent getContinentWithName(String name){
+        if(Objects.isNull(name) || name.length() == 0)
+            return null;
+
+        //return Arrays.stream(Continent.values()).map(continent -> continent.getName().equals(name));
+        return Arrays.stream(Continent.values()).filter(continent -> continent.getName().equals(name)).findFirst().get();
     }
 }

@@ -13,7 +13,7 @@ public class SelectItemConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return Gender.valueOf(value);
+        return null;
     }
 
     @Override

@@ -1,0 +1,154 @@
+<ui:composition
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface componentType="countrySelect">
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+        <cc:attribute name="isRequired" default="false" type="boolean"
+                      shortDescription="if the value is required"/>
+        <cc:attribute name="disabled" default="false" type="boolean"
+                      shortDescription="the input is rendered but disabled"/>
+        <cc:attribute name="readOnly" default="false" type="boolean"
+                      shortDescription="readOnlx means the comonent is rendered as string"/>
+        <cc:attribute name="ajaxRender"
+                      shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+    </cc:interface>
+    <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <div class="form-group row">
+                <h:outputLabel styleClass="col-md-2 col-sm-3 col-form-label" value="Region"/>
+                <div class="col-lg-4 col-sm-3">
+                    <div jsf:id="continent-inputContainer" class="inputContainer">
+                        <div class="input-group">
+                            <h:selectOneMenu value="#{testController.continent}" id="continent" styleClass="form-control" pt:data-valid="#{component.valid}"
+                                             style="width: 100%" required="#{cc.attrs.isRequired}" binding="#{cc.continentSelect}" >
+                                <f:selectItem
+                                        itemLabel="--Bitte wähl doch --" itemValue="#{null}"/>
+                                <f:selectItems value="#{masterdataService.continents}" var="item"
+                                               itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
+                                <f:ajax execute="@this" event="change" render="#{cc.clientId}" />
+                            </h:selectOneMenu>
+                            <!-- draw table with cols-->
+                            <div style="display: none">
+                                <ul>
+                                    <li id="#{cc.clientId}-continent-li-0">-- Bitte wählen --</li>
+                                    <ui:repeat value="#{masterdataService.continents}" var="item" varStatus="status">
+                                        <li id="#{cc.clientId}-continent-li-#{status.index + 1}">
+                                             #{masterdataService.getLocalizedNameFor(item)}
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                        </div>
+                        <h:outputScript>
+                            <!-- jqueryui takes info from table to generate ist-->
+                            $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
+                            _renderItem: function( ul, item ) {
+                            var _id = '#' + encodeId("#{cc.clientId}-continent-li-" + item.index);
+                            //console.info("#+#+ _d: " + _id);
+                            var _li = $(_id);
+
+                            var li = $("&lt;li/&gt;");
+                            var div = $("&lt;div&gt;");
+                            li.append(div);
+                            div.html(_li.html());
+                            return li.appendTo( ul );
+                            }
+                            });
+
+                            var continent_encodedId = "#" + encodeId("#{cc.clientId}:continent");
+                            console.info("**-- encodedId: " + continent_encodedId);
+                            // apply the menu
+                            $(continent_encodedId).selectOneMenu({
+                            // bei collision at the bottom of browser show menu on the oposite (top)
+                            position:{collision: "flip"},
+                            // trigger onchange for select and fire ajax
+                            change: function( event, ui ) {$(continent_encodedId).trigger( "change" );}
+                            }).selectOneMenu( "menuWidget" )
+                            .addClass("select-overflow");
+                        </h:outputScript>
+                    </div>
+                </div>
+                <div jsf:id="county-select" class="d-flex col-md-6 col-sm-12" >
+                    <ui:fragment rendered="true">
+                    <!--<ui:fragment rendered="#{!empty testController.continent}">-->
+                        <h:outputLabel styleClass="col-md-4 col-sm-6 col-form-label" value="Land"/>
+<!--                        <div class="col-lg-8 col-sm-3">
+                            <pe:selectComponent value="#{cc.attrs.value}" items="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" ajaxRender="#{cc.clientId}"
+                                                >
+                                <f:facet name="selectOnMenuTemplate">
+                                    <span>#{item.name}</span>
+                                </f:facet>
+                                &lt;!&ndash;<f:ajax event="changed" render="#{cc.clientId}"/>&ndash;&gt;
+                            </pe:selectComponent>
+                        </div>-->
+                    <!--</ui:fragment>-->
+                    <div class="col-lg-8 col-sm-3">
+                        <div jsf:id="inputContainer" class="inputContainer">
+                            <div class="input-group">
+                                <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
+                                                 style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}">
+                                    <f:selectItem
+                                            itemLabel="--Bitte wähl doch --" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" var="item"
+                                                   itemLabel="#{item.name}" itemValue="#{item.code}" />
+                                    <!--<f:ajax execute="@this" event="change" render="#{cc.clientId}" />-->
+                                </h:selectOneMenu>
+                                <!-- draw table with cols-->
+                                <div style="display: none">
+                                    <ul>
+                                        <li id="#{cc.clientId}-country-li-0">-- Bitte wählen --</li>
+                                        <ui:repeat value="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" var="item" varStatus="status">
+                                            <li id="#{cc.clientId}-country-li-#{status.index + 1}">
+                                                <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=""/> #{item.name}
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h:outputScript>
+                                <!-- jqueryui takes info from table to generate ist-->
+                                $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
+                                _renderItem: function( ul, item ) {
+                                var _id = '#' + encodeId("#{cc.clientId}-country-li-" + item.index);
+                                //console.info("#+#+ _d: " + _id);
+                                var _li = $(_id);
+
+                                var li = $("&lt;li/&gt;");
+                                var div = $("&lt;div&gt;");
+                                li.append(div);
+                                div.html(_li.html());
+                                return li.appendTo( ul );
+                                }
+                                });
+
+                                var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                                console.info("**-- encodedId: " + encodedId);
+                                // apply the menu
+                                $(encodedId).selectOneMenu({
+                                // bei collision at the bottom of browser show menu on the oposite (top)
+                                position:{collision: "flip"},
+                                // trigger onchange for select and fire ajax
+                                change: function( event, ui ) {$(encodedId).trigger( "change" );}
+                                }).selectOneMenu( "menuWidget" )
+                                .addClass("select-overflow");
+                            </h:outputScript>
+                        </div>
+                    </div>
+                    </ui:fragment>
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</ui:composition>

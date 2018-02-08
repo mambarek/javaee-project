@@ -4,6 +4,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
       xmlns:p="http://primefaces.org/ui">
 
@@ -66,7 +67,7 @@
                         radioItems="#{masterdataService.genders}" isRequired="true"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{masterdataService.genders}" isRequired="true">
+                        radioItems="#{masterdataService.genders}" isRequired="false">
                 <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
                     <i class="fas fa-#{item.name.toLowerCase()}"/>&#160;  #{masterdataService.getLocalizedNameFor(item)} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
@@ -79,12 +80,28 @@
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
             </pe:formRow>-->
-            <pe:countrySelect value="#{testController.country}" label="Test continent" isRequired="true"/>
+            <pe:countrySelect value="#{testController.countryCode}" label="Test continent" isRequired="true"/>
             <!--<pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}" >
                 <f:facet name="selectOnMenuTemplate">
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
             </pe:selectComponent>-->
+<!--            <pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}"
+                                ajaxRender="editor:employeeForm:country">
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:selectComponent>
+            <h:outputText id="country" value="Der Kontinent: #{testController.continent}"/>-->
+<!--
+            <div jsf:id="country">
+            <pe:selectComponent value="#{testController.country}" items="#{testController.continent.getCountries(facesContext.viewRoot.locale)}"
+                                >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{item.name}</span>
+                </f:facet>
+            </pe:selectComponent>
+            </div>-->
 
             <div class="form-group row justify-content-end">
                 <div class="btn-group">

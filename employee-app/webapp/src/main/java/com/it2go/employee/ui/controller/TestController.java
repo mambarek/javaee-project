@@ -1,6 +1,7 @@
 package com.it2go.employee.ui.controller;
 
 import com.it2go.masterdata.Continent;
+import com.it2go.masterdata.Country;
 import lombok.Data;
 
 import javax.enterprise.context.SessionScoped;
@@ -22,7 +23,10 @@ public class TestController implements Serializable {
     private Date date3;
 
     private Continent continent;
-    private Continent country;
+    private Country country;
+
+    private String continentCode;
+    private String countryCode;
 
     public String save() {
         System.out.println("-- TestController save() call --");
