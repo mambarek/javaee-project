@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
     JBoss, Home of Professional Open Source
     Copyright 2016, Red Hat, Inc. and/or its affiliates, and individual
@@ -15,25 +14,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>app</web-resource-name>
-            <url-pattern>/protected.jsp</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>*</role-name>
-        </auth-constraint>
-    </security-constraint>
 
-    <login-config>
-        <auth-method>KEYCLOAK</auth-method>
-    </login-config>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <title>Keycloak Example App</title>
 
-    <security-role>
-        <role-name>*</role-name>
-    </security-role>
-</web-app>
+        <link rel="stylesheet" type="text/css" href="styles.css"/>
+    </head>
+    <body>
+        <c:redirect url="index.jsp"/>
+    </body>
+</html>

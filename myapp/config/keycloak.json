@@ -1,0 +1,11 @@
+{
+  "realm": "quickstart-authz-servlet",
+  "auth-server-url": "http://192.168.99.100:8085/auth",
+  "ssl-required": "external",
+  "resource": "myapp",
+  "credentials": {
+    "secret": "secret"
+  },
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}
