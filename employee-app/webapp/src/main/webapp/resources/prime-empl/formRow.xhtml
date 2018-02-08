@@ -80,7 +80,7 @@
                                     </h:inputText>
                                     <h:outputScript >
                                         var id = '#' + encodeId('#{cc.clientId}:editableText');
-                                        console.info("Datepicker id: " + id);
+                                        //console.info("Datepicker id: " + id);
                                         $(id).datepicker($.datepicker.regional[employee_i18n['locale']]);
                                         $(id).datepicker( "option", {
                                             "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],

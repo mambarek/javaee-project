@@ -1,5 +1,7 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.framework.util.reflection.ReflectionUtil;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -35,5 +37,7 @@ public class ApplicationController implements Serializable {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
     }
 
-
+    public Object invoke(Object target, String methodName){
+        return ReflectionUtil.getAttributeValue(target,methodName);
+    }
 }

@@ -62,7 +62,7 @@ public class MasterdataService {
         if (dataObject instanceof Country) {
 
             Country country = (Country) dataObject;
-            Locale l = new Locale(country.getCode());
+            Locale l = new Locale("",country.getCode());
             return l.getDisplayCountry(locale);
         }
 

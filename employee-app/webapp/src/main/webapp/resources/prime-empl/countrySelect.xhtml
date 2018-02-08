@@ -102,7 +102,7 @@
                                             <li id="#{cc.clientId}-country-li-0">-- Bitte wählen --</li>
                                             <ui:repeat value="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" var="item" varStatus="status">
                                                 <li id="#{cc.clientId}-country-li-#{status.index + 1}">
-                                                    <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" "/>&#160;  #{item.name}
+                                                    <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="16px"/>&#160;  #{item.name}
                                                 </li>
                                             </ui:repeat>
                                         </ul>
