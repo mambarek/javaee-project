@@ -55,19 +55,35 @@
                                             pattern="#{employeeMsg['employee.app.date.pattern']}"/></h:outputText>
                                 </td>
                                 <td style="text-align: right;">
+                                    <div class="d-none">
+                                        <div id="pop-content-#{status.index}">
+                                            <img src="../../assets/images/avatar/avatar_#{status.index}.svg" class="embed-responsive"/>
+                                            <table width="200px">
+                                                <tr><td></td><td></td></tr>
+                                                <tr><td>Name:</td><td>#{employee.firstName} #{employee.lastName}</td></tr>
+                                                <tr><td>Alter:</td><td>26</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                     <a tabindex="0" id="pop-#{status.index}" data-toggle="popover"
                                        data-placement="right" style="color: green">
                                         <i class="fas fa-address-card fa-2x"/>
                                         <h:outputScript>
-                                            console.info("## der button",$('#pop-#{status.index}'));
+                                            //console.info("## der button",$('#pop-#{status.index}'));
                                             $('#pop-#{status.index}').popover({
-                                            title: "My first pop",
-                                            content: "All that text is for a button!",
-                                            animation: true,
-                                            container: 'body'
-                                            })
+                                                title: "Information Card",
+                                                content: $('#pop-content-#{status.index}').html(),
+                                                html: true,
+                                                animation: true,
+                                                container: 'body',
+                                                trigger: 'hover ', //click | hover | focus | manual
+                                                placement: 'auto'
+                                            });
+                                            //$('#pop-#{status.index}').popover.html = $('#pop-content').html;
                                         </h:outputScript>
-                                    </a></td>
+                                    </a>
+                                </td>
                             </tr>
                         </ui:repeat>
                         </tbody>
