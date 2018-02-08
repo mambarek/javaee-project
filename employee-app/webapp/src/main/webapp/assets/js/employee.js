@@ -254,7 +254,7 @@ function validateInputStyle(component, hightlight_valid_input){
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').show();
 
-        if(rowForm.length > 0)
+        //if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').show();
     }else {
         if(hightlight_valid_input) {
@@ -269,7 +269,7 @@ function validateInputStyle(component, hightlight_valid_input){
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').hide();
 
-        if(rowForm.length > 0)
+        //if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').hide();
     }
 

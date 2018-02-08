@@ -1,8 +1,4 @@
-var _eventHandler = {};
-
 $(document).ready(function(){
-
-    initAllEventHandler();
 
     jsf.ajax.addOnEvent(function(data) {
         if (data.status == "success") {
@@ -38,24 +34,6 @@ function refreshContainerEvents(containerId){
         refreshFormEventListener(container, "blur")
     }
 }
-// initHandler in documentReady aufrufen um den dom evnt zu intialisieren
-function initAllEventHandler(){
-    initHandler("click");
-    initHandler("change");
-    initHandler("blur");
-}
-
-function initHandler(eventName){
-    var oneventName = 'on' + eventName;
-    $("form").each(function(i, form){
-        $(form).find('['+oneventName+']').each(function(index, input){
-            var handlerIndex  = form.id + "_" + index + "_" + eventName;
-            var eventFunc = input.getAttribute(oneventName);
-            if(eventFunc)
-                _eventHandler[handlerIndex] = new Function(eventFunc);
-        })
-    })
-}
 
 /**
  * f:ajax generates an onclick in the submit button. by clicking the first time the form is submitted and the form is rerendered after Ajax is finish.
@@ -71,14 +49,10 @@ function refreshFormEventListener(form, eventName){
 
         var handlerIndex  = form.id + "_" + index + "_" + eventName;
         var eventFunc = input.getAttribute(oneventName);
-        var handler = _eventHandler[handlerIndex];
 
         if(eventFunc){
-            // if no handler so create one
-            if(!handler){
-                handler = new Function(eventFunc);
-                _eventHandler[handlerIndex] = handler;
-            }
+            // create a function
+            var handler = new Function(eventFunc);
 
             // check if the input have an event handler
             if(!input[oneventName]) {
