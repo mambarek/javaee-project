@@ -424,9 +424,16 @@ function hightlightMustFields(selector){
         // the select
         if($(this).is("select")) {
             var target = $(this).siblings('span');
-            // add border
-            if(!this.value)
-                target.removeClass("form-control is-invalid").addClass("form-control is-invalid");
+            if(target.length == 0) {
+                // combobx handling
+                target = $(this).siblings('.custom-combobox');
+                target.removeClass("is-invalid").addClass("is-invalid");
+            }
+            else {
+                // add border
+                if (!this.value)
+                    target.removeClass("form-control is-invalid").addClass("form-control is-invalid");
+            }
 
             return;
         }

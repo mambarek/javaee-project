@@ -35,7 +35,9 @@
             <div jsf:id="inputContainer" class="inputContainer">
                 <div class="input-group">
                     <cc:renderFacet name="preTemplate"/>
-                    <h:selectOneMenu id="editableText" value="#{cc.attrs.value}" styleClass="form-control"  pt:data-valid="#{cc.input.valid}"
+                    <h:selectOneMenu id="editableText" value="#{cc.attrs.value}"
+                                     styleClass="form-control"  pt:data-valid="#{cc.input.valid}"
+                                     pt:data-required="#{cc.attrs.isRequired}"
                                      style="width: 100%" binding="#{cc.input}" required="#{cc.attrs.isRequired}" pt:data-component-type="comboBox"
                                      label="#{cc.attrs.label}"   >
                         <f:selectItem
