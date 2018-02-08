@@ -96,7 +96,7 @@ function encodeId(id) {
 function validateInputStyle(component){
 
     var valid = component.attr("data-valid");
-    var inputContainer = component.closest("#inputContainer");
+    var inputContainer = component.closest(".inputContainer");
     var disabled = component.attr("disabled");
    // console.info("validateInputStyle component", component, " valid: " + valid);
 
@@ -198,7 +198,8 @@ function handleAjax(data) {
             console.info("checkInputStyle success jquery valid: " + valid);
 
             validateInputStyle(input);
-
+            var inputContainer = input.closest(".inputContainer")[0];
+            refreshAllEventListener(encodeId(inputContainer.id));
             //var date = $(data.source.getParent()).hasClass('date');
             //if(date) initDatepicker();
             break;
@@ -290,9 +291,16 @@ function checkValidationAndConfirmSave(data) {
     }
 }
 
-function refreshEventListener(rootId){
+function refreshAllEventListener(rootId){
+    if(isIE()) {
+        refreshEventListener(rootId, "click");
+        refreshEventListener(rootId, "change");
+    }
+}
+
+function musterRefreshEventListener(rootId){
     var form = $('#' + rootId);
-   // form.find("input[type=text], input[type=radio], select").each(function(){
+    // form.find("input[type=text], input[type=radio], select").each(function(){
     form.find('[onclick]').each(function(){
         if(this.removeEventListeners)
             this.removeEventListeners('click',this.onclick, true);
@@ -304,10 +312,27 @@ function refreshEventListener(rootId){
             this.onclick = new Function(onclickFunc);
             this.addEventListener('click', this.onclick);
         }
+    });
+}
+
+function refreshEventListener(rootId, eventName){
+    var form = $('#' + rootId);
+    var oneventName = 'on' + eventName;
+
+    // form.find("input[type=text], input[type=radio], select").each(function(){
+    form.find('['+oneventName+']').each(function(){
+        if(this.removeEventListeners)
+            this.removeEventListeners(eventName,this[oneventName], true);
+
+        var eventFunc = this.getAttribute(oneventName);
+
+        if(eventFunc && !this[oneventName]) {
+            console.info("## refreshEventListener " + this.id + " eventFunc[",eventFunc,"] this[oneventName][",this[oneventName],"]" );
+            this[oneventName] = new Function(eventFunc);
+            this.addEventListener(eventName, this[oneventName]);
+        }
 
     });
-
-
 }
 
 function confirmDelete(data) {

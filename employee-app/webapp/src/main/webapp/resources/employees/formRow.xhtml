@@ -48,7 +48,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3" for="editableText">#{cc.attrs.label}</label>
                 <div class="col">
-                    <div id="inputContainer">
+                    <div jsf:id="inputContainer" class="inputContainer">
                         <c:choose>
                             <!-- text -->
                             <c:when test="#{cc.attrs.type eq 'text'}">
