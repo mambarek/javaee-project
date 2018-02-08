@@ -18,7 +18,7 @@
                                  value="#{editEmployeeController.model.address.streetOne}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.street']}"
                                  pt:placeholder="Strasse">
-                        <f:validateLength minimum="3" maximum="100"/>
+                        <f:validateLength minimum="3" maximum="100" for="input"/>
                         <f:ajax execute="@this buildingNr" render="street-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
@@ -31,7 +31,7 @@
                                  value="#{editEmployeeController.model.address.buildingNr}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.buildingnr']}"
                                  pt:placeholder="Nr.">
-                        <f:validateLength minimum="1" maximum="5"/>
+                        <f:validateLength minimum="1" maximum="5" for="input"/>
                         <f:ajax execute="@this streetOne" render="street-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
@@ -57,7 +57,7 @@
     </div>
 
     <pe:formRow value="#{editEmployeeController.model.address.streetTwo}" label="#{employeeMsg['employee.editor.address.streettwo']}">
-        <f:validateLength minimum="3" maximum="50"/>
+        <f:validateLength minimum="3" maximum="50" for="input"/>
     </pe:formRow>
     <div jsf:id="zip-city-inputContainer" class="inputContainer" data-component-name="composedInput" data-valid="#{zipInput.valid and cityInput.valid}">
         <div class="form-group row" jsf:id="zip-city-container">
@@ -68,7 +68,7 @@
                                  value="#{editEmployeeController.model.address.zipCode}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.zip']}"
                                  pt:placeholder="Zip">
-                        <f:validateLength minimum="5" maximum="5"/>
+                        <f:validateLength minimum="5" maximum="5" for="input"/>
                         <f:ajax execute="@this citiy" render="zip-city-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
@@ -80,7 +80,7 @@
                                  value="#{editEmployeeController.model.address.city}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.city']}"
                                  pt:placeholder="City">
-                        <f:validateLength minimum="3" maximum="50"/>
+                        <f:validateLength minimum="3" maximum="50" for="input"/>
                         <f:ajax execute="@this zip-code" render="zip-city-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>

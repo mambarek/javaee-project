@@ -5,6 +5,7 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+        xmlns:empl="http://xmlns.jcp.org/jsf/composite/employees"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
 
@@ -25,30 +26,26 @@
                         <pe:formRow value="#{project.name}"
                                     label="#{employeeMsg['employee.editor.projects.name']}"
                                     isRequired="true" >
-                            <f:validateLength minimum="3" maximum="100"/>
+                            <f:validateLength minimum="3" maximum="100" for="input"/>
                         </pe:formRow>
-
-                        <pe:formRow value="#{project.begin}" inputType="date" model="#{project}"
-                                    label="#{employeeMsg['employee.editor.projects.begin']}"
-                                    isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
-                            <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                            <f:validator validatorId="ProjectDurationValidator"/>
-                            <!--<f:attribute name="project" value="#{project}"/>-->
-                            <!--<f:ajax event="changed" listener="#{editEmployeeController.ajaxActionCheckProjectDuration}" onevent="validateInput" render="@form"/>-->
-                        </pe:formRow>
+                        <div jsf:id="DateRangeValidator_BEGIN">
+                            <empl:row value="#{project.begin}" inputType="date" model="#{project}" logicalName="DateRangeValidator.BEGIN"
+                                        label="#{employeeMsg['employee.editor.projects.begin']}" ajaxRender=":DateRangeValidator_END"
+                                        isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                                <f:validator validatorId="DateRangeValidator" for="input"/>
+                            </empl:row>
+                        </div>
 
                         <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
-                            <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields"/>
+                            <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields" listener="#{project.setEnd(null)}"/>
                         </pe:formRow>
 
-                        <div jsf:id="lastProjectDate" jsf:rendered="#{!project.tilToday}">
-                            <pe:formRow value="#{project.end}" inputType="date" model="#{project}"
-                                        label="#{employeeMsg['employee.editor.projects.end']}"
+                        <div jsf:id="DateRangeValidator_END" jsf:rendered="#{!project.tilToday}">
+                            <empl:row value="#{project.end}" inputType="date" model="#{project}" logicalName="DateRangeValidator.END"
+                                        label="#{employeeMsg['employee.editor.projects.end']}" ajaxRender=":DateRangeValidator_BEGIN"
                                         isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
-                                <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                                <f:validator validatorId="ProjectDurationValidator"/>
-                                <!--<f:ajax event="changed" listener="#{editEmployeeController.ajaxActionCheckProjectDuration}"/>-->
-                            </pe:formRow>
+                                <f:validator validatorId="DateRangeValidator" for="input"/>
+                            </empl:row>
                         </div>
 
                         <pe:textArea value="#{project.description}" label="#{employeeMsg['employee.editor.projects.desc']}">

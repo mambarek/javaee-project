@@ -11,20 +11,20 @@
         <pe:formRow value="#{editEmployeeController.model.firstName}"
                     label="#{employeeMsg['employee.editor.personal.data.firstName']}"
                     isRequired="true" >
-            <f:validateLength minimum="3" maximum="50"/>
+            <f:validateLength minimum="3" maximum="50" for="input"/>
         </pe:formRow>
 
         <pe:formRow value="#{editEmployeeController.model.lastName}"
                     label="#{employeeMsg['employee.editor.personal.data.lastName']}"
                     isRequired="true" ajaxValidation="true">
-            <f:validateLength minimum="3" maximum="50"/>
+            <f:validateLength minimum="3" maximum="50" for="input"/>
         </pe:formRow>
 
         <pe:formRow value="#{editEmployeeController.model.birthDate}"
                     label="#{employeeMsg['employee.editor.personal.data.birthDate']}"
                     inputType="date"
                     placeholder="#{employeeMsg['employee.app.date.pattern']}">
-            <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+            <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"  for="input"/>
         </pe:formRow>
         <pe:formRow value="#{editEmployeeController.model.gender}" inputType="custom-radio" label="#{employeeMsg['employee.editor.personal.data.gender']}"
                     radioItems="#{masterdataService.genders}" isRequired="true">

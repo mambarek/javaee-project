@@ -11,20 +11,29 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 
-@FacesValidator("ProjectDurationValidator")
-public class ProjectDurationValidator implements Validator {
+@FacesValidator("DateRangeValidator")
+public class DateRangeValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
         final Object model = component.getAttributes().get("model");
+        final String logicalName = (String)component.getAttributes().get("logicalName");
 
         if(model == null) return;
 
         Project project = (Project)model;
-        final LocalDate begin = convertToLocalDate(project.getBegin());
-        final LocalDate end = convertToLocalDate(project.getEnd());
+        LocalDate begin = convertToLocalDate(project.getBegin());
+        LocalDate end = convertToLocalDate(project.getEnd());
+
+        if("DateRangeValidator.BEGIN".equals(logicalName))
+            begin = convertToLocalDate((Date)value);
+
+        if("DateRangeValidator.END".equals(logicalName))
+            end = convertToLocalDate((Date)value);
+
         if(end != null){
             Period period = Period.between(begin, end);
             if(period.isNegative()){

@@ -31,7 +31,7 @@
                                        jsf:required="#{'true'.equals(cc.attrs.isRequired)? 'true': 'false'}"
                                        placeholder="#{cc.attrs.placeholder}">
 
-                                    <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
+                                    <f:ajax execute="@this" render="#{cc.clientId}" onevent="validateInput" event="change"/>
                                 </input>
                                 <cc:renderFacet name="inputGroupAddon"/>
                             </div>

@@ -11,7 +11,7 @@
 
         <pe:formRow value="#{editEmployeeController.model.salary}"
                     label="#{employeeMsg['employee.editor.contract.slary']}">
-            <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
+            <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"  for="input"/>
         </pe:formRow>
         <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="switch" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
         <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="switch" label="#{employeeMsg['employee.editor.contract.traveling']}"/>

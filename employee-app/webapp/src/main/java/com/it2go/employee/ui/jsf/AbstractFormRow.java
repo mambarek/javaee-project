@@ -36,7 +36,8 @@ public class AbstractFormRow extends UIInputComponent implements NamingContainer
         if (converter != null) {
             input.setConverter(converter);
         }*/
-            input.setConverter(this.getConverter());
+            if(this.getConverter() != null)
+                input.setConverter(this.getConverter());
 
             boolean readOnly = (boolean) this.getAttributes().get("readOnly");
 
@@ -46,6 +47,7 @@ public class AbstractFormRow extends UIInputComponent implements NamingContainer
             else
                 input.setRendered(false);
         }
+
         if (visible)
             super.encodeBegin(context);
     }

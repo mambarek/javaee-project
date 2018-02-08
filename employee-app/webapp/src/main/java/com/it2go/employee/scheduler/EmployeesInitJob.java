@@ -37,8 +37,9 @@ public class EmployeesInitJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("-- EmployeesInitJob::execute");
+        //System.out.println("-- EmployeesInitJob::execute begin");
         cdiJob();
+        //System.out.println("-- EmployeesInitJob::execute finish");
         /*try {
             webserviceJob();
         } catch (MalformedURLException e) {
@@ -80,7 +81,7 @@ public class EmployeesInitJob implements Job {
 
         try {
             final Employee employee1 = employeeRepository.persist(employee,null);
-            System.out.println("-- EmployeesInitJob::execute employee persisted " + employee1);
+            //System.out.println("-- EmployeesInitJob::execute employee persisted " + employee1);
         } catch (EntityConcurrentModificationException | EntityRemovedException e) {
             e.printStackTrace();
         }
@@ -126,7 +127,7 @@ public class EmployeesInitJob implements Job {
 
         try {
             final com.it2go.employee.services.client.generated.Employee employee1 = employeeRepositoryService.save(employee);
-            System.out.println("-- EmployeesInitJob::execute employee persisted " + employee1);
+            //System.out.println("-- EmployeesInitJob::execute employee persisted " + employee1);
         } catch (EntityRemovedException_Exception | EntityConcurrentModificationException_Exception e) {
             e.printStackTrace();
         }

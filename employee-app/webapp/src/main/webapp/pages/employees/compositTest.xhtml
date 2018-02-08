@@ -1,0 +1,33 @@
+<!-- http://localhost:8080/webapp/pages/employees/compositTest.xhtml -->
+<ui:composition
+        template="../templates/masterTemplate.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:empl="http://xmlns.jcp.org/jsf/composite/employees"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <f:metadata>
+        <f:viewParam name="id" value="#{editEmployeeController.employeeId}"/>
+        <f:viewParam name="page" value="#{editEmployeeController.currentTabPage}"/>
+        <f:event type="preRenderView" listener="#{editEmployeeController.editEmployee(editEmployeeController.employeeId)}"/>
+    </f:metadata>
+    <ui:define name="mainContent">
+        <h:form>
+            <empl:formTextInputRow value="" >
+                <f:validateLength minimum="3" maximum="8" for="input"/>
+            </empl:formTextInputRow>
+            <empl:row value="" label="my Text" inputType="text">
+                <f:validateLength minimum="3" maximum="8" for="input"/>
+            </empl:row>
+            <empl:row value="" label="my Date" inputType="date">
+
+            </empl:row>
+            <empl:row value="" inputType="custom-radio" label="#{employeeMsg['employee.editor.personal.data.gender']}"
+                      radioItems="#{masterdataService.genders}" isRequired="true">
+
+            </empl:row>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
