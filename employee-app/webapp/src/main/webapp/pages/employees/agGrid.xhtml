@@ -11,8 +11,8 @@
             #{employeeMsg['employee.table.title']} - agGrid
         </div>
         <div class="card-block" style="padding: 0">
-            <div class="pt-2">
-                <div id="myGrid" style="height: 320px;" class="ag-theme-bootstrap"></div>
+            <div class="pt-2" style="overflow: hidden">
+                <div id="myGrid" style="height: 320px; width:100%" class="ag-theme-bootstrap"></div>
             </div>
         </div>
         <div class="card-footer">
@@ -28,75 +28,14 @@
 
 
     <h:outputScript>
+        var headerNames = {};
+        headerNames['firstName'] = "#{employeeMsg['employee.table.col.firstName']}";
+        headerNames['lastName'] = "#{employeeMsg['employee.table.col.lastName']}";
+        headerNames['salary'] = "#{employeeMsg['employee.table.col.salary']}";
+        headerNames['birthDate'] = "#{employeeMsg['employee.table.col.birthDate']}";
 
-        $(document).ready(function () {
+        var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/viewitems';
+        createEmployees_agGrid("#myGrid", headerNames, url);
 
-        // specify the columns
-            var columnDefs = [
-                {
-                    headerName: "#{employeeMsg['employee.table.col.firstName']}",
-                    field: "firstName",
-                    filterParams: {newRowsAction: 'keep'},
-                    checkboxSelection: function(params) {
-                    // we put checkbox on the name if we are not doing grouping
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                    },
-                    headerCheckboxSelection: function(params) {
-                    // we put checkbox on the name if we are not doing grouping
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                    }
-                },
-                {headerName: "#{employeeMsg['employee.table.col.lastName']}", field: "lastName", filter: "agTextColumnFilter",
-        filterParams: {
-        cellHeight: 20,
-        newRowsAction: 'keep'
-        }},
-                {headerName: "#{employeeMsg['employee.table.col.salary']}", field: "salary"},
-                {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate", filter: "agDateColumnFilter"}
-            ];
-
-/*            var autoGroupColumnDef = {
-            headerName: 'Group',
-            width: 200,
-            field: 'firstName',
-            valueGetter: function(params) {
-            if (params.node.group) {
-            return params.node.key;
-            } else {
-            return params.data[params.colDef.field];
-            }
-            },
-            headerCheckboxSelection: true,
-            // headerCheckboxSelectionFilteredOnly: true,
-            cellRenderer:'agGroupCellRenderer',
-            cellRendererParams: {
-            checkbox: true
-            }
-            };*/
-            // let the grid know which columns and what data to use
-            var gridOptions = {
-            columnDefs: columnDefs,
-            headerHeight: 44,
-            rowHeight: 44,
-            enableSorting: true,
-            enableFilter: true,
-            enableColResize: true,
-            pagination: true,
-            paginationPageSize: 10,
-            paginationAutoPageSize: false,
-           // autoGroupColumnDef: autoGroupColumnDef,
-            //floatingFilter: true
-            };
-
-            // lookup the container we want the Grid to use
-            var eGridDiv = document.querySelector('#myGrid');
-
-            // create the grid passing in the div to use together with the columns data we want to use
-            new agGrid.Grid(eGridDiv, gridOptions);
-
-            xhrGet('http://localhost:8080/webapp/rest/EmployeeService/employee/viewitems').then(function(data) {
-            gridOptions.api.setRowData(data);
-            })
-        })
     </h:outputScript>
 </ui:composition>

@@ -43,6 +43,12 @@
 {
 	font-size:0.8rem
 }
+.testClass {
+    background: yellow;
+}
+.testClass2 {
+    background: #4eb305;
+}
 </style>
 </head>
 <body>
@@ -54,46 +60,94 @@
 </div>
     <script type="text/javascript">
 
-        function formatter (cellvalue, options, rowObject)
-        {
-            // do something here
-            return cellvalue.split(" ")[0];
+        function formatNowCell  (rowId, cellvalue, rawObject, cm, rdata){
+            var now = new Date();
+            //if(rowObject.date.gregorian.day == now.getDate()) {
+            if(rdata.date.startsWith(now.getDate())) {
+                //if(options.colModel.name == "Maghrib" ) {
+                return 'class=\"testClass2\"';
+            }
+
+            return null;
         }
 
+        function formatCell  (rowId, cellvalue, rawObject, cm, rdata){
+            var now = new Date();
+            //if(rowObject.date.gregorian.day == now.getDate()) {
+            if(rdata.date.startsWith(now.getDate())) {
+                //if(options.colModel.name == "Maghrib" ) {
+                return 'class=\"testClass\"';
+            }
+
+            return null;
+        }
+
+        function formatCol  (pos, rowInd, tv, rawObject, rowId, rdata)
+        {
+            var now = new Date();
+            var value =  cellvalue.split(" ")[0];
+
+            var td = $('tr[id='+rowId+'] > td')[pos];
+
+
+            if(rowObject.date.gregorian.day == now.getDate()){
+                if(options.colModel.name == "Maghrib" ) {
+                    td.css('background','yellow');
+                    return "<div style=\"height:2.7rem;padding-top: 10px;width:100%;background-color: #4eb305\"><span style=\"font-weight:600;color:green\">" + value + "</span></div>";
+                }
+                else
+                    return "<span style=\"color:red\">"+value+"</span>";
+            }
+
+            return value;
+        }
+
+        function dateFormatter (cellvalue, options, rowObject)
+        {
+            var now = new Date();
+            var value =  cellvalue;
+
+            if(rowObject.date.gregorian.day == now.getDate())
+                return "<span style=\"color:red\">"+value+"</span>";
+
+            return value;
+        }
+// formatCol = function (pos, rowInd, tv, rawObject, rowId, rdata)
         function createGrid(data){
             $("#jqGrid").jqGrid({
-                datatype: 'local',
+                datatype: "local",
+                formatCol: formatCol,
                 data: data,
-                jsonReader : {
-                    root: "data"},
                 colModel: [
-                    { label: 'Date', name: 'date', jsonmap: 'date.readable', width: 100},
-                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', width: 80},
-                    { label: 'Fajr', name: 'Fajr', jsonmap: 'timings.Fajr', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 80, formatter: formatter, align: "center" },
-                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80, formatter: formatter, align: "center" },
-                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80, formatter: formatter, align: "center"},
-                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80, formatter: formatter, align: "center"}
+                    { label: 'Date', name: 'date', jsonmap: 'date.readable', formatter: dateFormatter, width: 100},
+                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', formatter: dateFormatter, width: 80},
+                    { label: 'Fajr', name: 'Fajr', jsonmap: 'timings.Fajr', width: 80, cellattr : formatNowCell , align: "center"},
+                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 80, cellattr : formatNowCell , align: "center" },
+                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 80, cellattr : formatNowCell , align: "center"},
+                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80, cellattr : formatNowCell , align: "center" },
+                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80, cellattr : formatNowCell , align: "center"},
+                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80, cellattr  : formatCell , align: "center"},
+                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80, cellattr : formatNowCell , align: "center"},
+                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80, cellattr : formatNowCell , align: "center"},
+                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80, cellattr : formatNowCell , align: "center"}
                 ],
                 loadonce: true,
                 altRows : true,
                 rownumbers : true,
                 colMenu : true,
                 menubar: true,
-                viewrecords : true,
+                //viewrecords : true,
                 hoverrows : true,
                 height: '100%',
                 rowNum: 10,
+                records: 31,
                 caption : 'Prayer time',
                 sortable: true,
                 //altRows: true, This does not work in boostrarap
                 // altclass: '....'
-                pager: "#jqGridPager"
+                pager: "#jqGridPager",
                 // set table stripped class in table style in bootsrap
+
             });
         }
         $(document).ready(function () {
@@ -195,8 +249,8 @@
 
 			xhrGet('http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018').then(function(data) {
 
-                createGrid(data);
-                //gridOptions.api.setRowData(data);
+                createGrid(data.data);
+
                 var days = data.data;
                 var now = new Date();
                 // Set the unit values in milliseconds.
@@ -256,9 +310,17 @@
 
 
 
-
                 }
-            })
+            });
+
+            $("#jqGrid").on("jqGridAfterInsertRow", function(event, id, orgEvent) {
+                console.info("#++Alees zu");
+                if(id && id!==lastSel){
+                    jQuery(this).jqGrid('restoreRow',lastSel);
+                    lastSel=id;
+                }
+                jQuery(this).jqGrid('editRow',id, true);
+            });
         });
 
     </script>

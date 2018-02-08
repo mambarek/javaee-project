@@ -75,8 +75,10 @@
         gridview: true,*/
         rowNum: 8,
         altRows : true,
-        pager: pagerId
+        pager: pagerId,
+
         });
+
 
         //mygrid.setGridWidth(850);
         // activate the toolbar searching
@@ -115,6 +117,15 @@
         click : function ( event) {
         var state = (this.p.gridstate === 'visible') ? 'hidden' : 'visible';
             grid.jqGrid('setGridState',state);
+        }
+        },
+        {
+        id : 'show_hide_col',
+        //cloasoncall : true,
+        title : 'Show/Hide column',
+        click : function ( event) {
+        grid.jqGrid('columnChooser');
+
         }
         }
         ]);
