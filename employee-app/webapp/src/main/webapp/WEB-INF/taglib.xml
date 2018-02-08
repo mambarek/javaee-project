@@ -35,4 +35,16 @@
             <name>visible</name>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>rangeValidator</tag-name>
+        <validator>
+            <validator-id>DateRangeValidator</validator-id>
+        </validator>
+        <attribute>
+            <name>beginInput</name>
+        </attribute>
+        <attribute>
+            <name>endInput</name>
+        </attribute>
+    </tag>
 </facelet-taglib>

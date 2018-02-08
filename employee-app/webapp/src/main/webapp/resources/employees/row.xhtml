@@ -12,8 +12,6 @@
                       shortDescription="The model value." />
         <cc:attribute name="value" required="true"
                       shortDescription="The selected value." />
-        <cc:attribute name="logicalName"
-                      shortDescription="The logical name." />
         <cc:attribute name="label"
                       shortDescription="the label." />
         <cc:attribute name="inputType" default="text"
@@ -73,7 +71,6 @@
                                         <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput"
                                                 event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
-                                        <f:attribute name="logicalName" value="#{cc.attrs.logicalName}"/>
                                     </h:inputText>
                                     <cc:renderFacet name="inputGroupAddon"/>
                                 </div>
@@ -89,7 +86,6 @@
                                         <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                                         <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput" event="change"/>
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
-                                        <f:attribute name="logicalName" value="#{cc.attrs.logicalName}"/>
                                     </h:inputText>
                                     <h:outputScript >
                                         var id = '#' + encodeId('#{cc.clientId}:editableText');
@@ -126,7 +122,6 @@
                                     <h:inputHidden id="editableText" binding="#{hiddenInput}" value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
                                                    required="#{cc.attrs.isRequired}" >
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
-                                        <f:attribute name="logicalName" value="#{cc.attrs.logicalName}"/>
                                     </h:inputHidden>
                                     <h:outputScript >
                                         // reset the hidden input

@@ -5,6 +5,7 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+        xmlns:tag="http://it2go.com/employee"
         xmlns:empl="http://xmlns.jcp.org/jsf/composite/employees"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
@@ -29,10 +30,12 @@
                             <f:validateLength minimum="3" maximum="100" for="input"/>
                         </pe:formRow>
                         <div jsf:id="DateRangeValidator_BEGIN">
-                            <empl:row value="#{project.begin}" inputType="date" model="#{project}" logicalName="DateRangeValidator.BEGIN"
+                            <empl:row value="#{project.begin}" inputType="date" model="#{project}"
                                         label="#{employeeMsg['employee.editor.projects.begin']}" ajaxRender=":DateRangeValidator_END"
                                         isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
                                 <f:validator validatorId="DateRangeValidator" for="input"/>
+                                <f:attribute name="DateRangeValidator_BEGIN" value="true" />
+                                <f:attribute name="endFieldLabel" value="#{employeeMsg['employee.editor.projects.end']}" />
                             </empl:row>
                         </div>
 
@@ -41,10 +44,12 @@
                         </pe:formRow>
 
                         <div jsf:id="DateRangeValidator_END" jsf:rendered="#{!project.tilToday}">
-                            <empl:row value="#{project.end}" inputType="date" model="#{project}" logicalName="DateRangeValidator.END"
+                            <empl:row value="#{project.end}" inputType="date" model="#{project}"
                                         label="#{employeeMsg['employee.editor.projects.end']}" ajaxRender=":DateRangeValidator_BEGIN"
                                         isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
-                                <f:validator validatorId="DateRangeValidator" for="input"/>
+                                <f:validator validatorId="DateRangeValidator" for="input" />
+                                <f:attribute name="DateRangeValidator_END" value="true" />
+                                <f:attribute name="beginFieldLabel" value="#{employeeMsg['employee.editor.projects.begin']}" />
                             </empl:row>
                         </div>
 

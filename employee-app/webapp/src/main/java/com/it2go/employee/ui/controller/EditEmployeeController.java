@@ -8,6 +8,7 @@ import com.it2go.framework.dao.EntityConcurrentModificationException;
 import com.it2go.framework.dao.EntityNotFoundException;
 import com.it2go.framework.dao.EntityNotPersistedException;
 import com.it2go.framework.dao.EntityRemovedException;
+import com.it2go.framework.util.StringUtils;
 import com.it2go.masterdata.Continent;
 import lombok.Data;
 
@@ -94,6 +95,29 @@ public class EditEmployeeController implements BaseViewController {
             return null;
 
         return editEmployee(this.employeeId);
+    }
+
+    public String initEditEmployeeAction() throws EntityNotFoundException {
+        //if (!FacesContext.getCurrentInstance().isPostback()) {
+        final String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:edit_employee_id");
+        if(StringUtils.exists(id))
+            employeeId = Long.parseLong(id);
+
+        final String create = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:create_employee");
+
+        if (employeeId != null) {
+                model = employeeRepository.findById((Long) employeeId);
+                if(model == null) return "error";
+
+                if (model.getAddress() == null)
+                    model.setAddress(new Address());
+            } else {
+                if (model == null && "true".equals(create))
+                    createNewEmployee();
+            }
+        //}
+
+        return "/pages/employees/editor.xhtml?faces-redirect";
     }
 
     public void editEmployeeAjax(Long id) throws EntityNotFoundException {

@@ -1,12 +1,16 @@
 
-function editEmployee(cellvalue, options, rowObject){
+function editEmployee(e, cellvalue, options, rowObject){
+    e.preventDefault();
+    e.stopPropagation();
     var currentPage = $('#grid').getGridParam('page');
-    window.location.href = 'editor.xhtml?id='+cellvalue + "&page=" + currentPage;
+    $('#'+encodeId('hiddenCreateForm:edit_employee_id')).val(cellvalue);
+    $('#'+encodeId('hiddenCreateForm:editEmployee')).click();
+    //window.location.href = 'editor.xhtml?id='+cellvalue + "&page=" + currentPage;
 }
 
 function editButton(cellvalue, options, rowObject){
 
-    return '<a onclick="editEmployee('+cellvalue+')" style="cursor: pointer;"><i class="fas fa-pencil-alt" aria-hidden="true"/></a>';
+    return '<a onclick="editEmployee(event,'+cellvalue+')" style="cursor: pointer;"><i class="fas fa-pencil-alt" aria-hidden="true"/></a>';
 }
 
 function yeditButton(cellvalue, options, rowObject){
@@ -309,12 +313,14 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
     var newWidth = $(selector).closest(".ui-jqgrid").parent().width();
     $(selector).jqGrid("setGridWidth", newWidth, true);
 
+    // Add Button function: add new row
     $('td#add_grid.ui-pg-button').off('click').on('click', function(e){
 
             e.preventDefault();
             e.stopPropagation();
             //alert("I was clicked");
             var currentPage = $('#grid').getGridParam('page');
+            $('#create_employee').val(true)
             window.location.href = 'editor.xhtml?page=' + currentPage;
         }
     )
