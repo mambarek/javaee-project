@@ -52,30 +52,72 @@
     <div id="jqGridPager"></div>
 	<span class="oi oi-person"  ></span>
 </div>
-    <script type="text/javascript"> 
-    
+    <script type="text/javascript">
+
+        function formatter (cellvalue, options, rowObject)
+        {
+            // do something here
+            return cellvalue.split(" ")[0];
+        }
+
+        function createGrid(data){
+            $("#jqGrid").jqGrid({
+                datatype: 'local',
+                data: data,
+                jsonReader : {
+                    root: "data"},
+                colModel: [
+                    { label: 'Date', name: 'date', jsonmap: 'date.readable', width: 100},
+                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', width: 80},
+                    { label: 'Fajr', name: 'Fajr', jsonmap: 'timings.Fajr', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 80, formatter: formatter, align: "center" },
+                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80, formatter: formatter, align: "center" },
+                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80, formatter: formatter, align: "center"}
+                ],
+                loadonce: true,
+                altRows : true,
+                rownumbers : true,
+                colMenu : true,
+                menubar: true,
+                viewrecords : true,
+                hoverrows : true,
+                height: '100%',
+                rowNum: 10,
+                caption : 'Prayer time',
+                sortable: true,
+                //altRows: true, This does not work in boostrarap
+                // altclass: '....'
+                pager: "#jqGridPager"
+                // set table stripped class in table style in bootsrap
+            });
+        }
         $(document).ready(function () {
            // altrows are set with table striped class for Boostrap
            //$.jgrid.styleUI.Bootstrap.base.rowTable = "table table-bordered table-striped";
 			
-           $("#jqGrid").jqGrid({
+/*           $("#jqGrid").jqGrid({
                 url: 'http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018',
                 datatype: "json",
                 mtype: "GET",
                jsonReader : {
                    root: "data"},
                 colModel: [
-                    { label: 'Date', name: 'date.readable', width: 75},
-                    { label: 'Hijri', name: 'date.hijri.date', width: 75},
-                    { label: 'Fajr', name: 'timings.Fajr', width: 75},
-                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 90 },
-                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 100},
-                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80 },
-                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80},
-                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80},
-                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80},
-                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80},
-                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80}
+                    { label: 'Date', name: 'date', jsonmap: 'date.readable', width: 100},
+                    { label: 'Hijri', name: 'hijri',jsonmap:'date.hijri.date', width: 80},
+                    { label: 'Fajr', name: 'Fajr', jsonmap: 'timings.Fajr', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 80, formatter: formatter, align: "center" },
+                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80, formatter: formatter, align: "center" },
+                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80, formatter: formatter, align: "center"},
+                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80, formatter: formatter, align: "center"}
                 ],
                 loadonce: true,
 				altRows : true,
@@ -85,15 +127,16 @@
 				viewrecords : true,
 				hoverrows : true,
                 height: '100%',
-                rowNum: 50,
+                rowNum: 10,
 				caption : 'Prayer time',
 				sortable: true,
                 //altRows: true, This does not work in boostrarap
                 // altclass: '....'
                 pager: "#jqGridPager"
                 // set table stripped class in table style in bootsrap
-            });
-            $('#jqGrid').navGrid('#jqGridPager',
+            });*/
+
+/*            $('#jqGrid').navGrid('#jqGridPager',
                 // the buttons to appear on the toolbar of the grid
                 { edit: true, add: true, del: true, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
                 // options for the Edit Dialog
@@ -123,8 +166,9 @@
                 },
 				{ multipleSearch: true,
 				showQuery: true} // search options - define multiple search
-				);
-			$("#jqGrid").jqGrid('menubarAdd',  [
+				);*/
+
+/*			$("#jqGrid").jqGrid('menubarAdd',  [
 				{
 					id : 'das',
 					//cloasoncall : true,
@@ -145,11 +189,13 @@
 						$("#jqGrid").jqGrid('setGridState',state);
 					}
 				}
-			]);
+			]);*/
 
 
 
 			xhrGet('http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018').then(function(data) {
+
+                createGrid(data);
                 //gridOptions.api.setRowData(data);
                 var days = data.data;
                 var now = new Date();
@@ -202,7 +248,9 @@
                         interval = interval - (minutes * msecPerMinute );
 
                         var seconds = Math.floor(interval / 1000 );
-                        $('#rest').html(hours+":"+minutes+":"+seconds);
+                        var min = minutes < 10 ? "0"+ minutes: minutes;
+                        var sec = seconds < 10 ? "0"+ seconds: seconds;
+                        $('#rest').html(hours+":"+min+":"+sec);
                     }, 1000);
 
 
