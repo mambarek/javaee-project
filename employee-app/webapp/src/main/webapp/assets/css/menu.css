@@ -147,11 +147,13 @@
     .navbar-dark .left-align .navbar-nav .nav-link{
         color: #000;
         padding-left: 8px;
+        padding-top: 0px;
     }
 
     .navbar-dark .right-align .navbar-nav .nav-link{
         color: #000;
         padding-right: 8px;
+        padding-top: 0px;
     }
 
     /* bootstrap 3.7*/

@@ -33,13 +33,15 @@
     <!-- semi transparent blurry curtain to hide content when expand manu from side  -->
     <div class="blurry-overlay d-lg-none"/>
 
-    <div class="container" id="main-container">
-        <div class="row hidden-md-down">
-            <div class="col-lg-2"/>
-            <div class="col">
-                <ui:insert name="breadcrumb"/>
-            </div>
-            <div class="col-2">
+    <div class="container-fluid" id="main-container">
+        <div class=" d-none d-lg-block">
+            <div class="row">
+                <div class="col-lg-3"/>
+                <div class="col-lg-6">
+                    <ui:insert name="breadcrumb"/>
+                </div>
+                <div class="col-3">
+                </div>
             </div>
         </div>
 
@@ -47,19 +49,20 @@
         <ui:insert name="mobile_tablet_extra"/>
 
         <div class="row no-gutters">
+            <div class="col-lg-1"/>
             <!-- Left col  -->
             <div class="col-lg-2">
                 <ui:insert name="leftColContent"/>
             </div>
             <!-- main content -->
-            <div class="col-md-12 col-lg-8" jsf:id="content">
+            <div class="col-md-12 col-lg-6" jsf:id="content">
                 <ui:insert name="mainContent"/>
             </div>
             <!-- right col content -->
             <div class="col-md-12 col-lg-2">
                 <ui:insert name="rightColContent"/>
-
             </div>
+            <div class="col-lg-1"/>
         </div>
 
         <hr/>
