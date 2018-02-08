@@ -17,9 +17,10 @@ function extendSession() {
     //reload page
     //location.reload();
     // extend the session sending an empty ajax
+    console.info("--extendSession() call",$('.refreshSession'));
     $('.refreshSession').click();
     //window.location.replace(window.location.href);
-    initSessionTimeOutTimer();
+    //initSessionTimeOutTimer();
 }
 
 function resetSession() {

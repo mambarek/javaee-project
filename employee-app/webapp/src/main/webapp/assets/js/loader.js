@@ -374,7 +374,7 @@ var overlay =  overlay || (function ($) {
                         document.getElementById("modal-btn-left").addEventListener("click", eval(settings.leftBtnFuncName));
 
                     if (settings && settings.rightBtnFuncName)
-                        document.getElementById("modal-btn-left").addEventListener("click", eval(settings.rightBtnFuncName));
+                        document.getElementById("modal-btn-right").addEventListener("click", eval(settings.rightBtnFuncName));
                 }
             })
 
