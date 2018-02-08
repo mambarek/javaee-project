@@ -25,7 +25,7 @@ function initPopover(selector, yourOptions){
     $(selector).popover(options);
 }
 /********************** selectOneMenu ***********************************/
-function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated) {
+function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated, showPopover) {
     $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
         _renderItem: function( ul, item ) {
             var _id = '#' + itemIdPrefix + item.index;
@@ -69,9 +69,18 @@ function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated) {
                 "class": "ui-selectmenu-text"
             });
 
+            var _id = '#' + itemIdPrefix + item.index;
+            //console.info("#+#+ _d: " + _id);
+            var _li = $(_id);
+
+            var content = item.label;
+            if(_li.find('.item-details').length > 0){
+                content = _li.find('.item-details').html();
+            }
+
             buttonItem.popover({
                 title: "Information Card",
-                content: item.label,
+                content: content,
                 html: true,
                 animation: true,
                 container: 'body',
@@ -82,8 +91,6 @@ function initSelectOneMenu(targetWidgetId, itemIdPrefix, decorated) {
             });
 
             if(decorated){
-                var _id = '#' + itemIdPrefix + item.index;
-                var _li = $(_id);
                 // set the span content to the selected item content
                 buttonItem.html(_li.html());
             }

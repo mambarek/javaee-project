@@ -425,6 +425,15 @@ a:hover, a:active{
   background-color: #31b0d5;
   border-color: #269abc;
 }
+/********************************************/
+.btn-link {
+  font-weight: $bold;
+  color: $corpColorBlack;
+  background-color: transparent;
+}
+.btn-link:hover, .btn-link:focus {
+  text-decoration: none;
+}
 /*----------------------------------------*/
 a.btn{
   border: 1px solid $primaryBorderColor;

@@ -93,11 +93,19 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
             field.setAccessible(true);
             final NotNull annotation = field.getAnnotation(NotNull.class);
             try {
-                if(annotation != null && field.get(this) == null)
+                Object value = field.get(this);
+                if(annotation != null &&  value == null)
                     return false;
+                // recursion of children
+                if(value != null && DomainEntity.class.isAssignableFrom(field.getType())){
+                    DomainEntity entity = (DomainEntity) field.get(this);
+                    if(!entity.isValid()) return false;
+                }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+
+
         }
 
         return true;

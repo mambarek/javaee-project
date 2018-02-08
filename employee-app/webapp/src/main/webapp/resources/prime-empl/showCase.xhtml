@@ -80,12 +80,30 @@
                                    radioItems="#{masterdataService.genders}" isRequired="false">
                 </pe:formRow>
 
+<!--
+            <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Prime-#{cc.resourceBundleMap['employee.editor.gender']}"
+                        radioItems="#{masterdataService.genders}" isRequired="true"/>
+
+            <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                        radioItems="#{masterdataService.genders}" isRequired="false">
+                <f:facet name="selectOnMenuTemplate">
+                    &lt;!&ndash;<div style="color:darkgreen">&ndash;&gt;
+                    <i class="fas fa-#{item.name.toLowerCase()}"/>&#160;  #{masterdataService.getLocalizedNameFor(item)} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
+                    &lt;!&ndash;</div>&ndash;&gt;
+                </f:facet>
+            </pe:formRow>
+-->
+<!--            <pe:formRow value="" inputType="newselect" label="Region"
+                        radioItems="#{masterdataService.continents}" >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:formRow>-->
+
 
             </div>
             </div>
             </div>
-                <!-- ##########  Adress data panel ############-->
-
             <div class="card">
             <div class="card-header" id="headingTwo">
                 <div class="mb-0">
@@ -96,93 +114,10 @@
             </div>
             <div id="collapseTwo" class="show" aria-labelledby="headingTwo" >
             <div class="card-body">
-                <div jsf:id="street-inputContainer" class="inputContainer">
-                    <div class="form-group row" jsf:id="street-container">
-                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="Str./HausNr."/>
-                        <div class="col pr-2">
-                            <div class="input-group">
-                                <h:inputText styleClass="form-control" id="streetOne"
-                                             value="#{cc.attrs.model.address.streetOne}" required="true"
-                                             pt:data-valid="#{component.valid}"
-                                             pt:placeholder="Strasse">
 
-                                    <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
 
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 ml-0 pl-0">
 
-                            <div class="input-group">
-                                <h:inputText styleClass="form-control" id="buildingNr"
-                                             value="#{cc.attrs.model.address.buildingNr}" required="true"
-                                             pt:data-valid="#{component.valid}"
-                                             pt:placeholder="Nr.">
-
-                                    <f:ajax execute="@this" render="street-container" onevent="handleAjax" event="change" />
-
-                                </h:inputText>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="form-group row" jsf:id="street-error-container">
-                        <div class="col-sm-3" />
-                        <div class="col-sm-9">
-                            <div class="invalid-feedback">
-                                <ul class="m-0 p-0 ml-3">
-                                    <li><h:message id="message1" for="streetOne"/></li>
-                                    <li><h:message id="message2" for="buildingNr"/></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <pe:formRow value="#{cc.attrs.model.address.streetTwo}" label="Zusatz Adr.">
-                    <f:validateLength minimum="3" maximum="50"/>
-                </pe:formRow>
-                <div jsf:id="zip-city-inputContainer" class="inputContainer">
-                    <div class="form-group row" jsf:id="zip-city-container">
-                        <h:outputLabel styleClass="col-sm-3 col-form-label" value="Str./HausNr."/>
-                        <div class="col-sm-2 pr-0">
-                            <div class="input-group">
-                                <h:inputText styleClass="form-control" id="zip-code"
-                                             value="#{cc.attrs.model.address.zipCode}" required="true"
-                                             pt:data-valid="#{component.valid}"
-                                             pt:placeholder="Zip">
-                                    <f:validateLength minimum="5" maximum="5"/>
-                                    <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
-
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col ml-0 pl-2">
-                            <div class="input-group">
-                                <h:inputText styleClass="form-control" id="citiy"
-                                             value="#{cc.attrs.model.address.city}" required="true"
-                                             pt:data-valid="#{component.valid}"
-                                             pt:placeholder="City">
-                                    <f:validateLength minimum="3" maximum="50"/>
-                                    <f:ajax execute="@this" render="zip-city-container" onevent="handleAjax" event="change" />
-
-                                </h:inputText>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row" jsf:id="zip-city-error-container">
-                        <div class="col-sm-3" />
-                        <div class="col-sm-9">
-                            <div class="invalid-feedback">
-                                <ul class="m-0 p-0 ml-3">
-                                    <li><h:message id="zip-message" for="zip-code"/></li>
-                                    <li><h:message id="city-message" for="citiy" /></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="Test continent" isRequired="true" decorated="true"/>
+            <pe:countrySelect value="#{testController.countryCode}" label="Test continent" isRequired="true" decorated="true"/>
             <!--<pe:countryComboBox value="#{testController.countryCode}" label="Test continent" isRequired="false"/>-->
 
             <div class="form-group row">
@@ -224,10 +159,32 @@
                 </div>
             </div>
 
+
             </div>
             </div>
             </div>
             </div>
+            <!--<pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}" >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:selectComponent>-->
+<!--            <pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}"
+                                ajaxRender="editor:employeeForm:country">
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{masterdataService.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:selectComponent>
+            <h:outputText id="country" value="Der Kontinent: #{testController.continent}"/>-->
+<!--
+            <div jsf:id="country">
+            <pe:selectComponent value="#{testController.country}" items="#{testController.continent.getCountries(facesContext.viewRoot.locale)}"
+                                >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{item.name}</span>
+                </f:facet>
+            </pe:selectComponent>
+            </div>-->
 
             <div class="form-group row justify-content-end">
                 <div class="btn-group">
