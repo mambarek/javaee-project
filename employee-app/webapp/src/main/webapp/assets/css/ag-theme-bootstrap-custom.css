@@ -1,25 +1,60 @@
+/* ag-Grid  custom props */
 .ag-theme-bootstrap {
     background-color: white;
     color: black;
-    font: 400 14px "Helvetica Neue", sans-serif;
-    border: 1px solid #9e9e9e;
+   /* font: 400 14px "Helvetica Neue", sans-serif;*/
+    border: 1px solid #ddd;
+    font-size:0.8rem;
+    font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
 }
 
+/* ###################### ag-Grid Header ########################*/
 .ag-header-viewport{
-    border-bottom: 1px solid #9E9E9E;
-    background: aliceblue;
+    border-bottom: 1px solid #ddd;
+    /*background: aliceblue;*/
     font-weight: 600;
 }
 
-.ag-theme-bootstrap .ag-header-cell-label .ag-header-cell-text{
-    padding-top: 5px;
+.ag-theme-bootstrap .ag-header-cell {
+    border-right: 0px none !important;
+    border-left: 1px solid #ddd !important;
 }
 
-.ag-theme-bootstrap .ag-row {
-    border-bottom: 1px solid #9E9E9E;
-    box-sizing: border-box;
+.ag-theme-bootstrap .ag-header-cell-label .ag-header-cell-text{
+    padding-top: 8px;
+}
+
+/* ag-Grid header cell menu (filtering ...)*/
+.ag-header-cell-menu-button {
+    float: right;
+    padding-top: 8px;
 }
 
 ag-header-cell ag-header-cell-sortable{
     padding-top: 3px;
+}
+
+/* ####################### ag-Gird table rows ########################*/
+.ag-theme-bootstrap .ag-row {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+/* ####################### ag-Gird table cell ########################*/
+.ag-theme-bootstrap .ag-cell{
+    padding-top: 8px;
+    border-right: 0px none !important;
+    border-left: 1px solid #ddd !important;
+}
+
+/* ag-Gird table focused cell */
+.ag-theme-bootstrap .ag-cell-focus {
+    border: 0px none !important;
+    border-right: 0px none !important;
+    border-left: 1px solid #ddd !important;
+}
+
+/* ####################### ag-Gird pagination ########################*/
+.ag-theme-bootstrap .ag-paging-panel{
+    height: 45px;
 }

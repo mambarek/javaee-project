@@ -55,7 +55,7 @@
                 {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate", filter: "agDateColumnFilter"}
             ];
 
-            var autoGroupColumnDef = {
+/*            var autoGroupColumnDef = {
             headerName: 'Group',
             width: 200,
             field: 'firstName',
@@ -72,19 +72,19 @@
             cellRendererParams: {
             checkbox: true
             }
-            };
+            };*/
             // let the grid know which columns and what data to use
             var gridOptions = {
             columnDefs: columnDefs,
-        headerHeight: 35,
-        rowHeight: 30,
-        enableSorting: true,
+            headerHeight: 44,
+            rowHeight: 44,
+            enableSorting: true,
             enableFilter: true,
             enableColResize: true,
             pagination: true,
             paginationPageSize: 10,
             paginationAutoPageSize: false,
-            autoGroupColumnDef: autoGroupColumnDef,
+           // autoGroupColumnDef: autoGroupColumnDef,
             //floatingFilter: true
             };
 
