@@ -18,20 +18,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-@Named
+//@Named
 public class CreateEmployeesJob implements Job {
 
-    @Inject
+   /* @Inject
     private EmployeeRepository employeeRepository;
 
     @Inject
-    private UserSession userSession;
+    private UserSession userSession;*/
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         System.out.println("-- CreateEmployeesJob::execute");
 
-        final List<Employee> all = employeeRepository.findAll();
+/*        final List<Employee> all = employeeRepository.findAll();
         Employee employee = new Employee();
         employee.setFirstName("Name_"+all.size());
         employee.setLastName("Lastname_"+all.size());
@@ -47,6 +47,6 @@ public class CreateEmployeesJob implements Job {
             e.printStackTrace();
         } catch (EntityRemovedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

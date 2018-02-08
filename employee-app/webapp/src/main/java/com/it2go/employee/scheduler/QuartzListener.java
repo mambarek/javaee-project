@@ -27,7 +27,7 @@ public class QuartzListener extends QuartzInitializerListener {
         if(jobFactory == null) System.out.println("WAAAAAAAAAARNUNG jobFactory not initilized!!!");
         ServletContext ctx = sce.getServletContext();
         StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
-        try {
+/*        try {
             Scheduler scheduler = factory.getScheduler();
             JobDetail jobDetail = JobBuilder.newJob(CreateEmployeesJob.class).build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
@@ -39,6 +39,6 @@ public class QuartzListener extends QuartzInitializerListener {
             scheduler.start();
         } catch (Exception e) {
             ctx.log("There was an error scheduling the job.", e);
-        }
+        }*/
     }
 }
