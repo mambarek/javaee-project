@@ -21,7 +21,7 @@ public class SearchResult {
 
     private int total;
     private int page;
-    private int records;
+    private Long records;
     private List<EmployeeTableItem> rows;
     private Object userdata;
 }

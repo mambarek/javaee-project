@@ -2,6 +2,10 @@ package com.it2go.employee.dao.cmt.view;
 
 import com.it2go.employee.dto.EmployeeTableItem;
 import com.it2go.employee.dto.EmployeesSearchTemplate;
+import com.it2go.employee.dto.search.Group;
+import com.it2go.employee.dto.search.GroupOperation;
+import com.it2go.employee.dto.search.Operation;
+import com.it2go.employee.dto.search.Rule;
 import com.it2go.employee.entities.Employee;
 import com.it2go.employee.entities.Employee_;
 import com.it2go.employee.entities.Person;
@@ -93,7 +97,7 @@ public class EmployeeTableViewDAO {
                 Expression<String> namePath = employeeRoot.get(Employee_.firstName);
                 final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.firstName), "%" + firstName + "%");
                 //select.where(predicate);
-                predicates.add(predicate);
+                //predicates.add(predicate);
             }
 
             // lastName
@@ -102,7 +106,35 @@ public class EmployeeTableViewDAO {
                 Expression<String> namePath = employeeRoot.get(Employee_.lastName);
                 final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.lastName), "%" + lastName + "%");
                 //select.where(predicate);
-                predicates.add(predicate);
+                //predicates.add(predicate);
+            }
+
+            if(employeesSearchTemplate.getFilters() != null){
+                Group group = employeesSearchTemplate.getFilters();
+                Predicate groupPredicat = null;
+                List<Predicate> rulesPredicate = new ArrayList<>();
+
+                for (Rule rule: group.getRules()) {
+                    Predicate rulePredicate = null;
+                    if(rule.getOp() == Operation.CONTAINS){
+                        rulePredicate = criteriaBuilder.like(employeeRoot.get(rule.getField()), "%" + rule.getData() + "%");
+                    }
+
+                    if(rulePredicate != null){
+                        rulesPredicate.add(rulePredicate);
+                    }
+                }
+
+                switch (group.getGroupOp()){
+                    case AND:
+                        groupPredicat = criteriaBuilder.and(rulesPredicate.toArray(new Predicate[0]));
+                        break;
+                    case OR:
+                        groupPredicat = criteriaBuilder.or(rulesPredicate.toArray(new Predicate[0]));
+                        break;
+                }
+
+                predicates.add(groupPredicat);
             }
 
 
@@ -111,22 +143,16 @@ public class EmployeeTableViewDAO {
 
             // Order by
             Order orderBy = null;
-            // ascending
-            if("asc".equals(employeesSearchTemplate.getOrderDirection())){
-                if(Employee_.firstName.getName().equals(employeesSearchTemplate.getOrderBy()))
-                    orderBy = criteriaBuilder.asc(employeeRoot.get(Employee_.firstName));
 
-                if(Employee_.lastName.getName().equals(employeesSearchTemplate.getOrderBy()))
-                    orderBy = criteriaBuilder.asc(employeeRoot.get(Employee_.lastName));
-            }
-
-            // descending
-            if("desc".equals(employeesSearchTemplate.getOrderDirection())){
-                if(Employee_.firstName.getName().equals(employeesSearchTemplate.getOrderBy()))
-                    orderBy = criteriaBuilder.desc(employeeRoot.get(Employee_.firstName));
-
-                if(Employee_.lastName.getName().equals(employeesSearchTemplate.getOrderBy()))
-                    orderBy = criteriaBuilder.desc(employeeRoot.get(Employee_.lastName));
+            if(StringUtils.exists(employeesSearchTemplate.getOrderBy())) {
+                switch (employeesSearchTemplate.getOrderDirection()) {
+                    case "asc":
+                        orderBy = criteriaBuilder.asc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
+                        break;
+                    case "desc":
+                        orderBy = criteriaBuilder.desc(employeeRoot.get(employeesSearchTemplate.getOrderBy()));
+                        break;
+                }
             }
 
             if(orderBy != null)
@@ -147,5 +173,79 @@ public class EmployeeTableViewDAO {
         System.out.println("resultList = " + resultList.size());
 
         return resultList;
+    }
+
+    public Long countEmployees(EmployeesSearchTemplate employeesSearchTemplate){
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Employee> employeeRoot = criteriaQuery.from(Employee.class);
+
+
+        final CriteriaQuery<Long> count = criteriaQuery.select(criteriaBuilder.count(employeeRoot));
+
+
+        if(employeesSearchTemplate != null){
+            List<Predicate> predicates = new ArrayList<>();
+            // firstName
+            final String firstName = employeesSearchTemplate.getEmployeeTableItem().getFirstName();
+            if(StringUtils.exists(firstName)){
+                Expression<String> namePath = employeeRoot.get(Employee_.firstName);
+                final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.firstName), "%" + firstName + "%");
+                //select.where(predicate);
+                //predicates.add(predicate);
+            }
+
+            // lastName
+            final String lastName = employeesSearchTemplate.getEmployeeTableItem().getLastName();
+            if(StringUtils.exists(lastName)){
+                Expression<String> namePath = employeeRoot.get(Employee_.lastName);
+                final Predicate predicate = criteriaBuilder.like(employeeRoot.get(Employee_.lastName), "%" + lastName + "%");
+                //select.where(predicate);
+                //predicates.add(predicate);
+            }
+
+            if(employeesSearchTemplate.getFilters() != null){
+                Group group = employeesSearchTemplate.getFilters();
+                Predicate groupPredicat = null;
+                List<Predicate> rulesPredicate = new ArrayList<>();
+
+                for (Rule rule: group.getRules()) {
+                    Predicate rulePredicate = null;
+                    if(rule.getOp() == Operation.CONTAINS){
+                        rulePredicate = criteriaBuilder.like(employeeRoot.get(rule.getField()), "%" + rule.getData() + "%");
+                    }
+
+                    if(rulePredicate != null){
+                        rulesPredicate.add(rulePredicate);
+                    }
+                }
+
+                switch (group.getGroupOp()){
+                    case AND:
+                        groupPredicat = criteriaBuilder.and(rulesPredicate.toArray(new Predicate[0]));
+                        break;
+                    case OR:
+                        groupPredicat = criteriaBuilder.or(rulesPredicate.toArray(new Predicate[0]));
+                        break;
+                }
+
+                predicates.add(groupPredicat);
+            }
+
+
+            count.where(predicates.toArray(new Predicate[0]));
+
+
+        }
+
+
+        final TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
+
+
+        final Long countResult = query.getSingleResult();
+
+        return countResult;
     }
 }

@@ -264,13 +264,6 @@ public class RepositoriesTest {
     }
 
     @Test
-    public void test07(){
-        System.out.println("### test7");
-        final List<EmployeeTableItem> employeeTableItems = employeeViewRepository.testCriteria();
-        employeeTableItems.forEach(System.out::println);
-    }
-
-    @Test
     public void test08(){
         System.out.println("### test8");
         final List<Employee> employees = employeeRepository.findByFirstName("John");

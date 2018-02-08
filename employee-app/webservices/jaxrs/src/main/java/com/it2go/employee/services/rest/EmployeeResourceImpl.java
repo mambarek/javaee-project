@@ -69,33 +69,18 @@ public class EmployeeResourceImpl implements EmployeeResource {
         return employeesViewRepository.getEmployeeItems();
     }
 
-    @Override
-    public List<EmployeeTableItem> findAllEmployeeItems(int rows, int offset, String sidx, String sord) {
-        EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
-        searchTemplate.setMaxResult(rows);
-        searchTemplate.setOffset(offset);
-        searchTemplate.setOrderBy(sidx);
-        searchTemplate.setOrderDirection(sord);
-
-        return employeesViewRepository.filterEmployees(searchTemplate);
-    }
 
     @Override
-    public SearchResult findAllEmployeeItems(int rows, int offset, String sidx, String sord, String searchField, String searchString, String searchOper, String filters) {
-
-        EmployeesSearchTemplate searchTemplate = new EmployeesSearchTemplate();
-        searchTemplate.setMaxResult(rows);
-        searchTemplate.setOffset(offset);
-        searchTemplate.setOrderBy(sidx);
-        searchTemplate.setOrderDirection(sord);
+    public SearchResult findAllEmployeeItems(final EmployeesSearchTemplate searchTemplate) {
 
         final List<EmployeeTableItem> employeeTableItems = employeesViewRepository.filterEmployees(searchTemplate);
+        final Long countEmployees = employeesViewRepository.countEmployees(searchTemplate);
 
         SearchResult result = new SearchResult();
         result.setRows(employeeTableItems);
-        result.setPage(1);
-        result.setRecords(10);
-        result.setTotal(10);
+        //result.setPage(1);
+        result.setRecords(countEmployees);
+        //result.setTotal(10);
 
         return result;
     }

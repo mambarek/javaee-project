@@ -2,6 +2,7 @@ package com.it2go.employee.services.rest;
 
 
 import com.it2go.employee.dto.EmployeeTableItem;
+import com.it2go.employee.dto.EmployeesSearchTemplate;
 import com.it2go.employee.dto.search.SearchResult;
 import com.it2go.employee.entities.Employee;
 import com.it2go.framework.dao.EntityNotFoundException;
@@ -26,7 +27,7 @@ public interface EmployeeResource {
     @POST
     @Path("/employees")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED})
     Employee save(final Employee employee);
 
     @GET
@@ -40,30 +41,9 @@ public interface EmployeeResource {
     @Path("/employees")
     List<Employee> findAll();
 
-    @GET
+    @POST
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    // http://localhost:8080/webapp/rest/EmployeeService/employee/filter?_search=false&nd=1528382176889&rows=8&page=0&sidx=&sord=asc
-    @Path("/employee/filter")
-    List<EmployeeTableItem> findAllEmployeeItems(
-
-            @QueryParam("rows") final int rows,
-            @QueryParam("offset") final int offset,
-            @QueryParam("sidx") final String sidx,
-            @QueryParam("sord") final String sord
-    );
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED})
     @Path("/employee/search")
-    SearchResult findAllEmployeeItems(
-
-            @QueryParam("rows") final int rows,
-            @QueryParam("offset") final int offset,
-            @QueryParam("sidx") final String sidx,
-            @QueryParam("sord") final String sord,
-            @QueryParam("searchField") final String searchField,
-            @QueryParam("searchString") final String searchString,
-            @QueryParam("searchOper") final String searchOper,
-            @QueryParam("filters") final String filters
-    );
+    SearchResult findAllEmployeeItems(final EmployeesSearchTemplate searchTemplate);
 }

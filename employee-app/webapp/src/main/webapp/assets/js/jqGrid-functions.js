@@ -100,41 +100,63 @@ function createEmployeesGrid(selector, colModel, data, rowsPerPage, locale){
 
 }
 
+
 function fetchData(url, postdata, minPage, currPage, data, rowsPerPage, maxPage, totalPages, thegrid) {
+
+    var searchTemplate = {
+        maxResult: postdata.rows,
+        offset: postdata.offset,
+        orderBy: postdata.sidx,
+        orderDirection: postdata.sord
+    };
+
+    if(postdata.filters)
+        searchTemplate.filters = JSON.parse(postdata.filters);
+
     $.ajax({
-        url: url,
-        data: postdata,
-        dataType: "json",
-        complete: function (jsonData, stat) {
-            if (stat == "success") {
-                if (minPage == currPage) {
-                    data[minPage] = data[currPage] = jsonData.responseJSON.slice(0, rowsPerPage);
-                    data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
+        url:url,
+        type:'POST',
+        data: JSON.stringify(searchTemplate),
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        success: function (jsonData, textStatus, jqXHR ) {
+
+            var rows = jsonData.rows;
+            data.records = jsonData.records;
+            data.total = jsonData.total;
+
+            if (minPage == currPage) {
+                data[minPage] = data[currPage] = rows.slice(0, rowsPerPage);
+                data[maxPage] = rows.slice(rowsPerPage, 2 * rowsPerPage);
+            }
+            else {
+                if (currPage == totalPages) {
+                    data[minPage] = rows.slice(0, rowsPerPage);
+                    data[currPage] = data[maxPage] = rows.slice(rowsPerPage, 2 * rowsPerPage);
                 }
                 else {
-                    if (currPage == totalPages) {
-                        data[minPage] = jsonData.responseJSON.slice(0, rowsPerPage);
-                        data[currPage] = data[maxPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
-                    }
-                    else {
-                        data[minPage] = jsonData.responseJSON.slice(0, rowsPerPage);
-                        data[currPage] = jsonData.responseJSON.slice(rowsPerPage, 2 * rowsPerPage);
-                        data[maxPage] = jsonData.responseJSON.slice(2 * rowsPerPage, 3 * rowsPerPage);
-                    }
+                    data[minPage] = rows.slice(0, rowsPerPage);
+                    data[currPage] = rows.slice(rowsPerPage, 2 * rowsPerPage);
+                    data[maxPage] = rows.slice(2 * rowsPerPage, 3 * rowsPerPage);
                 }
-
-                thegrid.addJSONData(data[currPage]);
             }
+
+            thegrid.addJSONData(data[currPage]);
+        },
+        error:function(res){
+            alert("Bad thing happend! " + res.statusText);
         }
-    })
+    });
+
 }
 
 /* cached items grid*/
 function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, currentPage, locale){
     var pagerId = "#gridPager"; // muss als param übergebne
     var data = {};
-    var totalRows = 100;
+    var totalRows = rowsPerPage*2;
     var totalPages = Math.ceil(totalRows/rowsPerPage);
+
     $(selector).jqGrid({
         regional: locale,
         datatype: function(postdata) {
@@ -146,6 +168,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             var minPage = currPage - 1;
             if(minPage < 1) minPage = 1;
             var maxPage = currPage + 1;
+
             if(maxPage > totalPages) maxPage = totalPages;
             var rows = (maxPage - minPage + 1)*rowsPerPage;
 
@@ -190,14 +213,15 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
 
         },
         jsonReader: {
-            repeatitems: false,
-            id: "id",
-            root: function (obj) { return obj; },
             //page: function (obj) { return 3; },
-            //total: function (obj) { return rowsPerPage; }, // total page number
-            //records: function (obj) { return totalPages; } // total records number
-            total: function (obj) { return totalPages; }, // total page number
-            records: function (obj) { return totalRows; } // total records number
+            total: function (obj) {
+                totalPages = Math.ceil(data.records/rowsPerPage);
+                return totalPages;
+            }, // total page number
+            records: function (obj) {
+                totalRows = data.records;
+                return data.records;
+            } // total records number
 
         },
         colModel: colModel,
@@ -208,8 +232,6 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         viewrecords : true,
         hoverrows : true,
         height: '100%',
-        rowNum: rowsPerPage,
-        records: 100,
         caption : 'Employees',
         sortable: true,
         //altRows: true, This does not work in boostrarap
@@ -220,13 +242,23 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
 
     });
 
-    $(selector).jqGrid('navGrid',pagerId, {
-        search: true, // show search button on the toolbar
-        add: true,
-        edit: false,
-        del: false,
-        refresh: true
-    });
+    $(selector).jqGrid('navGrid',pagerId,
+        {
+            search: true, // show search button on the toolbar
+            add: true,
+            edit: false,
+            del: false,
+            refresh: true
+        },
+        {}, // edit options
+        {}, // add options
+        {}, // delete options
+        {
+            // search options - define multiple search
+            multipleSearch: true,
+            //multipleGroup: true,
+            //showQuery: true
+        });
 
 
     $(selector).jqGrid('menubarAdd',  [

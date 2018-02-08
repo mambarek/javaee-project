@@ -27,4 +27,9 @@ public class EmployeesViewRepository {
     public List<EmployeeTableItem> filterEmployees(EmployeesSearchTemplate employeesSearchTemplate){
         return employeeTableViewDAO.filterEmployees(employeesSearchTemplate);
     }
+
+    public Long countEmployees(EmployeesSearchTemplate employeesSearchTemplate){
+        return employeeTableViewDAO.countEmployees(employeesSearchTemplate);
+    }
+
 }
