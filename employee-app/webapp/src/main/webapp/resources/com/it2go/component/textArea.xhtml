@@ -1,0 +1,68 @@
+<ui:component
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:f="http://xmlns.jcp.org/jsf/core"
+              xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+              xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:jsf="http://xmlns.jcp.org/jsf"
+              xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <cc:interface>
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+
+        <cc:attribute name="isRequired" default="false" type="boolean"
+                      shortDescription="if the value is required"/>
+        <cc:attribute name="disabled" default="false" type="boolean"
+                      shortDescription="the input is rendered but disabled"/>
+        <cc:attribute name="readOnly" default="false" type="boolean"
+                      shortDescription="readOnlx means the comonent is rendered as string"/>
+        <cc:attribute name="placeholder"
+                      shortDescription="HTML5 palceholder for the input"/>
+        <cc:attribute name="ajaxValidation" default="true" type="boolean"
+                      shortDescription="enable onChange event ajax validation. default true"/>
+        <cc:attribute name="ajaxRender"
+                      shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
+        <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:clientBehavior name="changed" event="change" targets="editableText"/>
+        <cc:clientBehavior name="click" event="click" targets="editableText"/>
+
+    </cc:interface>
+
+    <cc:implementation>
+        <div id="#{cc.clientId}" class="inputWidget" data-component-name="rowForm">
+            <div class="col inputContainer p-0" data-component-name='rowForm'>
+                <h:outputLabel styleClass="col-form-label" value="#{cc.attrs.label}"/>
+                <c:if test="#{!cc.attrs.readOnly}">
+                    <div class="input-group">
+                        <h:inputTextarea cols="30" rows="10" styleClass="form-control"
+                                         id="editableText"
+                                         binding="#{cc.input}"
+                                         value="#{cc.attrs.value}"
+                                         required="#{cc.attrs.isRequired}"
+                                         pt:data-required="#{cc.attrs.isRequired}"
+                                         disabled="#{cc.attrs.disabled}"
+                                         pt:data-valid="#{cc.input.valid}"
+                                         pt:placeholder="#{cc.placeHolder}"
+                                         label="#{cc.attrs.label}"
+                                         style="margin-top: 0px; margin-bottom: 0px; height: 123px;">
+
+                            <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput"
+                                    event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
+                        </h:inputTextarea>
+                    </div>
+                    <!-- error message output -->
+                    <div class="invalid-feedback">
+                        <h:message id="message" for="editableText"/>
+                    </div>
+                </c:if>
+                <c:if test="#{cc.attrs.readOnly}">
+                    <span>#{cc.displayValue}</span>
+                </c:if>
+            </div>
+
+        </div>
+    </cc:implementation>
+</ui:component>

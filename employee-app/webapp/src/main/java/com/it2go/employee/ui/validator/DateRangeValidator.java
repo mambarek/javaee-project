@@ -2,6 +2,7 @@ package com.it2go.employee.ui.validator;
 
 import com.it2go.employee.entities.Project;
 
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -19,7 +20,9 @@ public class DateRangeValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        final Object model = component.getAttributes().get("model");
+        //final Object model = component.getAttributes().get("model");
+        final ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        final Object model = elContext.getELResolver().getValue(elContext,null,"project");
         final String logicalName = (String)component.getAttributes().get("logicalName");
 
         if(model == null) return;
