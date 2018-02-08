@@ -1,0 +1,65 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']} - agGrid
+        </div>
+        <div class="card-block" style="padding: 0">
+            <div class="table-responsive mb-5">
+                <h:form>
+                    <div style='margin-top: 10px;' id="grid"/>
+                    <div id="myGrid" style="height: 300px;width:100%;" class="ag-theme-balham"></div>
+                </h:form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+
+    <h:outputScript>
+
+        $(document).ready(function () {
+
+        // specify the columns
+            var columnDefs = [
+                {headerName: "#{employeeMsg['employee.table.col.firstName']}", field: "firstName"},
+                {headerName: "#{employeeMsg['employee.table.col.lastName']}", field: "lastName"},
+                {headerName: "#{employeeMsg['employee.table.col.salary']}", field: "salary"},
+                {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate"}
+            ];
+
+            // let the grid know which columns and what data to use
+            var gridOptions = {
+            columnDefs: columnDefs,
+            enableSorting: true,
+            enableFilter: true
+            };
+
+            // lookup the container we want the Grid to use
+            var eGridDiv = document.querySelector('#myGrid');
+
+            // create the grid passing in the div to use together with the columns data we want to use
+            new agGrid.Grid(eGridDiv, gridOptions);
+
+            fetch('http://localhost:8080/webapp/rest/EmployeeService/employees').then(function(response) {
+            return response.json();
+            }).then(function(data) {
+            gridOptions.api.setRowData(data);
+            })
+        })
+    </h:outputScript>
+</ui:composition>

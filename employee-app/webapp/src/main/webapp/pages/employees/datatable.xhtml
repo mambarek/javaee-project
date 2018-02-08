@@ -1,0 +1,133 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']}
+        </div>
+        <div class="card-block" style="padding: 0">
+            <div class="table-responsive mb-5">
+                <h:form>
+                    <table id="employeeList" class="table table-hover table-sm">
+                        <thead class="table-header">
+                        <tr>
+                            <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                            <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                            <th scope="col"/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat var="employee" value="#{employeeListController.allEmployees}"
+                                   varStatus="status">
+                            <tr>
+                                <td>
+                                    <h:commandLink>
+                                        <i class="fas fa-edit" aria-hidden="true"/>
+                                        <f:ajax execute="@this" render="content"
+                                                listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                                event="click"/>
+                                    </h:commandLink>
+                                </td>
+                                <td>
+                                    <h:commandLink value="#{employee.firstName}">
+                                        <f:ajax execute="@this" render="content"
+                                                listener="#{editEmployeeController.editEmployee(employee.id)}"
+                                                event="click"/>
+                                    </h:commandLink>
+                                </td>
+                                <td>
+                                    <h:commandLink
+                                            outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</h:commandLink>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{employee.salary}"><f:convertNumber
+                                            currencySymbol="$" minFractionDigits="2"/></h:outputText>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{employee.birthDate}"><f:convertDateTime
+                                            pattern="#{employeeMsg['employee.app.date.pattern']}"/></h:outputText>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="d-none">
+                                        <div id="pop-content-#{status.index}">
+                                            <img src="../../assets/images/avatar/avatar_#{status.index}.svg" class="embed-responsive"/>
+                                            <table width="200px">
+                                                <tr><td></td><td></td></tr>
+                                                <tr><td>Name:</td><td>#{employee.firstName} #{employee.lastName}</td></tr>
+                                                <tr><td>Alter:</td><td>26</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <a tabindex="0" id="pop-#{status.index}" data-toggle="popover"
+                                       data-placement="right" style="color: green">
+                                        <i class="fas fa-address-card fa-2x"/>
+                                        <h:outputScript>
+                                            initPopover('#pop-#{status.index}',
+                                            {
+                                            title: "Information Card",
+                                            content: $('#pop-content-#{status.index}').html()
+                                            }
+                                            );
+                                        </h:outputScript>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                    <div id="paging-first-datatable"/>
+                    <div id="loading"/>
+                </h:form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+
+    <h:outputScript>
+        //refreshAllEventListener('content');
+        $(document).ready(function () {
+
+        $('#employeeList').datatable({
+                    pageSize: 5,
+
+                    sort: [false, true, true, true, true, false],
+                    filters: [false, true, 'select', true, true, false],
+                    filterText: 'Type to filter... ',
+                    pagingDivSelector: "#paging-first-datatable",
+                   // loadingDivSelector: "#loading"
+
+         }
+
+        )
+
+        for(var i=0; i &lt; #{employeeListController.allEmployees.size()}; i++){
+
+        initPopover('#pop-' + i,
+        {
+        title: "Information Card",
+        content: $('#pop-content-' + i).html()
+        }
+        );
+
+        }
+        });
+    </h:outputScript>
+</ui:composition>

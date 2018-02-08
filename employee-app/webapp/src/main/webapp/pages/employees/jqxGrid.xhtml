@@ -1,0 +1,70 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+    <div class="card" >
+        <div class="card-header corp-block-header">
+            #{employeeMsg['employee.table.title']} - jqxGrid
+        </div>
+        <div class="card-block" style="padding: 0">
+            <div class="table-responsive mb-5">
+                <h:form>
+                    <div style='margin-top: 10px;' id="grid"/>
+                </h:form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h:form id="create_employee_form" rendered="#{empty editEmployeeController.model}">
+                <h:commandLink id="create_button" styleClass="btn btn-primary" >
+                    <i class="fa fa-user-plus"
+                       aria-hidden="true"/>&#xA0; #{employeeMsg['employee.table.col.create']}
+                    <f:ajax listener="#{editEmployeeController.createNewEmployee()}" render="content"/>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+
+    <h:outputScript>
+        //refreshAllEventListener('content');
+        $(document).ready(function () {
+
+            var source = {
+                datatype: "json",
+                url: "http://localhost:8080/webapp/rest/EmployeeService/employees",
+                id: "id",
+                datafields:
+                [
+                    {name: "firstName", type: "string"},
+                    {name: "lastName", type: "string"},
+                    {name: "salary", type: "string"},
+                    {name: "birthDate", type: "date", format: '#{employeeMsg['employee.app.date.pattern']}'}
+                ]
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#grid").jqxGrid(
+                    {
+                        width: '99%',
+                        //height: '100%',
+                        source: dataAdapter,
+                        columnsresize: true,
+                        autoheight: true,
+                        sortable: true,
+                        //showfilterrow: true,
+                        filterable: true,
+                        columns: [
+                            {text: '#{employeeMsg['employee.table.col.firstName']}', dataField: 'firstName', align: 'center', width: '25%'},
+                            {text: '#{employeeMsg['employee.table.col.lastName']}', dataField: 'lastName', align: 'center', width: '25%'},
+                            {text: '#{employeeMsg['employee.table.col.salary']}', dataField: 'salary', align: 'center', width: '25%'},
+                            {text: '#{employeeMsg['employee.table.col.birthDate']}', dataField: 'birthDate', align: 'center', cellsformat: 'd', width: '25%'}
+                        ]
+                    })
+        });
+    </h:outputScript>
+</ui:composition>

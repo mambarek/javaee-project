@@ -37,6 +37,7 @@ public class EmployeeResourceTest {
 
     private static WebTarget target;
 
+    // http://localhost:8080/webapp/rest/EmployeeService/employees
     /**
      * Arquillian specific method for creating a file which can be deployed
      * while executing the test.

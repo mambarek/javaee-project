@@ -1,0 +1,13 @@
+<ui:composition
+        template="../templates/masterTemplate.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="mainContent">
+        <ui:include src="datatables.xhtml"/>
+        <ui:fragment rendered="#{!empty editEmployeeController.model}">
+            <!--<ui:include src="editor/accordion-editor.xhtml"/>-->
+            <ui:include src="editor/tab-editor.xhtml"/>
+        </ui:fragment>
+    </ui:define>
+
+</ui:composition>

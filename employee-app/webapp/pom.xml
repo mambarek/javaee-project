@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>
+        <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>jaxrs</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -28,7 +28,7 @@
             <groupId>com.it2go.employee</groupId>
             <artifactId>jaxws</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>javax.faces-api</artifactId>
@@ -51,19 +51,14 @@
             <version>1.0.10</version>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.0.0</version>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery-ui</artifactId>
-            <version>1.12.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>5.0.6</version>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>2.2.1</version>
         </dependency>
     </dependencies>
     <build>

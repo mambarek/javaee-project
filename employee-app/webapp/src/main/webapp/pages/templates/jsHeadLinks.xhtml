@@ -2,24 +2,30 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <script src="../../assets/extern/datatable-master/js/datatable.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/datatable-master/js/datatable.js"/>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- !!! WHEN YOU USE PRIMEFACES DON'T INCLUS jquery.js !!!-->
     <!-- Primefaces loads automtically jquery version 1.11.3 to test ist type $.fn.jquery-->
-    <script src="../../assets/extern/jquery-3.3.1/jquery-3.3.1.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/jquery-3.3.1/jquery-3.3.1.js"/>
 
     <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>-->
     <!--<script src="https://code.jquery.com/jquery-3.2.1.js"/>-->
-    <script src="../../assets/extern/datatable-master/js/datatable.jquery.js"/>
-    <script src="../../assets/extern/bootstrap-4.0.0-dist/js/bootstrap.bundle.js"/>
-    <script src="../../assets/extern/jquery-ui-1.12.1/jquery-ui.js"/>
-    <script src="../../assets/extern/jquery-ui-1.12.1/ui/i18n/datepicker-de.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/datatable-master/js/datatable.jquery.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/bootstrap-4.0.0-dist/js/bootstrap.bundle.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/jquery-ui-1.12.1/jquery-ui.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/jquery-ui-1.12.1/ui/i18n/datepicker-de.js"/>
 
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/jqwidgets-ver5.7.2/jqwidgets/jqx-all.js"/>
 
-    <script src="../../assets/js/util.js"/>
-    <script src="../../assets/js/employee.js"/>
-    <script src="../../assets/js/ui.js"/>
+    <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"/>
 
-    <script src="../../assets/js/loader.js"/>
-    <script src="../../assets/js/menu.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/datatables-1.10.16/js/jquery.dataTables.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/extern/datatables-1.10.16/js/dataTables.bootstrap4.js"/>
+
+    <script src="${facesContext.externalContext.requestContextPath}/assets/js/util.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/js/employee.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/js/ui.js"/>
+
+    <script src="${facesContext.externalContext.requestContextPath}/assets/js/loader.js"/>
+    <script src="${facesContext.externalContext.requestContextPath}/assets/js/menu.js"/>
 </ui:composition>
