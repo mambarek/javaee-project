@@ -65,8 +65,9 @@
 </div>
 
     <div style="width:300px;float: right;margin-top: 50px;margin-right: 50px;">
-        <div style="height: 100px;width: 100%;">
-            </span><span id="nextSalatCounter" style="height: 100%;font-size: 3rem;color:brown;"></span>
+        <div style="height: 100px;width: 100%;margin-bottom: 50px">
+            <p style="border-bottom: 1px solid;color: brown;"><span style="font-weight: 700;">Remain time to Salat</span></p>
+            <span id="nextSalatCounter" style="height: 100%;font-size: 3rem;color: brown;"></span>
             <audio id="adhanAudio" preload="auto" controls style="display: none">
                 <source src="Adhan_Makkah.mp3" type="audio/mpeg" /><!-- .../ = Pfadangabe hier nur gekürzt -->
             </audio>
@@ -79,8 +80,10 @@
             <tbody>
             </tbody>
         </table>
+
         <div style="height: 100px;width: 100%;margin-top: 50px">
-            </span><span id="maghribCounter" style="height: 100%;font-size: 4rem;"></span>
+            <p style="    border-bottom: 1px solid;color: #0c5460;"><span style="font-weight: 700;">Remain time to Iftar</span></p>
+            </span><span id="maghribCounter" style="height: 100%;font-size: 4rem;color: #0c5460"></span>
         </div>
     </div>
 
@@ -129,11 +132,11 @@
                 $(selector).html(hours+":"+min+":"+sec);
                 if(hours+":"+min+":"+sec == "0:00:00") {
                     console.info("Yes ist gleich " + hours+":"+min+":"+sec);
-                    playAdhan();
                     // empty table
                     $('#dayTable > tbody > tr').remove();
                     // redraw it again
                     fillDayTable(cachedDayData);
+                    playAdhan();
                 }
             }, 1000);
         }
@@ -183,7 +186,7 @@
                 table.append("<tr style='background: #4eb305'><td>Maghrib</td><td>" + data.data.timings.Maghrib + "</td></tr>");
             }
             else
-                table.append("<tr><td>Isha</td><td>" + data.data.timings.Maghrib + "</td></tr>");
+                table.append("<tr><td>Maghrib</td><td>" + data.data.timings.Maghrib + "</td></tr>");
 
             interval = ishaDate - new Date();
             if(!found && interval > 0) {
