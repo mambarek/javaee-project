@@ -11,11 +11,8 @@
             #{employeeMsg['employee.table.title']} - agGrid
         </div>
         <div class="card-block" style="padding: 0">
-            <div class="table-responsive mb-5">
-                <h:form>
-                    <div style='margin-top: 10px;' id="grid"/>
-                    <div id="myGrid" style="height: 320px;width:100%;" class="ag-theme-blue"></div>
-                </h:form>
+            <div class="pt-2">
+                <div id="myGrid" style="height: 320px;" class="ag-theme-bootstrap"></div>
             </div>
         </div>
         <div class="card-footer">
@@ -49,9 +46,13 @@
                     return params.columnApi.getRowGroupColumns().length === 0;
                     }
                 },
-                {headerName: "#{employeeMsg['employee.table.col.lastName']}", field: "lastName"},
+                {headerName: "#{employeeMsg['employee.table.col.lastName']}", field: "lastName", filter: "agTextColumnFilter",
+        filterParams: {
+        cellHeight: 20,
+        newRowsAction: 'keep'
+        }},
                 {headerName: "#{employeeMsg['employee.table.col.salary']}", field: "salary"},
-                {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate"}
+                {headerName: "#{employeeMsg['employee.table.col.birthDate']}", field: "birthDate", filter: "agDateColumnFilter"}
             ];
 
             var autoGroupColumnDef = {
@@ -81,8 +82,8 @@
             pagination: true,
             paginationPageSize: 10,
             paginationAutoPageSize: false,
-            autoGroupColumnDef: autoGroupColumnDef
-
+            autoGroupColumnDef: autoGroupColumnDef,
+            //floatingFilter: true
             };
 
             // lookup the container we want the Grid to use
