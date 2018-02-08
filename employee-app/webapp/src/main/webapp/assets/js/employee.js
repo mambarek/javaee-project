@@ -152,8 +152,14 @@ function validateInputStyle(component){
     inputContainer.removeClass('has-danger has-success');
 
     var target = component;
-    if(component[0].type == "radio") {
+    if(component[0].type == "radio" ) {
         target = component.closest(".input-group");
+        // add border
+        target.addClass("form-control");
+    }
+
+    if(component[0].type.startsWith("select")) {
+        target = component.siblings('span');
         // add border
         target.addClass("form-control");
     }
@@ -486,11 +492,12 @@ function hasError(element){
     var res = false;
     element.find("input[type=text], input[type=radio], select").each(function(){
         var target = $(this);
+        var valid = target.attr("data-valid");
         if($(this)[0].type == "radio") {
             target = $(this).closest(".input-group");
         }
         var erro = target.hasClass('form-control-danger');
-        if(erro){
+        if(valid == "false" || erro){
             res = true;
             return false;}
          }

@@ -1,8 +1,14 @@
 package com.it2go.employee.ui.jsf.renderer.html;
 
+import com.sun.faces.io.FastStringWriter;
+import com.sun.faces.renderkit.Attribute;
+import com.sun.faces.renderkit.AttributeManager;
+import com.sun.faces.renderkit.RenderKitUtils;
+import com.sun.faces.renderkit.SelectItemsIterator;
 import com.sun.faces.renderkit.html_basic.MenuRenderer;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -46,6 +52,8 @@ public class ExtendedMenuRenderer extends MenuRenderer {
 
     // Override -----------------------------------------------------------------------------------
 
+    private static final Attribute[] ATTRIBUTES =
+            AttributeManager.getAttributes(AttributeManager.Key.SELECTMANYMENU);
 
     @Override
     protected boolean renderOption(FacesContext context,
@@ -71,7 +79,18 @@ public class ExtendedMenuRenderer extends MenuRenderer {
         String valueString = getFormattedValue(context, component, curItem.getValue(), converter);
         writer.writeAttribute("value", valueString, "value");
 
-        final Object labelStyle = (String)selectComponent.getAttributes().get("data-label-style");
+        selectComponent.getAttributes().forEach((attribute, value)->{
+            if(attribute.startsWith("data-")){
+                if(value != null) {
+                    try {
+                        writer.writeAttribute(attribute, value, null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+/*        final Object labelStyle = (String)selectComponent.getAttributes().get("data-label-style");
         if(labelStyle != null)
             writer.writeAttribute("data-label-style", labelStyle, null);
 
@@ -80,7 +99,7 @@ public class ExtendedMenuRenderer extends MenuRenderer {
             writer.writeAttribute("data-class", dataClass, null);
         final Object dataStyle = (String)selectComponent.getAttributes().get("data-style");
         if(dataStyle != null)
-            writer.writeAttribute("data-style", dataStyle, null);
+            writer.writeAttribute("data-style", dataStyle, null);*/
 
         // Write 'selected' attribute.
         Object valuesArray;
@@ -92,6 +111,7 @@ public class ExtendedMenuRenderer extends MenuRenderer {
             valuesArray = currentSelections;
             itemValue = curItem.getValue();
         }
+
         if (isSelected(context, component, itemValue, valuesArray, converter)) {
             writer.writeAttribute("selected", true, "selected");
         }

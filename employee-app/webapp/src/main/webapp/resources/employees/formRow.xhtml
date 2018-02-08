@@ -5,8 +5,9 @@
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+                <!--xmlns:p="http://primefaces.org/ui"-->
+
 
     <cc:interface componentType="AbstractFormRow">
         <cc:attribute name="value" required="true"
@@ -162,17 +163,22 @@
                             <!-- text -->
                             <c:when test="#{cc.attrs.type eq 'select'}">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
-                                        <f:selectItem data-label-style="color:#999;"
-                                         itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="#{null}"/>
-                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item" data-class="avatar" data-style="background-image: url(&apos;http://www.gravatar.com/avatar/b3e04a46e85ad3e165d66f5d927eb609?d=monsterid&amp;r=g&amp;s=16&apos;);"
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%"
+                                                     required="#{cc.attrs.isRequired}" a:data-valid="#{cc.input.valid}" binding="#{cc.input}">
+                                        <f:selectItem
+                                         itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
+                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item" data-class="avatar"
+                                                       data-style="background-image: url(&apos;http://www.gravatar.com/avatar/b3e04a46e85ad3e165d66f5d927eb609?d=monsterid&amp;r=g&amp;s=16&apos;);"
                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
-
+                                        <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
                                     </h:selectOneMenu>
                                     <h:outputScript>
                                         var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
-                                        console.info("-- encodedId: " + encodedId);
-                                        $(encodedId).iconselectmenu().iconselectmenu( "menuWidget").addClass( "ui-menu-icons avatar" );
+                                        //console.info("-- encodedId: " + encodedId);
+                                        $(encodedId).iconselectmenu({
+                                            // trigger onchange for select and fire ajax
+                                            change: function( event, ui ) {$(encodedId).trigger( "change" );}
+                                        }).iconselectmenu( "menuWidget").addClass( "ui-menu-icons avatar" );
 
 
                                     </h:outputScript>
@@ -181,7 +187,7 @@
                             </c:when>
 
                             <!-- pselect -->
-                            <c:when test="#{cc.attrs.type eq 'pselect'}">
+<!--                            <c:when test="#{cc.attrs.type eq 'pselect'}">
                                 <div class="input-group">
                                     <p:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
                                         <f:selectItem
@@ -197,11 +203,11 @@
                                         </p:column>
                                     </p:selectOneMenu>
                                 </div>
-                            </c:when>
+                            </c:when>-->
                             <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
-                        <h:message for="editableText" errorClass="form-control-feedback" />
+                        <h:message id="message" for="editableText" errorClass="form-control-feedback" />
                     </div>
                     <!-- if readonly so render the display value. the input is not rendered s. class AbstractFormRow -->
                     <c:if test="#{cc.attrs.readOnly}">
