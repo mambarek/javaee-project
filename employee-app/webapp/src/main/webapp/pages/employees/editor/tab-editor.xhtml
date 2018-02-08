@@ -12,15 +12,15 @@
             <!--<h:form id="employeeForm" styleClass="employeeForm">-->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="personal-data-tab" data-toggle="tab" href="#personal-data" role="tab"
+                        <a class="nav-link active" id="personal-data-tab" data-toggle="tab" href="#personal-data" role="tab" data-last-clicked="false"
                            aria-controls="personal-data" aria-selected="true">#{employeeMsg['employee.editor.personal.data.panel.title']}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address-data" role="tab"
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address-data" role="tab" data-last-clicked="false"
                            aria-controls="address-tab" aria-selected="false">#{employeeMsg['employee.editor.address.data.panel.title']}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+                        <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab" data-last-clicked="false"
                            aria-controls="comment" aria-selected="false">#{employeeMsg['employee.editor.comment.panel.title']}</a>
                     </li>
                 </ul>
@@ -30,23 +30,32 @@
                             <!-- include personal data -->
                             <ui:include src="panels/personal-data.xhtml"/>
                             <div style="display: none">
-                                <h:commandButton id="submit-button" type="submit">
-                                    <f:ajax execute="@form" render="@form" onevent="checkValidation"/>
+                                <h:commandButton id="personal-data-submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
-
                         </h:form>
                     </div>
                     <div class="tab-pane fade mt-4" id="address-data" role="tabpanel" aria-labelledby="address-tab">
                         <h:form id="address-data-form">
                             <!-- include address data -->
                             <ui:include src="panels/address-data.xhtml"/>
+                            <div style="display: none">
+                                <h:commandButton id="address-data-submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
+                                </h:commandButton>
+                            </div>
                         </h:form>
                     </div>
                     <div class="tab-pane fade mt-4" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                         <h:form id="comment-form">
                             <!-- include address data -->
                             <ui:include src="panels/comment.xhtml"/>
+                            <div style="display: none">
+                                <h:commandButton id="comment-submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
+                                </h:commandButton>
+                            </div>
                         </h:form>
                     </div>
                 </div>
@@ -60,10 +69,6 @@
         </div>
     </div>
     <h:outputScript >
-        activateTabs();
-        $('a[data-toggle="tab"]').on('click', function (e) {
-            e.preventDefault()
-            $(this).tab('show')
-        })
+        checkTabValidation('#myTab');
     </h:outputScript>
 </ui:composition>

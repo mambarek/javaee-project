@@ -293,31 +293,37 @@ function initComboBox(targetWidgetId, itemIdPrefix){
     });
 }
 
-function checkTab(){
-    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+function checkTabValidation(selector){
+    $(selector).find('a').on('click', function (e) {
+        // stop event propagation
+        e.preventDefault();
+        e.stopPropagation();
 
-        e.target // newly activated tab
-        e.relatedTarget // previous active tab
-
-        var form = $(e.relatedTarget.hash).find('form').first();
-        // submit the form
+        // reset selection
+        $(selector).find('a').attr('data-last-clicked',false);
+        // set last clicked tab
+        $(this).attr('data-last-clicked',true);
+        // validate active tab
+        var selectedTab = $(selector).find('a[aria-selected=true]');
+        var form = $(selectedTab.attr('href'));
+        // submit the form to validate it
         form.find("input[type=submit]").click();
-
-        validateForm(form);
-
-        if(hasError(form)) {
-            e.preventDefault();
-        }
-/*        else {
-            //$(e.relatedTarget).find('a').tab('show');
-            $(e.relatedTarget).tab('show');
-        }*/
     })
 }
 
-function activateTabs() {
-    $('a[data-toggle="tab"]').on('click', function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
+function checkValidationAndSelectTab(data){
+    var status = data.status;
+    checkValidation(data);
+    if(status == "success"){
+
+        var selectedTab = $('ul[role=tablist] a[aria-selected=true]');
+        var lastClicked = $('ul[role=tablist] a[data-last-clicked=true]');
+        var form = $(selectedTab.attr('href'));
+
+        if(hasError(form)) {
+            $(selectedTab).tab('show');
+        }
+        else
+            $(lastClicked).tab('show');
+    }
 }
