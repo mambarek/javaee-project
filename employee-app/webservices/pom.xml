@@ -10,9 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>employee-services</artifactId>
+    <artifactId>webservices</artifactId>
     <packaging>pom</packaging>
-    <name>Java EE Project: javaee-project - employee-app - services</name>
+    <name>Java EE Project: javaee-project - employee-app - webservices</name>
     <modules>
         <module>jaxws</module>
         <module>jaxrs</module>

@@ -1,0 +1,4 @@
+<jboss-web>
+   <!-- <security-domain>exampleApplicationDomain</security-domain>-->
+   <context-root>employeeservices</context-root>
+</jboss-web>

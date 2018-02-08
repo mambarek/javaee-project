@@ -186,17 +186,17 @@
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>entities</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>jaxrs</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.it2go.employee</groupId>
             <artifactId>jaxws</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

@@ -23,6 +23,8 @@
         <module>webservices</module>
         <module>employee-ear</module>
         <module>webapp</module>
+        <module>employee-services</module>
+        <module>security</module>
     </modules>
 
     <dependencies>
