@@ -19,7 +19,8 @@
   .ag-theme-bootstrap .ag-tab-header .ag-tab.ag-tab-selected {
     background-color: #f6f6f6;
     border-bottom: 2px solid #f6f6f6 !important;
-    border-color: transparent; }
+    border-color: transparent;
+     }
   .ag-theme-bootstrap .ag-ltr .ag-toolpanel-indent-1 {
     padding-left: 16px; }
   .ag-theme-bootstrap .ag-rtl .ag-toolpanel-indent-1 {
@@ -444,7 +445,7 @@
     color: #333333;
     font: 400 14px "Helvetica Neue", sans-serif; }
   .ag-theme-bootstrap .ag-header-row {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #9E9E9E;
     box-sizing: border-box; }
   .ag-theme-bootstrap .ag-row {
     border-bottom: 1px solid transparent;

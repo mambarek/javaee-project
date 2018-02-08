@@ -1,0 +1,25 @@
+.ag-theme-bootstrap {
+    background-color: white;
+    color: black;
+    font: 400 14px "Helvetica Neue", sans-serif;
+    border: 1px solid #9e9e9e;
+}
+
+.ag-header-viewport{
+    border-bottom: 1px solid #9E9E9E;
+    background: aliceblue;
+    font-weight: 600;
+}
+
+.ag-theme-bootstrap .ag-header-cell-label .ag-header-cell-text{
+    padding-top: 5px;
+}
+
+.ag-theme-bootstrap .ag-row {
+    border-bottom: 1px solid #9E9E9E;
+    box-sizing: border-box;
+}
+
+ag-header-cell ag-header-cell-sortable{
+    padding-top: 3px;
+}
