@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>jqGrid Loading Data - Alternate Row Background</title>
+    <!-- The jQuery library is a prerequisite for all jqSuite products -->
+    <script type="text/ecmascript" src="./assets/extern/jquery-3.3.1/jquery-3.3.1.js"></script>
+    <script type="text/ecmascript" src="./assets/extern/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <script type="text/ecmascript" src="./assets/js/util.js"></script>
+
+    <!-- We support more than 40 localizations -->
+    <script type="text/ecmascript" src="./assets/extern/jqGrid/js/trirand/i18n/grid.locale-en.js"></script>
+    <!-- This is the Javascript file of jqGrid -->   
+    <script type="text/ecmascript" src="./assets/extern/jqGrid/js/trirand/src/jquery.jqGrid.js"></script>
+    <!-- This is the localization file of the grid controlling messages, labels, etc.
+    <!-- A link to a jQuery UI ThemeRoller theme, more than 22 built-in and many more custom -->
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="./assets/extern/bootstrap-4.0.0-dist/css/bootstrap.min.css"/>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css"/>
+	<!---	
+	<link rel="stylesheet" href="../../../css/iconic/font/css/open-iconic-bootstrap.css">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> 
+ --->
+    <!-- The link to the CSS that the grid needs -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/extern/jqGrid/css/trirand/ui.jqgrid-bootstrap4.css" />
+	<script>
+		$.jgrid.defaults.width = 1000;
+		$.jgrid.defaults.responsive = true;
+		$.jgrid.defaults.styleUI = 'Bootstrap4';
+		$.jgrid.defaults.iconSet = "Octicons";
+	</script>
+	<!--
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+    <script src="assets/extern/bootstrap-4.0.0-dist/js/bootstrap.bundle.js"></script>
+<style>
+.ui-jqgrid
+{
+	font-size:0.8rem
+}
+</style>
+</head>
+<body>
+<div style="margin-left:20px;margin-top:20px">
+    <span >Rest Time: </span><span id="rest"></span>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+	<span class="oi oi-person"  ></span>
+</div>
+    <script type="text/javascript"> 
+    
+        $(document).ready(function () {
+           // altrows are set with table striped class for Boostrap
+           //$.jgrid.styleUI.Bootstrap.base.rowTable = "table table-bordered table-striped";
+			
+           $("#jqGrid").jqGrid({
+                url: 'http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018',
+                datatype: "json",
+                mtype: "GET",
+               jsonReader : {
+                   root: "data"},
+                colModel: [
+                    { label: 'Date', name: 'date.readable', width: 75},
+                    { label: 'Hijri', name: 'date.hijri.date', width: 75},
+                    { label: 'Fajr', name: 'timings.Fajr', width: 75},
+                    { label: 'Sunrise', name: 'Sunrise', jsonmap: 'timings.Sunrise', width: 90 },
+                    { label: 'Dhuhr', name: 'Dhuhr', jsonmap: 'timings.Dhuhr', width: 100},
+                    { label: 'Asr', name: 'Asr', jsonmap: 'timings.Asr', width: 80 },
+                    { label: 'Sunset', name: 'Sunset', jsonmap: 'timings.Sunset', width: 80},
+                    { label: 'Maghrib', name: 'Maghrib', jsonmap: 'timings.Maghrib', width: 80},
+                    { label: 'Isha', name: 'Isha', jsonmap: 'timings.Isha', width: 80},
+                    { label: 'Imsak', name: 'Imsak', jsonmap: 'timings.Imsak', width: 80},
+                    { label: 'Midnight', name: 'Midnight', jsonmap: 'timings.Midnight', width: 80}
+                ],
+                loadonce: true,
+				altRows : true,
+				rownumbers : true,
+				colMenu : true,
+				menubar: true,
+				viewrecords : true,
+				hoverrows : true,
+                height: '100%',
+                rowNum: 50,
+				caption : 'Prayer time',
+				sortable: true,
+                //altRows: true, This does not work in boostrarap
+                // altclass: '....'
+                pager: "#jqGridPager"
+                // set table stripped class in table style in bootsrap
+            });
+            $('#jqGrid').navGrid('#jqGridPager',
+                // the buttons to appear on the toolbar of the grid
+                { edit: true, add: true, del: true, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+                // options for the Edit Dialog
+                {
+                    editCaption: "The Edit Dialog",
+                    recreateForm: true,
+					checkOnUpdate : true,
+					checkOnSubmit : true,
+                    closeAfterEdit: true,
+                    errorTextFormat: function (data) {
+                        return 'Error: ' + data.responseText
+                    }
+                },
+                // options for the Add Dialog
+                {
+                    closeAfterAdd: true,
+                    recreateForm: true,
+                    errorTextFormat: function (data) {
+                        return 'Error: ' + data.responseText
+                    }
+                },
+                // options for the Delete Dailog
+                {
+                    errorTextFormat: function (data) {
+                        return 'Error: ' + data.responseText
+                    }
+                },
+				{ multipleSearch: true,
+				showQuery: true} // search options - define multiple search
+				);
+			$("#jqGrid").jqGrid('menubarAdd',  [
+				{
+					id : 'das',
+					//cloasoncall : true,
+					title : 'Sort by Category',
+					click : function ( event) {
+						$("#jqGrid").jqGrid('sortGrid','CategoryName');
+					}
+				},
+				{
+					divider : true,
+				},
+				{
+					id : 'was',
+					//cloasoncall : true,
+					title : 'Toggle Visibility',
+					click : function ( event) {
+						var state = (this.p.gridstate === 'visible') ? 'hidden' : 'visible';
+						$("#jqGrid").jqGrid('setGridState',state);
+					}
+				}
+			]);
+
+
+
+			xhrGet('http://api.aladhan.com/v1/calendarByCity?city=Kaiserslautern&country=de&method=2&month=05&year=2018').then(function(data) {
+                //gridOptions.api.setRowData(data);
+                var days = data.data;
+                var now = new Date();
+                // Set the unit values in milliseconds.
+                var msecPerMinute = 1000 * 60;
+                var msecPerHour = msecPerMinute * 60;
+                var msecPerDay = msecPerHour * 24;
+                var maghribDate;
+                var interval = -1;
+                for(var i=0; i<days.length; i++){
+                    var day = days[i];
+                    if(day.date.gregorian.day == now.getDate()){
+                        var maghrib = day.timings.Maghrib.split(" ")[0];
+
+                        var arr = maghrib.split(":")
+                        var hours = arr[0];
+                        var minutes = arr[1];
+                        maghribDate = now.setHours(hours, minutes, 0);
+
+
+
+
+
+                        // Calculate how many days the interval contains. Subtract that
+                        // many days from the interval to determine the remainder.
+                        /*var days = Math.floor(interval / msecPerDay );
+                        interval = interval - (days * msecPerDay );*/
+
+// Calculate the hours, minutes, and seconds.
+
+// Display the result.
+                        //document.write(hours + " hours, " + minutes + " minutes, " + seconds + " seconds.");
+                    }
+                }
+
+                if(maghribDate){
+
+                    var counter = setInterval(function (args) {
+                        // Get the difference in milliseconds.
+                        interval = maghribDate - new Date();
+                        if(interval < 0) {
+                            clearInterval(counter);
+                            return;
+                        }
+
+                        var hours = Math.floor(interval / msecPerHour );
+                        interval = interval - (hours * msecPerHour );
+
+                        var minutes = Math.floor(interval / msecPerMinute );
+                        interval = interval - (minutes * msecPerMinute );
+
+                        var seconds = Math.floor(interval / 1000 );
+                        $('#rest').html(hours+":"+minutes+":"+seconds);
+                    }, 1000);
+
+
+
+
+
+                }
+            })
+        });
+
+    </script>
+
+    
+	
+</body>
+</html>
