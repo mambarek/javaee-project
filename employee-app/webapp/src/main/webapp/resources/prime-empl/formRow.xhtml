@@ -48,8 +48,8 @@
     <cc:implementation>
         <div id="#{cc.clientId}" class="inputWidget">
             <div class="form-group row">
-                <h:outputLabel styleClass="col-form-label col-md-3" value="#{cc.attrs.label}"/>
-                <div class="col">
+                <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
+                <div class="col-sm-9">
                     <div jsf:id="inputContainer" class="inputContainer">
 
                         <c:choose>
@@ -76,36 +76,44 @@
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  pt:placeholder="#{cc.placeHolder}">
-
                                         <f:ajax execute="@this" render="#{cc.clientId}" onevent="handleAjax" event="change"/>
                                     </h:inputText>
-                                    <div class="input-group-addon">
-                                        <i class="fas fa-calendar-alt" aria-hidden="true"/>
-                                    </div>
                                     <h:outputScript >
-                                        $(function() {
-                                        var id = '#' + encodeId('#{cc.clientId}:datetimepicker');
+                                        var id = '#' + encodeId('#{cc.clientId}:editableText');
                                         console.info("Datepicker id: " + id);
-                                        $(id).datepicker({
-                                        language: employee_i18n['locale'],
-                                        autoclose: true,
-                                        todayHighlight: true,
-                                        format: employee_i18n['employee.app.javascript.date.pattern']
-                                        })
-                                        });
+                                        $(id).datepicker($.datepicker.regional[employee_i18n['locale']]);
+                                        $(id).datepicker( "option", {
+                                            "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],
+                                            "changeMonth": true ,
+                                            "changeYear": true
+                                            });
+                                        $(id).datepicker( "setDate",$(id).attr('value'));
                                     </h:outputScript>
                                 </div>
                             </c:when>
+                            <c:when test="#{cc.attrs.inputType eq 'pdate'}">
+                                <div class="input-group">
+                                    <p:calendar styleClass="form-control" binding="#{cc.input}" id="editableText"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 disabled="#{cc.attrs.disabled}" pt:data-valid="#{cc.input.valid}"
+                                                 pt:placeholder="#{cc.placeHolder}"
+                                                locale="#{webFlowController.locale}" navigator="true" pattern="#{cc.resourceBundleMap['employee.app.javascript.date.pattern']}">
 
+                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="handleAjax"
+                                                event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
+
+                                    </p:calendar>
+                                </div>
+                            </c:when>
                             <!-- Radio -->
                             <c:when test="#{cc.attrs.inputType eq 'radio'}">
-                                <div class="input-group form-control" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
+                                <div class="input-group" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
 
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="form-check form-check-inline">
                                             <div class="custom-control custom-radio">
                                                 <input class="form-check-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"
-                                                       jsf:id="radio" value="#{item}"
+                                                       jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}"
                                                        pt:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
                                                     <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
                                                 </input>
@@ -229,8 +237,9 @@
       <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
-                        <h:message id="message" for="editableText" errorClass="form-control-feedback" />
-
+                        <div class="invalid-feedback">
+                            <h:message id="message" for="editableText"/>
+                        </div>
                     </div>
                     <!-- if readonly so render the display value. the input is not rendered s. class AbstractFormRow -->
                     <c:if test="#{cc.attrs.readOnly}">

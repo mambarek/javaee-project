@@ -36,7 +36,7 @@
     </div>
     <div class="card-block">
         <h:form id="employeeForm" styleClass="form-horizontal employeeForm" >
-        <div class="form-row">
+
             <pe:formRow value="#{cc.attrs.model.firstName}"
                                label="#{cc.resourceBundleMap['employee.editor.firstName']}"
                                isRequired="true" >
@@ -51,11 +51,10 @@
 
             <pe:formRow value="#{cc.attrs.model.birthDate}"
                                label="#{cc.resourceBundleMap['employee.editor.birthDate']}"
-                        inputType="date"
+                               inputType="date"
                                placeholder="#{cc.resourceBundleMap['employee.app.date.pattern']}">
                 <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
             </pe:formRow>
-
             <pe:formRow value="#{cc.attrs.model.salary}"
                         label="#{cc.resourceBundleMap['employee.editor.salary']}">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
@@ -63,7 +62,7 @@
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genders}" isRequired="true">
             </pe:formRow>
-            <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
+            <pe:formRow inputType="prime-pselect" value="#{cc.attrs.model.gender}" label="Prime-#{cc.resourceBundleMap['employee.editor.gender']}"
                         radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
@@ -93,7 +92,7 @@
                 </div>
             </div>
 
-        </div>
+
     </h:form>
 
      <div class="employeeFormErrorList" style="display: none">

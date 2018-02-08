@@ -154,7 +154,7 @@ function encodeId(id) {
     return id.replace(new RegExp(':', 'g'), "\\:").toString();
 }
 
-function validateInputStyle(component){
+function validateInputStyle3(component){
 
     var valid = component.attr("data-valid");
     var inputContainer = component.closest(".inputContainer");
@@ -210,6 +210,42 @@ function validateInputStyle(component){
     }
 }
 
+function validateInputStyle(component){
+
+    var valid = component.attr("data-valid");
+    var inputContainer = component.closest(".inputContainer");
+    var disabled = component.attr("disabled");
+    // console.info("validateInputStyle component", component, " valid: " + valid);
+
+    var target = component;
+
+    // dropdown: HTML select are display none
+    // the jqueryui select menu generates a span with
+    // select content. so highlight the span instead of
+    // the select
+    if(component.is("select")) {
+        target = component.siblings('span');
+        // add border
+        target.addClass("form-control");
+    }
+
+    target.removeClass("is-valid is-invalid")
+
+    // when disabled so no highlighting
+    if(disabled && disabled != false) return;
+
+    if (valid == "false") {
+        target.addClass('is-invalid');
+        //target.siblings('.invalid-feedback').show();
+        inputContainer.find('.invalid-feedback').show();
+    }
+    else {
+        target.addClass('is-valid');
+        //target.siblings('.invalid-feedback').hide();
+        inputContainer.find('.invalid-feedback').hide();
+    }
+}
+
 function validateElementWithId(id){
     var element = $("#" + id.replace(new RegExp(':', 'g'),"\\:"));
     //var allInputFields = form.filter('input[type=text], select');
@@ -229,6 +265,8 @@ function validateForm(form){
     //form.find("input[type=text], input[type=radio], select").each(function(){
         validateInputStyle($(this))
     });
+
+    form.addClass("was-validated");
 }
 
 function validateWidget(widget){

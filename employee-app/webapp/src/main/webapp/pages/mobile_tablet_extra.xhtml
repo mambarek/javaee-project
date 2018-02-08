@@ -5,14 +5,14 @@
         xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <!-- Search and language for Tablet-->
-<div class="row hidden-xs-down hidden-lg-up">
-    <div class="col-12 d-flex">
-        <div class="d-flex flex-row" style="width: 100%">
+<div class="row d-none d-md-block d-lg-none">
+    <div class="col-12">
+        <div class="d-md-flex">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
             </form>
-            <div class="ml-md-auto align-self-center">
+            <div class="ml-auto pt-3">
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         #{employeeMsg['employee.app.language']} (#{webFlowController.locale})
@@ -32,8 +32,8 @@
         </div>
     </div>
 </div>
-        <!-- Search and language for Mobile-->
-<div class="row hidden-sm-up">
+<!-- Search and language for Mobile-->
+<div class="row d-md-none">
 <div class="col-12">
     <div style="width:100%">
         <div class="btn-group" style="margin-top: 5px;float: right;">
@@ -54,14 +54,11 @@
     </div>
 </div>
 </div>
-<div class="row hidden-sm-up">
+<!-- search field with button -->
+<div class="row d-md-none">
 <div class="col-12">
     <form class="form-inline my-2 my-lg-0">
-        <!--                        <div class="input-group">
-                                <input class="form-control mr-sm-2" type="text" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
-                                <button class="btn btn-primary my-2 my-sm-0" type="submit">#{employeeMsg['employee.header.menu.search']}</button>
-                                </div>-->
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 w-100">
             <input type="text" class="form-control" placeholder="#{employeeMsg['employee.header.menu.search']}"/>
             <div class="input-group-append">
                 <button class="btn btn-outline-primary" type="submit">

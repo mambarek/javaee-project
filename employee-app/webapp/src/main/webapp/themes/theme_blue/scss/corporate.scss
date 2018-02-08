@@ -55,6 +55,9 @@ $blockHeaderReightFontColor: #ffffff;
 $anchorColor: $corpColorBlack;
 $anchorHoverColor:$primaryHoverBgColor;
 
+/*Grid gutter*/
+$grid-spacing: 5px;
+
 /* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
 
 The size can be calculated from pixels to em using this formula: pixels/16=em */
@@ -155,6 +158,7 @@ a:hover, a:active{
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   /* padding: 1.25rem; */
+  padding-top: 15px;
 }
 
 .card-header:first-child {
@@ -176,7 +180,19 @@ a:hover, a:active{
   font-weight: $bold;
   border-bottom: 2px solid #eceeef;
 }
+
 /* ----------------- theme bootstrap ------------------------------*/
+.no-gutters {
+  margin-right: $grid-spacing;
+  margin-left: $grid-spacing;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: $grid-spacing;
+    padding-left: $grid-spacing;
+  }
+}
+
 .form-control {
   display: block;
   width: 100%;
@@ -219,7 +235,7 @@ a:hover, a:active{
   padding: 0;
 }
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+.ui-state-default, .ui-state-hover{
   border: 1px solid #c5c5c5;
   background: #ffffff;
   font-weight: normal;

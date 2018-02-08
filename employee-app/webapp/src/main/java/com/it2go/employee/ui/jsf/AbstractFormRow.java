@@ -67,6 +67,13 @@ public class AbstractFormRow extends UIInputComponent implements NamingContainer
         return placeHolder;
     }
 
+    public String getRequired(){
+        if((boolean) this.getAttributes().get("isRequired"))
+            return "required";
+
+        return "";
+    }
+
     public Object getStartValue() {
         return this.getStateHelper().get(START_VALUE);
     }
