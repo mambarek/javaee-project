@@ -53,6 +53,9 @@ function showConfirmationDialog(element, event, yesFunc){
 
 function makeAjax(element, event, execute, render, oneventFunc, onerrorFunc){
 
+    event.preventDefault();
+    event.stopPropagation();
+    //alert("makeAjax call");
     return jsf.ajax.request(element, event,{execute:execute,render:render, onevent: oneventFunc, onerror: onerrorFunc});
 }
 
@@ -253,6 +256,19 @@ function checkValidationAndConfirmSave(data) {
 
         case "success":
             // This is invoked right after successful processing of AJAX response and update of HTML DOM.
+            if(isIE()){
+               // data.source.addEventListener("click", data.source.getAttribute('onclick'));
+                //document.getElementById(data.source.id).addEventListener("click", clickSave);
+
+                //data.source.addEventListener("click", function(){eval(data.source.getAttribute('onclick'))},false);
+                //document.getElementById(data.source.id).addEventListener("click", function(){eval(data.source.getAttribute('onclick'))},true);
+                //data.source.addEventListener("click", clickSave);
+                // data.source.addEventListener("click", function(event) {eval(data.source.getAttribute('onclick'))});
+                //data.source.addEventListener("click", new Function (data.source.getAttribute('onclick')));
+                //document.getElementById(data.source.id)
+                //document.getElementById(data.source.id).onclick = new Function (data.source.getAttribute('onclick'));
+                //refreshEvtnListener();
+            }
 
             validateForm(form);
             var error = hasError(form);
@@ -272,6 +288,26 @@ function checkValidationAndConfirmSave(data) {
                 break;
             }
     }
+}
+
+function refreshEventListener(rootId){
+    var form = $('#' + rootId);
+   // form.find("input[type=text], input[type=radio], select").each(function(){
+    form.find('[onclick]').each(function(){
+        if(this.removeEventListeners)
+            this.removeEventListeners('click',this.onclick, true);
+
+        var onclickFunc = this.getAttribute('onclick');
+
+        if(onclickFunc && onclickFunc != null && !this.onclick) {
+            console.info("## refreshEventListener " + this.id + " onclickFunc[",onclickFunc,"] this.onclick[",this.onclick,"]" );
+            this.onclick = new Function(onclickFunc);
+            this.addEventListener('click', this.onclick);
+        }
+
+    });
+
+
 }
 
 function confirmDelete(data) {
@@ -519,4 +555,58 @@ function showOverlay(message, callback){
         return 0;
     });
     return dfd.promise();
+}
+
+
+function clickSave() {
+    console.info('##### clickSave call');
+    $('.saveConfirmed').click();
+}
+
+function clickDelete() {
+    $('.deleteConfirmed').click();
+}
+
+/**
+ * detect IE
+ * returns version of IE or false, if browser is not Internet Explorer
+ */
+function isIE() {
+    var ua = window.navigator.userAgent;
+
+    // Test values; Uncomment to check result …
+
+    // IE 10
+    // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+
+    // IE 11
+    // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
+
+    // Edge 12 (Spartan)
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+
+    // Edge 13
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+        // Edge (IE 12+) => return version number
+        return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
 }

@@ -5,9 +5,9 @@
 
     <persistence-unit name="EmployeeDS" transaction-type="JTA">
          <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
-        <!--<jta-data-source>java:jboss/datasources/EmployeeDS</jta-data-source>-->
+        <jta-data-source>java:jboss/datasources/EmployeeDS</jta-data-source>
         <!--<jta-data-source>java:/comp/env/jdbc/EmployeeDS</jta-data-source>-->
-        <jta-data-source>jdbc/EmployeeDS</jta-data-source>
+        <!--<jta-data-source>jdbc/EmployeeDS</jta-data-source>-->
         <!--<non-jta-data-source>java:/comp/env/jdbc/EmployeeDS</non-jta-data-source>-->
 
         <class>com.it2go.employee.entities.Employee</class>

@@ -4,11 +4,11 @@
          id="WebApp_ID" version="3.1">
     <display-name>Archetype Created Web Application</display-name>
 
-    <context-param>
+<!--    <context-param>
         <param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
         <param-value>mojarra-2.3.3</param-value>
-        <!--<param-value>myfaces-2.3.0-beta</param-value>-->
-    </context-param>
+        <param-value>myfaces-2.3.0-beta</param-value>
+    </context-param>-->
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
@@ -33,7 +33,10 @@
         <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
         <param-value>/WEB-INF/taglib.xml</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.jsp</welcome-file>
