@@ -46,6 +46,19 @@ function encodeId(id) {
 
 var _eventHandler = {};
 
+// initHandler in documentReady aufrufen um den dom evnt zu intialisieren
+function initHandler(eventName){
+    var oneventName = 'on' + eventName;
+    $("form").each(function(i, form){
+        $(form).find('['+oneventName+']').each(function(index, input){
+            var handlerIndex  = form.id + "_" + index + "_" + eventName;
+            var eventFunc = input.getAttribute(oneventName);
+            if(eventFunc)
+                _eventHandler[handlerIndex] = new Function(eventFunc);
+        })
+    })
+}
+
 /**
  * f:ajax generates an onclick in the submit button. by clicking the first time the form is submitted and the form is rerendered after Ajax is finish.
  * the onclick is in new generated html but in IE there is no Eventlistener registered for click you can see this analysing the button properties in IE DevTools.
@@ -74,7 +87,12 @@ function refreshRootEventListener(rootId, eventName){
             if(!input[oneventName]) {
                 //console.info("## refreshEventListener " + handlerIndex + " eventFunc[",eventFunc,"] this[oneventName][",input[oneventName],"]" );
                 input.removeEventListener(eventName,handler);
-                input.addEventListener(eventName, handler, true);
+                // this is not working on IE
+                //input.addEventListener(eventName, handler, false);
+                // works  fine
+                //input[oneventName] = handler;
+                // use better jquery
+                $(input).off(eventName).on(eventName,handler);
             }
         }
     });
