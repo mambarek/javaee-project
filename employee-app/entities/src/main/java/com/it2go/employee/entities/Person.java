@@ -1,5 +1,6 @@
 package com.it2go.employee.entities;
 
+import com.it2go.masterdata.Country;
 import com.it2go.masterdata.Gender;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,6 +60,11 @@ public class Person extends DomainEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "GENDER")
     private Gender gender;
+
+    @Basic
+    @Column(name = "NATIONALITY")
+    @Size(min = 2, max = 3)
+    private String nationality;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ADDR_ID")

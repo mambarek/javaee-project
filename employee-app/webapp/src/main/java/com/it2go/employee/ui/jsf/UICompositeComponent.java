@@ -1,5 +1,7 @@
 package com.it2go.employee.ui.jsf;
 
+import lombok.Data;
+
 import javax.faces.application.Resource;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponent;
@@ -27,11 +29,12 @@ import java.util.logging.Logger;
 However that is obviously a bug in the Mojarra and I hope it will be fixed soon.
 Problem: CC can not find resource bundles for translations
   */
+@Data
 @FacesComponent("uiCompositeComponent")
 public class UICompositeComponent extends UINamingContainer {
     private static final String PROPERTIES_EXT = ".properties";
 
-
+    private boolean readOnly = false;
 /*    private static Logger LOGGER = Logger.getLogger("com.it2go.employee.ui.jsf",
             "javax.faces.LogStrings");*/
 

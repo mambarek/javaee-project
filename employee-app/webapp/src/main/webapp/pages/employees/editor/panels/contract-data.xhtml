@@ -6,14 +6,13 @@
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:it2go="http://xmlns.jcp.org/jsf/composite/com/it2go/component">
 
-        <pe:formRow value="#{editEmployeeController.model.salary}"
+        <it2go:row value="#{editEmployeeController.model.salary}"
                     label="#{employeeMsg['employee.editor.contract.slary']}">
             <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"  for="input"/>
-        </pe:formRow>
-        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="switch" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
-        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="switch" label="#{employeeMsg['employee.editor.contract.traveling']}"/>
+        </it2go:row>
+        <it2go:row value="#{editEmployeeController.model.weekendWork}" inputType="switch" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
+        <it2go:row value="#{editEmployeeController.model.traveling}" inputType="switch" label="#{employeeMsg['employee.editor.contract.traveling']}"/>
 
 </ui:composition>

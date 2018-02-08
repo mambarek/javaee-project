@@ -7,7 +7,7 @@
               xmlns:jsf="http://xmlns.jcp.org/jsf"
               xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <cc:interface componentType="NewRow">
+    <cc:interface componentType="Row">
         <cc:attribute name="model" type="java.lang.Object"
                       shortDescription="The model value." />
         <cc:attribute name="value" required="true"
@@ -21,7 +21,7 @@
         <cc:attribute name="disabled" default="false" type="boolean"
                       shortDescription="the input is rendered but disabled"/>
         <cc:attribute name="readOnly" default="false" type="boolean"
-                      shortDescription="readOnlx means the comonent is rendered as string"/>
+                      shortDescription="readOnly means the value is rendered as string"/>
         <cc:attribute name="placeholder"
                       shortDescription="HTML5 palceholder for the input"/>
         <cc:attribute name="ajaxValidation" default="true" type="boolean"
@@ -55,7 +55,7 @@
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
                     <!--<c:if test="#{!cc.attrs.readOnly}">-->
-                        <div  class="inputContainer #{cc.cssHideClass()}" style="height: 100%">
+                    <div  class="inputContainer #{cc.cssHideClass()}" style="height: 100%">
 
                         <c:choose>
                             <!-- CHOOSE BLOCK BEGIN-->
@@ -176,20 +176,21 @@
       <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
-                            <c:if test="#{!cc.attrs.readOnly}">
-                                <div class="invalid-feedback">
-                                    <h:message id="message" for="editableText"/>
-                                </div>
-                            </c:if>
+                        <!--<c:if test="#{!cc.attrs.readOnly}">-->
+                            <div class="invalid-feedback">
+                                <h:message id="message" for="editableText"/>
+                            </div>
+                        <!--</c:if>-->
 
                     </div>
 
                     <!--</c:if>-->
-                    <c:if test="#{cc.attrs.readOnly}">
-                        <div  class="inputContainer" style="height: 100%">
+                    <!-- jstl cc:if funtioniert nicht da es hier noch früh ist und readOnly wurde noch nicht aufgelöst durch EL-->
+                    <!--<c:if test="#{cc.cssHideClass() eq 'd-none'}">-->
+                        <div  jsf:id="display" class="inputContainer" style="height: 100%" jsf:rendered="#{cc.attrs.readOnly}">
                             <span>#{cc.displayValue}</span>
                         </div>
-                    </c:if>
+                    <!--</c:if>-->
 
                 </div>
             </div>

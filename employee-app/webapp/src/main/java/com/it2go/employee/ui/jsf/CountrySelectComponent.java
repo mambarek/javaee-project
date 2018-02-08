@@ -58,10 +58,10 @@ public class CountrySelectComponent extends UIInputComponent implements NamingCo
         return new ArrayList<>();
     }
 
-    @Override
+/*    @Override
     public void resetValue() {
         super.resetValue();
         this.continentSelect.resetValue();
         this.countrySelect.resetValue();
-    }
+    }*/
 }

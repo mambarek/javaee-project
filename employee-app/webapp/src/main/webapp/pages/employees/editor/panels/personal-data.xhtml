@@ -6,28 +6,46 @@
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+        xmlns:it2go="http://xmlns.jcp.org/jsf/composite/com/it2go/component">
 
-        <pe:formRow value="#{editEmployeeController.model.firstName}"
+        <it2go:row value="#{editEmployeeController.model.firstName}"
                     label="#{employeeMsg['employee.editor.personal.data.firstName']}"
                     isRequired="true" >
             <f:validateLength minimum="3" maximum="50" for="input"/>
-        </pe:formRow>
+        </it2go:row>
 
-        <pe:formRow value="#{editEmployeeController.model.lastName}"
+        <it2go:row value="#{editEmployeeController.model.lastName}"
                     label="#{employeeMsg['employee.editor.personal.data.lastName']}"
                     isRequired="true" ajaxValidation="true">
             <f:validateLength minimum="3" maximum="50" for="input"/>
-        </pe:formRow>
+        </it2go:row>
 
-        <pe:formRow value="#{editEmployeeController.model.birthDate}"
+        <it2go:row value="#{editEmployeeController.model.birthDate}"
                     label="#{employeeMsg['employee.editor.personal.data.birthDate']}"
                     inputType="date"
                     placeholder="#{employeeMsg['employee.app.date.pattern']}">
             <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"  for="input"/>
-        </pe:formRow>
-        <pe:formRow value="#{editEmployeeController.model.gender}" inputType="custom-radio" label="#{employeeMsg['employee.editor.personal.data.gender']}"
+        </it2go:row>
+        <it2go:row value="#{editEmployeeController.model.gender}" inputType="custom-radio" label="#{employeeMsg['employee.editor.personal.data.gender']}"
                     radioItems="#{masterdataService.genders}" isRequired="true">
-        </pe:formRow>
+        </it2go:row>
 
+    <div class="form-group row" jsf:id="test">
+        <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.personal.data.nationality']}"/>
+        <div class="flex-column col-sm-9">
+            <it2go:comboBoxComponent value="#{editEmployeeController.model.nationality}" items="#{masterdataService.getAllCountries(facesContext.viewRoot.locale)}"
+                                   decorated="true">
+                <f:facet name="selectOneMenuTemplate">
+                    <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="11px"/>&#160;  #{item.name}
+                </f:facet>
+                <f:facet name="postTemplate">
+                    <ui:fragment rendered="#{!empty editEmployeeController.model.nationality}">
+                        <div class="mt-1 ml-2">
+                            <img src="../../assets/images/flags/icons/png/#{editEmployeeController.model.nationality.toLowerCase()}.png" alt=" " width="32px" height="22px"/>
+                        </div>
+                    </ui:fragment>
+                </f:facet>
+            </it2go:comboBoxComponent>
+        </div>
+    </div>
 </ui:composition>

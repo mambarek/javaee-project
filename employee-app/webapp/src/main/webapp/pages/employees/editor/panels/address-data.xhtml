@@ -6,8 +6,7 @@
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:it2go="http://xmlns.jcp.org/jsf/composite/com/it2go/component">
 
     <div jsf:id="street-inputContainer" class="inputContainer" data-component-name="composedInput" data-valid="#{streetOneInput.valid and hausNrInput.valid}">
         <div class="form-group row" jsf:id="street-container">
@@ -56,9 +55,9 @@
         </div>
     </div>
 
-    <pe:formRow value="#{editEmployeeController.model.address.streetTwo}" label="#{employeeMsg['employee.editor.address.streettwo']}">
+    <it2go:row value="#{editEmployeeController.model.address.streetTwo}" label="#{employeeMsg['employee.editor.address.streettwo']}">
         <f:validateLength minimum="3" maximum="50" for="input"/>
-    </pe:formRow>
+    </it2go:row>
     <div jsf:id="zip-city-inputContainer" class="inputContainer" data-component-name="composedInput" data-valid="#{zipInput.valid and cityInput.valid}">
         <div class="form-group row" jsf:id="zip-city-container">
             <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.address.zip.city']}"/>
@@ -113,6 +112,6 @@
             </div>
         </div>-->
     </div>
-    <pe:countrySelect value="#{editEmployeeController.model.address.countryCode}" label="#{employeeMsg['employee.editor.address.state']}" isRequired="true" decorated="true"/>
+    <it2go:countrySelect value="#{editEmployeeController.model.address.countryCode}" label="#{employeeMsg['employee.editor.address.state']}" isRequired="true" decorated="true"/>
 
 </ui:composition>

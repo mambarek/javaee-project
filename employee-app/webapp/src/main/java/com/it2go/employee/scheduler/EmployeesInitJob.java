@@ -73,6 +73,7 @@ public class EmployeesInitJob implements Job {
 
         employee.setFirstName("Name_"+all.size());
         employee.setLastName("Lastname_"+all.size());
+        //employee.setNationality("DE");
 
         if(all.size() % 2 == 0)
             employee.setGender(Gender.FEMALE);

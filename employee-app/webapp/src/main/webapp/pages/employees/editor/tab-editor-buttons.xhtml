@@ -18,7 +18,7 @@
                 <i class="far fa-trash-alt" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.delete']}
                 <f:ajax execute="@form" render="@none" onevent="confirmDelete"/>
             </h:commandLink>
-            <a class="btn btn-primary mr-3 btn-sm-block" href="#" onclick="$('.personal-data-submit-button').click()">
+            <a class="btn btn-primary mr-3 btn-sm-block" id="save-button" href="#save-button" onclick="validateTabEditor()">
                 <i class="far fa-save" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.save']}
             </a>
             <a class="d-none tabSendSave" href="#" onclick="checkTabValidationAndConfirmSave()" ></a>

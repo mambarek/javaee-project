@@ -1,13 +1,13 @@
 <ui:component
               xmlns:h="http://xmlns.jcp.org/jsf/html"
-              xmlns:f="http://xmlns.jcp.org/jsf/core"
+              xmlns:f="http://java.sun.com/jsf/core"
               xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
               xmlns:cc="http://xmlns.jcp.org/jsf/composite"
               xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
               xmlns:jsf="http://xmlns.jcp.org/jsf"
               xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <cc:interface>
+    <cc:interface componentType="AbstractFormRow">
         <cc:attribute name="value" required="true"
                       shortDescription="The selected value." />
         <cc:attribute name="label"

@@ -6,9 +6,9 @@
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:composite="http://xmlns.jcp.org/jsf/composite"
         xmlns:tag="http://it2go.com/employee"
-        xmlns:empl="http://xmlns.jcp.org/jsf/composite/employees"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+        xmlns:it2go="http://xmlns.jcp.org/jsf/composite/com/it2go/component">
 
     <div jsf:id="projectList">
     <div id="accordion" class="accordion">
@@ -24,38 +24,37 @@
                 </div>
                 <div id="collapseOne_#{index}" class="show" aria-labelledby="headingOne_#{index}" >
                     <div class="card-body">
-                        <empl:row value="#{project.name}" readOnly="true"
+                        <it2go:row value="#{project.name}" readOnly="#{!project.isNew()}"
                                     label="#{employeeMsg['employee.editor.projects.name']}"
                                     isRequired="true" >
                             <f:validateLength minimum="3" maximum="100" for="input"/>
-                        </empl:row>
-                        <div jsf:id="DateRangeValidator_BEGIN">
-                            <empl:row value="#{project.begin}" inputType="date" model="#{project}" readOnly="true"
-                                        label="#{employeeMsg['employee.editor.projects.begin']}" ajaxRender=":DateRangeValidator_END"
-                                        isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
-                                <f:validator validatorId="DateRangeValidator" for="input"/>
-                                <f:attribute name="DateRangeValidator_BEGIN" value="true" />
-                                <f:attribute name="endFieldLabel" value="#{employeeMsg['employee.editor.projects.end']}" />
-                            </empl:row>
-                        </div>
+                        </it2go:row>
 
-                        <empl:row value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}" readOnly="true">
+                        <it2go:row value="#{project.begin}" inputType="date" readOnly="#{!project.isNew()}"
+                                    label="#{employeeMsg['employee.editor.projects.begin']}"
+                                    isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                            <f:validator validatorId="DateRangeValidator" for="input"/>
+                            <f:attribute name="DateRangeValidator_BEGIN" value="true" />
+                            <f:attribute name="endFieldLabel" value="#{employeeMsg['employee.editor.projects.end']}" />
+                        </it2go:row>
+
+                        <it2go:row value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}"
+                                  readOnly="#{!project.isNew()}">
                             <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields" listener="#{project.setEnd(null)}"/>
-                        </empl:row>
+                        </it2go:row>
 
-                        <div jsf:id="DateRangeValidator_END" jsf:rendered="#{!project.tilToday}">
-                            <empl:row value="#{project.end}" inputType="date" model="#{project}"
-                                        label="#{employeeMsg['employee.editor.projects.end']}" ajaxRender=":DateRangeValidator_BEGIN"
-                                        isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
-                                <f:validator validatorId="DateRangeValidator" for="input" />
-                                <f:attribute name="DateRangeValidator_END" value="true" />
-                                <f:attribute name="beginFieldLabel" value="#{employeeMsg['employee.editor.projects.begin']}" />
-                            </empl:row>
-                        </div>
+                        <it2go:row value="#{project.end}" inputType="date" readOnly="#{!project.isNew()}" rendered="#{!project.tilToday}"
+                                    label="#{employeeMsg['employee.editor.projects.end']}"
+                                    isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                            <f:validator validatorId="DateRangeValidator" for="input" />
+                            <f:attribute name="DateRangeValidator_END" value="true" />
+                            <f:attribute name="beginFieldLabel" value="#{employeeMsg['employee.editor.projects.begin']}" />
+                        </it2go:row>
 
-                        <pe:textArea value="#{project.description}" label="#{employeeMsg['employee.editor.projects.desc']}">
 
-                        </pe:textArea>
+                        <it2go:textArea value="#{project.description}" label="#{employeeMsg['employee.editor.projects.desc']}">
+
+                        </it2go:textArea>
 
                         <div class="form-group row">
                             <div class="col m-3">
@@ -93,4 +92,5 @@
         }
 
     </h:outputScript>
+
 </ui:composition>

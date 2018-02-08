@@ -293,6 +293,33 @@ function initComboBox(targetWidgetId, itemIdPrefix){
     });
 }
 
+function processTabValidation(data){
+    var status = data.status;
+
+    if(status == "success"){
+
+        var selectedTab = $('ul[role=tablist] a[aria-selected=true]');
+
+        var form = $(selectedTab.attr('href'));
+        validateForm(form);
+
+        if(hasError(form)) {
+            $(selectedTab).tab('show');
+        }
+        else {
+            $('.personal-data-submit-button').click();
+        }
+    }
+}
+
+function validateTabEditor(){
+    // validiere den selektierten Tab
+    var selectedTab = $('ul[role=tablist] a[aria-selected=true]');
+    var form = $(selectedTab.attr('href'));
+    form.find('.tabValidation').click();
+
+}
+
 function checkTabValidation(selector){
     $(selector).find('a').on('click', function (e) {
         // stop event propagation
@@ -315,9 +342,9 @@ function checkTabValidation(selector){
 
 function checkValidationAndSelectTab(data){
     var status = data.status;
-    checkValidation(data);
-    if(status == "success"){
 
+    if(status == "success"){
+        checkValidation(data);
         var selectedTab = $('ul[role=tablist] a[aria-selected=true]');
         var lastClicked = $('ul[role=tablist] a[data-last-clicked=true]');
         var form = $(selectedTab.attr('href'));
@@ -352,6 +379,8 @@ function validateNextTab(data, tabId, nextSubmitId){
         $(nextSubmitId).click();
     }
 }
+
+
 
 function validateTabAndProcessSave(data){
     var status = data.status;
