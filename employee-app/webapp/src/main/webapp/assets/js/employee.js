@@ -231,12 +231,21 @@ function validateInputStyle(component, hightlight_valid_input){
 
     var target = component;
 
+    var type = component.attr("data-component-type");
+    if(type === "comboBox"){
+        target = component.siblings('.custom-combobox');
+    }
     // dropdown: HTML select are display none
     // the jqueryui select menu generates a span with
     // select content. so highlight the span instead of
     // the select
     if(component.is("select")) {
         target = component.siblings('span');
+        if(target.length == 0) {
+            target = component.siblings('.custom-combobox');
+
+        }
+        else
         // add border
         target.removeClass("form-control").addClass("form-control");
     }
@@ -302,6 +311,9 @@ function validateInputStyle(component, hightlight_valid_input){
         if(rowForm.length > 0)
             inputContainer.find('.invalid-feedback').show();
 
+        if(type === "comboBox")
+            inputContainer.find('.invalid-feedback').show();
+
         if(composedInput.length > 0)
             composedInput.find(".error-container.collapse").show();
     }else {
@@ -310,6 +322,9 @@ function validateInputStyle(component, hightlight_valid_input){
             countrySelect.find('.invalid-feedback').hide();
 
         if(rowForm.length > 0)
+            inputContainer.find('.invalid-feedback').hide();
+
+        if(type === "comboBox")
             inputContainer.find('.invalid-feedback').hide();
 
         if(composedInput.length > 0)

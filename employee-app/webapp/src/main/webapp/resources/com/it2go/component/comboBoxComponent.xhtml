@@ -4,7 +4,6 @@
         xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
         xmlns:cc="http://xmlns.jcp.org/jsf/composite"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
@@ -37,20 +36,15 @@
                 <div class="input-group">
                     <cc:renderFacet name="preTemplate"/>
                     <h:selectOneMenu id="editableText" value="#{cc.attrs.value}" styleClass="form-control"  pt:data-valid="#{cc.input.valid}"
-                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.input}">
+                                     style="width: 100%" binding="#{cc.input}" required="#{cc.attrs.isRequired}" pt:data-component-type="comboBox"
+                                     label="#{cc.attrs.label}"   >
                         <f:selectItem
                                 itemLabel="-- Bitte wählen --" itemValue=""/>
                         <f:selectItems value="#{cc.attrs.items}" var="item"
                                        itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item.code}" />
-                        <c:choose>
-                            <c:when test="#{!empty cc.attrs.ajaxRender}">
-                                <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="validateInput" />
-                            </c:when>
-                            <c:otherwise>
-                                <f:ajax execute="@this" event="change" render="#{cc.clientId}" onevent="validateInput"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <f:ajax execute="@this" event="change" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput"/>
                     </h:selectOneMenu>
+
                     <cc:renderFacet name="postTemplate"/>
                     <!-- draw table with cols-->
                     <div style="display: none">
@@ -76,6 +70,10 @@
                 <h:outputScript>
                     initComboBox(encodeId("#{cc.clientId}:editableText" ),encodeId("#{cc.clientId}-li-"));
                 </h:outputScript>
+
+                <div class="invalid-feedback" style="position: absolute;top: 40px;">
+                    <h:message id="message" for="editableText"/>
+                </div>
             </div>
         </div>
     </cc:implementation>
