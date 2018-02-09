@@ -267,8 +267,10 @@ function checkValidationAndConfirmSave(data) {
                     rightBtnFunc: null
                 };
 
-                overlay.showConfirm2BtnDialog(dialogOptions);
-
+                //overlay.showConfirm2BtnDialog(dialogOptions);
+                overlay.showSpinner('Die daten werden gespeichert');
+                setTimeout(
+                clickSave, 3000);
                 break;
             }
     }
@@ -519,4 +521,13 @@ function showOverlay(message, callback){
         return 0;
     });
     return dfd.promise();
+}
+
+function clickSave() {
+    console.info('##### clickSave call');
+    $('.saveConfirmed').click();
+}
+
+function clickDelete() {
+    $('.deleteConfirmed').click();
 }

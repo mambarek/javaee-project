@@ -30,34 +30,43 @@
             <f:validateRequired/>
         </h:inputText>
         <h:message for="firstName" errorClass="form-control-feedback" />
-        <h:commandButton value="Form1 Submit P:Ajax" type="submit">
-            <f:ajax execute=":myform" render=":myform"/>
+        <h:commandButton value="Form1 Submit f:Ajax" type="submit">
+            <f:ajax execute="@form" render=":myform"/>
             <!--<p:ajax process="@form" update="@form"/>-->
         </h:commandButton>
-
+        <button jsf:id="submit" >
+            Form1 Submit button f:Ajax
+            <f:ajax execute="@form" render=":myform :mylabel"/>
+        </button>
         <br/>
         <h:outputLabel value="Das ist dein Text: #{testController.firstName}" id="mylabel"/>
     </h:form>
 
-    <button onclick="jsf.ajax.request(this, event, {render: ':myform', execute: ':myform'})">Ich bin draussen!</button>
+    <button onclick="jsf.ajax.request(this, event, {render: 'myform', execute: 'myform'})">Ich bin draussen!</button>
+    <h:commandButton value="Form1 Submit draussen" type="submit">
+        <f:ajax execute="myform" render="myform"/>
+        <!--<p:ajax process="@form" update="@form"/>-->
+    </h:commandButton>
     <hr/>
 
     <h:form id="myform2" style="margin-top: 50px;margin-left: 50px">
-        <input type="text" jsf:value="#{testController.firstName}" jsf:id="text2" jsf:rendered="true">
+        <input type="text" jsf:value="#{testController.firstName}" jsf:id="text2"
+               jsf:rendered="true" jsf:required="true">
            <!-- <f:ajax event="change" render="@form :mylabel2" execute="@form"/>-->
             <!--<f:ajax render="myform" execute="@this"/>-->
             <!--<f:validateLength minimum="3" maximum="50"/>-->
-            <f:validateRequired for="text2"/>
         </input>
         <h:message for="text2" errorClass="form-control-feedback" />
         <button jsf:id="submit" >
             Form2 Submit f:Ajax
-            <f:ajax execute="@form" render=":myform2:mylabel2"/>
+            <f:ajax execute="@form" render=":myform2 :mylabel2"/>
         </button>
 
         <br/>
         <h:outputLabel value="Das ist dein Text: #{testController.firstName}" id="mylabel2"/>
     </h:form>
-
+    <hr/>
+    <h:messages style="color: red;"/>
+    <script src="assets/js/jsf-fixes.js"/>
 </h:body>
 </html>

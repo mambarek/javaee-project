@@ -77,7 +77,8 @@
             </employees:formRow>
             <div class="form-group row justify-content-end hidden-sm-down">
                 <div class="btn-group">
-                    <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel">
+                    <button type="submit" class="btn btn-primary mr-2" jsf:immediate="true" jsf:id="cancel"
+                            jsf:actionListener="#{editEmployeeController.cancelRedirect}">
                         <i class="fa fa-reply" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.cancel']}
                     </button>
 
@@ -87,12 +88,26 @@
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
                     </button>
 
-                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" data-saveFunc="clickSave()">
+                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save" data-saveFunc="clickSave();return false">
                         <i class="fa fa-floppy-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
                     </button>
                 </div>
             </div>
+
+
+            <div class="form-group row justify-content-end hidden-sm-down">
+                <div class="btn-group">
+
+                    <button type="submit" class="btn btn-primary mr-3" jsf:id="save_x" data-saveFunc="clickSave()">
+                        <i class="fa fa-floppy-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.save']}
+                        <f:ajax execute="employeeForm" render="#{cc.attrs.renderAfterSave}" onevent="checkValidationAndConfirmSave"/>
+                    </button>
+                </div>
+            </div>
+
+
+
             <ui:remove>
             <div class="form-group row hidden-md-up">
                 <div class="col-sm-12">
@@ -131,7 +146,7 @@
             <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
                 <f:ajax execute="@this"  render="content"/>
             </h:commandButton>
-            <h:outputScript>
+<!--            <h:outputScript>
                 function clickSave() {
                     $('.saveConfirmed').click();
                 }
@@ -139,7 +154,7 @@
                 function clickDelete() {
                     $('.deleteConfirmed').click();
                 }
-            </h:outputScript>
+            </h:outputScript>-->
         </h:form>
     </div>
 </div>

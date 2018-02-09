@@ -280,7 +280,7 @@ var waitingDialog =  (function ($) {
 
 var overlay =  overlay || (function ($) {
 
-    'use strict';
+    /*'use strict';*/
 
     // Creating modal dialog's DOM
     var $dialog = $(
@@ -293,10 +293,11 @@ var overlay =  overlay || (function ($) {
         minLiveTime:3,   // 3s
         visible: false,
 
-        showContent: function (content) {
+        showContent: function (content, settings) {
             var dfd = jQuery.Deferred();
             if(this.visible) {
                 this.dialog.html(content);
+
 
                 // set focus when chainging content
                 if(this.dialog.find('#modal-btn-left').length > 0)
@@ -329,6 +330,13 @@ var overlay =  overlay || (function ($) {
             // show the dialog
             this.dialog.modal();
 
+            // AFTER ADD TO DOM
+            // IE: PROBLEM must add the click event manually
+            if(settings && settings.leftBtnFuncName)
+                document.getElementById("modal-btn-left").addEventListener("click", settings.leftBtnFuncName);
+
+            if(settings && settings.rightBtnFuncName)
+                document.getElementById("modal-btn-left").addEventListener("click", settings.rightBtnFuncName);
 
             while(!this.visible){
                 // wait until visible
@@ -417,9 +425,9 @@ var overlay =  overlay || (function ($) {
 
             if(!settings.showOnlyRightBtn) {
                 if(settings.leftBtnDismiss)
-                    dialogContent += '<button id="modal-btn-left" type="button" class="btn btn-primary" data-dismiss="modal" onclick="'+settings.leftBtnFuncName+'">' + settings.leftBtnLabel+'</button>';
+                    dialogContent += '<button id="modal-btn-left" class="btn btn-primary" data-dismiss="modal" onclick="'+settings.leftBtnFuncName+'">' + settings.leftBtnLabel+'</button>';
                 else
-                    dialogContent += '<button id="modal-btn-left" type="button" class="btn btn-primary" onclick="'+settings.leftBtnFuncName+'" >' + settings.leftBtnLabel+'</button>';
+                    dialogContent += '<button id="modal-btn-left" class="btn btn-primary" onclick="'+settings.leftBtnFuncName+'" >' + settings.leftBtnLabel+'</button>';
             }
 
             var btnClass = "btn btn-secondary";
@@ -427,10 +435,10 @@ var overlay =  overlay || (function ($) {
 
             if(settings.rightBtnDismiss)
                 dialogContent +=
-                    '<button id="modal-btn-right" type="button" class="'+btnClass+'" data-dismiss="modal" onclick="'+settings.rightBtnFunc+'" >' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" class="'+btnClass+'" data-dismiss="modal" onclick="'+settings.rightBtnFuncName+'" >' + settings.rightBtnLabel+'</button>';
             else
                 dialogContent +=
-                    '<button id="modal-btn-right" type="button" class="'+btnClass+'" onclick="'+settings.rightBtnFunc+'"  > ' + settings.rightBtnLabel+'</button>';
+                    '<button id="modal-btn-right" class="'+btnClass+'" onclick="'+settings.rightBtnFuncName+'"  > ' + settings.rightBtnLabel+'</button>';
 
             dialogContent +=
                 '</div>'+
@@ -438,7 +446,7 @@ var overlay =  overlay || (function ($) {
                 '</div>';
 
 
-            return this.showContent(dialogContent);
+            return this.showContent(dialogContent, settings);
         },
 
         /**

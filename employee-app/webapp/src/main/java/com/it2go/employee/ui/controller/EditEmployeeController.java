@@ -139,6 +139,13 @@ public class EditEmployeeController implements BaseViewController{
        // return "employeeList?faces-redirect=true";
     }
 
+    public String cancelRedirect(){
+        // reset the view
+        this.resetView();
+
+         return "employeeList?faces-redirect=true";
+    }
+
     private void resetView(){
         if(viewParams != null)
             viewParams.remove("id");

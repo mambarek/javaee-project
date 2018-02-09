@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="assets/css/corporate.css"/>
     <link rel="stylesheet" href="assets/css/loader.css" />
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>
 </h:head>
 
 <h:body>
@@ -221,8 +223,8 @@
 
                     <employees:employeeEditor model="#{editEmployeeController.model}" renderAfterSave="content"
                                               rendered="#{!empty editEmployeeController.model}">
-                        <f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>
-                        <f:ajax event="saveConfirmed" render="content" onevent="handleAjaxSaveEvent" listener="#{editEmployeeController.ajaxSaveAction}"/>
+                        <!--<f:ajax event="cancel" listener="#{editEmployeeController.cancel()}" render="content"/>-->
+                        <f:ajax event="saveConfirmed" render="content"  listener="#{editEmployeeController.ajaxSaveAction}"/>
                         <f:ajax event="deleteConfirmed" render="content" onevent="handleAjaxDeleteEvent" listener="#{editEmployeeController.ajaxDeleteAction}"/>
                     </employees:employeeEditor>
 
@@ -269,15 +271,14 @@
         </footer>
         </div> <!-- /Container-->
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"/>-->
     <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
 
     <script src="assets/js/employee.js"/>
-    <script src="assets/js/jsf-fixes.js"/>
+    <!--<script src="assets/js/jsf-fixes.js"/>-->
     <script src="assets/js/loader.js"/>
 
 </h:body>
