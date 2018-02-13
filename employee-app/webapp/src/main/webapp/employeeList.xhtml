@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="assets/css/corporate.css"/>
     <link rel="stylesheet" href="assets/css/loader.css" />
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>
+    <script src="assets/js/employee.js"/>
+
+    <script src="assets/js/loader.js"/>
 </h:head>
 
 <h:body>
@@ -182,13 +187,12 @@
                                 <tr>
                                     <td>
                                         <form jsf:id="id_link">
-                                            <a href="#" jsf:id="edit"
-                                               >
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"/></a>
-                                            <f:ajax execute="@this" render="content"
+                                            <a href="#" jsf:id="edit">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"/>
+                                                <f:ajax execute="@this" render="content"
                                                     listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                                    event="click"
-                                            />
+                                                    event="click"/>
+                                            </a>
                                         </form>
                                     </td>
                                     <td>
@@ -227,6 +231,9 @@
                     </employees:employeeEditor>
 
                 </div>
+                <h:outputScript>
+                    refreshEventListener('content');
+                </h:outputScript>
             </div>
             <div class="col-md-12 col-lg-2">
                 <div class="card mb-3">
@@ -269,16 +276,13 @@
         </footer>
         </div> <!-- /Container-->
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"/>-->
     <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
 
-    <script src="assets/js/employee.js"/>
     <script src="assets/js/jsf-fixes.js"/>
-    <script src="assets/js/loader.js"/>
 
 </h:body>
 </html>

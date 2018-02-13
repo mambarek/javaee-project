@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<h:head>
+    <title>Employees App</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+</h:head>
+<h:body>
+
+    <h:form id="myform" style="margin-top: 50px;margin-left: 50px">
+        <h:inputText value="#{testController.firstName}" id="firstName">
+            <f:validateLength minimum="3" maximum="50"/>
+            <f:validateRequired/>
+        </h:inputText>
+        <h:message for="firstName" errorClass="form-control-feedback" />
+        <h:commandButton value="Form1 Submit f:Ajax" >
+            <f:ajax execute="@form" render=":myform"/>
+        </h:commandButton>
+    </h:form>
+
+</h:body>
+</html>
