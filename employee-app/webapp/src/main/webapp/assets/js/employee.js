@@ -344,10 +344,9 @@ function confirmDelete(data) {
 
 function handleAjaxSaveEvent(data){
     var status = data.status;
-    var encodedId = encodeId(data.source.id);
-    var form = $("#" + encodedId).closest("form");
+    //var encodedId = encodeId(data.source.id);
+    //var form = $("#" + encodedId).closest("form");
     var minLiveTime = 3000; // 3s
-
     switch (status) {
         case "begin":
             // This is the start of the AJAX request.
@@ -396,8 +395,8 @@ function handleAjaxSaveEvent(data){
 
 function handleAjaxDeleteEvent(data){
     var status = data.status;
-    var encodedId = encodeId(data.source.id);
-    var form = $("#" + encodedId).closest("form");
+/*    var encodedId = encodeId(data.source.id);
+    var form = $("#" + encodedId).closest("form");*/
     var minLiveTime = 3000; // 3s
 
     switch (status) {

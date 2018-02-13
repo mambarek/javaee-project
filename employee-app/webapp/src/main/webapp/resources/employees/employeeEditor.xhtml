@@ -82,7 +82,7 @@
                     </button>
 
                     <button type="submit" class="btn btn-primary mr-2" jsf:rendered="#{cc.attrs.model.isNew() == false}"
-                            jsf:id="delete" data-deleteFunc="clickDelete()">
+                            jsf:id="delete" data-deleteFunc="clickDelete">
                         <i class="fa fa-trash-o" aria-hidden="true"/>&#xA0; #{cc.resourceBundleMap['employee.editor.button.delete']}
                         <f:ajax execute="@form" render="#{cc.attrs.renderAfterDelete}" onevent="confirmDelete"/>
                     </button>
@@ -132,15 +132,6 @@
             <h:commandButton id="saveConfirmed" style="display: none;" styleClass="saveConfirmed">
                 <f:ajax execute="@this"  render="content"/>
             </h:commandButton>
-            <h:outputScript>
-                function clickSave() {
-                    $('.saveConfirmed').click();
-                }
-
-                function clickDelete() {
-                    $('.deleteConfirmed').click();
-                }
-            </h:outputScript>
         </h:form>
     </div>
 </div>
