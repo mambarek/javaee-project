@@ -2,8 +2,8 @@ $(document).ready(function(){
     //initSessionTimeoutTimer();
     jsf.ajax.addOnEvent(function (data) {
         if(data.status == 'success'){
-            //console.info("-- jsf.ajax.addOnEvent() call -- so resetTimer()");
-            resetTimer();
+            //console.info("-- jsf.ajax.addOnEvent() call -- so resetSessionTimeOutTimer()");
+            resetSessionTimeOutTimer();
         }
     })
 });
@@ -31,18 +31,18 @@ function resetSession() {
 
 function initSessionTimeOutTimer(){
 
-    resetTimer();
+    resetSessionTimeOutTimer();
 
     // restart session timer, not on login mask
 /*
     if($("#sub-navi").children().length > 0){
-        resetTimer();
+        resetSessionTimeOutTimer();
     }
 */
 }
 
-function resetTimer(){
-    console.info("-- resetTimer timeout: "+ timeout);
+function resetSessionTimeOutTimer(){
+    console.info("-- resetSessionTimeOutTimer timeout: "+ timeout);
     if (sessionTimeoutCounterInterval){
         clearTimeout(sessionTimeoutCounterInterval);
     }
@@ -61,11 +61,12 @@ function resetTimer(){
 
 function showSessionTimeOutCounter(){
     var count = 10;
+    var s = '<span style="font-weight: bold" id="timer">'+count+'</span>';
     var options = {
-        title: "Sitzung läuft bald ab",//employee_i18n['employee.overlay.info'],
-        message: "Ihre Session läuft in <span style='font-weight: bold' id=\"timer\">"+count+"</span> sek. ab!",//employee_i18n['employee.overlay.savingSuccess'],
+        title: employee_i18n['employee.overlay.session.timout.timer.titel'],
+        message: format(employee_i18n['employee.overlay.session.timout.timer.message'],[s]),
         showOnlyRightBtn: true,
-        rightBtnLabel: "Sitzung verlängern",//employee_i18n['employee.overlay.ok']
+        rightBtnLabel: employee_i18n['employee.overlay.session.timout.timer.button.text'],
         rightBtnFuncName: "extendSession"
     };
 
@@ -80,10 +81,10 @@ function showSessionTimeOutCounter(){
 function showSessionTimeOutInfo(){
     if(counter) clearInterval(counter);
     var options = {
-        title: "Sitzung abgelaufen",//employee_i18n['employee.overlay.info'],
-        message: "Ihre Sitzung ist abgelaufen. Bitte neu anmelden!",//employee_i18n['employee.overlay.savingSuccess'],
+        title: employee_i18n['employee.overlay.session.timout.info.titel'],
+        message: employee_i18n['employee.overlay.session.timout.info.message'],
         showOnlyRightBtn: true,
-        rightBtnLabel: "Anmelden",//employee_i18n['employee.overlay.ok']
+        rightBtnLabel: employee_i18n['employee.overlay.session.timout.info.button.text'],
         rightBtnFuncName: "resetSession"
     };
 
