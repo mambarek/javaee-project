@@ -542,6 +542,14 @@ label {
   display: block;
 }
 
+.ui-selectmenu-button.ui-button {
+  width: 100%;
+  border-radius: 0px;
+  height: 2.125rem;
+  background-color: white;
+  /* vertical-align: middle; */
+  padding-top: 10px;
+}
 /* select with custom icons */
 .ui-selectmenu-menu .ui-menu.customicons .ui-menu-item-wrapper {
   padding: 0.5em 0 0.5em 3em;
