@@ -19,9 +19,15 @@
     <link rel="stylesheet" href="assets/css/loader.css" />
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="jquery-3.3.1/jquery-3.3.1.js"/>
+    <script src="jquery-ui-1.12.1/jquery-ui.js"/>
     <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"/>-->
     <!--<script src="https://code.jquery.com/jquery-3.2.1.js"/>-->
-    <script src="jquery-ui-1.12.1/jquery-ui.js"/>
+    <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
+    <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
+
+
+
     <script src="assets/js/util.js"/>
     <script src="assets/js/employee.js"/>
     <script src="assets/js/ui.js"/>
@@ -127,7 +133,7 @@
         </nav>
     </header>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row hidden-md-down">
             <div class="col-lg-3"/>
             <div class="col">
@@ -140,7 +146,6 @@
         </div>
 
         <div class="row ">
-            <div class="col-lg-1"/>
             <div class="col-lg-2">
                 <div class="card">
                     <div class="card-header corp-block-header-left">
@@ -182,7 +187,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-6" jsf:id="content">
+            <div class="col-md-12 col-lg-8" jsf:id="content">
                 <div class="card" >
                     <div class="card-header corp-block-header">
                         #{employeeMsg['employee.table.title']}
@@ -191,40 +196,51 @@
                         <div class="table-responsive mb-5">
                             <h:form>
                             <table jsf:id="employeeList" class="table table-hover table-sm">
-                            <thead  class="table-header">
-                            <tr>
-                                <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
-                                <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
-                                <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
-                                <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
-                                <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
-                            </tr>
-                            </thead>
+                                <thead  class="table-header">
+                                    <tr>
+                                        <th scope="col">#{employeeMsg['employee.table.col.details']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.firstName']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.lastName']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.salary']}</th>
+                                        <th scope="col">#{employeeMsg['employee.table.col.birthDate']}</th>
+                                        <th scope="col"/>
+                                    </tr>
+                                </thead>
                             <tbody>
-                            <ui:repeat var="employee" value="#{employeeListController.allEmployees}">
-                                <tr>
-                                    <td>
-                                        <h:commandLink>
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"/>
-                                            <f:ajax execute="@this" render="content"
-                                               listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
-                                               event="click"/>
-                                        </h:commandLink>
-                                    </td>
-                                    <td>
-                                        <h:commandLink value="#{employee.firstName}">
-
-                                            <f:ajax execute="@this" render="content"
-                                                    listener="#{editEmployeeController.editEmployee(employee.id)}"
-                                                    event="click"/>
-                                        </h:commandLink>
-                                    </td>
-                                    <td><a jsf:id="lastName_link"
-                                           jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
-                                    <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
-                                    <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
-                                </tr>
-                            </ui:repeat>
+                                <ui:repeat var="employee" value="#{employeeListController.allEmployees}" varStatus="status">
+                                    <tr>
+                                        <td>
+                                            <h:commandLink>
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"/>
+                                                <f:ajax execute="@this" render="content"
+                                                   listener="#{editEmployeeController.editEmployeeAjax(employee.id)}"
+                                                   event="click"/>
+                                            </h:commandLink>
+                                        </td>
+                                        <td>
+                                            <h:commandLink value="#{employee.firstName}">
+                                                <f:ajax execute="@this" render="content"
+                                                        listener="#{editEmployeeController.editEmployee(employee.id)}"
+                                                        event="click"/>
+                                            </h:commandLink>
+                                        </td>
+                                        <td><a jsf:id="lastName_link"
+                                               jsf:outcome="editEmployee?id=#{employee.id}">#{employee.lastName}</a></td>
+                                        <td><label jsf:value="#{employee.salary}"><f:convertNumber currencySymbol="$" minFractionDigits="2"/></label></td>
+                                        <td><label jsf:id="table_birthdate" jsf:value="#{employee.birthDate}"><f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/></label></td>
+                                        <td><a tabindex="0" class="btn btn-lg btn-danger" role="button"  id="pop-#{status.index}" data-toggle="popover" data-placement="right">pop
+                                            <h:outputScript>
+                                                console.info("## der button",$('#pop-#{status.index}'));
+                                                $('#pop-#{status.index}').popover({
+                                                    title: "My first pop",
+                                                    content: "All that text is for a button!",
+                                                    animation: true,
+                                                    container: 'body'
+                                                })
+                                            </h:outputScript>
+                                        </a> </td>
+                                    </tr>
+                                </ui:repeat>
                             </tbody>
                             </table>
                             </h:form>
@@ -268,7 +284,6 @@
                 </div>
 
             </div>
-            <div class="col-lg-1"/>
         </div>
 
         <hr/>
@@ -297,10 +312,6 @@
     <!-- Optional JavaScript -->
 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"/>-->
-    <script src="bootstrap-4.0.0-beta.3-dist/js/bootstrap.bundle.js"/>
-    <script src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
-    <script src="bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.de.min.js"  charset="UTF-8"/>
-
     <script src="assets/js/jsf-fixes.js"/>
 
 </h:body>
