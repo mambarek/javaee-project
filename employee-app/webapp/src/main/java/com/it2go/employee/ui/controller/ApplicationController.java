@@ -1,5 +1,7 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.employee.entities.Gender;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -39,5 +41,25 @@ public class ApplicationController implements Serializable{
     public long getSessionTimeoutPeriod() {
 
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
+    }
+
+    public String getLocalizedNameFor(Object dataObject){
+        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+
+        if(dataObject instanceof Gender){
+            String resLabel;
+            Gender gender = (Gender)dataObject;
+            try {
+                ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/gender/gender", locale);
+                resLabel = resourceBundle.getString(gender.toString());
+            }catch (Exception e){
+                e.printStackTrace();
+                resLabel = gender.getName();
+            }
+
+            return resLabel;
+        }
+
+        return "";
     }
 }

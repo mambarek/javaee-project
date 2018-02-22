@@ -209,7 +209,11 @@ public class EditEmployeeController implements BaseViewController{
 
     }
 
-    public SelectItemWrapper[] getGenderList(){
+    public Gender[] getGenders(){
+        return Gender.values();
+    }
+
+    public SelectItemWrapper[] getGenderWrapperList(){
 
         SelectItemWrapper[] resArray = new SelectItemWrapper[Gender.values().length];
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();

@@ -152,13 +152,18 @@ function validateInputStyle(component){
     inputContainer.removeClass('has-danger has-success');
 
     var target = component;
+    var isSelect = component.is("select");
     if(component[0].type == "radio" ) {
         target = component.closest(".input-group");
         // add border
         target.addClass("form-control");
     }
 
-    if(component[0].type.startsWith("select")) {
+    // dropdown: HTML select are display none
+    // the jqueryui select menu generates a span with
+    // select content. so heighleight th span instead of
+    // the select
+    if(component.is("select")) {
         target = component.siblings('span');
         // add border
         target.addClass("form-control");

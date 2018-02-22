@@ -112,7 +112,7 @@
                                             <!--<label class="form-check-label" for="radio">#{item.name}</label>-->
                                             <!--<div class="form-check-label">#{item.name}</div>-->
                                             <div class="form-check-label" style="display: inline-flex">
-                                                <div>#{item.getLocalizedName(facesContext.viewRoot.locale)}</div>
+                                                <div>#{applicationController.getLocalizedNameFor(item)}</div>
 <!--
                                                 <h:inputText style="margin-left: 5px" value="#{cc.attrs.value}" id="text" required="true" />
                                                 <h:message for="text" errorClass="form-control-feedback" />

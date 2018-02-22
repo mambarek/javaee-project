@@ -285,8 +285,8 @@ var overlay =  overlay || (function ($) {
                 '<div class="modal-body">' +
                 '<div class="overlay-white">'+
 
-                /*'<i class="fa fa-spinner fa-spin fa-4x fa-fw"></i>'+*/
-                '<i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>'+
+                '<i class="fas fa-spinner fa-spin fa-4x"></i>'+
+                /*'<i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>'+*/
 
                 /*'<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>'+*/
 

@@ -69,18 +69,18 @@
                                label="#{cc.resourceBundleMap['employee.editor.salary']}" readOnly="true">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </employees:formRow>-->
-<!--            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                               radioItems="#{editEmployeeController.genderList}" isRequired="true">
-            </employees:formRow>-->
+            <employees:formRow value="#{cc.attrs.model.gender}" type="radio" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                               radioItems="#{editEmployeeController.genders}" isRequired="true">
+            </employees:formRow>
             <employees:formRow value="#{cc.attrs.model.gender}" type="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                               radioItems="#{editEmployeeController.genderList}" isRequired="true">
+                               radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true">
                 <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
                     <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
                     <!--</div>-->
                 </f:facet>
             </employees:formRow>
-<!--            <employees:selectOneMenue items="#{editEmployeeController.genderList}" value="#{cc.attrs.model.gender}">
+<!--            <employees:selectOneMenue items="#{editEmployeeController.genderWrapperList}" value="#{cc.attrs.model.gender}">
                 <f:facet name="template">
                     &lt;!&ndash;<div style="color:darkgreen">&ndash;&gt;
                         <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;Noch was
