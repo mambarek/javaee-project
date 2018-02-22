@@ -44,7 +44,7 @@
         <cc:attribute name="radioLabel"/>
         <cc:attribute name="radioValue"/>
         <cc:facet name="radioFacet"/>
-        <cc:facet name="template"/>
+        <cc:facet name="selectOnMenuTemplate"/>
     </cc:interface>
 
     <cc:implementation>
@@ -184,14 +184,51 @@
 
                             <c:when test="#{cc.attrs.type eq 'newselect'}">
                                 <div class="input-group">
-                                    <employees:selectOneMenue value="#{cc.attrs.value}" items="#{cc.attrs.radioItems}">
-                                        <!--<f:facet name="template">-->
-                                            <!--<div style="color:darkgreen">-->
-                                            <cc:renderFacet name="template"/>
-                                            <!--</div>-->
-                                        <!--</f:facet>-->
-                                    </employees:selectOneMenue>
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
+                                        <f:selectItem
+                                                itemLabel="-- Bitte wählen --" itemValue=""/>
+                                        <f:selectItems value="#{cc.attrs.radioItems}" var="item"
+                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
+                                        <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
+                                    </h:selectOneMenu>
+                                    <!-- draw table with cols-->
+                                    <div style="display: none">
+                                        <ul>
+                                            <li id="#{cc.clientId}-li-0">-- Bitte wählen --</li>
+                                            <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="status">
+                                                <li id="#{cc.clientId}-li-#{status.index + 1}">
+                                                    <cc:renderFacet name="selectOnMenuTemplate">
+                                                        <f:param name="item" value="#{item}"/>
+                                                    </cc:renderFacet>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
+                                    </div>
                                 </div>
+                                <h:outputScript>
+                                    <!-- jqueryui takes info from table to generate ist-->
+                                    $.widget( "custom.selectOneMenu", $.ui.selectmenu, {
+                                    _renderItem: function( ul, item ) {
+                                    var _id = '#' + encodeId("#{cc.clientId}-li-" + item.index);
+                                    //console.info("#+#+ _d: " + _id);
+                                    var _li = $(_id);
+
+                                    var li = $("&lt;li/&gt;");
+                                    var div = $("&lt;div&gt;");
+                                    li.append(div)
+                                    div.html(_li.html());
+                                    return li.appendTo( ul );
+                                    }
+                                    });
+
+                                    var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                                    //console.info("**-- encodedId: " + encodedId);
+
+                                    $(encodedId).selectOneMenu({
+                                    // trigger onchange for select and fire ajax
+                                    change: function( event, ui ) {$(encodedId).trigger( "change" );}
+                                    });
+                                </h:outputScript>
                             </c:when>
                             <!-- pselect -->
 <!--                            <c:when test="#{cc.attrs.type eq 'pselect'}">

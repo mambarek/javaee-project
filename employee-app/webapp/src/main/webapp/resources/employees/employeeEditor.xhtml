@@ -74,9 +74,9 @@
             </employees:formRow>-->
             <employees:formRow value="#{cc.attrs.model.gender}" type="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                                radioItems="#{editEmployeeController.genderList}" isRequired="true">
-                <f:facet name="template">
+                <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
-                    <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;Noch was
+                    <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
                     <!--</div>-->
                 </f:facet>
             </employees:formRow>
