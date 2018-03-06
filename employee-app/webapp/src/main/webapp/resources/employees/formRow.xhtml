@@ -6,6 +6,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+              xmlns:p="http://primefaces.org/ui"
                 xmlns:employees="http://xmlns.jcp.org/jsf/composite/employees">
                 <!--xmlns:p="http://primefaces.org/ui"-->
 
@@ -231,23 +232,23 @@
                                 </h:outputScript>
                             </c:when>
                             <!-- pselect -->
-<!--                            <c:when test="#{cc.attrs.type eq 'pselect'}">
+                            <c:when test="#{cc.attrs.type eq 'pselect'}">
                                 <div class="input-group">
                                     <p:selectOneMenu value="#{cc.attrs.value}" id="editableText" style="width: 100%">
                                         <f:selectItem
                                                       itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue="#{null}"/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
                                                        itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
-                                        <p:column style="width:10%">
+<!--                                        <p:column style="width:10%">
                                             <h:outputText  value="TEST"/>
                                         </p:column>
 
                                         <p:column>
                                             <h:outputText value="#{item.getLocalizedLabel()}" />
-                                        </p:column>
+                                        </p:column>-->
                                     </p:selectOneMenu>
                                 </div>
-                            </c:when>-->
+                            </c:when>
                             <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->

@@ -1,12 +1,11 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite"
       xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
-                xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
 <composite:interface componentType="employee.component">
     <composite:attribute name="model" type="com.it2go.employee.entities.Employee" required="true"/>
@@ -57,30 +56,13 @@
                 <f:convertDateTime pattern="#{cc.resourceBundleMap['employee.app.date.pattern']}"/>
             </pe:formRow>
 
-
-
-
-
             <pe:formRow value="#{cc.attrs.model.salary}"
                         label="#{cc.resourceBundleMap['employee.editor.salary']}">
                 <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
             </pe:formRow>
-            <pe:formRow value="#{cc.attrs.model.firstName}"
-                        label="#{cc.resourceBundleMap['employee.editor.firstName']}"
-                        isRequired="true" >
-                <f:validateLength minimum="3" maximum="50"/>
-            </pe:formRow>
-
-
-
-
-            <pe:formRow value="#{cc.attrs.model.firstName}"
-                        label="#{cc.resourceBundleMap['employee.editor.firstName']}"
-                        isRequired="true" >
-                <f:validateLength minimum="3" maximum="50"/>
-            </pe:formRow>
             <pe:formRow inputType="spselect" value="#{cc.attrs.model.gender}" label="Jo-#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genderWrapperList}"></pe:formRow>
+                        radioItems="#{editEmployeeController.genderWrapperList}"/>
+
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
                         radioItems="#{editEmployeeController.genderWrapperList}" >
                 <f:facet name="selectOnMenuTemplate">
@@ -89,6 +71,7 @@
                     <!--</div>-->
                 </f:facet>
             </pe:formRow>
+
             <div class="form-group row justify-content-end">
                 <div class="btn-group">
                     <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel">

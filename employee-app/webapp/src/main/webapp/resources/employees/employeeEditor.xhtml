@@ -80,6 +80,9 @@
                     <!--</div>-->
                 </f:facet>
             </employees:formRow>
+            <employees:formRow value="#{cc.attrs.model.gender}" type="pselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
+                               radioItems="#{editEmployeeController.genderWrapperList}">
+            </employees:formRow>
 <!--            <employees:selectOneMenue items="#{editEmployeeController.genderWrapperList}" value="#{cc.attrs.model.gender}">
                 <f:facet name="template">
                     &lt;!&ndash;<div style="color:darkgreen">&ndash;&gt;
