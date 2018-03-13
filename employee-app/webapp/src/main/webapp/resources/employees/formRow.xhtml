@@ -104,22 +104,22 @@
                                 <div class="input-group form-control">
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="form-check form-check-inline">
-                                        <div class="custom-control custom-radio">
-                                            <input class="form-check-input" type="radio" a:name="#{cc.hiddenInput.clientId}"
-                                                   jsf:id="radio" value="#{item}"
-                                                   a:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
-                                                <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
-                                            </input>
-                                            <!--<label class="form-check-label" for="radio">#{item.name}</label>-->
-                                            <!--<div class="form-check-label">#{item.name}</div>-->
-                                            <div class="form-check-label" style="display: inline-flex">
-                                                <div>#{applicationController.getLocalizedNameFor(item)}</div>
-<!--
-                                                <h:inputText style="margin-left: 5px" value="#{cc.attrs.value}" id="text" required="true" />
-                                                <h:message for="text" errorClass="form-control-feedback" />
--->
+                                            <div class="custom-control custom-radio">
+                                                <input class="form-check-input" type="radio" a:name="#{cc.hiddenInput.clientId}"
+                                                       jsf:id="radio" value="#{item}" jsf:required="#{cc.attrs.isRequired}"
+                                                       a:checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
+                                                    <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
+                                                </input>
+                                                <!--<label class="form-check-label" for="radio">#{item.name}</label>-->
+                                                <!--<div class="form-check-label">#{item.name}</div>-->
+                                                <div class="form-check-label" style="display: inline-flex">
+                                                    <div>#{applicationController.getLocalizedNameFor(item)}</div>
+    <!--
+                                                    <h:inputText style="margin-left: 5px" value="#{cc.attrs.value}" id="text" required="true" />
+                                                    <h:message for="text" errorClass="form-control-feedback" />
+    -->
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </ui:repeat>
                                     <h:inputHidden id="editableText" binding="#{cc.hiddenInput}" value="#{cc.attrs.value}"

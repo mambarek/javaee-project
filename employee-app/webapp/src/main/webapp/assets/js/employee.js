@@ -229,6 +229,10 @@ function validateInputStyle(component){
         target.addClass("form-control");
     }
 
+    if(component.attr('type') == "radio") {
+        inputContainer.addClass("was-validated")
+    }
+
     target.removeClass("is-valid is-invalid")
 
     // when disabled so no highlighting
@@ -261,12 +265,13 @@ function validateElement(elem){
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
     //form-control
-    form.find(".form-control").each(function(){
+    form.find(".form-control, input[type=radio]").each(function(){
     //form.find("input[type=text], input[type=radio], select").each(function(){
         validateInputStyle($(this))
     });
 
-    form.addClass("was-validated");
+    //form.find("radio")
+    //form.addClass("was-validated");
 }
 
 function validateWidget(widget){

@@ -120,10 +120,6 @@
 
                                                 <div class="form-check-label" style="display: inline-flex">
                                                     <div>#{applicationController.getLocalizedNameFor(item)}</div>
-                                                    <!--
-                                                                                                    <h:inputText style="margin-left: 5px" value="#{cc.attrs.value}" id="text" required="true" />
-                                                                                                    <h:message for="text" errorClass="form-control-feedback" />
-                                                    -->
                                                 </div>
                                             </div>
                                         </div>
@@ -136,11 +132,11 @@
                                         $(function() {
                                         var id = '#' + encodeId('#{cc.clientId}');
                                         var checked = $(id).find("input[type='radio']:checked").val();
-                                        console.info("Found checked redios:",checked);
-                                        console.info("Found checked redios undefined:",checked == undefined);
+                                        //console.info("Found checked redios:",checked);
+                                        //console.info("Found checked redios undefined:",checked == undefined);
                                         if(checked == undefined || checked.length == 0){
                                         var hiddenId = '#' + encodeId('#{cc.clientId}:editableText');
-                                        console.info("Found hidden input:",$(hiddenId));
+                                        //console.info("Found hidden input:",$(hiddenId));
                                         $(hiddenId)[0].value = null;
                                         }
 
