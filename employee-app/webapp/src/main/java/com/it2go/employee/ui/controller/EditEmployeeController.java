@@ -48,6 +48,10 @@ public class EditEmployeeController implements BaseViewController{
 
     private Employee model;
 
+    // this must be moved to a country view select
+    // contains continents and countries
+    private Continent selectedContinent;
+
     public EditEmployeeController() {
         System.out.println(">> EditEmployeeController::Constructor!");
     }
@@ -240,5 +244,13 @@ public class EditEmployeeController implements BaseViewController{
         res[1] = new SelectItem(Gender.FEMALE, Gender.FEMALE.getName());
 
         return res;
+    }
+
+    public Continent getSelectedContinent() {
+        return selectedContinent;
+    }
+
+    public void setSelectedContinent(Continent selectedContinent) {
+        this.selectedContinent = selectedContinent;
     }
 }

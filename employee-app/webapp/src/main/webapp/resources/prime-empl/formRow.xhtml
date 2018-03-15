@@ -184,7 +184,7 @@
                                         <f:selectItem
                                                 itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                                         <f:selectItems value="#{cc.attrs.radioItems}" var="item"
-                                                       itemLabel="#{item.getLocalizedLabel()}" itemValue="#{item.value}" />
+                                                       itemLabel="#{applicationController.getLocalizedNameFor(item)}" itemValue="#{item}" />
                                         <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="handleAjax"/>
                                     </h:selectOneMenu>
                                     <!-- draw table with cols-->

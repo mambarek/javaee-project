@@ -1,5 +1,6 @@
 package com.it2go.employee.ui.controller;
 
+import com.it2go.employee.entities.Continent;
 import com.it2go.employee.entities.Gender;
 
 import javax.annotation.Resource;
@@ -11,10 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @Named
 @ApplicationScoped
@@ -61,6 +59,24 @@ public class ApplicationController implements Serializable{
             return resLabel;
         }
 
+        if(dataObject instanceof Continent){
+            String resLabel;
+            Continent continent = (Continent)dataObject;
+            try {
+                ResourceBundle resourceBundle = ResourceBundle.getBundle("com/it2go/continents/continents", locale);
+                resLabel = resourceBundle.getString(continent.toString());
+            }catch (Exception e){
+                e.printStackTrace();
+                resLabel = continent.getName();
+            }
+
+            return resLabel;
+        }
+
         return "";
+    }
+
+    public List<Continent> getContinents(){
+        return Arrays.asList(Continent.values());
     }
 }

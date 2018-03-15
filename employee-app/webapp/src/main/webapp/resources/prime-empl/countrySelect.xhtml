@@ -1,0 +1,29 @@
+<ui:component
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="value" required="true"
+                      shortDescription="The selected value." />
+        <cc:attribute name="label"
+                      shortDescription="the label." />
+    </cc:interface>
+    <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <pe:formRow value="" inputType="newselect" label="Region"
+                        radioItems="#{applicationController.continents}" >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{applicationController.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:formRow>
+        </div>
+    </cc:implementation>
+</ui:component>

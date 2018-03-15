@@ -66,14 +66,19 @@
                         radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true"/>
 
             <pe:formRow value="#{cc.attrs.model.gender}" inputType="newselect" label="#{cc.resourceBundleMap['employee.editor.gender']}"
-                        radioItems="#{editEmployeeController.genderWrapperList}" isRequired="true">
+                        radioItems="#{editEmployeeController.genders}" isRequired="true">
                 <f:facet name="selectOnMenuTemplate">
                     <!--<div style="color:darkgreen">-->
-                    <i class="fas fa-#{item.value.name.toLowerCase()}"/>&#160;  #{item.getLocalizedLabel()} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
+                    <i class="fas fa-#{item.name.toLowerCase()}"/>&#160;  #{applicationController.getLocalizedNameFor(item)} &#160;&#160;<span style="font-weight:bold;color:darkgreen ">Noch was</span>
                     <!--</div>-->
                 </f:facet>
             </pe:formRow>
-
+            <pe:formRow value="" inputType="newselect" label="Region"
+                        radioItems="#{applicationController.continents}" >
+                <f:facet name="selectOnMenuTemplate">
+                    <span>#{applicationController.getLocalizedNameFor(item)}</span>
+                </f:facet>
+            </pe:formRow>
             <div class="form-group row justify-content-end">
                 <div class="btn-group">
                     <h:commandLink type="submit" styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel">
