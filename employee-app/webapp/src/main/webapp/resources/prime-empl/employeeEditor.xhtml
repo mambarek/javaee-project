@@ -73,18 +73,18 @@
                     <!--</div>-->
                 </f:facet>
             </pe:formRow>
-            <pe:formRow value="" inputType="newselect" label="Region"
+<!--            <pe:formRow value="" inputType="newselect" label="Region"
                         radioItems="#{masterdataService.continents}" >
                 <f:facet name="selectOnMenuTemplate">
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
-            </pe:formRow>
-            <pe:countrySelect value="#{testController.continent}" label="Test continent"/>
-            <pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}">
+            </pe:formRow>-->
+            <pe:countrySelect value="#{testController.country}" label="Test continent"/>
+            <!--<pe:selectComponent value="#{testController.continent}" items="#{masterdataService.continents}" >
                 <f:facet name="selectOnMenuTemplate">
                     <span>#{masterdataService.getLocalizedNameFor(item)}</span>
                 </f:facet>
-            </pe:selectComponent>
+            </pe:selectComponent>-->
 
             <div class="form-group row justify-content-end">
                 <div class="btn-group">

@@ -24,11 +24,13 @@
         <cc:attribute name="ajaxRender"
                       shortDescription="add which ids to render after ajax validation e.e (@form text1)"/>
         <cc:editableValueHolder name="input" targets="editableText"/>
+        <cc:clientBehavior name="changed" event="change" targets="editableText"/>
         <cc:facet name="selectOnMenuTemplate"/>
     </cc:interface>
     <!-- zwei neben einander liegenden dropdowns im ersten die region (continent) im zweiten stehen die länder  -->
     <cc:implementation>
         <div id="#{cc.clientId}">
+        <div jsf:id="inputContainer" class="inputContainer">
             <div class="input-group">
                 <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
                                  style="width: 100%" required="#{cc.attrs.isRequired}" binding="#{cc.input}">
@@ -36,7 +38,11 @@
                             itemLabel="#{cc.resourceBundleMap['employee.selectone.empty.text']}" itemValue=""/>
                     <f:selectItems value="#{cc.attrs.items}" var="item"
                                    itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
-                    <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax"/>
+                    <c:choose>
+                        <c:when test="#{!empty cc.attrs.ajaxRender}">
+                            <f:ajax execute="@this" render="#{cc.attrs.ajaxRender}" event="change" onevent="handleAjax"/>
+                        </c:when>
+                    </c:choose>
                 </h:selectOneMenu>
                 <!-- draw table with cols-->
                 <div style="display: none">
@@ -87,6 +93,7 @@
 
 
             </h:outputScript>
+        </div>
         </div>
     </cc:implementation>
 </ui:component>
