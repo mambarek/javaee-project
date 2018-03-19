@@ -83,16 +83,17 @@
                 });
 
                 var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
-                //console.info("**-- encodedId: " + encodedId);
+                console.info("**-- encodedId: " + encodedId);
                 // apply the menu
                 $(encodedId).selectOneMenu({
-                // bei collision at the bottom of browser show menu on the oposite (top)
+                // bei collision at the bottom of browser show menu on the opposite (top)
                 position:{collision: "flip"},
                 // trigger onchange for select and fire ajax
                 change: function( event, ui ) {$(encodedId).trigger( "change" );}
-                });
+                }).selectOneMenu( "menuWidget" )
+                .addClass("select-overflow"); // set max height for scrolling
 
-                $(encodedId).addClass("select-overflow");
+
             </h:outputScript>
         </div>
         </div>
