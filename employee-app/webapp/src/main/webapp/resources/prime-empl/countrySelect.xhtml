@@ -30,11 +30,11 @@
         <div id="#{cc.clientId}">
             <div class="form-group row">
                 <h:outputLabel styleClass="col-md-3 pr-0 col-sm-6 col-form-label" value="Region"/>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 pr-1">
                     <div jsf:id="continent-inputContainer" class="inputContainer">
                         <div class="input-group">
                             <h:selectOneMenu value="#{testController.continent}" id="continent" styleClass="form-control"
-                                             pt:data-valid="#{cc.countrySelect.valid and !empty testController.continent}"
+
                                              style="width: 100%" binding="#{cc.continentSelect}" >
                                 <f:selectItem
                                         itemLabel="--Bitte wähl doch --" itemValue="#{masterdataService.nullValueContinent}" />
@@ -88,7 +88,7 @@
 
                             <div jsf:id="inputContainer" class="inputContainer">
                                 <div class="input-group">
-                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{component.valid}"
+                                    <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control"
                                                      style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}">
                                         <f:selectItem
                                                 itemLabel="--Bitte wähl doch --" itemValue="" noSelectionOption="true"/>
