@@ -213,4 +213,8 @@ public class EditEmployeeController implements BaseViewController {
     public void setSelectedContinent(Continent selectedContinent) {
         this.selectedContinent = selectedContinent;
     }
+
+    public FacesMessage.Severity getSeverityError(){
+        return FacesMessage.SEVERITY_ERROR;
+    }
 }

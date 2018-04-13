@@ -252,10 +252,12 @@
 
      <div class="employeeFormErrorList" style="display: none">
         <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
-            <ui:fragment rendered="#{facesMessage.severity eq 'ERROR'}">
+            <ui:fragment rendered="#{facesMessage.severity eq editEmployeeController.severityError}">
+            <!--<ui:fragment >-->
                 <div class="alert alert-danger alert-dismissable">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&#x00D7;</a>
                     <strong>#{cc.resourceBundleMap['employee.messgaes.error']} </strong> #{facesMessage.summary}
+                    <!--<strong>#{facesMessage.severity} </strong> #{facesMessage.summary}-->
                 </div>
             </ui:fragment>
         </ui:repeat>

@@ -104,8 +104,6 @@ public abstract class DomainEntity implements IAbstractEntity<Long> {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         return true;
