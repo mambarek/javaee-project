@@ -670,3 +670,14 @@ option.avatar {
   padding-right:10px;
   content: "\f182";
 }
+
+.accordion .panel .header .title{
+  font-size: $fontSize;
+  font-weight: $bold;
+}
+
+/*-- jquery ui*/
+.ui-widget {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 0.825rem;
+}

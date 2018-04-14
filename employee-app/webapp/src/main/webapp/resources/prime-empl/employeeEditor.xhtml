@@ -39,11 +39,11 @@
         <h:form id="employeeForm" styleClass="employeeForm" >
 
 
-            <div id="accordion">
-            <div class="card">
-            <div class="card-header" id="headingOne">
+            <div id="accordion" class="accordion">
+            <div class="card panel">
+            <div class="card-header header" id="headingOne">
                 <div class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="return false;">
+                    <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="return false;">
                         <i class="fas fa-caret-right fa-lg"/> Persönliche Daten
                     </button>
                 </div>
@@ -86,10 +86,10 @@
             </div>
                 <!-- ##########  Adress data panel ############-->
 
-            <div class="card">
-            <div class="card-header" id="headingTwo">
+            <div class="card panel">
+            <div class="card-header header" id="headingTwo">
                 <div class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
+                    <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onclick="return false;">
                        <i class="fas fa-caret-right fa-lg"/> Adressdaten
                     </button>
                 </div>
@@ -182,47 +182,7 @@
                         </div>
                     </div>
                 </div>
-            <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="Test continent" isRequired="true" decorated="true"/>
-            <!--<pe:countryComboBox value="#{testController.countryCode}" label="Test continent" isRequired="false"/>-->
-
-            <div class="form-group row">
-            <h:outputLabel styleClass="col-sm-3 col-form-label" value="Test"/>
-            <div class="col-sm-9">
-                <pe:selectComponent value="#{testController.countryCode}" items="#{masterdataService.getAllCountries(facesContext.viewRoot.locale)}"
-                                    targetAttr="code"  decorated="true">
-                    <f:facet name="selectOneMenuTemplate">
-                        <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="11px"/>&#160;  #{item.name}
-                    </f:facet>
-                    <f:facet name="itemDetails">
-                        <div>
-                            <table>
-                                <tr><td></td><td></td></tr>
-                                <tr><td>Fläche:</td><td>1234000 k2</td></tr>
-                                <tr><td>Sprache:</td><td>Deutsch</td></tr>
-                            </table>
-                        </div>
-                    </f:facet>
-                </pe:selectComponent>
-            </div>
-            </div>
-            <div class="form-group row" jsf:id="test">
-                <h:outputLabel styleClass="col-sm-3 col-form-label" value="Combobox"/>
-                <div class="flex-column col-sm-9">
-                    <pe:comboBoxComponent value="#{testController.countryCode}" items="#{masterdataService.getAllCountries(facesContext.viewRoot.locale)}"
-                                          ajaxRender="#{cc.clientId}:employeeForm:test" decorated="true">
-                        <f:facet name="selectOneMenuTemplate">
-                            <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="11px"/>&#160;  #{item.name}
-                        </f:facet>
-                        <f:facet name="postTemplate">
-                            <ui:fragment rendered="#{!empty testController.countryCode}">
-                                <div class="mt-1 ml-2">
-                                    <img src="../../assets/images/flags/icons/png/#{testController.countryCode.toLowerCase()}.png" alt=" " width="32px" height="22px"/>
-                                </div>
-                            </ui:fragment>
-                        </f:facet>
-                    </pe:comboBoxComponent>
-                </div>
-            </div>
+            <pe:countrySelect value="#{cc.attrs.model.address.countryCode}" label="Land" isRequired="true" decorated="true"/>
 
             </div>
             </div>

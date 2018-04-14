@@ -29,17 +29,17 @@
     <cc:implementation>
         <div id="#{cc.clientId}">
             <div class="form-group row">
-                <h:outputLabel styleClass="col-md-3 pr-0 col-sm-6 col-form-label" value="Land"/>
+                <h:outputLabel styleClass="col-md-3 pr-0 col-sm-6 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-md-3 pr-0">
                     <div jsf:id="continent-inputContainer" class="inputContainer">
                         <div class="input-group">
-                            <h:selectOneMenu value="#{testController.continent}" id="continent" styleClass="form-control"
+                            <h:selectOneMenu id="continent" styleClass="form-control"
 
                                              style="width: 100%" binding="#{cc.continentSelect}" >
                                 <f:selectItem
-                                        itemLabel="-- Region wählen" itemValue="#{masterdataService.nullValueContinent}" noSelectionOption="true"/>
+                                        itemLabel="-- Region wählen" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{masterdataService.continents}" var="item"
-                                               itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item}" />
+                                               itemLabel="#{masterdataService.getLocalizedNameFor(item)}" itemValue="#{item.code}" />
                                 <f:ajax execute="@this" event="change" render="county-select"  onevent="handleAjax"/>
                             </h:selectOneMenu>
                             <!-- draw table with cols-->
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="d-flex col-md-6 col-sm-12" jsf:id="county-select">
-                    <ui:fragment rendered="#{!empty testController.continent}">
+                    <ui:fragment rendered="#{!empty cc.continentSelect.value}">
                         <!--<h:outputLabel styleClass="col-md-3 pr-0 col-sm-6 col-form-label" value="Land"/>-->
                         <div class="col pl-1 pr-0" style="overflow-x: hidden;">
 
@@ -92,7 +92,7 @@
                                                      style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}">
                                         <f:selectItem
                                                 itemLabel="-- Land wählen" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" var="item"
+                                        <f:selectItems value="#{cc.countries}" var="item"
                                                        itemLabel="#{item.name}" itemValue="#{item.code}" />
                                         <!--<f:ajax execute="@this" event="change" render="#{cc.clientId}" />-->
                                     </h:selectOneMenu>
@@ -100,7 +100,7 @@
                                     <div style="display: none">
                                         <ul>
                                             <li id="#{cc.clientId}-country-li-0">-- Bitte wählen --</li>
-                                            <ui:repeat value="#{testController.continent.getCountries(facesContext.viewRoot.locale)}" var="item" varStatus="status">
+                                            <ui:repeat value="#{cc.countries}" var="item" varStatus="status">
                                                 <li id="#{cc.clientId}-country-li-#{status.index + 1}">
                                                     <img src="../../assets/images/flags/icons/png/#{item.code.toLowerCase()}.png" alt=" " width="16px" height="16px"/>&#160;  #{item.name}
                                                 </li>
