@@ -33,15 +33,16 @@ public class CountrySelectComponent extends UIInputComponent implements NamingCo
 
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
-        String countryCode = (String)getValue();
-        if(countryCode != null && !countryCode.isEmpty()){
-            Continent continent = Continent.getContinentContainingCountry(countryCode);
+        if(continentSelect.getValue() == null) {
+            String countryCode = (String) countrySelect.getValue();
+            if (countryCode != null && !countryCode.isEmpty()) {
+                Continent continent = Continent.getContinentContainingCountry(countryCode);
 
-            if(continent != null)
-                continentSelect.setValue(continent.getCode());
+                if (continent != null)
+                    continentSelect.setValue(continent.getCode());
+            } else
+                continentSelect.setValue(null);
         }
-        else
-            continentSelect.setValue(null);
 
         super.encodeBegin(context);
     }

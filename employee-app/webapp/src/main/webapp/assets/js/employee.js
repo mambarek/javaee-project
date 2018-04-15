@@ -238,16 +238,27 @@ function validateInputStyle(component){
     // when disabled so no highlighting
     if(disabled && disabled != false) return;
 
+    var countrySelect = component.closest("[data-component-nsme='countrySelect']");
+
     if (valid == "false") {
         target.addClass('is-invalid');
         //target.siblings('.invalid-feedback').show();
-        inputContainer.find('.invalid-feedback').show();
+
+        if(countrySelect)
+            countrySelect.find('.invalid-feedback').show();
+        else
+            inputContainer.find('.invalid-feedback').show();
     }
     else {
         target.addClass('is-valid');
         //target.siblings('.invalid-feedback').hide();
-        inputContainer.find('.invalid-feedback').hide();
+
+        if(countrySelect)
+            countrySelect.find('.invalid-feedback').hide();
+        else
+            inputContainer.find('.invalid-feedback').hide();
     }
+
 }
 
 function validateElementWithId(id){
@@ -265,8 +276,8 @@ function validateElement(elem){
 function validateForm(form){
     //var allInputFields = form.filter('input[type=text], select');
     //form-control
-    form.find(".form-control, input[type=radio]").each(function(){
-    //form.find("input[type=text], input[type=radio], select").each(function(){
+    //form.find(".form-control, input[type=radio]").each(function(){
+    form.find("input[type=text], input[type=radio], select").each(function(){
         validateInputStyle($(this))
     });
 
