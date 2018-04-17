@@ -16,7 +16,7 @@ public class ContinentConverter implements Converter {
         if (Objects.isNull(value) || value.trim().length() == 0)
             return null;
 
-        return Continent.getContinentWithName(value);
+        return Continent.getContinentWithCode(value);
     }
 
     @Override

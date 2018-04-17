@@ -10,15 +10,6 @@ import static org.junit.Assert.*;
 public class ContinentTest {
 
     @Test
-    public void testContinent(){
-        List<Country> all =  Continent.ASIA.getCountries(Locale.CHINESE);
-        System.out.println("Test3");
-        //Continent.ASIA.getCountries(Locale.GERMAN).forEach(System.out::println);
-        final Continent europe = Continent.getContinentWithName(Continent.SOUTH_AMERICA.getName());
-        System.out.println(europe);
-    }
-
-    @Test
     public void testCountry(){
         Country country = new Country("AS","Samoa");
         Locale l = new Locale(country.getCode());
