@@ -314,3 +314,10 @@ function checkTab(){
         }*/
     })
 }
+
+function activateTabs() {
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+}
