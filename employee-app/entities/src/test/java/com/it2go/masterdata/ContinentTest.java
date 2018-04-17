@@ -25,7 +25,10 @@ public class ContinentTest {
         System.out.println("l.getDisplayCountry() = " + l.getDisplayCountry());;
         System.out.println("l.getDisplayCountry(de) = " + l.getDisplayCountry(Locale.GERMANY));
 
-        Country.getAllCountries(Locale.GERMAN).forEach(System.out::println);
+        //Country.getAllCountries(Locale.GERMAN).forEach(System.out::println);
+
+        Continent continent = Continent.getContinentContainingCountry("de");
+        System.out.println("continent = " + continent);
     }
 
     @Test
