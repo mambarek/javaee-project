@@ -140,6 +140,7 @@
                         </ui:repeat>
                         </tbody>
                     </table>
+                    <div id="paging-first-datatable"></div>
                 </h:form>
             </div>
         </div>
@@ -156,6 +157,18 @@
 
 
     <h:outputScript>
-        refreshAllEventListener('content');
+        //refreshAllEventListener('content');
+        $(document).ready(function() {
+
+            $('#employeeList').datatable({
+                pageSize: 5,
+                sort: [false,true,true],
+                filters: [false,true, 'select'],
+                filterText: 'Type to filter... ',
+                pagingDivSelector: "#paging-first-datatable"
+            });
+
+
+        })
     </h:outputScript>
 </ui:composition>
