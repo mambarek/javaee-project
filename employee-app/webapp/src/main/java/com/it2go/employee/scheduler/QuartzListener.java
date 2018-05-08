@@ -19,7 +19,7 @@ import java.util.Date;
 public class QuartzListener extends QuartzInitializerListener {
 
     @Inject
-    CDIJobFactory jobFactory;
+    private CDIJobFactory jobFactory;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
