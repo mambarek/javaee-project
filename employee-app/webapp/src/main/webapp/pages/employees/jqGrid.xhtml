@@ -11,9 +11,9 @@
         <div class="card-header corp-block-header">
             #{employeeMsg['employee.table.title']} - jqGrid
         </div>
-        <div class="card-block" style="padding: 0">
+        <div class="card-block" style="padding: 0" id="gridContainer">
 
-                <table style='width: 100%;' id="grid"/>
+                <table style='width: 100% !important;' id="grid"/>
                 <div id="gridPager"/>
 
         </div>
@@ -46,7 +46,7 @@
         var grid = $('#grid');
         var pagerId = '#gridPager';
 
-        var mygrid = grid.jqGrid({
+        grid.jqGrid({
         regional: '#{facesContext.viewRoot.locale.language}',
         url: 'http://localhost:8080/webapp/rest/EmployeeService/employees',
         mtype: "GET",
@@ -63,7 +63,8 @@
         ],
         viewrecords: true,
         height: 'auto',
-        width:'800',
+        //width:'800',
+        autoWidth: true,
         responsive: true,
         menubar: true,
         caption : 'Aktionen',
@@ -115,6 +116,10 @@
         }
         }
         ]);
+
+        // workaround set width to 100%
+        var newWidth = grid.closest(".ui-jqgrid").parent().width();
+        grid.jqGrid("setGridWidth", newWidth, true);
 
         });
     </h:outputScript>
