@@ -74,8 +74,10 @@
         </div>
         <table id="dayTable" style="width: 150px">
             <thead>
-                <th>Salat</th>
-                <th>Adhan</th>
+                <tr style="border-bottom: 1px solid;">
+                    <th>Salat</th>
+                    <th>Adhan</th>
+                </tr>
             </thead>
             <tbody>
             </tbody>
@@ -155,7 +157,7 @@
             if(interval > 0) {
                 found = true;
                 setTimerToDate(fajrDate,"#nextSalatCounter");
-                table.append("<tr style='background: #4eb305'><td>Fajr</td><td>" + data.data.timings.Fajr + "</td></tr>");
+                table.append("<tr style='background: brown;color: white;'><td>Fajr</td><td>" + data.data.timings.Fajr + "</td></tr>");
             }
             else
                 table.append("<tr><td>Fajr</td><td>" + data.data.timings.Fajr + "</td></tr>");
@@ -165,7 +167,7 @@
             if(!found && interval > 0) {
                 found = true;
                 setTimerToDate(dhuhrDate,"#nextSalatCounter");
-                table.append("<tr style='background: #4eb305'><td>Dhuhr</td><td>" + data.data.timings.Dhuhr + "</td></tr>");
+                table.append("<tr style='background: brown;color: white;'><td>Dhuhr</td><td>" + data.data.timings.Dhuhr + "</td></tr>");
             }
             else
                 table.append("<tr><td>Dhuhr</td><td>" + data.data.timings.Dhuhr + "</td></tr>");
@@ -174,7 +176,7 @@
             if(!found && interval > 0) {
                 found = true;
                 setTimerToDate(asrDate,"#nextSalatCounter");
-                table.append("<tr style='background: #4eb305'><td>Asr</td><td>" + data.data.timings.Asr + "</td></tr>");
+                table.append("<tr style='background: brown;color: white;'><td>Asr</td><td>" + data.data.timings.Asr + "</td></tr>");
             }
             else
                 table.append("<tr><td>Asr</td><td>" + data.data.timings.Asr + "</td></tr>");
@@ -183,7 +185,7 @@
             if(!found && interval > 0) {
                 found = true;
                 setTimerToDate(maghribDate,"#nextSalatCounter");
-                table.append("<tr style='background: #4eb305'><td>Maghrib</td><td>" + data.data.timings.Maghrib + "</td></tr>");
+                table.append("<tr style='background: brown;color: white;'><td>Maghrib</td><td>" + data.data.timings.Maghrib + "</td></tr>");
             }
             else
                 table.append("<tr><td>Maghrib</td><td>" + data.data.timings.Maghrib + "</td></tr>");
@@ -192,7 +194,7 @@
             if(!found && interval > 0) {
                 found = true;
                 setTimerToDate(ishaDate,"#nextSalatCounter");
-                table.append("<tr style='background: #4eb305'><td>Maghrib</td><td>" + data.data.timings.Isha + "</td></tr>");
+                table.append("<tr style='background: brown;color: white;'><td>Maghrib</td><td>" + data.data.timings.Isha + "</td></tr>");
             }
             else
                 table.append("<tr><td>Isha</td><td>" + data.data.timings.Isha + "</td></tr>");
