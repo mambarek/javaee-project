@@ -204,7 +204,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         rownumbers : false,
         colMenu : true,
         menubar: true,
-        //viewrecords : true,
+        viewrecords : true,
         hoverrows : true,
         height: '100%',
         rowNum: rowsPerPage,
