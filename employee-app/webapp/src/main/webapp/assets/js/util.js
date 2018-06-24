@@ -48,3 +48,30 @@ function xhrGet(url) {
 
     return def;
 }
+
+function xhrPost(url) {
+
+    var xhr, results, def;
+
+    def = $.Deferred();
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+
+    xhr.onload = function (e) {
+
+        if (this.status === 200) {
+
+            results = JSON.parse(this.responseText);
+            def.resolve(results);
+        }
+    };
+
+    xhr.onerror = function (e) {
+        def.reject(e);
+    };
+
+    xhr.send();
+
+    return def;
+}

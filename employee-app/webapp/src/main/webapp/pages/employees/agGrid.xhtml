@@ -34,7 +34,7 @@
         headerNames['salary'] = "#{employeeMsg['employee.table.col.salary']}";
         headerNames['birthDate'] = "#{employeeMsg['employee.table.col.birthDate']}";
 
-        var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/viewitems';
+        var url = 'http://localhost:8080/webapp/rest/EmployeeService/employee/search';
         createEmployees_agGrid("#myGrid", headerNames, url);
 
     </h:outputScript>

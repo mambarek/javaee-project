@@ -6,7 +6,7 @@ function editEmployee(cellvalue, options, rowObject){
 
 function editButton(cellvalue, options, rowObject){
 
-    return '<a onclick="editEmployee('+cellvalue+')" ><i class="fas fa-pencil-alt" aria-hidden="true"/></a>';
+    return '<a onclick="editEmployee('+cellvalue+')" style="cursor: pointer;"><i class="fas fa-pencil-alt" aria-hidden="true"/></a>';
 }
 
 function yeditButton(cellvalue, options, rowObject){
@@ -172,7 +172,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             var thegrid = this;
             var currPage = $(this).getGridParam('page');
             var fetchdata = false;
-            //if(currPage == 0) currPage = 1;
+            if(currPage == 0) currPage = 1;
 
             var minPage = currPage - 1;
             if(minPage < 1) minPage = 1;
@@ -246,10 +246,10 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
         sortable: true,
         //altRows: true, This does not work in boostrarap
         // altclass: '....'
-        pager: "#gridPager"
+        pager: "#gridPager",
 
         // set table stripped class in table style in bootsrap
-        //page: currentPage
+        page: currentPage
 
     });
 

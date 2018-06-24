@@ -64,8 +64,8 @@ function createEmployees_agGrid(selector, colNames, url, data){
     // create the grid passing in the div to use together with the columns data we want to use
     new agGrid.Grid(eGridDiv, gridOptions);
 
-    xhrGet(url).then(function (data) {
-        gridOptions.api.setRowData(data);
+    xhrPost(url).then(function (data) {
+        gridOptions.api.setRowData(data.rows);
     })
 
 }
