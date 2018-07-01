@@ -2,6 +2,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <!-- Logo and top menu not for mobile -->
@@ -78,11 +79,18 @@
                         <a class="nav-link"  href="#"><i class="fas fa-envelope fa-fw" aria-hidden="true"/>&#xa0;Contact</a>
                     </li>
                 </ul>
+                <h:form>
                 <ul class="navbar-nav ml-auto">
                     <li class="divider"/>
-                    <li><a class="nav-link"  href="#"><span class="fas fa-user"/> Sign In</a></li>
-                    <li><a class="nav-link"  href="#"><span class="fas fa-sign-in-alt"/> Login</a></li>
+                    <ui:fragment rendered="#{!loginController.userLoggedIn}">
+                        <li><a class="nav-link"  href="#"><span class="fas fa-user"/> Sign In</a></li>
+                        <li><a class="nav-link"  href="#"><span class="fas fa-sign-in-alt"/> Login</a></li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{loginController.userLoggedIn}">
+                        <li><a class="nav-link"  href="#" jsf:id="logout" jsf:action="#{loginController.logout}"><span class="fas fa-sign-in-alt"/> Logout</a></li>
+                    </ui:fragment>
                 </ul>
+                </h:form>
             </div>
         </div>
     </nav>
