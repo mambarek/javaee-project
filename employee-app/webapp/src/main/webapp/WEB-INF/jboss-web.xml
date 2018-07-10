@@ -1,10 +1,7 @@
 <jboss-web>
 
+   <!-- mit java:/jaas funktionieren die session beans nicht-->
    <!--<security-domain>java:/jaas/LDAPAuth</security-domain>-->
    <security-domain>LDAPAuth</security-domain>
-   <security-role>
-      <description>example of mapping an app role name to real group name. This way we can  take advantage of already existing groups</description>
-      <role-name>admins</role-name><!-- the role name appearing in the standard web.xml dd  -->
-      <principal-name>AppUser</principal-name><!-- the existing role in your credential repo -->
-   </security-role>
+
 </jboss-web>

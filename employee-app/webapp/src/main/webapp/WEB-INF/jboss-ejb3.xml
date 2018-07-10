@@ -11,10 +11,10 @@
                impl-version="2.0">
 
     <assembly-descriptor>
-        <s:security>
+        <!--<s:security>
             <ejb-name>*</ejb-name>
-            <!--<s:security-domain>java:/jaas/LDAPAuth</s:security-domain>-->
+            <s:security-domain>LDAPAuth</s:security-domain>
             <s:missing-method-permissions-deny-access>false</s:missing-method-permissions-deny-access>
-        </s:security>
+        </s:security>-->
     </assembly-descriptor>
 </jboss:ejb-jar>
