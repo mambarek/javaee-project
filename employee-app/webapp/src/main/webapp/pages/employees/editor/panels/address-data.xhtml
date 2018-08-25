@@ -9,7 +9,7 @@
         xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl"
         xmlns:p="http://primefaces.org/ui">
 
-    <div jsf:id="street-inputContainer" class="inputContainer" data-component-name="composedInput">
+    <div jsf:id="street-inputContainer" class="inputContainer" data-component-name="composedInput" data-valid="#{streetOneInput.valid and hausNrInput.valid}">
         <div class="form-group row" jsf:id="street-container">
             <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.address.streetone']}"/>
             <div class="col pr-md-2">
@@ -19,7 +19,7 @@
                                  pt:data-valid="#{component.valid}"
                                  pt:placeholder="Strasse">
                         <f:validateLength minimum="3" maximum="100"/>
-                        <f:ajax execute="@this buildingNr" render="@this street-error-container" onevent="validateInput" event="change" />
+                        <f:ajax execute="@this buildingNr" render="street-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
                 </div>
@@ -32,7 +32,7 @@
                                  pt:data-valid="#{component.valid}"
                                  pt:placeholder="Nr.">
                         <f:validateLength minimum="1" maximum="5"/>
-                        <f:ajax execute="@this streetOne" render="@this street-error-container" onevent="validateInput" event="change" />
+                        <f:ajax execute="@this streetOne" render="street-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
                 </div>
@@ -41,8 +41,8 @@
         </div>
 
         <!--<div class="form-group row collapse" jsf:id="street-error-container" jsf:rendered="#{!empty facesContext.getMessageList(streetOneInput.clientId) or !empty facesContext.getMessageList(hausNrInput.clientId)}">-->
-        <div jsf:id="outer" class="error-container collapse">
-            <div jsf:id="street-error-container" class="form-group row" >
+        <div jsf:id="strretone-outer" class="error-container collapse">
+            <div class="form-group row" >
                 <div class="col-sm-3 col-form-label"/>
                 <div class="col-sm-9">
                     <div class="invalid-feedback" style="display: block">
@@ -59,35 +59,48 @@
     <pe:formRow value="#{editEmployeeController.model.address.streetTwo}" label="#{employeeMsg['employee.editor.address.streettwo']}">
         <f:validateLength minimum="3" maximum="50"/>
     </pe:formRow>
-    <div jsf:id="zip-city-inputContainer" class="inputContainer">
+    <div jsf:id="zip-city-inputContainer" class="inputContainer" data-component-name="composedInput" data-valid="#{zipInput.valid and cityInput.valid}">
         <div class="form-group row" jsf:id="zip-city-container">
             <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.address.zip.city']}"/>
             <div class="col-sm-2 pr-md-0">
                 <div class="input-group">
-                    <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}"
+                    <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.zipCode}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}"
                                  pt:placeholder="Zip">
                         <f:validateLength minimum="5" maximum="5"/>
-                        <f:ajax execute="@this" render="@this" onevent="validateInput" event="change" />
+                        <f:ajax execute="@this citiy" render="zip-city-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
                 </div>
             </div>
             <div class="col ml-md-0 pl-md-2">
                 <div class="input-group">
-                    <h:inputText styleClass="form-control" id="citiy" binding="#{cityInput}"
+                    <h:inputText styleClass="form-control" id="citiy" binding="#{cityInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.city}" required="true" pt:data-required="true"
                                  pt:data-valid="#{component.valid}"
                                  pt:placeholder="City">
                         <f:validateLength minimum="3" maximum="50"/>
-                        <f:ajax execute="@this" render="@this" onevent="validateInput" event="change" />
+                        <f:ajax execute="@this zip-code" render="zip-city-inputContainer" onevent="validateInput" event="change" />
 
                     </h:inputText>
                 </div>
             </div>
         </div>
-        <div class="form-group row" jsf:id="zip-city-error-container"
+        <div jsf:id="zip-city-outer" class="error-container collapse">
+            <div class="form-group row" >
+                <div class="col-sm-3 col-form-label"/>
+                <div class="col-sm-9">
+                    <div class="invalid-feedback" style="display: block">
+                        <ul class="m-md-0 p-md-0 ml-md-3">
+                            <li jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId)}"><h:message id="zip-message" for="zip-code"/></li>
+                            <li jsf:rendered="#{!empty facesContext.getMessageList(cityInput.clientId)}"><h:message id="city-message" for="citiy"/></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <div class="form-group row" jsf:id="zip-city-error-container"
              jsf:rendered="#{!empty facesContext.getMessageList(zipInput.clientId) or !empty facesContext.getMessageList(cityInput.clientId)}">
             <div class="col-sm-3" />
             <div class="col-sm-9">
@@ -98,7 +111,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
     <pe:countrySelect value="#{editEmployeeController.model.address.countryCode}" label="#{employeeMsg['employee.editor.address.state']}" isRequired="true" decorated="true"/>
 

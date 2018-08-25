@@ -246,14 +246,51 @@ function validateInputStyle(component, hightlight_valid_input){
 
     var isComposedInput = component.closest("[data-component-name='composedInput-input']").length > 0;
     var composedInput = component.closest("[data-component-name='composedInput']");
+    var showErrorContainer = valid == "false";
+    if(composedInput.length > 0) {
+        showErrorContainer = composedInput.attr('data-valid') == "false";
+        composedInput.find('input').each(function(){
+            var ch_valid = $(this).attr("data-valid");
+            if (ch_valid == "false") {
+                $(this).removeClass("is-invalid").addClass('is-invalid');
+                //target.siblings('.invalid-feedback').show();
+                if($(this).attr('type') == "radio") {
+                    // all radios should have the same color valid/invalid
+                    $('input[name="'+encodeId($(this).attr('name'))+'"').removeClass('is-invalid').addClass('is-invalid');
+                }
+            }else {
+                if(hightlight_valid_input) {
+                    $(this).removeClass("is-valid").addClass('is-valid');
+                    //target.siblings('.invalid-feedback').hide();
+                    if ($(this).attr('type') == "radio") {
+                        // all radios should have the same color valid/invalid
+                        $('input[name="' + encodeId($(this).attr('name')) + '"').removeClass('is-invalid').addClass('is-valid');
+                    }
+                }
+            }
+        })
+    }
 
     if (valid == "false") {
-        target.addClass('is-invalid');
+        target.removeClass('is-valid').addClass('is-invalid');
         //target.siblings('.invalid-feedback').show();
         if(component.attr('type') == "radio") {
             // all radios should have the same color valid/invalid
-            $('input[name="'+encodeId(component.attr('name'))+'"').addClass('is-invalid');
+            $('input[name="'+encodeId(component.attr('name'))+'"').removeClass('is-valid').addClass('is-invalid');
         }
+    }else {
+        if(hightlight_valid_input) {
+            target.removeClass('is-invalid').addClass('is-valid');
+            //target.siblings('.invalid-feedback').hide();
+            if (component.attr('type') == "radio") {
+                // all radios should have the same color valid/invalid
+                $('input[name="' + encodeId(component.attr('name')) + '"').removeClass('is-invalid').addClass('is-valid');
+            }
+        }
+    }
+
+    if (showErrorContainer) {
+
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').show();
 
@@ -263,14 +300,6 @@ function validateInputStyle(component, hightlight_valid_input){
         if(composedInput.length > 0)
             composedInput.find(".error-container.collapse").show();
     }else {
-        if(hightlight_valid_input) {
-            target.addClass('is-valid');
-            //target.siblings('.invalid-feedback').hide();
-            if (component.attr('type') == "radio") {
-                // all radios should have the same color valid/invalid
-                $('input[name="' + encodeId(component.attr('name')) + '"').addClass('is-valid');
-            }
-        }
 
         if(countrySelect.length > 0)
             countrySelect.find('.invalid-feedback').hide();
@@ -281,7 +310,6 @@ function validateInputStyle(component, hightlight_valid_input){
         if(composedInput.length > 0)
             composedInput.find(".error-container.collapse").hide();
     }
-
 }
 
 function validateElementWithId(selector){
