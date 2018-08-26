@@ -10,10 +10,10 @@
         xmlns:p="http://primefaces.org/ui">
 
         <pe:formRow value="#{editEmployeeController.model.salary}"
-                    label="#{employeeMsg['employee.editor.salary']}">
+                    label="#{employeeMsg['employee.editor.contract.slary']}">
             <f:convertNumber currencySymbol="EUR" minFractionDigits="2" type="currency"/>
         </pe:formRow>
-        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="checkbox" label="Bereitschft für Wochenendarbeit"/>
-        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="checkbox" label="Reisebereitschft"/>
+        <pe:formRow value="#{editEmployeeController.model.weekendWork}" inputType="checkbox" label="#{employeeMsg['employee.editor.contract.weekendWork']}"/>
+        <pe:formRow value="#{editEmployeeController.model.traveling}" inputType="checkbox" label="#{employeeMsg['employee.editor.contract.traveling']}"/>
 
 </ui:composition>

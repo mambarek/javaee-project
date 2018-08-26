@@ -1,0 +1,61 @@
+<ui:component
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
+
+    <cc:interface componentType="com.it2go.employee.ui.jsf.ProjectList">
+        <cc:attribute name="value" type="java.util.List" shortDescription="The list of projects from model" />
+    </cc:interface>
+
+    <cc:implementation>
+        <div jsf:id="projectList">
+            <ui:repeat value="#{cc.attrs.value}" var="project">
+                <pe:formRow value="#{project.name}"
+                            label="#{employeeMsg['employee.editor.projects.name']}"
+                            isRequired="true" >
+                    <f:validateLength minimum="3" maximum="100"/>
+                </pe:formRow>
+                <pe:formRow value="#{project.begin}" inputType="date"
+                            label="#{employeeMsg['employee.editor.projects.begin']}"
+                            isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                    <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                </pe:formRow>
+                <pe:formRow value="#{project.end}" inputType="date"
+                            label="#{employeeMsg['employee.editor.projects.end']}"
+                            isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                    <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                </pe:formRow>
+
+                <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tilnow']}"/>
+
+                <div class="col inputContainer p-0" jsf:id="description-block" data-component-name='rowForm'>
+                    <div class="input-group">
+                        <h:inputTextarea cols="30" rows="10" styleClass="form-control" id="description" binding="#{descriptionTextArea}"
+                                         value="#{project.description}" pt:data-valid="#{descriptionTextArea.valid}" label="Description"
+                                         style="margin-top: 0px; margin-bottom: 0px; height: 123px;">
+                            <f:validateLength minimum="50" maximum="500"/>
+                            <f:ajax execute="@this" render="description-block" onevent="validateInput"/>
+                        </h:inputTextarea>
+                    </div>
+                    <!-- error message output -->
+                    <div class="invalid-feedback">
+                        <h:message id="message" for="description"/>
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" />
+            <div class="col">
+                <a class="btn btn-primary" jsf:action="#{cc.add}"  jsf:id="addAction">
+                    <f:ajax render="projectList" />
+                    <i class="fa fa-plus-square fa-lg"/>  Project</a>
+            </div>
+        </div>
+    </cc:implementation>
+</ui:component>

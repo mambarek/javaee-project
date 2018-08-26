@@ -66,7 +66,8 @@
                             <div jsf:id="inputContainer" class="inputContainer">
                                 <div class="input-group">
                                     <h:selectOneMenu value="#{cc.attrs.value}" id="editableText" styleClass="form-control" pt:data-valid="#{cc.countrySelect.valid}"
-                                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}" pt:data-required="#{cc.attrs.isRequired}">
+                                                     style="width: 100%" required="#{cc.attrs.isRequired}"  binding="#{cc.countrySelect}"
+                                                     pt:data-required="#{cc.attrs.isRequired}" label="#{cc.attrs.label}">
                                         <f:selectItem
                                                 itemLabel="#{cc.resourceBundleMap['employee.countrySelect.empty.text']}" />
                                         <f:selectItems value="#{cc.countries}" var="item"

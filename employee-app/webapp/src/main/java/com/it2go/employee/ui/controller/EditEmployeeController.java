@@ -1,10 +1,6 @@
 package com.it2go.employee.ui.controller;
 
-import com.it2go.employee.entities.Address;
-import com.it2go.employee.entities.EmailAddress;
-import com.it2go.employee.entities.Employee;
-import com.it2go.employee.entities.EntityNotValidException;
-import com.it2go.employee.entities.Person;
+import com.it2go.employee.entities.*;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
 import com.it2go.framework.dao.BaseException;
@@ -176,6 +172,18 @@ public class EditEmployeeController implements BaseViewController {
         System.out.println("*** EditController::addNewEmail after emails size " + this.model.getEmails().size());
 
         return "employeeList?faces-redirect=true";
+    }
+
+    public String addProject(){
+        this.model.addProject(new Project());
+
+        return null;
+    }
+
+    public String removeProject(Project project){
+        this.model.removeProject(project);
+
+        return null;
     }
 
     @Override

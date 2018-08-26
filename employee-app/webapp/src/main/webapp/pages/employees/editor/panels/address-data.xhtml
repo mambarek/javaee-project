@@ -16,7 +16,7 @@
                 <div class="input-group">
                     <h:inputText styleClass="form-control" id="streetOne" binding="#{streetOneInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.streetOne}" required="true" pt:data-required="true"
-                                 pt:data-valid="#{component.valid}"
+                                 pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.street']}"
                                  pt:placeholder="Strasse">
                         <f:validateLength minimum="3" maximum="100"/>
                         <f:ajax execute="@this buildingNr" render="street-inputContainer" onevent="validateInput" event="change" />
@@ -29,7 +29,7 @@
                 <div class="input-group">
                     <h:inputText styleClass="form-control" id="buildingNr" binding="#{hausNrInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.buildingNr}" required="true" pt:data-required="true"
-                                 pt:data-valid="#{component.valid}"
+                                 pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.buildingnr']}"
                                  pt:placeholder="Nr.">
                         <f:validateLength minimum="1" maximum="5"/>
                         <f:ajax execute="@this streetOne" render="street-inputContainer" onevent="validateInput" event="change" />
@@ -66,7 +66,7 @@
                 <div class="input-group">
                     <h:inputText styleClass="form-control" id="zip-code" binding="#{zipInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.zipCode}" required="true" pt:data-required="true"
-                                 pt:data-valid="#{component.valid}"
+                                 pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.zip']}"
                                  pt:placeholder="Zip">
                         <f:validateLength minimum="5" maximum="5"/>
                         <f:ajax execute="@this citiy" render="zip-city-inputContainer" onevent="validateInput" event="change" />
@@ -78,7 +78,7 @@
                 <div class="input-group">
                     <h:inputText styleClass="form-control" id="citiy" binding="#{cityInput}" pt:data-component-name="composedInput-input"
                                  value="#{editEmployeeController.model.address.city}" required="true" pt:data-required="true"
-                                 pt:data-valid="#{component.valid}"
+                                 pt:data-valid="#{component.valid}" label="#{employeeMsg['employee.editor.address.city']}"
                                  pt:placeholder="City">
                         <f:validateLength minimum="3" maximum="50"/>
                         <f:ajax execute="@this zip-code" render="zip-city-inputContainer" onevent="validateInput" event="change" />

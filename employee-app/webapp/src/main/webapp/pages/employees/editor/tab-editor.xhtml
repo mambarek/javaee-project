@@ -25,6 +25,10 @@
                            aria-controls="contract-tab" aria-selected="false">Vertragsdaten</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="projects-tab" data-toggle="tab" href="#projects" role="tab" data-last-clicked="false"
+                           aria-controls="projects" aria-selected="false">#{employeeMsg['employee.editor.projects.data.panel.title']}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab" data-last-clicked="false"
                            aria-controls="comment" aria-selected="false">#{employeeMsg['employee.editor.comment.panel.title']}</a>
                     </li>
@@ -58,6 +62,17 @@
                             <ui:include src="panels/contract-data.xhtml"/>
                             <div style="display: none">
                                 <h:commandButton id="contract-data-submit-button" type="submit">
+                                    <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="tab-pane fade mt-4" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+                        <h:form id="projects-form">
+                            <!-- include address data -->
+                            <ui:include src="panels/projects.xhtml"/>
+                            <div style="display: none">
+                                <h:commandButton id="projects-submit-button" type="submit">
                                     <f:ajax execute="@form" render="@form" onevent="checkValidationAndSelectTab"/>
                                 </h:commandButton>
                             </div>
