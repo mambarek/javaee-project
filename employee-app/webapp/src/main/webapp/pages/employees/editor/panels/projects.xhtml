@@ -9,6 +9,67 @@
         xmlns:pe="http://xmlns.jcp.org/jsf/composite/prime-empl">
 
     <div jsf:id="projectList">
+    <div id="accordion" class="accordion">
+        <ui:repeat value="#{editEmployeeController.model.projects}" var="project" varStatus="index">
+            <div class="card panel">
+                <div class="card-header header" id="headingOne_#{index}">
+                    <div class="mb-0">
+                        <button class="btn btn-link title" data-toggle="collapse" data-target="#collapseOne_#{index}"
+                                aria-expanded="true" aria-controls="collapseOne_#{index}" onclick="return false;">
+                            <i class="fas fa-caret-right fa-lg"/> Project: #{project.name}
+                        </button>
+                    </div>
+                </div>
+                <div id="collapseOne_#{index}" class="show" aria-labelledby="headingOne_#{index}" >
+                    <div class="card-body">
+                        <pe:formRow value="#{project.name}"
+                                    label="#{employeeMsg['employee.editor.projects.name']}"
+                                    isRequired="true" >
+                            <f:validateLength minimum="3" maximum="100"/>
+                        </pe:formRow>
+                        <pe:formRow value="#{project.begin}" inputType="date"
+                                    label="#{employeeMsg['employee.editor.projects.begin']}"
+                                    isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                            <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                        </pe:formRow>
+                        <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
+                            <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields"/>
+                        </pe:formRow>
+                        <div jsf:id="lastProjectDate" jsf:rendered="#{!project.tilToday}">
+                            <pe:formRow value="#{project.end}" inputType="date"
+                                        label="#{employeeMsg['employee.editor.projects.end']}"
+                                        isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
+                                <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
+                            </pe:formRow>
+                        </div>
+                        <div class="col inputContainer p-0" jsf:id="description-block_#{index}" data-component-name='rowForm'>
+                            <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.projects.desc']}"/>
+                            <div class="input-group">
+                                <h:inputTextarea cols="30" rows="10" styleClass="form-control" id="description_#{index}"
+                                                 value="#{project.description}"  label="Description"
+                                                 style="margin-top: 0px; margin-bottom: 0px; height: 123px;">
+                                    <f:validateLength minimum="50" maximum="500"/>
+                                    <f:ajax execute="@this" render="description-block_#{index}" onevent="validateInput"/>
+                                </h:inputTextarea>
+                            </div>
+                            <!-- error message output -->
+                            <div class="invalid-feedback">
+                                <h:message id="message_#{index}" for="description_#{index}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row border-bottom border-dark">
+                            <div class="col m-3">
+                                <a class="btn btn-primary" jsf:action="#{editEmployeeController.removeProject(project)}"  jsf:id="removeProject">
+                                    <f:ajax render="@none" onevent="refreshProjectsView"/>
+                                    #{employeeMsg['employee.editor.projects.button.delete']}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:repeat>
+    </div>
         <ui:repeat value="#{editEmployeeController.model.projects}" var="project">
             <pe:formRow value="#{project.name}"
                         label="#{employeeMsg['employee.editor.projects.name']}"
@@ -21,7 +82,7 @@
                 <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
             </pe:formRow>
             <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
-                <f:ajax execute="@this" render="@form" event="click"/>
+                <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields"/>
             </pe:formRow>
             <div jsf:id="lastProjectDate" jsf:rendered="#{!project.tilToday}">
                 <pe:formRow value="#{project.end}" inputType="date"
@@ -30,9 +91,6 @@
                     <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                 </pe:formRow>
             </div>
-
-
-
             <div class="col inputContainer p-0" jsf:id="description-block" data-component-name='rowForm'>
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{employeeMsg['employee.editor.projects.desc']}"/>
                 <div class="input-group">
@@ -63,12 +121,12 @@
         <hr/>
         <div class="col mt-2">
             <a class="btn btn-primary" jsf:action="#{editEmployeeController.addProject}"  jsf:id="addAction">
-                <f:ajax render="projectList" />
+                <f:ajax render="projectList" onevent="hightlightMustFields"/>
                 #{employeeMsg['employee.editor.projects.button.add']}</a>
         </div>
     </div>
     <h:commandButton id="removeProjectConfirm" styleClass="d-none">
-        <f:ajax render="projectList" />
+        <f:ajax render="projectList" onevent="hightlightMustFields"/>
     </h:commandButton>
     <h:outputScript >
         // remove button cannot rebuild the view. a jsf issue
