@@ -258,6 +258,8 @@ public class EditEmployeeController implements BaseViewController {
 
     public String checkProjectDuration(Project project){
 
+        if(project == null) return null;
+
         final Date begin = project.getBegin();
         final Date end = project.getEnd();
 
