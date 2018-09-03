@@ -54,10 +54,12 @@ function encodeId(id) {
 }
 
 function format(source, params) {
+    if(!source) return "";
     //var regex = new RegExp("{-?[0-9]+}", "g");
     $.each(params,function (i, n) {
         source = source.replace(new RegExp("\\%" + i + "\\%", "g"), n);
-    })
+    });
+
     return source;
 }
 

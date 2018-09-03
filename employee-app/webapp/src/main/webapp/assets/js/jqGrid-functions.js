@@ -3,6 +3,7 @@ function editEmployee(e, cellvalue, options, rowObject){
     e.preventDefault();
     e.stopPropagation();
     var currentPage = $('#grid').getGridParam('page');
+    $('#'+encodeId('hiddenCreateForm:currentTabPage')).val(currentPage);
     $('#'+encodeId('hiddenCreateForm:edit_employee_id')).val(cellvalue);
     $('#'+encodeId('hiddenCreateForm:editEmployee')).click();
     //window.location.href = 'editor.xhtml?id='+cellvalue + "&page=" + currentPage;
@@ -14,7 +15,7 @@ function editButton(cellvalue, options, rowObject){
 }
 
 function yeditButton(cellvalue, options, rowObject){
-    var currentPage = $('#'+ options.grid).getGridParam('page')
+    var currentPage = $('#'+ options.grid).getGridParam('page');
     return '<a onclick="editEmployee(cellvalue)" href="editor.xhtml?id='+cellvalue+'"&page="+ currentPage +" ><i class="fas fa-pencil-alt" aria-hidden="true"/></a>';
 }
 
@@ -66,7 +67,7 @@ function createEmployeesGrid(selector, colModel, data, rowsPerPage, locale){
             }
         },
         {
-            divider : true,
+            divider : true
         },
         {
             id : 'was',
@@ -287,7 +288,7 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             }
         },
         {
-            divider : true,
+            divider : true
         },
         {
             id : 'was',
@@ -320,8 +321,12 @@ function createCachedEmployeesGrid(selector, url, colModel, rowsPerPage, current
             e.stopPropagation();
             //alert("I was clicked");
             var currentPage = $('#grid').getGridParam('page');
-            $('#create_employee').val(true)
-            window.location.href = 'editor.xhtml?page=' + currentPage;
+            $('#create_employee').val(true);
+            $('#'+encodeId('hiddenCreateForm:currentTabPage')).val(currentPage);
+            $('#'+encodeId('hiddenCreateForm:edit_employee_id')).val("");
+            $('#'+encodeId('hiddenCreateForm:create_employee')).val(true);
+            $('#'+encodeId('hiddenCreateForm:editEmployee')).click();
+            //window.location.href = 'editor.xhtml?page=' + currentPage;
         }
     )
 

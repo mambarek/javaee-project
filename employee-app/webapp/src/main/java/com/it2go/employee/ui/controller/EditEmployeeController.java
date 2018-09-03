@@ -52,7 +52,7 @@ public class EditEmployeeController implements BaseViewController {
 
     private Long employeeId;
     private Employee model;
-    private int currentTabPage;
+    private int currentTabPage = 1;
 
     // this must be moved to a country view select
     // contains continents and countries
@@ -97,6 +97,13 @@ public class EditEmployeeController implements BaseViewController {
         return editEmployee(this.employeeId);
     }
 
+    public String initPage(){
+
+        if(this.model == null) return "error";
+
+        return null;
+    }
+
     public String initEditEmployeeAction() throws EntityNotFoundException {
         //if (!FacesContext.getCurrentInstance().isPostback()) {
         final String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:edit_employee_id");
@@ -104,20 +111,30 @@ public class EditEmployeeController implements BaseViewController {
             employeeId = Long.parseLong(id);
 
         final String create = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:create_employee");
+        final String currentPage = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenCreateForm:currentTabPage");
 
-        if (employeeId != null) {
-                model = employeeRepository.findById((Long) employeeId);
-                if(model == null) return "error";
-
-                if (model.getAddress() == null)
-                    model.setAddress(new Address());
-            } else {
-                if (model == null && "true".equals(create))
-                    createNewEmployee();
+        if(StringUtils.exists(currentPage)) {
+            try {
+                this.currentTabPage = Integer.parseInt(currentPage);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
+        }
+
+        if (employeeId != null){
+            model = employeeRepository.findById((Long) employeeId);
+            if(model == null) return "error";
+
+            if (model.getAddress() == null)
+                model.setAddress(new Address());
+        } else {
+            if (model == null && "true".equals(create))
+                createNewEmployee();
+        }
         //}
 
-        return "/pages/employees/editor.xhtml?faces-redirect";
+        //return "/pages/employees/editor.xhtml?faces-redirect";
+        return "editEmployee";
     }
 
     public void editEmployeeAjax(Long id) throws EntityNotFoundException {

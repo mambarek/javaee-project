@@ -30,4 +30,25 @@
             <renderer-class>com.it2go.employee.ui.jsf.renderer.html.ExtendedMenuRenderer</renderer-class>
         </renderer>
     </render-kit>-->
+    <navigation-rule>
+        <from-view-id>/pages/employees/jqGrid-table.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editEmployee</from-outcome>
+            <to-view-id>/pages/employees/editor.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/pages/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

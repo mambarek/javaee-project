@@ -68,7 +68,12 @@ function resetSessionTimeOutTimer(){
 
     if(counter) clearInterval(counter);
 
-    var timeout = sessionTimeOutSec * 1000 - 30000; // 3 sec puffer???
+    var timeout = null;
+    if(sessionTimeOutSec)
+     timeout = sessionTimeOutSec * 1000 - 30000; // 3 sec puffer???
+
+    if(!timeout) return;
+
     sessionTimeoutCounterInterval = setTimeout('showSessionTimeOutCounter()', timeout - 10000); // - 10 sek for countdown
     // 10 sec countdown
     sessionTimeoutInterval = setTimeout('showSessionTimeOutInfo()', timeout);

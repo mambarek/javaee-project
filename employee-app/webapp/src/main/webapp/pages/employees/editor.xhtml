@@ -6,9 +6,12 @@
         xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
     <ui:define name="metadata">
         <f:metadata>
+<!--
             <f:viewParam name="id" value="#{editEmployeeController.employeeId}"/>
             <f:viewParam name="page" value="#{editEmployeeController.currentTabPage}"/>
             <f:viewAction action="#{editEmployeeController.initEditEmployeeAction()}"/>
+-->
+            <f:viewAction action="#{editEmployeeController.initPage()}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="mainContent">
