@@ -1,29 +1,21 @@
 package com.it2go.employee.ui.jsf;
 
+import com.it2go.framework.util.StringUtils;
 import lombok.Data;
 
-import javax.faces.component.*;
+import javax.faces.component.FacesComponent;
+import javax.faces.component.UIInput;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 @Data
-@FacesComponent(value = "Row")
-public class Row extends UIInputComponent implements NamingContainer {
+@FacesComponent("NewRow")
+public class NewRow extends UINamingContainer {
 
-    private boolean visible = true;
     private UIInput input;
-    private UIInput hiddenInput;
-
-    /**
-     * Returns the component family of {@link UINamingContainer}.
-     * (that's just required by composite component)
-     */
-    /*@Override
-    public String getFamily() {
-        return UINamingContainer.COMPONENT_FAMILY;
-    }*/
 
     public String getDisplayValue() {
 
@@ -42,18 +34,22 @@ public class Row extends UIInputComponent implements NamingContainer {
             placeHolder = "Bitte angeben";
             //final String s = getResourceBundleMap().get("employee.app.mustfiled.placeholder");
             final String s = getLocalizedMessage(FacesContext.getCurrentInstance().getViewRoot().getLocale(), "employee.app.mustfiled.placeholder");
-            if(s != null)
+            if(StringUtils.exists(s))
                 placeHolder = s;
         }
 
         return placeHolder;
     }
 
-    public String getLocalizedMessage(Locale locale, String key) {
+    private String getLocalizedMessage(Locale locale, String key) {
         ResourceBundle bundle = ResourceBundle.getBundle("com/it2go/EmployeeApp", locale);
 
         return bundle.getString(key);
     }
+
+    public String cssHideClass(){
+        if((boolean) this.getAttributes().get("readOnly")) return "d-none";
+
+        return "";
+    }
 }
-
-

@@ -7,7 +7,7 @@
               xmlns:jsf="http://xmlns.jcp.org/jsf"
               xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <cc:interface componentType="Row">
+    <cc:interface componentType="NewRow">
         <cc:attribute name="model" type="java.lang.Object"
                       shortDescription="The model value." />
         <cc:attribute name="value" required="true"
@@ -54,8 +54,8 @@
             <div class="form-group row">
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
-                    <c:if test="#{!cc.attrs.readOnly}">
-                        <div  class="inputContainer" style="height: 100%">
+                    <!--<c:if test="#{!cc.attrs.readOnly}">-->
+                        <div  class="inputContainer #{cc.cssHideClass()}" style="height: 100%">
 
                         <c:choose>
                             <!-- CHOOSE BLOCK BEGIN-->
@@ -66,7 +66,7 @@
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
                                                  pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
-                                                 pt:placeholder="" label="#{cc.attrs.label}">
+                                                 pt:placeholder="#{cc.placeHolder}" label="#{cc.attrs.label}">
 
                                         <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput"
                                                 event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
@@ -82,7 +82,7 @@
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  label="#{cc.attrs.label}"
-                                                 pt:placeholder="" >
+                                                 pt:placeholder="#{cc.placeHolder}" >
                                         <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
                                         <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput" event="change"/>
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
@@ -141,18 +141,56 @@
                                 </div>
                             </c:when>
 
+                            <!-- checkbox -->
+                            <c:when test="#{cc.attrs.inputType eq 'checkbox'}">
+                                <div class="custom-control custom-checkbox pl-0" style="height: 100%;" id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="custom-control-input"
+                                                              value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
+                                                              disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox >
+                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                </div>
+                                <h:outputScript>
+                                    $(encodeId("#" + "#{cc.clientId}:checkbox-wrapper")).closest(".inputContainer").css("padding-top","5px");
+                                </h:outputScript>
+                            </c:when>
+
+                            <!-- switch -->
+                            <c:when test="#{cc.attrs.inputType eq 'switch'}">
+                                <div class="custom-control" style="height: 100%;padding-left: 0px;" id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="d-none"
+                                                              value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
+                                                              disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox >
+                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                </div>
+                                <h:outputScript>
+                                    var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
+                                    new DG.OnOffSwitch({
+                                    el: encodedId,
+                                    textOn: "#{employeeMsg['employee.app.boolean.yes']}",
+                                    textOff: "#{employeeMsg['employee.app.boolean.no']}"
+                                    });
+                                </h:outputScript>
+                            </c:when>
       <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
-                        <div class="invalid-feedback">
-                            <h:message id="message" for="editableText"/>
-                        </div>
+                            <c:if test="#{!cc.attrs.readOnly}">
+                                <div class="invalid-feedback">
+                                    <h:message id="message" for="editableText"/>
+                                </div>
+                            </c:if>
+
                     </div>
-                    </c:if>
-                    <!-- if readonly so render the display value. the input is not rendered s. class AbstractFormRow -->
+
+                    <!--</c:if>-->
                     <c:if test="#{cc.attrs.readOnly}">
-                        <span>#{cc.displayValue}</span>
+                        <div  class="inputContainer" style="height: 100%">
+                            <span>#{cc.displayValue}</span>
+                        </div>
                     </c:if>
+
                 </div>
             </div>
         </div>

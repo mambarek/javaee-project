@@ -24,13 +24,13 @@
                 </div>
                 <div id="collapseOne_#{index}" class="show" aria-labelledby="headingOne_#{index}" >
                     <div class="card-body">
-                        <empl:row value="#{project.name}"
+                        <empl:row value="#{project.name}" readOnly="true"
                                     label="#{employeeMsg['employee.editor.projects.name']}"
                                     isRequired="true" >
                             <f:validateLength minimum="3" maximum="100" for="input"/>
                         </empl:row>
                         <div jsf:id="DateRangeValidator_BEGIN">
-                            <empl:row value="#{project.begin}" inputType="date" model="#{project}"
+                            <empl:row value="#{project.begin}" inputType="date" model="#{project}" readOnly="true"
                                         label="#{employeeMsg['employee.editor.projects.begin']}" ajaxRender=":DateRangeValidator_END"
                                         isRequired="true" placeholder="#{employeeMsg['employee.app.date.pattern']}">
                                 <f:validator validatorId="DateRangeValidator" for="input"/>
@@ -39,9 +39,9 @@
                             </empl:row>
                         </div>
 
-                        <pe:formRow value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}">
+                        <empl:row value="#{project.tilToday}" inputType="checkbox" label="#{employeeMsg['employee.editor.projects.tiltoday']}" readOnly="true">
                             <f:ajax execute="@this" render="@form" event="click" onevent="hightlightMustFields" listener="#{project.setEnd(null)}"/>
-                        </pe:formRow>
+                        </empl:row>
 
                         <div jsf:id="DateRangeValidator_END" jsf:rendered="#{!project.tilToday}">
                             <empl:row value="#{project.end}" inputType="date" model="#{project}"
