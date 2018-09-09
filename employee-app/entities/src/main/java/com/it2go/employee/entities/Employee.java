@@ -28,11 +28,15 @@ public class Employee extends Person {
 
     @Column(name = "WEEKEND_WORK")
     private boolean weekendWork;
+
     @Column(name = "TRAVELING")
     private boolean traveling;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Project> projects = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<File> documents = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -52,4 +56,15 @@ public class Employee extends Person {
         this.projects.remove(project);
     }
 
+    public void addDocument(File document){
+        Objects.requireNonNull(document);
+        document.setOwner(this);
+        documents.add(document);
+    }
+
+    public void remoDocument(File document){
+        Objects.requireNonNull(document);
+        document.setOwner(null);
+        documents.remove(document);
+    }
 }

@@ -17,6 +17,7 @@
         <class>com.it2go.employee.entities.Person</class>
         <class>com.it2go.employee.entities.Address</class>
         <class>com.it2go.employee.entities.Project</class>
+        <class>com.it2go.employee.entities.File</class>
         <class>com.it2go.employee.entities.Truck</class>
         <class>com.it2go.employee.entities.VehicleData</class>
 
@@ -24,6 +25,10 @@
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!--<property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value="sa"/>-->
+            <!--<property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value="sa"/>-->
             <!--<property name="hibernate.archive.autodetection" value="class"/>-->
             <property
                     name="hibernate.enable_lazy_load_no_trans"

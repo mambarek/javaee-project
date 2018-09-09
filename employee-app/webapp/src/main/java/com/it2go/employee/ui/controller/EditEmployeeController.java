@@ -21,10 +21,14 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.AjaxBehaviorListener;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -44,6 +48,8 @@ public class EditEmployeeController implements BaseViewController {
 
     @Inject
     private Conversation conversation;
+
+    private Part file;
 
     @Inject
     private IEmployeeRepository employeeRepository;
@@ -322,12 +328,11 @@ public class EditEmployeeController implements BaseViewController {
         return null;
     }
 
-    public String testActionListener(ValueChangeEvent e){
+    public void testActionListener(){
 
         String s = "xxx";
 
 
-        return null;
     }
 
     public String ajaxTestAction(AjaxBehaviorEvent event) {
@@ -379,4 +384,43 @@ public class EditEmployeeController implements BaseViewController {
     }
 
 
+    public String uploadFile() {
+        try {
+            String contentType = file.getContentType();
+            String filename = file.getSubmittedFileName();
+            InputStream inputStream = file.getInputStream();
+            byte[] content = new byte[inputStream.available()];
+            inputStream.read(content);
+
+            File newFile = new File();
+            newFile.setName(filename);
+            newFile.setContentType(contentType);
+            newFile.setContent(content);
+
+            upload(newFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String getFileNameFromPart(Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : partHeader.split(";")) {
+            if (content.trim().startsWith("filename")) {
+                String fileName = content.substring(content.indexOf('=') + 1)
+                        .trim().replace("\"", "");
+                return fileName;
+            }
+        }
+        return null;
+    }
+
+    public void upload(File file) {
+        if(file != null){
+            this.model.addDocument(file);
+        }
+    }
 }
