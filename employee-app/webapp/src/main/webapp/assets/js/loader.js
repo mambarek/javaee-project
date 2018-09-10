@@ -370,11 +370,11 @@ var overlay =  overlay || (function ($) {
             promise.then(function(){
                 if(isIE()) {
                     // IE: PROBLEM must add the click event manually
-                    if (settings && settings.leftBtnFuncName)
+/*                    if (settings && settings.leftBtnFuncName)
                         document.getElementById("modal-btn-left").addEventListener("click", eval(settings.leftBtnFuncName));
 
                     if (settings && settings.rightBtnFuncName)
-                        document.getElementById("modal-btn-right").addEventListener("click", eval(settings.rightBtnFuncName));
+                        document.getElementById("modal-btn-right").addEventListener("click", eval(settings.rightBtnFuncName));*/
                 }
             })
 

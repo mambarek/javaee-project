@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "EmployeeRepositoryService", targetNamespace = "http://services.employee.it2go.com/", wsdlLocation = "file:/C:/Dev/learning/javaee-project/employee-app/webapp/src/main/resources/wsdl/employees-service.wsdl")
+@WebServiceClient(name = "EmployeeRepositoryService", targetNamespace = "http://services.employee.it2go.com/", wsdlLocation = "file:/E:/development/projects/javaee-project/employee-app/webapp/src/main/resources/wsdl/employees-service.wsdl")
 public class EmployeeRepositoryService_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class EmployeeRepositoryService_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/C:/Dev/learning/javaee-project/employee-app/webapp/src/main/resources/wsdl/employees-service.wsdl");
+            url = new URL("file:/E:/development/projects/javaee-project/employee-app/webapp/src/main/resources/wsdl/employees-service.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

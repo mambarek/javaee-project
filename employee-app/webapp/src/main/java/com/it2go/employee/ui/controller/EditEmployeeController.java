@@ -162,7 +162,7 @@ public class EditEmployeeController implements BaseViewController {
         }
     }
 
-    public String saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
+    public void saveEmployee() throws EntityConcurrentModificationException, EntityRemovedException, EntityNotValidException {
 
         System.out.println("## EditEmployeeController::saveEmployee model = " + model);
 
@@ -173,11 +173,6 @@ public class EditEmployeeController implements BaseViewController {
             loggedInUser = userSession.getTestCreationUser();
 
         employeeRepository.persist(model, loggedInUser);
-
-        // reset the view
-        this.resetView();
-
-        return null;//redirectToList();
     }
 
     public void deleteEmployee() throws EntityNotPersistedException {
@@ -265,19 +260,17 @@ public class EditEmployeeController implements BaseViewController {
 
     /*** Ajax events handling ***/
 
-    public String ajaxSaveAction(AjaxBehaviorEvent event) {
+    public void ajaxSaveAction(AjaxBehaviorEvent event) {
 
         final UIComponent component = event.getComponent();
         final String componentId = component.getId();
 
         try {
-            return this.saveEmployee();
+            this.saveEmployee();
         } catch (BaseException e) {
             this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
-
-        return null;
     }
 
     public void ajaxDeleteAction(AjaxBehaviorEvent event) {

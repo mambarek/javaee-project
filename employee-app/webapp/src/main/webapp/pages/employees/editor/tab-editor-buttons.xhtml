@@ -8,9 +8,9 @@
     <div class="form-group row justify-content-end" style="position:absolute;margin-top:30px;right:0;">
         <div class="btn-group">
             <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" immediate="true" id="cancel"
-                           action="#{editEmployeeController.cancel}" >
+                           action="backToList" >
                 <i class="fas fa-undo" aria-hidden="true"/>&#xA0; #{employeeMsg['employee.editor.button.cancel']}
-                <f:ajax />
+                <f:actionListener binding="#{editEmployeeController.cancel()}"/>
             </h:commandLink>
 
             <h:commandLink styleClass="btn btn-primary mr-2 btn-sm-block" rendered="#{!editEmployeeController.model.isNew()}"
