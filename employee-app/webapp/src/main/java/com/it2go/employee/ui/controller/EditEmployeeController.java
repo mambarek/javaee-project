@@ -3,28 +3,20 @@ package com.it2go.employee.ui.controller;
 import com.it2go.employee.entities.*;
 import com.it2go.employee.persistence.IEmployeeRepository;
 import com.it2go.employee.persistence.UserSession;
-import com.it2go.framework.dao.BaseException;
-import com.it2go.framework.dao.EntityConcurrentModificationException;
-import com.it2go.framework.dao.EntityNotFoundException;
-import com.it2go.framework.dao.EntityNotPersistedException;
-import com.it2go.framework.dao.EntityRemovedException;
+import com.it2go.framework.dao.*;
 import com.it2go.framework.util.StringUtils;
 import com.it2go.masterdata.Continent;
 import lombok.Data;
+import org.apache.commons.configuration2.io.FileLocatorUtils;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversation;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import javax.activation.MimeType;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.AjaxBehaviorListener;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
@@ -34,13 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Named
 @ConversationScoped
@@ -379,7 +365,12 @@ public class EditEmployeeController implements BaseViewController {
 
         try {
             String contentType = file.getContentType();
-            String filename = file.getSubmittedFileName();
+            String filename = "file_name_NOT_FOUND";
+            if(StringUtils.exists(file.getSubmittedFileName())){
+                String[] split = org.apache.commons.lang3.StringUtils.split(file.getSubmittedFileName(), '\\');
+                filename = split[split.length - 1];
+            }
+
             InputStream inputStream = file.getInputStream();
             byte[] content = new byte[inputStream.available()];
             inputStream.read(content);

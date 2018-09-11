@@ -39,21 +39,21 @@
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
                     <div  class="inputContainer" style="height: 100%">
-                    <div class="input-group">
+                        <div class="input-group">
 
-                        <h:inputFile id="file" styleClass="form-control" value="#{cc.attrs.value}">
+                            <h:inputFile id="file" styleClass="form-control" value="#{cc.attrs.value}" style="height: 100%">
 
-                        </h:inputFile>
-                        <h:commandButton id="upload-button" value="Upload" action="#{cc.attrs.action}">
-                            <f:ajax execute="@this file" render="#{cc.attrs.ajaxRender}"/>
-                        </h:commandButton>
+                            </h:inputFile>
+                            <h:commandButton id="upload-button" value="Upload" action="#{cc.attrs.action}">
+                                <f:ajax execute="@this file" render="#{cc.attrs.ajaxRender}"/>
+                            </h:commandButton>
 
+                        </div>
+                        <!-- error message output -->
+                        <div class="invalid-feedback">
+                            <h:message id="message" for="file"/>
+                        </div>
                     </div>
-                    <!-- error message output -->
-                    <div class="invalid-feedback">
-                        <h:message id="message" for="file"/>
-                    </div>
-                </div>
                 </div>
             </div>
 
