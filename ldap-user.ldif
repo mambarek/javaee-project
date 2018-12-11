@@ -1,0 +1,53 @@
+version: 1
+
+dn: ou=users,ou=employees-web-app,o=employees-app,dc=it2go,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: cn=admins,ou=roles,ou=employees-web-app,o=employees-app,dc=it2go,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: admins
+member: uid=admin,ou=users,ou=employees-web-app,o=employees-app,dc=it2go,dc=
+member: cn=Ali Mbarek,ou=users,ou=employees-web-app,o=employees-app,dc=it2go
+ ,dc=com
+
+dn: uid=admin,ou=users,ou=employees-web-app,o=employees-app,dc=it2go,dc=com
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+uid: admin
+userPassword:: e1NIQX01ZW42RzZNZXpScm9UM1hLcWtkUE9tWS9CZlE9
+
+dn: ou=employees-web-app,o=employees-app,dc=it2go,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: employees-web-app
+
+dn: o=employees-app,dc=it2go,dc=com
+objectClass: organization
+objectClass: top
+o: employees-app
+
+dn: ou=roles,ou=employees-web-app,o=employees-app,dc=it2go,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: roles
+
+dn: dc=it2go,dc=com
+objectclass: top
+objectclass: domain
+dc: it2go
+
+dn: cn=Ali Mbarek,ou=users,ou=employees-web-app,o=employees-app,dc=it2go,dc=
+ com
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: Ali Mbarek
+sn: Mbarek
+uid: mmbarek
+userPassword:: e1NIQX01ZW42RzZNZXpScm9UM1hLcWtkUE9tWS9CZlE9
+
