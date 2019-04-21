@@ -16,6 +16,11 @@ import javax.inject.Inject;
 import javax.ws.rs.Path;
 import java.util.List;
 
+/*
+    @Path annotation must be on the implementation
+    If the annotation is on the Interface Weld can't instantiate
+    the injected beans
+ */
 @Path("/EmployeeService")
 public class EmployeeResourceImpl implements EmployeeResource {
 

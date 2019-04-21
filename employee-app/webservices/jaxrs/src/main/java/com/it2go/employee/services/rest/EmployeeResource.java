@@ -17,6 +17,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+/*
+    @Path annotation must be on the implementation
+    If the annotation is on the Interface Weld can't instantiate
+    the injected beans. Path on the interface confuse the rst-Container
+    witch implementation would be used for a given interface
+ */
 public interface EmployeeResource {
 
     @GET
