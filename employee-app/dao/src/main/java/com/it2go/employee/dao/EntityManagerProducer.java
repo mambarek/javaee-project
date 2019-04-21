@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-public class EntityManagerProducecr {
+public class EntityManagerProducer {
 
     @PersistenceContext(unitName = "EmployeeDS")
     private EntityManager defaultEntityManager;
