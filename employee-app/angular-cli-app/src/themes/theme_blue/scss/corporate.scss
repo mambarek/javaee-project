@@ -1,0 +1,701 @@
+/*---------------------- Variable def ------------------------------*/
+
+/*Corporation colors*/
+$corpColorGreen: #45A61C;
+$corpColorYellow: #ffc107;
+$corpColorBlack: #292b2c;
+
+$heigth-10: 0.625rem;
+$heigth-12: 0.75rem;
+$heigth-14: 0.875rem;
+$heigth-16: 1rem;
+
+$lineHeight: 1rem;
+$fontSize: 0.875rem;
+$blockHeaderHeight:$heigth-10;
+
+$placeHolderFontSize: 0.8rem;
+
+$bold:500;
+/* green */
+$primaryFontColor: #ffffff;
+$primaryBgColor: #0b127f;
+$primaryBorderColor: #0b127f;
+
+$primaryHoverBgColor: #2196F3;
+$primaryHoverFontColor: #0b127f;
+/* rosa */
+/*$primaryFontColor: #000000;
+$primaryBgColor: #E235C2;
+$primaryBorderColor: #E30AD2;
+
+$primaryHoverBgColor: #e7ddd8;
+$primaryHoverFontColor: #000000;*/
+
+$btn-border-radius: 0;
+
+/*$primaryHoverBgColor: #45A61C;
+$primaryHoverFontColor: #ffffff;*/
+/* headers*/
+$headerBgColor: $corpColorBlack;
+$headerFontColor: #ffffff;
+$footerBgColor: #5a5a5a;
+$footerFontColor: #ffffff;
+
+$blockHeaderBgColor: $primaryBgColor;
+$blockHeaderFontColor: $primaryFontColor;
+
+$blockHeaderLeftBgColor: $corpColorYellow;
+$blockHeaderLeftFontColor: #ffffff;
+
+$blockHeaderReightBgColor: #2196F3;
+$blockHeaderReightFontColor: #ffffff;
+
+
+$anchorColor: $corpColorBlack;
+$anchorHoverColor:$primaryHoverBgColor;
+
+/*Grid gutter*/
+$grid-spacing: 5px;
+
+/* 1em is equal to the current font size. The default text size in browsers is 16px. So, the default size of 1em is 16px.
+
+The size can be calculated from pixels to em using this formula: pixels/16=em */
+html{
+    font-size:100%;
+}
+
+body {
+  font-size: $fontSize;
+  height: 100%;
+  /*line-height: $lineHeight;*/
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.875rem;
+}
+
+a, a:visited, a:focus{
+  color: $anchorColor;
+  text-decoration: none;
+}
+a:hover, a:active{
+  color: $anchorHoverColor;
+  text-decoration: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  //color: red;
+  //opacity: 1; /* Firefox */
+  font-size: $placeHolderFontSize;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  //color: red;
+  font-size: $placeHolderFontSize;
+}
+
+:-ms-input-placeholder { /* Microsoft Edge */
+  //color: red;
+  font-size: $placeHolderFontSize;
+}
+/*-----------------------------------------------------*/
+
+.corp-block-header{
+    background-color: $blockHeaderBgColor;
+    color: $blockHeaderFontColor;
+    font-weight: $bold;
+    line-height: $blockHeaderHeight;
+}
+
+.corp-block-header-left{
+  background-color: $blockHeaderLeftBgColor;
+  color: $blockHeaderLeftFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.corp-block-header-reight{
+  background-color: $blockHeaderReightBgColor;
+  color: $blockHeaderReightFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.corp-block-form-header{
+  background-color: $primaryBgColor;
+  color: $blockHeaderFontColor;
+  font-weight: $bold;
+  line-height: $blockHeaderHeight;
+}
+
+.popup-header{
+  background-color: $primaryBgColor;
+  color: $blockHeaderFontColor;
+  padding: 5px;
+/*  font-weight: $bold;
+  line-height: $blockHeaderHeight;*/
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-size: $fontSize;
+  font-weight: $bold;
+}
+
+.card{
+    border: none;
+}
+
+.card-block {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  /* padding: 1.25rem; */
+  padding-top: 15px;
+}
+
+.card-header:first-child {
+  border-radius: $btn-border-radius;
+}
+
+.corp-footer{
+  background-color: $footerBgColor;
+  color: $footerFontColor;
+}
+/*---------------------- table ------------------------------------*/
+.table-header{
+  background-color: $primaryBgColor;
+  color: $primaryFontColor;
+}
+
+.table-header .datatable-filter-line{
+  background-color: #ffffff;
+  color: $primaryFontColor;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  font-weight: $bold;
+  border-bottom: 2px solid #eceeef;
+}
+
+/* ----------------- theme bootstrap ------------------------------*/
+.no-gutters {
+  margin-right: $grid-spacing;
+  margin-left: $grid-spacing;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: $grid-spacing;
+    padding-left: $grid-spacing;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 2.2rem;
+  padding: 0.5rem 0.75rem;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  border-radius: $btn-border-radius;
+}
+
+.table-header .datatable-filter-line .form-control {
+  display: block;
+  width: 100%;
+  height: 1.8rem;
+  padding: 0.5rem 0.75rem;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  border-radius: $btn-border-radius;
+}
+
+.datatable-filter-line select.form-control:not([size]):not([multiple]) {
+  height: 1.8rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/*.form-control:hover {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}*/
+
+.form-control:hover {
+  border-color: #e9bc52;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 208, 128, 0.98);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 208, 128, 0.98);
+}
+
+/*------     primefaces jqueryui layout anpassen BEGIN -------------*/
+.has-danger .ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.form-control,
+.has-success .ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.form-control{
+  background-repeat: no-repeat;
+  background-position-x: 90%;
+  background-position-y: 50%;
+  background-size: 20px 20px;
+  height: 2.2rem;
+}
+
+.ui-selectonemenu-label.ui-inputfield.ui-corner-all{
+  background-color: transparent;
+}
+
+.ui-inputfield{
+  padding: 0;
+}
+
+.ui-state-default, .ui-state-hover{
+  border: 1px solid #c5c5c5;
+  background: #ffffff;
+  font-weight: normal;
+  color: #454545;
+}
+
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
+  border: 1px solid #f1a899;
+  background: #ffffff;
+  color: #5f3f3f;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger, .ui-selectonemenu-trigger:focus {
+  cursor: pointer;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  border: 0;
+  padding-left: 15px;
+  padding-top: 5px;
+}
+
+.ui-selectmenu-button.ui-selectmenu-button-closed.ui-corner-all.ui-button.ui-widget.form-control{
+  background-position-x: 90%;
+}
+/*------     primefaces jqueryui layout anpassen END -------------*/
+
+@media (max-width: 768px) {
+  .container{
+    width: 100%;
+  }
+
+  .navbar{
+    line-height: 2rem;
+  }
+}
+
+.breadcrumb{
+  background-color: #ffffff;
+  margin-left: -15px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  display: inline-block;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #636c72;
+  content: ">";
+}
+
+.breadcrumb-item.active {
+  color: $primaryBorderColor;
+}
+
+.btn {
+  font-size: $heigth-12;
+  line-height: $heigth-14;
+  border-radius: $btn-border-radius;
+}
+
+/*-------------- primary btn----------------------------*/
+.btn-primary {
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:hover {
+  color: $primaryHoverFontColor;
+  background-color: $primaryHoverBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:focus{
+  border: double;
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: $primaryBorderColor;
+  border-color: $primaryBorderColor;
+}
+
+.btn-primary:active, .btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  color: $primaryFontColor;
+  background-color: $primaryBgColor;
+  background-image: none;
+  border-color: $primaryBorderColor;
+}
+/*-------------- default btn----------------------------*/
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-default:focus,
+.btn-default.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.btn-default:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+/*--------------- btn secondary --------------------------*/
+.btn-secondary:hover {
+  color: #292b2c;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
+  box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
+}
+
+.btn-secondary.disabled, .btn-secondary:disabled {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn-secondary:active, .btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #292b2c;
+  background-color: #e6e6e6;
+  background-image: none;
+  border-color: #adadad;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #5bc0de;
+}
+/*-------------- btn success -----------------------------*/
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.btn-success:focus,
+.btn-success.focus {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #255625;
+}
+.btn-success:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.btn-success:active,
+.btn-success.active,
+.open > .dropdown-toggle.btn-success {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+/*------------- btn info ------------------*/
+.btn-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.btn-info:focus,
+.btn-info.focus {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #1b6d85;
+}
+.btn-info:hover {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+/********************************************/
+.btn-link {
+  font-weight: $bold;
+  color: $corpColorBlack;
+  background-color: transparent;
+}
+.btn-link:hover, .btn-link:focus {
+  text-decoration: none;
+}
+/*----------------------------------------*/
+a.btn{
+  border: 1px solid $primaryBorderColor;
+  color: $primaryFontColor;
+}
+/*--------------------- list items*/
+.list-group-item.active {
+  background-color: $blockHeaderBgColor;
+  font-weight: bold;
+    /*border-color: $primaryBorderColor;*/
+}
+
+.list-group-item{
+  color: $corpColorBlack;
+  font-weight: 500;
+}
+
+.list-group-item:active{
+  color: $corpColorGreen;
+  font-weight: 500;
+}
+/* ------------------------- Bootstrap-Datepicker --------------------------- */
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom {
+    padding: 5px;
+}
+.datepicker.dropdown-menu {
+    border-radius: 0;
+}
+.datepicker table tr td, .datepicker table tr th {
+    border-radius: 0;
+}
+
+.datepicker table tr td:hover {
+    background-color: #92d80259;
+}
+
+.datepicker table tr td.active {
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-color: $primaryBorderColor;
+}
+
+.datepicker table tr td.active:hover {
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor !important;
+    border-color: $primaryBorderColor !important;
+}
+
+.datepicker-switch{
+    background-color: $primaryBgColor;
+    color: $primaryFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+.datepicker .datepicker-switch:hover,
+.datepicker .prev:hover,
+.datepicker .next:hover,
+.datepicker tfoot tr th:hover {
+    background-color: $primaryHoverBgColor !important;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+.datepicker thead tr:first-child th.datepicker-switch:hover,
+.datepicker tfoot tr th.datepicker-switch:hover {
+    background: $primaryHoverBgColor;
+    color: $primaryHoverFontColor;
+    border: 1px solid $primaryBorderColor !important;
+}
+
+.input-group-addon {
+    color: $primaryFontColor;
+    background-color: $primaryBgColor;
+    border-radius: $btn-border-radius;
+}
+
+.input-group-addon:hover {
+    color: $primaryHoverFontColor;
+    background-color: $primaryHoverBgColor;
+    border-radius: $btn-border-radius;
+}
+
+/*----------------------------------- bootstrap dropdown menu --------------------------------------*/
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #292b2c;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: normal;
+  font-size: $heigth-12;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  color: #1d1e1f;
+  text-decoration: none;
+  background-color:  $primaryHoverBgColor;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: $primaryHoverBgColor;
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+  color: #636c72;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+/***** radio ---------------------***/
+
+.form-check-inline .form-check-label {
+  vertical-align: unset;
+}
+
+.form-check-label {
+  padding-left: 0;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.has-danger .form-check-label, .has-success .form-check-label{
+  color: inherit;
+}
+
+.form-check-inline+.form-check-inline {
+   margin-left: 1.25rem;;
+}
+
+.input-group select{
+  width: 100%;
+  height: 2.075rem; /*the same height as an input field*/
+  font-size: 0.8rem;
+}
+
+/*---------------------------*/
+h2 {
+  margin: 30px 0 0 0;
+}
+fieldset {
+  border: 0;
+}
+label {
+  display: block;
+}
+
+.ui-selectmenu-button.ui-button {
+  width: 100%;
+  border-radius: 0px;
+  height: 2.125rem;
+  background-color: white;
+  padding-top: 8px;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: 98% 50%;
+  display: block;
+}
+
+/*.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  border: 1px solid #0b127f;
+  background: #0b127f;
+  color: #ffffff;
+}*/
+.ui-state-checked {
+  border: 1px solid #ffffff;
+  background: #ffffff;
+}
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+  color: #777620;
+}
+/* select with CSS avatar icons */
+option.avatar {
+  background-repeat: no-repeat !important;
+  padding-left: 20px;
+}
+.avatar .ui-icon {
+  background-position: left top;
+}
+
+.gender-male, .gender-female{
+  position:relative;
+}
+
+.gender-male::before{
+  font-family: FontAwesome;
+  top:0;
+  left:-5px;
+  padding-right:10px;
+  content: "\f183";
+}
+
+.gender-female::before{
+  font-family: FontAwesome;
+  top:0;
+  left:-5px;
+  padding-right:10px;
+  content: "\f182";
+}
+
+.accordion .panel .header .title{
+  font-size: $fontSize;
+  font-weight: $bold;
+}
+
+/*-- jquery ui*/
+.ui-widget {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 0.825rem;
+}

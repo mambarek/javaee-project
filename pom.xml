@@ -25,6 +25,7 @@
         <module>framework</module>
         <module>employee-app</module>
         <module>myapp</module>
+        <module>spring-sec-web</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,89 @@
+  <!-- Logo and top menu not for mobile -->
+  <!-- Top menu BEGIN -->
+  <nav class="navbar navbar-expand-lg navbar-light d-lg-block">
+      <div class="container">
+          <div class="col-2">
+          <a class="navbar-brand" href="#">
+              <img src="themes/theme_blue/corp_logo.jpg" class="img-fluid" style="width: 150px"/>
+          </a>
+          </div>
+        <div class="col-1"></div>
+          <div class="col-5">
+              <form class="form-inline my-2 my-lg-0">
+                  <div class="input-group mb-3 mt-3 w-100">
+                      <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1"/>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button">Search</button>
+                      </div>
+                  </div>
+<!--                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+              </form>
+          </div>
+          <form>
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item dropdown active">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sprache(de)
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">English</a>
+                    <a class="dropdown-item" href="#">Deutsch</a>
+                  </div>
+              </li>
+          </ul>
+          </form>
+      </div>
+  </nav>
+  <!-- Top menu end END -->
+
+  <!-- main menu for desktop and mobile with toggle function -->
+  <!-- main menu begin -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container">
+          <!-- brand -->
+          <a class="navbar-brand" href="#">E-Management</a>
+          <!-- Toggler -->
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#m2"
+                  aria-controls="m2" aria-expanded="false" aria-label="Toggle navigation" >
+              <span class="sr-only">Toggle Navigation</span>
+            <span class="bar-top"></span>
+              <span class="bar-middle"></span>
+              <span class="bar-bottom"></span>
+          </button>
+
+          <!-- collapsable for mobile menu -->
+          <div class="collapse navbar-collapse left-align" id="m2">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#"><i class="fas fa-home fa-fw" aria-hidden="true"></i>&#xa0;Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  href="#"><i class="fas fa-cog fa-fw" aria-hidden="true"></i>&#xa0;Work</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  href="#"><i class="fas fa-book fa-fw" aria-hidden="true"></i>&#xa0;Course</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  href="#"><i class="fas fa-envelope fa-fw" aria-hidden="true"></i>&#xa0;Contact</a>
+                  </li>
+              </ul>
+              <form>
+              <ul class="navbar-nav ml-auto">
+                  <li class="divider"></li>
+
+                      <li><a class="nav-link"  href="#"><span class="fas fa-user"></span> Sign In</a></li>
+                      <li><a class="nav-link"  href="#"><span class="fas fa-sign-in-alt"></span> Login</a></li>
+
+                <!--
+                  <ui:fragment rendered="#{loginController.userLoggedIn}">
+                      <li class="nav-link">Sie sind angemeldet als: #{loginController.loggedInUser.userName}</li>
+                      <li><a class="nav-link"  href="#" jsf:id="logout" jsf:action="#{loginController.logout}"><span class="fas fa-sign-in-alt"/> Logout</a></li>
+                  </ui:fragment>
+                 -->
+              </ul>
+              </form>
+          </div>
+      </div>
+  </nav>
+  <!-- main menu end -->

@@ -1,3 +1,7 @@
+### Ldap
+mmbarek / secret\
+admin / secret
+
 ###1) jpa
 
 View \
@@ -53,7 +57,11 @@ folgendes eintragen
       
 ###) Tab validierung
 Es werden ein Tab nach dem anderen validiert. Wenn der erste keine Fehler aufweist dann wird per javascript
-der submit für den nexten Tab gedrückt unsw.       
+der submit für den nexten Tab gedrückt unsw.    
+
+###) IMPORTANT [Rest / Weld / CDI]
+As for using Interface for REST Service it is a good idea IMHO. But one thing do not annotate Interface itself leave it for implementation. This way you may have more flexibility. The biggest Problem may occurs is that Weld can't instantiate 
+CDI beans required in the Rest-class   
       
       
                       

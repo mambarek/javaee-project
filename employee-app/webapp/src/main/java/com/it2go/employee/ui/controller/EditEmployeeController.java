@@ -254,7 +254,7 @@ public class EditEmployeeController implements BaseViewController {
         try {
             this.saveEmployee();
         } catch (BaseException e) {
-            this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
+            this.handleBaseException(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
     }
@@ -267,13 +267,13 @@ public class EditEmployeeController implements BaseViewController {
         try {
             this.deleteEmployee();
         } catch (BaseException e) {
-            this.handleBaseEcption(e, event.getComponent().getParent().getClientId());
+            this.handleBaseException(e, event.getComponent().getParent().getClientId());
             e.printStackTrace();
         }
 
     }
 
-    private void handleBaseEcption(BaseException e, String clientId) {
+    private void handleBaseException(BaseException e, String clientId) {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         String msg = e.getLocalizedMessage(locale);
         FacesContext.getCurrentInstance().addMessage(clientId,

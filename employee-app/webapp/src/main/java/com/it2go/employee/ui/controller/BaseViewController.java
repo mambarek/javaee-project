@@ -52,10 +52,7 @@ public interface BaseViewController extends Serializable{
                 {
                     UIComponent component = findComponentFor(context, root, id, parentId);
 
-                    if (component != null)
-                    {
-                        return component;
-                    }
+                    return component;
                 }
             }
         }

@@ -1,0 +1,35 @@
+
+
+
+
+@import "../assets/extern/jquery-ui-1.12.1/jquery-ui.css";
+@import "../assets/extern/bootstrap-4.0.0-dist/css/bootstrap.min.css";
+@import "../assets/extern/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css";
+@import "../assets/extern/on-off-toggle-switch-Plugin/css/on-off-switch.css";
+
+@import url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css);
+
+@import "../assets/css/global.css";
+@import "../assets/css/corporate.css";
+@import "../assets/css/loader.css";
+@import "../assets/css/menu.css";
+
+
+
+/* gespiegelt*/
+
+
+@import "../assets/css/menu.css";
+@import "../assets/css/loader.css";
+@import "../assets/css/corporate.css";
+@import "../assets/css/global.css";
+
+@import url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css);
+
+@import "../assets/extern/on-off-toggle-switch-Plugin/css/on-off-switch.css";
+@import "../assets/extern/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css";
+@import "../assets/extern/bootstrap-4.0.0-dist/css/bootstrap.min.css";
+@import "../assets/extern/jquery-ui-1.12.1/jquery-ui.css";
+
+
+
