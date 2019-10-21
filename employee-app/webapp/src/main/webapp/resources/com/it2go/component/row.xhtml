@@ -1,19 +1,19 @@
 <ui:component
-              xmlns:h="http://xmlns.jcp.org/jsf/html"
-              xmlns:f="http://java.sun.com/jsf/core"
-              xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-              xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-              xmlns:jsf="http://xmlns.jcp.org/jsf"
-              xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
     <cc:interface componentType="Row">
         <cc:attribute name="model" type="java.lang.Object"
-                      shortDescription="The model value." />
+                      shortDescription="The model value."/>
         <cc:attribute name="value" required="true"
-                      shortDescription="The selected value." />
+                      shortDescription="The selected value."/>
         <cc:attribute name="label"
-                      shortDescription="the label." />
+                      shortDescription="the label."/>
         <cc:attribute name="inputType" default="text"
                       shortDescription="the type of the input (text date)"/>
         <cc:attribute name="isRequired" default="false" type="boolean"
@@ -55,20 +55,21 @@
                 <h:outputLabel styleClass="col-sm-3 col-form-label" value="#{cc.attrs.label}"/>
                 <div class="col-sm-9">
                     <!--<c:if test="#{!cc.attrs.readOnly}">-->
-                    <div  class="inputContainer #{cc.cssHideClass()}" style="height: 100%">
+                    <div class="inputContainer #{cc.cssHideClass()}" style="height: 100%">
 
                         <c:choose>
                             <!-- CHOOSE BLOCK BEGIN-->
                             <!-- text -->
                             <c:when test="#{cc.attrs.inputType eq 'text'}">
                                 <div class="input-group">
-                                    <h:inputText styleClass="form-control"  id="editableText" binding="#{cc.input}"
+                                    <h:inputText styleClass="form-control" id="editableText" binding="#{cc.input}"
                                                  value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
                                                  pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  pt:placeholder="#{cc.placeHolder}" label="#{cc.attrs.label}">
 
-                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput"
+                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}"
+                                                onevent="validateInput"
                                                 event="change" disabled="#{!cc.attrs.ajaxValidation}"/>
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
                                     </h:inputText>
@@ -77,27 +78,29 @@
                             </c:when>
                             <!-- date -->
                             <c:when test="#{cc.attrs.inputType eq 'date'}">
-                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true"  >
-                                    <h:inputText styleClass="form-control"  id="editableText" binding="#{cc.input}"
-                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}" pt:data-required="#{cc.attrs.isRequired}"
+                                <div class="input-group date" data-provide="datepicker" data-date-autoClose="true">
+                                    <h:inputText styleClass="form-control" id="editableText" binding="#{cc.input}"
+                                                 value="#{cc.attrs.value}" required="#{cc.attrs.isRequired}"
+                                                 pt:data-required="#{cc.attrs.isRequired}"
                                                  disabled="#{cc.attrs.disabled}" pt:data-valid="#{component.valid}"
                                                  label="#{cc.attrs.label}"
-                                                 pt:placeholder="#{cc.placeHolder}" >
+                                                 pt:placeholder="#{cc.placeHolder}">
                                         <f:convertDateTime pattern="#{employeeMsg['employee.app.date.pattern']}"/>
-                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}" onevent="validateInput" event="change"/>
+                                        <f:ajax execute="@this" render="#{cc.clientId} #{cc.attrs.ajaxRender}"
+                                                onevent="validateInput" event="change"/>
                                         <f:attribute name="model" value="#{cc.attrs.model}"/>
                                     </h:inputText>
-                                    <h:outputScript >
+                                    <h:outputScript>
                                         var id = '#' + encodeId('#{cc.clientId}:editableText');
-                                        var pattern =  employee_i18n['employee.app.date.pattern'];
+                                        var pattern = employee_i18n['employee.app.date.pattern'];
                                         console.info("Datepicker id: " + id + " Pattern: " + pattern);
                                         $(id).datepicker($.datepicker.regional[employee_i18n['locale']]);
                                         $(id).datepicker( "option", {
-                                            "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],
-                                            "changeMonth": true ,
-                                            "changeYear": true,
-                                            "yearRange": "c-100:c+100"
-                                            });
+                                        "dateFormat": employee_i18n['employee.app.javascript.date.pattern'],
+                                        "changeMonth": true ,
+                                        "changeYear": true,
+                                        "yearRange": "c-100:c+100"
+                                        });
                                         $(id).datepicker( "setDate",$(id).attr('value')).inputmask(employee_i18n['employee.app.date,inputmask.format'],
                                         {placeholder: employee_i18n['employee.app.date,inputmask.pattern'], showMaskOnHover: false});
                                     </h:outputScript>
@@ -108,18 +111,24 @@
                                 <div class="input-group" data-isRadio="true" data-valid="#{cc.hiddenInput.valid}">
                                     <ui:repeat value="#{cc.attrs.radioItems}" var="item" varStatus="indexStatus">
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input class="custom-control-input" type="radio" pt:name="#{cc.hiddenInput.clientId}"  label="#{cc.attrs.label}"
-                                                   jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}" data-required="#{cc.attrs.isRequired}"
-                                                   checked="#{item eq cc.attrs.value ? 'checked' : null}" data-valid="#{cc.hiddenInput.valid}">
-                                                <f:ajax execute="@this" render="#{cc.clientId}" event="change" onevent="validateInput"/>
+                                            <input class="custom-control-input" type="radio"
+                                                   pt:name="#{cc.hiddenInput.clientId}" label="#{cc.attrs.label}"
+                                                   jsf:id="radio" value="#{item}" required="#{cc.attrs.isRequired}"
+                                                   data-required="#{cc.attrs.isRequired}"
+                                                   checked="#{item eq cc.attrs.value ? 'checked' : null}"
+                                                   data-valid="#{cc.hiddenInput.valid}">
+                                                <f:ajax execute="@this" render="#{cc.clientId}" event="change"
+                                                        onevent="validateInput"/>
                                             </input>
-                                            <label jsf:id="label" class="custom-control-label" jsf:for="radio">#{masterdataService.getLocalizedNameFor(item)}</label>
+                                            <label jsf:id="label" class="custom-control-label"
+                                                   jsf:for="radio">#{masterdataService.getLocalizedNameFor(item)}</label>
                                         </div>
                                     </ui:repeat>
 
-                                    <h:inputHidden id="editableText" binding="#{cc.hiddenInput}" value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
-                                                   required="#{cc.attrs.isRequired}" />
-                                    <h:outputScript >
+                                    <h:inputHidden id="editableText" binding="#{cc.hiddenInput}"
+                                                   value="#{cc.attrs.value}" label="#{cc.attrs.label}"
+                                                   required="#{cc.attrs.isRequired}"/>
+                                    <h:outputScript>
                                         // reset the hidden input
                                         $(function() {
                                         var id = '#' + encodeId('#{cc.clientId}');
@@ -139,12 +148,15 @@
 
                             <!-- checkbox -->
                             <c:when test="#{cc.attrs.inputType eq 'checkbox'}">
-                                <div class="custom-control custom-checkbox pl-0" style="height: 100%;" id="#{cc.clientId}:checkbox-wrapper">
-                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="custom-control-input"
-                                                              value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
-                                                              disabled="#{cc.attrs.disabled}">
-                                    </h:selectBooleanCheckbox >
-                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                <div class="custom-control custom-checkbox pl-0" style="height: 100%;"
+                                     id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox binding="#{cc.input}" id="editableText"
+                                                             styleClass="custom-control-input"
+                                                             value="#{cc.attrs.value}" label="#{cc.attrs.label}"
+                                                             disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox>
+                                    <label class="custom-control-label"
+                                           for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
                                 </div>
                                 <h:outputScript>
                                     $(encodeId("#" + "#{cc.clientId}:checkbox-wrapper")).closest(".inputContainer").css("padding-top","5px");
@@ -153,12 +165,14 @@
 
                             <!-- switch -->
                             <c:when test="#{cc.attrs.inputType eq 'switch'}">
-                                <div class="custom-control" style="height: 100%;padding-left: 0px;" id="#{cc.clientId}:checkbox-wrapper">
-                                    <h:selectBooleanCheckbox  binding="#{cc.input}" id="editableText" styleClass="d-none"
-                                                              value="#{cc.attrs.value}"  label="#{cc.attrs.label}"
-                                                              disabled="#{cc.attrs.disabled}">
-                                    </h:selectBooleanCheckbox >
-                                    <label class="custom-control-label" for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
+                                <div class="custom-control" style="height: 100%;padding-left: 0px;"
+                                     id="#{cc.clientId}:checkbox-wrapper">
+                                    <h:selectBooleanCheckbox binding="#{cc.input}" id="editableText" styleClass="d-none"
+                                                             value="#{cc.attrs.value}" label="#{cc.attrs.label}"
+                                                             disabled="#{cc.attrs.disabled}">
+                                    </h:selectBooleanCheckbox>
+                                    <label class="custom-control-label"
+                                           for="#{cc.clientId}:editableText">#{cc.attrs.checkboxLabel}</label>
                                 </div>
                                 <h:outputScript>
                                     var encodedId = "#" + encodeId("#{cc.clientId}:editableText");
@@ -169,13 +183,13 @@
                                     });
                                 </h:outputScript>
                             </c:when>
-      <!-- End choose -->
+                            <!-- End choose -->
                         </c:choose>
                         <!-- error message output -->
                         <!--<c:if test="#{!cc.attrs.readOnly}">-->
-                            <div class="invalid-feedback">
-                                <h:message id="message" for="editableText"/>
-                            </div>
+                        <div class="invalid-feedback">
+                            <h:message id="message" for="editableText"/>
+                        </div>
                         <!--</c:if>-->
 
                     </div>
@@ -183,9 +197,10 @@
                     <!--</c:if>-->
                     <!-- jstl cc:if funtioniert nicht da es hier noch früh ist und readOnly wurde noch nicht aufgelöst durch EL-->
                     <!--<c:if test="#{cc.cssHideClass() eq 'd-none'}">-->
-                        <div  jsf:id="display" class="inputContainer" style="height: 100%" jsf:rendered="#{cc.attrs.readOnly}">
-                            <span>#{cc.displayValue}</span>
-                        </div>
+                    <div jsf:id="display" class="inputContainer" style="height: 100%"
+                         jsf:rendered="#{cc.attrs.readOnly}">
+                        <span>#{cc.displayValue}</span>
+                    </div>
                     <!--</c:if>-->
 
                 </div>
