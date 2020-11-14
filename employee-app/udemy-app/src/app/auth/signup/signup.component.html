@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-4 offset-4 col-sm-12">
+    <div class="p-4" style="background-color: deepskyblue; border: solid 1px;">
+      <form #signUpForm="ngForm" (ngSubmit)="onSubmit(signUpForm.value)">
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" ngModel class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" ngModel class="form-control" required="">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid">Sing up</button>
+      </form>
+      <div class="alert alert-danger mt-2" *ngIf="signUpError">{{signUpError}}</div>
+    </div>
+  </div>
+</div>
+
+
+
+

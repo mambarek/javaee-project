@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-4 offset-4 col-sm-12">
+    <div class="p-4" style="background-color: mediumturquoise; border: solid 1px">
+      <form #signInFormRef="ngForm" (ngSubmit)="onSubmit(signInFormRef.value)">
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" ngModel name="email" class="form-control" required="">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" ngModel name="password" class="form-control" required="">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!signInFormRef.valid">Sing in</button>
+      </form>
+      <div class="alert alert-danger mt-2" *ngIf="signInError">{{signInError}}</div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header">
+    User data
+  </div>
+  <div *ngIf="!isFetchingData">
+    <div class="card-body" *ngIf="user">
+      <p class="card-text">First name: {{user.firstName}}</p>
+      <p class="card-text">Last name: {{user.lastName}}</p>
+      <p class="card-text">E-Mail: {{user.email}}</p>
+    </div>
+    <div class="card-body" *ngIf="user">
+      <a routerLink="edit" [routerLinkActive]="'active fluffy'" class="card-link">Edit user</a>
+    </div>
+    <div class="card-body" *ngIf="!user">
+      User not found!
+    </div>
+  </div>
+  <div class="card-body" *ngIf="isFetchingData">
+    <div class="d-flex align-items-center">
+      Loading...
+      <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+
